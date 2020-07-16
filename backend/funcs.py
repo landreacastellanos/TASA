@@ -25,9 +25,7 @@ def searchUser(user):
     
     for i in rows:
         pwd = user["password"]
-        result = bcrypt.checkpw(pwd.encode("utf-8"), i["password"].encode())
-        print(result)
-        if user["password"] == i["password"]:
+        if bcrypt.checkpw(pwd.encode("utf-8"), i["password"].encode()):
             return i
         else:
             return -1
