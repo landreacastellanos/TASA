@@ -1,11 +1,12 @@
 import mysql.connector
+import os
 
 def connection():
     db = mysql.connector.connect(
         host="localhost",
-        user="admin",
-        password="Admin123.",
-        database="tasa"
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
     return db
 
