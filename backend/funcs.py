@@ -1,5 +1,6 @@
 from typing import TypeVar, Generic
 import connection
+import bcrypt
 
 T = TypeVar('T')
 
@@ -23,6 +24,9 @@ def searchUser(user):
         return -1
     
     for i in rows:
+        pwd = user["password"]
+        result = bcrypt.checkpw(pwd.encode("utf-8"), i["password"].encode())
+        print(result)
         if user["password"] == i["password"]:
             return i
         else:
