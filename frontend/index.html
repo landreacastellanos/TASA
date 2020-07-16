@@ -1,0 +1,35 @@
+<!doctype html>
+<!--ts=4 sw=4-->
+<html>
+  <head>
+	    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  
+    <title>TASA</title>
+    <link rel="stylesheet" href="./css/styles.css">
+  </head>
+  <body>
+	  <div class="login-box">
+		  <div class="login-container">
+			  <h2 class="titulo-foto"> Un futuro más eficiente </h2>
+		  </div>
+		  <div class="login-form">
+			  <h3 class="registro"> Registro </h3>
+			  <h6 class="registro-description"> Ingresa tu Email o usario junto con tu contraseña </h6>
+			  <form action="/login" method="POST">
+				  <input class="form usuario" name="user" type="text" placeholder="Usuario"/>
+				  <input class="form password" name="password" type="password" placeholder="Contraseña"/>
+			  	  <small class="lost"> ¿ Olvidaste tu contraseña ? </small>
+				  <input class="submit  " type="submit" Value="Ingresar"/>
+			  </form>
+			  <h6 class="forgot"> ¿Ya tienes cuenta? <a class="link" href="#"> Ingresa aquí </a> </h6>
+	                  <label class="switch">
+				  <input type="checkbox">
+				  <span class="slider round"></span>
+			  </label>
+			  <h6 class="switch-message"> Mantenme conectado </h6>
+		  </div>
+	  </div>
+  </body>
+</html>
