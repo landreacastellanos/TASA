@@ -19,6 +19,7 @@ create table user (
 	password varchar(500),
 	created_date datetime,
 	role_id int,
+	unique(email),
 	primary key(id),
 	foreign key (role_id) references role(id)
 );
