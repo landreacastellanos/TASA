@@ -5,8 +5,6 @@ class User:
 
     def getuser(user):
         return user.user
-    
+
     def set_user(self, user):
         self.user = user
-    
-    
