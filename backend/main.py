@@ -19,6 +19,17 @@ def index():
         return "Welcome: "+ session["user"]
     return "<script> location.href=\'/index.html\' </script>"
 
+@app.route('/saveUser', methods=['POST'])
+def saveUser():
+    is_logged = funcs.validateSession(session)
+    if is_logged == -1:
+        return "<script> location.href=\'/index.html\' </script>"
+    dict_form = funcs.parseForm(request.form, funcs.saveUser)
+    if dict_form == -1:
+        return "Sorry The User Already exists."
+    return dict_form
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
