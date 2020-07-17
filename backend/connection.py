@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 
+
 def connection():
     db = mysql.connector.connect(
         host="localhost",
@@ -13,5 +14,5 @@ def connection():
 
 
 
-#usefull links
-#https://stackoverflow.com/questions/7268178/python-mysql-and-select-output-to-dictionary-with-column-names-for-keys
+# usefull links
+# https://stackoverflow.com/questions/7268178/python-mysql-and-select-output-to-dictionary-with-column-names-for-keys
