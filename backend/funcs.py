@@ -3,6 +3,7 @@ import connection
 import bcrypt
 import query
 import time
+import json
 
 INSERT = 0
 UPDATE = 1
@@ -97,6 +98,56 @@ def userList(user=""):
     return rows
 
 
+def saveProperty(form, table_name):
+    lands = form["lands"]
+    table_name = form["table_name"]
+    form.pop("lands")
+    form.pop("table_name")
+    form["created_date"] = now()
+    property_dict = form
+    headers, values = getHeadersAndValues(property_dict)
+    statement = query.insert(table_name, ",".join(headers), "','".join(values))
+    # print(statement)
+    # return
+    last_id, err = query.runQuery(statement)
+    if last_id == -1:
+        print("Error Happend: ", err)
+        return -1
+    print("Property Last Id:", last_id.lastrowid)
+    saveLand(last_id.lastrowid, lands)
+
+
+def saveLand(last_id, lands):
+    decode_lands = json.loads(lands)
+    if len(decode_lands) == 0:
+        print("Error No added Lands")
+        return
+    # decode_lands[0]["propert_id"] = str(last_id)
+    result = [
+        dict(item, **{'property_id': str(last_id)}) for item in decode_lands
+    ]
+
+    for land in result:
+        headers, values = getHeadersAndValues(land)
+        statement = query.insert("land", ",".join(headers), "','".join(values))
+        print(statement)
+        last_id, err = query.runQuery(statement)
+        if last_id == -1:
+            print("Land Error Happend: ", err)
+            return -1
+
+
+def getHeadersAndValues(struct):
+    headers = []
+    values = []
+    for k, v in struct.items():
+        headers.append(k)
+        values.append(v)
+    return headers, values
+
+
 def validateSession(session):
     if 'user' not in session:
         return -1
+
+# https://stackoverflow.com/questions/14071038/add-an-element-in-each-dictionary-of-a-list-list-comprehension
