@@ -76,8 +76,8 @@ def login():
     if request.method == "GET":
         return "<script> location.href=\'/index.html\' </script>"
     else:
-        dict_form = funcs.parseForm(request.form, funcs.searchUser)
-        if dict_form == -1:
+        dict_form = funcs.parseForm(request.form, funcs.searchUser, SEARCH)
+        if dict_form != -1:
             session['user'] = dict_form["email"]
             return redirect(url_for('index'))
 
