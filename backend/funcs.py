@@ -30,7 +30,7 @@ def parseForm(form, callback, mode):
     return callback(T, mode)
 
 
-def searchUser(user):
+def searchUser(user, mode):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute("select * from user where email='"+user["user"]+"'", (),)
