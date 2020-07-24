@@ -45,10 +45,11 @@ def updateUser():
     result = funcs.parseForm(request.form, funcs.updateUser, UPDATE)
     if result == -1:
         return "Some Error Happend, Please Contact the Admin"
-    return result
+    return "<script> alert('"+result+"'); location.href=\'/\'; </script>"
 
 
 # TODO: Add Documentation of the endpoints of the api
+# TODO: Create i18n for responses and headers
 @app.route('/userList', methods=['GET', 'POST'])
 def userList():
     if funcs.validateSession(session) == -1:
@@ -57,8 +58,7 @@ def userList():
     if request.method == "GET":
         user = request.args.get("user")
         response = funcs.userList(user)
-        print(render_template("user.html", user=response[0]))
-        return "Wait..."
+        return render_template("user.html", user=response[0])
     if request.method == "POST":
         response = funcs.userList()
     return render_template("table.html", user_list=response)
