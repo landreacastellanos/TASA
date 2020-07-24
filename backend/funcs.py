@@ -87,7 +87,7 @@ def updateUser(form, mode):
 
 def userList(user=""):
     querystr = "SELECT "
-    querystr += "name, last_name, email, role.role "
+    querystr += "concat(name,\" \",last_name), age, profesion,email,role.role "
     querystr += "FROM user join role on role.id = user.role_id"
     if user != "":
         querystr += " where email='"+user+"'"
