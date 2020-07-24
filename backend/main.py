@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, session, redirect, url_for, jsonify, render_template
+from flask import request, session, redirect, url_for, render_template
 
 import funcs
 
@@ -58,7 +58,7 @@ def userList():
         response = funcs.userList(user)
     if request.method == "POST":
         response = funcs.userList()
-    return jsonify(response)
+    return render_template("table.html", user_list=response)
 
 
 # TODO: Validate LOGIN
