@@ -48,6 +48,7 @@ def updateUser():
     return result
 
 
+# TODO: Add Documentation of the endpoints of the api
 @app.route('/userList', methods=['GET', 'POST'])
 def userList():
     if funcs.validateSession(session) == -1:
@@ -56,6 +57,8 @@ def userList():
     if request.method == "GET":
         user = request.args.get("user")
         response = funcs.userList(user)
+        print(render_template("user.html", user=response[0]))
+        return "Wait..."
     if request.method == "POST":
         response = funcs.userList()
     return render_template("table.html", user_list=response)
