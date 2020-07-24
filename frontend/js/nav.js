@@ -1,7 +1,21 @@
+// vim: sw=4 ts=4 expandtab
+
+var main_url="http://0.0.0.0:5000/";
 function main(){
     add_events("click",document.querySelectorAll("[rel='addProperty']"),dashf.bind(this, addProperty));
     add_events("click",document.querySelectorAll("[rel='listProperties']"),dashf.bind(this, listProperties));
     add_events("click",document.querySelectorAll("[rel='addUser']"),dashf.bind(this, addUser));
+    add_events("click",document.querySelectorAll("[rel='userList']"),user_list.bind(this, userList));
+}
+
+function user_list(item, element) {
+    var id = item.getAttribute("id");
+    clean(id)
+    item.classList.add("show")
+
+    ajax("POST", "userList", "", function(response){
+       userlist.innerHTML = response;
+    })
 }
 
 function dashf(item, element){
@@ -30,3 +44,19 @@ function clean(id){
     }
 }
 
+
+function ajax(method,url,json,callback){
+    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+    xmlhttp.open(method, url);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    if(json != null) {
+        xmlhttp.send(json);
+    }else{
+        xmlhttp.send();
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState === 4) {
+            callback(this.response);
+        }
+    };
+}
