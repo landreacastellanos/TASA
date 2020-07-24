@@ -1,0 +1,27 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Edad</th>
+      <th scope="col">Profesion</th>
+      <th scope="col">Email</th>
+      <th scope="col">Perfil</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for i in user_list %}  
+{% set vars= {'email': ""} %}
+    <tr>
+  {% for key, v in i.items() %}
+        {% if key == "email" %}
+                {% if vars.update({'email': v}) %} {% endif %}   
+        {% endif %}
+        <td>{{v}}</td>
+  {% endfor %}
+        <td> <a class="fas fa-edit fa-2x" onclick="edit('{{vars.email}}')"></i></a> </td>
+    </tr>
+{% endfor %}
+    
+  </tbody>
+</table>
