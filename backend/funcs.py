@@ -70,7 +70,7 @@ def saveUser(form, mode):
     cursor, err = query.runQuery(querystr)
     if err == -1:
         return cursor
-    return "<script>alert('Great, now you are in the system!');location.href='/'"
+    return "Great, now you are in the system!"
 
 
 def updateUser(form, mode):
