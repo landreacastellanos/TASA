@@ -1,0 +1,25 @@
+<div class="hide custom-item" id="addUser">
+    <h2>Editar Usuario</h2>
+    <form enctype="multipart/form-data" action="/edit" accept-charset="uft-8" method="post" id="scheduleServiceForm">
+        {% for k, v in user.items() %}
+        <div class="form-group">
+            <label for="name">{{k}}</label>
+            <input type="text" class="form-control" name="{{k}}" id="{{k}}" value="{{v}}">
+        </div>
+        {% endfor %}
+        <div class="form-group">
+            <label for="role">Perfil</label>
+            <select id="role" name="role" class="form-control">
+                <option> </option>
+                <option value="1">Administrador</option>
+                <option value="2">Capatas</option>
+                <option value="3">Responsable Decisiones de Compra</option>
+                <option value="4">Dueño de la finca</option>
+                <option value="5">Socio Adicional</option>
+                <option value="6">Vendedor</option>
+            </select>
+        </div>
+        <button type="submit" id="btn_approve" class="btn btn-primary"> Editar </button>
+    </form>
+</div>
+
