@@ -10,12 +10,30 @@ function main(){
 
 function user_list(item, element) {
     var id = item.getAttribute("id");
-    clean(id)
-    item.classList.add("show")
+    clean(id);
+    item.classList.add("show");
 
     ajax("POST", "userList", "", function(response){
        userlist.innerHTML = response;
     })
+}
+
+
+function fill_data(response) {
+    editUser.classList.remove("hide");
+    editUser.classList.add("show");
+    editUser.innerHTML = response;
+    selectElement("role_id", parseInt(id_role.value));
+}
+
+function edit(email) {
+    clean(userList);
+    ajax("GET", "userList?user="+email, "", fill_data);
+}
+
+function selectElement(id, valueToSelect) {
+    let element = document.getElementById(id);
+    element.value = valueToSelect;
 }
 
 function dashf(item, element){
