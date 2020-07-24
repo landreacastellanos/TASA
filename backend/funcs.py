@@ -89,7 +89,7 @@ def userList(user=""):
     # q = QueryString
     q = "SELECT "
     if user != "":
-        q += "name, last_name, age, profesion, email, role.role "
+        q += "name, last_name, age, profesion, email, role.id "
     else:
         q += "concat(name,\" \",last_name), age, profesion, email, role.role "
     q += "FROM user join role on role.id = user.role_id"
