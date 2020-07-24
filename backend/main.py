@@ -34,7 +34,7 @@ def saveUser():
     dict_form = funcs.parseForm(request.form, funcs.saveUser, INSERT)
     if dict_form == -1:
         return "Sorry The User Already exists."
-    return dict_form
+    return "<script> alert('"+dict_form+"'); location.href=\'/\'; </script>"
 
 
 @app.route('/updateUser', methods=['POST'])
