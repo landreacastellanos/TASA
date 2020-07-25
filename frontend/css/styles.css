@@ -4,7 +4,6 @@ body {
   background: url("../images/Atech_Background.1.jpg") no-repeat center center fixed;
   background-size: cover;
   margin:0;
-  position:fixed;
   width:100%
 }
 
@@ -204,4 +203,18 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.hide{
+   display:none;
+}
+.show{
+   display:block;
+}
+.custom-item{
+   padding: 0 15%;
+}
+
+#content{
+   background: rgb(255 255 255 / 35%);
 }

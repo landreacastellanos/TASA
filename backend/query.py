@@ -48,8 +48,11 @@ def runQuery(querystr):
     except mysql.connector.errors.IntegrityError as err:
         cursor.close()
         db.close()
-        return err.msg, -1
-
+        return -1, err.msg
+    except mysql.connector.errors.DatabaseError as dbError:
+        cursor.close()
+        db.close()
+        return -1, dbError.msg
     db.close()
     return cursor, 1
 
@@ -68,3 +71,8 @@ def fetchall(querystr):
 
     db.close()
     return data, 1
+
+
+def insert(table_name, headers, value):
+    return format("insert into %s (%s) \
+values('%s')" % (table_name, headers, value))
