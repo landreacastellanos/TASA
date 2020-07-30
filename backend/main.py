@@ -1,7 +1,12 @@
+import jwt
+import time
 from flask import Flask
-from flask import request, session, redirect, url_for, render_template
+from flask_mail import Mail
+from flask import request, session, redirect, url_for, render_template, flash
 
 import funcs
+import send_email
+
 
 app = Flask(__name__, static_url_path="", static_folder="../frontend")
 app.template_folder = "../frontend"
@@ -12,6 +17,17 @@ UPDATE = 1
 SEARCH = 2
 DELETE = 3
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'digitaltasa@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Abc.123@?'
+mail = Mail()
+
+app.app_context().push()
+
+mail.init_app(app)
+
 
 @app.route('/ping', methods=['GET', 'POST'])
 def ping():
@@ -21,7 +37,7 @@ def ping():
 @app.route('/')
 def index():
     if 'user' not in session:
-        return "<script> location.href=\'/index.html\' </script>"
+        return render_template('/index.html')
     return render_template("main.html", user=session["user"])
     # return "Welcome: " + session["user"]
 
@@ -77,16 +93,65 @@ def save_property():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
-        return "<script> location.href=\'/index.html\' </script>"
+        return render_template('/index.html')
     else:
         dict_form = funcs.parseForm(request.form, funcs.searchUser, SEARCH)
         if dict_form != -1:
             session['user'] = dict_form["email"]
             return redirect(url_for('index'))
 
-        return '''<script>
-            alert("You are not enable in the login");
-            location.href=\'/index.html\' </script>'''
+        flash('Usuario no se encuentra en el sistema')
+        return render_template('/index.html')
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == "GET":
+        return render_template('/reset_password.html')
+
+
+    if request.method == "POST":
+        dict_form = funcs.parseForm(request.form, funcs.searchUserByEmail, SEARCH)
+        if dict_form != -1:
+            email = dict_form["user"]
+            token = get_reset_token(email)
+            recover_url = url_for(
+            'reset_with_token',
+            token=token,
+            _external=True)
+            send_email.welcome_mail(email, recover_url)
+            flash('Hemos enviado un link al correo registrado')
+            return render_template('/index.html')
+        
+        flash('Este correo no se encuentra registrado')
+        return render_template('/reset_password.html')
+
+def get_reset_token(self, expires=5000):
+    return jwt.encode({'reset_password': self,
+                           'exp':    time.time() + expires},
+                           key=app.secret_key)
+
+@app.route('/reset/<token>', methods=["GET", "POST"])
+def reset_with_token(token):
+    if request.method == "GET":
+        try:
+            username = jwt.decode(token,
+                key=app.secret_key)['reset_password']
+        except Exception as e:
+            print(e)
+            return
+
+        user = {"user":username}
+        return render_template('email/reset_with_token.html', token=token)
+    if request.method == "POST":
+        new_password = request.form['password']
+        token = request.form['token']
+        email = jwt.decode(token,
+                key=app.secret_key)['reset_password']
+
+        result = funcs.updateUserPasswordByEmail(email, new_password)
+        flash('Se ha restaurado la contraseña')
+        return redirect(url_for('index'))
+
 
 
 @app.route('/logout')
