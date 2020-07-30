@@ -3,6 +3,7 @@ import connection
 import bcrypt
 import query
 import time
+import json
 
 INSERT = 0
 UPDATE = 1
@@ -28,8 +29,38 @@ def parseForm(form, callback, mode):
         T[k] = v
     return callback(T, mode)
 
+def searchUserByEmail(user, mode):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select * from user where email='"+user["user"]+"'", (),)
+    rows = cursor.fetchall()
+    if len(rows) < 1:
+        return -1
+    
+    return user
 
-def searchUser(user):
+    db.close()
+
+def updateUserPasswordByEmail(email, new_password):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    pw_hash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
+    print(pw_hash)
+    sql = "update user set password='"+pw_hash+"' where email='"+email+"'"
+    print(sql)
+    cursor.execute(sql)
+    db.commit()
+    rows = cursor.rowcount
+    if rows < 1:
+        return -1
+
+    return email
+
+    db.close()
+
+
+
+def searchUser(user, mode):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute("select * from user where email='"+user["user"]+"'", (),)
@@ -85,18 +116,72 @@ def updateUser(form, mode):
 
 
 def userList(user=""):
-    querystr = "SELECT "
-    querystr += "name, last_name, email, role.role "
-    querystr += "FROM user join role on role.id = user.role_id"
+    # q = QueryString
+    q = "SELECT "
     if user != "":
-        querystr += " where email='"+user+"'"
-    rows, err = query.fetchall(querystr)
+        q += "name, last_name, age, profesion, email, role.id "
+    else:
+        q += "concat(name,\" \",last_name), age, profesion, email, role.role "
+    q += "FROM user join role on role.id = user.role_id"
+    if user != "":
+        q += " where email='"+user+"'"
+    rows, err = query.fetchall(q)
     if err == -1:
         print(err)
         return -1
     return rows
 
 
+def saveProperty(form, table_name):
+    lands = form["lands"]
+    table_name = form["table_name"]
+    form.pop("lands")
+    form.pop("table_name")
+    form["created_date"] = now()
+    property_dict = form
+    headers, values = getHeadersAndValues(property_dict)
+    statement = query.insert(table_name, ",".join(headers), "','".join(values))
+    # print(statement)
+    # return
+    last_id, err = query.runQuery(statement)
+    if last_id == -1:
+        print("Error Happend: ", err)
+        return -1
+    print("Property Last Id:", last_id.lastrowid)
+    saveLand(last_id.lastrowid, lands)
+
+
+def saveLand(last_id, lands):
+    decode_lands = json.loads(lands)
+    if len(decode_lands) == 0:
+        print("Error No added Lands")
+        return
+    # decode_lands[0]["propert_id"] = str(last_id)
+    result = [
+        dict(item, **{'property_id': str(last_id)}) for item in decode_lands
+    ]
+
+    for land in result:
+        headers, values = getHeadersAndValues(land)
+        statement = query.insert("land", ",".join(headers), "','".join(values))
+        print(statement)
+        last_id, err = query.runQuery(statement)
+        if last_id == -1:
+            print("Land Error Happend: ", err)
+            return -1
+
+
+def getHeadersAndValues(struct):
+    headers = []
+    values = []
+    for k, v in struct.items():
+        headers.append(k)
+        values.append(v)
+    return headers, values
+
+
 def validateSession(session):
     if 'user' not in session:
         return -1
+
+# https://stackoverflow.com/questions/14071038/add-an-element-in-each-dictionary-of-a-list-list-comprehension

@@ -1,0 +1,33 @@
+<!doctype html>
+<!--ts=4 sw=4-->
+<html>
+
+<head>
+	<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+	<title>TASA</title>
+	<link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+	<div class="login-box">
+		<div class="login-container">
+			<h2 class="titulo-foto"> Un futuro más eficiente </h2>
+		</div>
+		<div class="login-form">
+			<h3 class="registro"> Digite la nueva contraseña </h3>
+			<form action="/reset/{{token}}" method="POST">
+				<input class="form password" name="password" type="password" placeholder="Contraseña"/>
+                <input name="token" type="hidden" value="{{token}}"/>
+				</br>
+				</br>
+				</br>
+				<input class="submit  " type="submit" Value="Restaurar" />
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>
