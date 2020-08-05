@@ -118,14 +118,18 @@ def saveProperty(form, table_name):
         print("Error Happend: ", err)
         return -1
     print("Property Last Id:", last_id.lastrowid)
-    saveLand(last_id.lastrowid, lands)
+    response = saveLand(last_id.lastrowid, lands)
+    if response == -1:
+        print("Error Saving Lands")
+        return -1
+    return "Propery Added"
 
 
 def saveLand(last_id, lands):
     decode_lands = json.loads(lands)
     if len(decode_lands) == 0:
         print("Error No added Lands")
-        return
+        return -1
     # decode_lands[0]["propert_id"] = str(last_id)
     result = [
         dict(item, **{'property_id': str(last_id)}) for item in decode_lands
