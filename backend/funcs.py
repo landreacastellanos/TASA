@@ -98,20 +98,25 @@ def saveUser(form, mode):
     querystr = query.insertUser(values, query.queryInsert())
     # print(querystr)
     cursor, err = query.runQuery(querystr)
-    if err == -1:
-        return cursor
+    if err != 1:
+        print(cursor)
+        return -1
     return "Great, now you are in the system!"
 
 
 def updateUser(form, mode):
     email = form["email"]
     form.pop("email")
+    form.pop("password-verify")
+    if form["password"] == "":
+        form.pop("password")
     values = returnvalues(form, mode)
     querystr = query.update(values, query.queryUpdate(), email)
     cursor, err = query.runQuery(querystr)
-    if err == -1:
+    if err != 1:
+        print(err)
         return cursor
-    print(cursor.rowcount)
+    # print(cursor.rowcount)
     return "User Updated"
 
 
@@ -121,7 +126,7 @@ def userList(user=""):
     if user != "":
         q += "name, last_name, age, profesion, email, role.id "
     else:
-        q += "concat(name,\" \",last_name), age, profesion, email, role.role "
+        q += "name, last_name, age, profesion, email, role.role "
     q += "FROM user join role on role.id = user.role_id"
     if user != "":
         q += " where email='"+user+"'"
