@@ -21,3 +21,11 @@ pip3 install flask
 apt install python3-flask
 
 pip3 install mysql-connector-python
+
+pip install bcrypt
+
+pip install Flask-Mail
+
+pip install pyjwt
+
+pip install Werkzeug

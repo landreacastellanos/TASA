@@ -1,35 +1,50 @@
 <!doctype html>
 <!--ts=4 sw=4-->
 <html>
-  <head>
-	    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  
-    <title>TASA</title>
-    <link rel="stylesheet" href="./css/styles.css">
-  </head>
-  <body>
-	  <div class="login-box">
-		  <div class="login-container">
-			  <h2 class="titulo-foto"> Un futuro más eficiente </h2>
-		  </div>
-		  <div class="login-form">
-			  <h3 class="registro"> Registro </h3>
-			  <h6 class="registro-description"> Ingresa tu Email o usario junto con tu contraseña </h6>
-			  <form action="/login" method="POST">
-				  <input class="form usuario" name="user" type="text" placeholder="Usuario"/>
-				  <input class="form password" name="password" type="password" placeholder="Contraseña"/>
-			  	  <small class="lost"> ¿ Olvidaste tu contraseña ? </small>
-				  <input class="submit  " type="submit" Value="Ingresar"/>
-			  </form>
-			  <h6 class="forgot"> ¿Ya tienes cuenta? <a class="link" href="#"> Ingresa aquí </a> </h6>
-	                  <label class="switch">
-				  <input type="checkbox">
-				  <span class="slider round"></span>
-			  </label>
-			  <h6 class="switch-message"> Mantenme conectado </h6>
-		  </div>
-	  </div>
-  </body>
+
+<head>
+	<link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+	<title>TASA</title>
+	<link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+	<div class="col-md-12 col-md-offset-1">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				{% for message  in messages %}
+					<div class="alert alert-success" role="alert">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+	</div>
+	<div class="login-box">
+		<div class="login-container">
+			<h2 class="titulo-foto"> Un futuro más eficiente </h2>
+		</div>
+		<div class="login-form">
+			<h3 class="registro"> Registro </h3>
+			<h6 class="registro-description"> Ingresa tu Email o usario junto con tu contraseña </h6>
+			<form action="/login" method="POST">
+				<input class="form usuario" name="user" type="text" placeholder="Usuario" />
+				<input class="form password" name="password" type="password" placeholder="Contraseña" />
+				<small class="lost"> <a href="/reset_password">¿ Olvidaste tu contraseña ?</a></small>
+				<input class="submit  " type="submit" Value="Ingresar" />
+			</form>
+			<h6 class="forgot"> ¿Ya tienes cuenta? <a class="link" href="#"> Ingresa aquí </a> </h6>
+			<label class="switch">
+				<input type="checkbox">
+				<span class="slider round"></span>
+			</label>
+			<h6 class="switch-message"> Mantenme conectado </h6>
+		</div>
+	</div>
+</body>
+
 </html>

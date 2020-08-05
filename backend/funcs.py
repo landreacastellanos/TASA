@@ -29,6 +29,36 @@ def parseForm(form, callback, mode):
         T[k] = v
     return callback(T, mode)
 
+def searchUserByEmail(user, mode):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select * from user where email='"+user["user"]+"'", (),)
+    rows = cursor.fetchall()
+    if len(rows) < 1:
+        return -1
+    
+    return user
+
+    db.close()
+
+def updateUserPasswordByEmail(email, new_password):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    pw_hash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
+    print(pw_hash)
+    sql = "update user set password='"+pw_hash+"' where email='"+email+"'"
+    print(sql)
+    cursor.execute(sql)
+    db.commit()
+    rows = cursor.rowcount
+    if rows < 1:
+        return -1
+
+    return email
+
+    db.close()
+
+
 
 def searchUser(user, mode):
     db = connection.connection()
