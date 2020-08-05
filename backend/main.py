@@ -50,7 +50,7 @@ def saveUser():
         return "<script> location.href=\'/index.html\' </script>"
     dict_form = funcs.parseForm(request.form, funcs.saveUser, INSERT)
     if dict_form == -1:
-        return "Sorry The User Already exists."
+        return "<script> alert('El usuario ya existe en el sistema'); location.href=\'/\'; </script>"
     return "<script> alert('"+dict_form+"'); location.href=\'/\'; </script>"
 
 
