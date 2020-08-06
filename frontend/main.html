@@ -33,7 +33,6 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-
 				<div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
 					<ul class="nav navbar-nav">
 						<li class="nav-item" role="presentation">
@@ -62,15 +61,23 @@
 								</li>
 							</ul>
 						</li>
-
-						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Informes</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Informes</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informe de Visita</a>
+									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informe de Fotogria</a>
+								</li>
+							</ul>
 						</li>
 						<li class="nav-item" role="presentation">
 							<a class="nav-link" href="#">Históricos</a>
 						</li>
 						<li class="nav-item" role="presentation">
 							<a class="nav-link" id="profiles-tab" data-toggle="tab" href="#profiles" role="tab" aria-controls="profiles" aria-selected="true">Perfiles</a>
+						</li>
+						<li class="nav-item" role="presentation">
+							<a class="nav-link" href="/logout" >Cerrar Sesión</a>
 						</li>
 					</ul>
 				</div>
@@ -102,7 +109,10 @@
 											<label for="profesion">Profesion</label>
 											<input type="text" class="form-control form-control-lg" name="profesion" id="profesion">
 										</div>
-
+										<div class="form-group col-md-6">
+											<label for="phone">Telefono</label>
+											<input type="text" class="form-control form-control-lg" name="phone" id="phone">
+										</div>
 									</div>
 									<div class="separator"> </div>
 									<div class="form-row user-form-step2">
@@ -123,11 +133,11 @@
 												<option value="6">Vendedor</option>
 											</select>
 										</div>
-										<div class="form-group col-md-6">
+										<div class="form-group col-md-12">
 											<label for="password">Contraseña</label>
 											<input type="password" class="form-control form-control-lg" name="password" id="password">
 										</div>									
-										<div class="form-group col-md-6">
+										<div class="form-group col-md-12">
 											<label for="password">Confirma tu Contraseña</label>
 											<input type="password" class="form-control form-control-lg" name="password" id="password">
 										</div>
@@ -140,11 +150,11 @@
 					<button type="button" class="btn custom-btn user-btn border border-white" onclick="list()"> <i class="far fa-folder-open"></i> Ver lista Usuarios </button>
 					<button type="button" class="btn custom-btn save-btn" onclick="up()"> Guardar Usuario <i class="far fa-check-circle"></i> </button>
 				</div>
-				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home_tab"><h1>Bienvenido {{user}}!</h1></div>
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home_tab"></div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">.C3..</div>
 				<!--Property Tab -->
 				<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">
-					<div id="panel_list" class="panel1 panel-list">
+					<div id="panel_add" class="panel1 panel-list">
 						<h3 class="main-headers"><i class="fas fa-mountain"></i> Registrar Finca </h3>
 						<div class="form-row user-form-step1">
 							<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
@@ -196,7 +206,7 @@
 						</div>
 						<div class="actions">
 							<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
-							<button type="button" class="btn custom-btn btn-action"  onclick="list()"> <i class="fas fa-search"></i> Consultar </button>
+							<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
 							<button type="button" class="btn custom-btn btn-action"  onclick="list()"> <i class="fas fa-trash"></i> Eliminar </button>
 						</div>
 					</div>
@@ -204,6 +214,12 @@
 					</div>
 					<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
 					<button type="button" id="btn_approve" class="btn custom-btn save-btn hide" onclick="up_edit()"> Guardar Cambios <i class="far fa-check-circle"></i> </button>
+				</div>
+				<!--Profile Tab -->
+				<div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+					<div id="showUser" class="panel1 panel-list">
+					</div>
+					<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
 				</div>
 			</div>
 		</div>
