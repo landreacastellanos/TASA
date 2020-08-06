@@ -31,7 +31,7 @@ def update(values, action, email):
 # the for all those crud function
 def queryInsert():
     return ''' INSERT INTO user
-(name, last_name, age, profesion, email,role_id, password, created_date)
+(name, last_name, age, profesion, phone,email,role_id, password, created_date)
  values(\' '''
 
 

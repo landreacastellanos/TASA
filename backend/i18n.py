@@ -5,5 +5,6 @@ def i18n(key):
         "age": "Edad",
         "profesion": "Profesión",
         "email": "Correo Electronico",
+        "phone": "Telefono",
     }
     return i18n[key]
