@@ -42,7 +42,10 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Fincas</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Registrar Finca</a></li>
+								<li>
+									<a class="dropdown-item" id="property_tab" data-toggle="tab" href="#property" role="tab" aria-controls="property" aria-selected="true">Registrar Finca</a>
+									
+								</li>
 								<li><a class="dropdown-item" href="#">Ver Fincas &raquo</a>
 									<ul class="submenu dropdown-menu">
 										<li><a class="dropdown-item" href="">Submenu item 1</a></li>
@@ -139,7 +142,53 @@
 				</div>
 				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home_tab"><h1>Bienvenido {{user}}!</h1></div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">.C3..</div>
-				<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">.C4..</div>
+				<!--Property Tab -->
+				<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">
+					<div id="panel_list" class="panel1 panel-list">
+						<h3 class="main-headers"><i class="fas fa-mountain"></i> Registrar Finca </h3>
+						<div class="form-row user-form-step1">
+							<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
+							<div class="form-group col-md-6">
+								<label for="property_name">Nombre</label>
+								<input type="text" class="form-control form-control-lg" name="property_name" id="property_name">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="business_name">Razon Social</label>
+								<input type="text" class="form-control form-control-lg" name="business_name" id="bussiness_name">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="phone">Telefono</label>
+								<input type="phone" class="form-control form-control-lg" name="phone" id="phone">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="property_address">Dirección</label>
+								<input type="text" class="form-control form-control-lg" name="property_address" id="property_address">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="web_site">Dirección Web</label>
+								<input type="text" class="form-control form-control-lg" name="web_site" id="web_site">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="total_ha_property">Total Hectareas de  la Finca</label>
+								<input type="number" class="form-control form-control-lg" name="total_ha_property" id="total_ha_property">
+							</div>
+							<div class="form-group col-md-6">
+								<label for="sowing_system">Sistema de Siembra</label>
+								<select id="sowing_system" name="sowing_system" class="form-control form-control-lg">
+									<option> </option>
+									<option value="1">Arroz Secano</option>
+									<option value="2">Arroz de Riego</option>
+								</select>
+							</div>
+						</div>
+						<div class="dropdown-divider"></div>
+						<h3 class="main-headers"><i class="fas fa-mountain"></i> Registrar Lotes </h3>
+						<div class="form-row user-form-step1" id="land">
+						</div>
+						<button type="button" class="btn btn-link form-btn"  onclick="add()"> <i class="fas fa-plus-circle fa-2x align-icon"></i> Agregar Lotes </button>
+					</div>
+				</div>
+				<!--Profile Tab -->
 				<div class="tab-pane fade" id="userList" role="tabpanel" aria-labelledby="property-tab">
 					<div id="panel_list" class="panel1 panel-list">
 						<h3 class="main-headers"><i class="far fa-user"></i> Lista de Usuarios </h3>

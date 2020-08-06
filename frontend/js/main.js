@@ -16,6 +16,69 @@ function list() {
     
 }
 
+function create(type, classlist) {
+    var element = document.createElement(type);
+    for(var i = 0; i < classlist.length; i++){
+        addClass(element, classlist[i]);
+    }
+    return element
+}
+
+function appendchild(element, node) {
+    element.appendChild(node);
+}
+
+function add() {
+    var classArray = ["form-group", "col-md-4"]
+    var land_group = create("div", classArray)
+    var ha_group = create("div", classArray)
+    var hide_group = create("div", classArray)
+
+    var classinput = ["form-control", "form-control-lg"]
+    var land_input = create("input", classinput);
+    var ha_input = create("input", classinput);
+
+    var label_land = document.createElement("label");
+    var label_ha = document.createElement("label");
+    label_land.innerText = "Nombre del Lote";
+    label_ha.innerText = "Hectareas del Lote";
+
+    land_group.appendChild(label_land);
+    land_group.appendChild(land_input);
+    
+    ha_group.appendChild(label_ha);
+    ha_group.appendChild(ha_input);
+
+    land.appendChild(land_group);
+    land.appendChild(ha_group);
+    land.appendChild(hide_group);
+
+    /*var field = document.createElement("div");
+    var field2 = document.createElement("div");
+    addClass(field, "form-group");
+    addClass(field, "col-md-4");
+    addClass(field2, "form-group");
+    addClass(field2, "col-md-4");
+    var input_land = document.createElement("input");
+    var input_ha = document.createElement("input");
+    var label_land = document.createElement("label");
+    var label_ha = document.createElement("label");
+    label_land.innerText = "Nombre del Lote";
+    label_ha.innerText = "Hectareas del Lote";
+
+    input_land.classList.add("form-control");
+    input_land.classList.add("form-control-lg");
+    input_ha.classList.add("form-control");
+    input_ha.classList.add("form-control-lg");
+    
+    field.appendChild(label_land);
+    field.appendChild(input_ha);
+    field2.appendChild(label_ha);
+    field2.appendChild(input_land);
+    land.appendChild(field);
+    land.appendChild(field2);*/
+}
+
 function edit() {
     var table = document.getElementById("userlist");
     var checkbox_input = table.querySelectorAll('input[type=checkbox]');
