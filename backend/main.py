@@ -81,6 +81,14 @@ def userList():
     return render_template("table.html", user_list=response)
 
 
+@app.route('/user', methods=["GET"])
+def showUser():
+    if request.method == "GET":
+        user = request.args.get("user")
+        response = funcs.userList(user)
+        return render_template("show_user.html", user=response[0], i18n=i18n.i18n)
+
+
 # TODO: Validate LOGIN
 @app.route('/save_property', methods=['POST'])
 def save_property():

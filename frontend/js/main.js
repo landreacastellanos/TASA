@@ -7,6 +7,23 @@ function up_edit() {
    updateUserForm.submit(); 
 }
 
+function show_user() {
+    var table = document.getElementById("userlist");
+    var checkbox_input = table.querySelectorAll('input[type=checkbox]');
+    for(var i = 0; i < checkbox_input.length; i ++) {
+        var input = checkbox_input[i];
+        if(input.checked == true) {
+            ajax("GET", "user?user="+input.value, "", function(response){
+                showUser.innerHTML = response;
+                selectElement("role_id", parseInt(id_role.value));
+                remove(userList);
+                show(user);
+            });
+        }
+        //console.log(checkbox_input[i]); 
+    }
+}
+
 function list() {
     remove(profiles)
     show(userList);
@@ -52,32 +69,8 @@ function add() {
     land.appendChild(land_group);
     land.appendChild(ha_group);
     land.appendChild(hide_group);
-
-    /*var field = document.createElement("div");
-    var field2 = document.createElement("div");
-    addClass(field, "form-group");
-    addClass(field, "col-md-4");
-    addClass(field2, "form-group");
-    addClass(field2, "col-md-4");
-    var input_land = document.createElement("input");
-    var input_ha = document.createElement("input");
-    var label_land = document.createElement("label");
-    var label_ha = document.createElement("label");
-    label_land.innerText = "Nombre del Lote";
-    label_ha.innerText = "Hectareas del Lote";
-
-    input_land.classList.add("form-control");
-    input_land.classList.add("form-control-lg");
-    input_ha.classList.add("form-control");
-    input_ha.classList.add("form-control-lg");
-    
-    field.appendChild(label_land);
-    field.appendChild(input_ha);
-    field2.appendChild(label_ha);
-    field2.appendChild(input_land);
-    land.appendChild(field);
-    land.appendChild(field2);*/
 }
+
 
 function edit() {
     var table = document.getElementById("userlist");
