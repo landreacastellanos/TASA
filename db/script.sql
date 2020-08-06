@@ -7,7 +7,7 @@ create table role (
 	id int auto_increment,
 	role varchar(255),
 	primary key(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table user (
 	id int auto_increment,
@@ -22,7 +22,7 @@ create table user (
 	unique(email),
 	primary key(id),
 	foreign key (role_id) references role(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 create table property (
@@ -38,9 +38,9 @@ create table property (
 	vendor_id int,
 	primary key (id),
 	foreign key (vendor_id) references user(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table property_user(
+create table property_user (
 	property_id int auto_increment,
 	name varchar(255),
 	last_name varchar(255),
@@ -50,22 +50,20 @@ create table property_user(
 	profesion varchar(255),
 	created_date datetime,
 	foreign key(property_id) references property(id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table land (
-	id int auto_increment,
 	property_id int,
 	land_name varchar(255),
 	land_ha varchar(255),
-	primary key(id),
 	foreign key(property_id) references property(id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table stage (
 	id int auto_increment,
 	stage_name varchar(255),
 	primary key(id)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table stage_procedure (
 	id int auto_increment,
@@ -89,8 +87,12 @@ create table stage_procedure (
 	primary key(id),
 	foreign key(stage_id) references stage(id),
 	foreign key(property_id) references property(id)
-);
-
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 insert into role(role) values('administrator');
 insert into user(name, email, password, role_id) values('admin', 'admin@123', '123', 1);
+
+ALTER TABLE user add column phone VARCHAR(255);
+ALTER TABLE `tasa`.`user` 
+CHANGE COLUMN `phone` `phone` VARCHAR(255) NULL DEFAULT NULL AFTER `email`;
+
