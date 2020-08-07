@@ -18,6 +18,7 @@ function show_user() {
                 selectElement("role_id", parseInt(id_role.value));
                 remove(userList);
                 show(user);
+                selectElement("role_id", parseInt(id_role.value));
             });
         }
         //console.log(checkbox_input[i]); 
@@ -88,8 +89,6 @@ function edit() {
 function fill_data(response) {
     addClass(panel_list, "hide");
     editUser.innerHTML = response;
-    addClass(editUser, "panel1");
-    addClass(editUser, "panel-list");
     btn_approve.classList.remove("hide");
     selectElement("role_id", parseInt(id_role.value));
 

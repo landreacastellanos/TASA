@@ -91,7 +91,7 @@
 
 .user-form-step1 {
   display: flex;
-  /*width: 48%;*/
+  width: 120%;
 }
 
 .flex-container {
@@ -100,14 +100,17 @@
 }
 
 .user-form-step2 {
-  /*width: 48%;*/
+  width: 90%;
+  display: block;
 }
-
 .l-label {
   border-bottom-style: inset;
   font-weight: bold;
 }
 
+.f-width {
+  width: 100%;
+}
 .separator {
   width: 0.2%;
   background-color: #ECF1F5;
@@ -142,6 +145,8 @@
 .hidde {
   display: none;
 }
+
+
 
 @media (min-width: 992px){
 	.dropdown-menu .dropdown-toggle:after{
