@@ -29,6 +29,7 @@ def parseForm(form, callback, mode):
         T[k] = v
     return callback(T, mode)
 
+
 def searchUserByEmail(user, mode):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
@@ -36,10 +37,9 @@ def searchUserByEmail(user, mode):
     rows = cursor.fetchall()
     if len(rows) < 1:
         return -1
-    
     return user
-
     db.close()
+
 
 def updateUserPasswordByEmail(email, new_password):
     db = connection.connection()
@@ -57,7 +57,6 @@ def updateUserPasswordByEmail(email, new_password):
     return email
 
     db.close()
-
 
 
 def searchUser(user, mode):
@@ -178,6 +177,36 @@ def saveLand(last_id, lands):
         if last_id == -1:
             print("Land Error Happend: ", err)
             return -1
+
+
+def searchPropertyById(property_id):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select * from property where id="+property_id)
+    property_dict = cursor.fetchall()
+    if len(property_dict) < 1:
+        return -1
+    return property_dict
+
+
+def getPropertiesName():
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select id, property_name from property order by id")
+    property_dict = cursor.fetchall()
+    if len(property_dict) < 1:
+        return -1
+    return property_dict
+
+
+def getLandByProperty():
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select property_id, land_name from land order by property_id")
+    land_dict = cursor.fetchall()
+    if len(land_dict) < 1:
+        return -1
+    return land_dict
 
 
 def getHeadersAndValues(struct):
