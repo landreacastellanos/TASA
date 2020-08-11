@@ -1,0 +1,13 @@
+{% set last_id=0 %}
+{% for i in property_list %}
+<li><a class="dropdown-item" href="{{i['id']}}">{{i["property_name"]}} &raquo</a>
+	<ul class="submenu dropdown-menu">
+		{% for j in property_land %}
+			{% if (j["property_id"] == i["id"]) and (last_id != j["property_id"]) %}
+				{% set last_id = j["property_id"] %}
+				<li><a class="dropdown-item" href="" id="property_{{j['land_name']}}">{{j["land_name"]}}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</li>
+{% endfor %}

@@ -1,0 +1,28 @@
+<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">
+	<div id="panel_add" class="panel1 panel-list">
+		<h3 class="main-headers"><i class="fas fa-mountain"></i> Editar Finca </h3>
+		<div class="form-row user-form-step1">
+			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
+			{% for k, v in property_dict.items() %}
+			<div class="form-group col-md-6">
+				<label for="property_{{k}}">{{k}}</label>
+				<input type="text" class="form-control form-control-lg" name="property_{{k}}" id="property_{{k}}" value="{{v}}">
+			</div>
+			{% endfor %}
+			<div class="form-group col-md-6">
+				<label for="sowing_system">Sistema de Siembra</label>
+				<select id="sowing_system" name="sowing_system" class="form-control form-control-lg" value="2">
+					<option> </option>
+					<option value="1">Arroz Secano</option>
+					<option value="2">Arroz de Riego</option>
+				</select>
+			</div>
+		</div>
+		<div class="dropdown-divider"></div>
+		<h3 class="main-headers"><i class="fas fa-mountain"></i> Editar Lotes </h3>
+		<div class="form-row user-form-step1" id="land">
+		</div>
+		<button type="button" class="btn btn-link form-btn"  onclick="add()"> <i class="fas fa-plus-circle fa-2x align-icon"></i> Agregar Lotes </button>
+	</div>
+</div>
+
