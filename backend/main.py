@@ -3,6 +3,7 @@ import time
 from flask import Flask
 from flask_mail import Mail
 from flask import request, session, redirect, url_for, render_template, flash
+from flask_sqlalchemy import SQLAlchemy
 
 import funcs
 import i18n
@@ -18,6 +19,7 @@ UPDATE = 1
 SEARCH = 2
 DELETE = 3
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Admin123.@localhost/tasa'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
@@ -26,7 +28,7 @@ app.config['MAIL_PASSWORD'] = 'Abc.123@?'
 mail = Mail()
 
 app.app_context().push()
-
+db = SQLAlchemy(app)
 mail.init_app(app)
 
 
@@ -63,6 +65,21 @@ def updateUser():
     if result == -1:
         return "Some Error Happend, Please Contact the Admin"
     return "<script> alert('"+result+"'); location.href=\'/\'; </script>"
+
+
+@app.route('/property', methods=['GET', 'POST'])
+def propertyList():
+    if request.method == "GET":
+        property_id = request.args.get("id")
+        property_dict = funcs.searchPropertyById(property_id)
+        return render_template("property.html", property_dict=property_dict[0])
+
+
+@app.route("/property_menu", methods=['GET'])
+def printPropertyMenu():
+    propertyList = funcs.getPropertiesName()
+    propertyLand = funcs.getLandByProperty()
+    return render_template("property_menu.html", property_list=propertyList, property_land=propertyLand)
 
 
 # TODO: Add Documentation of the endpoints of the api
