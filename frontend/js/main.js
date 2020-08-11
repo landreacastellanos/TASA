@@ -3,6 +3,12 @@ function up(){
     saveUserForm.submit();
 }
 
+function load_properties(){
+    ajax("GET", "property_menu", "", function(response){
+        properties.innerHTML = response
+    })
+}
+
 function up_edit() {
    updateUserForm.submit(); 
 }

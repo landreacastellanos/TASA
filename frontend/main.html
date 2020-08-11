@@ -14,7 +14,7 @@
 	  <script src="/js/main.js"></script>
 	  <title>TASA| Menú </title>
 	</head>
-	<body>
+	<body onload="load_properties()">
 	<div class="col-md-12 col-md-offset-1">
 		{% with messages = get_flashed_messages() %}
 			{% if messages %}
@@ -46,8 +46,8 @@
 									
 								</li>
 								<li><a class="dropdown-item" href="#">Ver Fincas &raquo</a>
-									<ul class="submenu dropdown-menu">
-										<li><a class="dropdown-item" href="">Submenu item 1</a></li>
+									<ul class="submenu dropdown-menu" id="properties">
+										<!--<li><a class="dropdown-item" href="">Submenu item 1</a></li>
 										<li><a class="dropdown-item" href="">Submenu item 2</a></li>
 										<li><a class="dropdown-item" href="">Submenu item 3 &raquo </a>
 											<ul class="submenu dropdown-menu">
@@ -56,7 +56,7 @@
 											</ul>
 										</li>
 										<li><a class="dropdown-item" href="">Submenu item 4</a></li>
-										<li><a class="dropdown-item" href="">Submenu item 5</a></li>
+										<li><a class="dropdown-item" href="">Submenu item 5</a></li>-->
 									</ul>
 								</li>
 							</ul>
