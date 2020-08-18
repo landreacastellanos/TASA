@@ -76,3 +76,11 @@ def fetchall(querystr):
 def insert(table_name, headers, value):
     return format("insert into %s (%s) \
 values('%s')" % (table_name, headers, value))
+
+
+def select(table_name, headers):
+    return format("select %s from %s" % (headers, table_name))
+
+
+def selectwhere(table_name, headers, where):
+    return format("select %s from %s where %s" % (headers, table_name, where))

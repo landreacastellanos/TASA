@@ -26,7 +26,6 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'digitaltasa@gmail.com'
 app.config['MAIL_PASSWORD'] = 'Abc.123@?'
 mail = Mail()
-
 app.app_context().push()
 db = SQLAlchemy(app)
 mail.init_app(app)
@@ -52,6 +51,7 @@ def saveUser():
         return "<script> location.href=\'/index.html\' </script>"
     dict_form = funcs.parseForm(request.form, funcs.saveUser, INSERT)
     if dict_form == -1:
+        print(dict_form)
         return "<script> alert('El usuario ya existe en el sistema'); location.href=\'/\'; </script>"
     return "<script> alert('"+dict_form+"'); location.href=\'/\'; </script>"
 
@@ -178,6 +178,11 @@ def reset_with_token(token):
         flash('Se ha restaurado la contraseña')
         return redirect(url_for('index'))
 
+
+@app.route('/userSelect', methods=["GET"])
+def printSelect():
+    html = funcs.listOfUsers()
+    return html
 
 
 @app.route('/logout')

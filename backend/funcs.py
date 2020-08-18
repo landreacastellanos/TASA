@@ -4,6 +4,7 @@ import bcrypt
 import query
 import time
 import json
+import i18n
 
 INSERT = 0
 UPDATE = 1
@@ -93,12 +94,14 @@ def returnvalues(form, mode):
 
 # name=Julian&last_name=Linares&age=22&profesion=web&email=julianlg97@hotmail.com&password=abc123&role_id=2
 def saveUser(form, mode):
+    form.pop("confirm_password")
     values = returnvalues(form, mode)
     querystr = query.insertUser(values, query.queryInsert())
-    # print(querystr)
+    print(querystr)
     cursor, err = query.runQuery(querystr)
     if err != 1:
         print(cursor)
+        print("here")
         return -1
     return "Great, now you are in the system!"
 
@@ -123,9 +126,9 @@ def userList(user=""):
     # q = QueryString
     q = "SELECT "
     if user != "":
-        q += "name, last_name, age, profesion, email, phone, role.id "
+        q += "name, last_name, age, email, phone, profesion, role.id "
     else:
-        q += "name, last_name, age, profesion, email, phone, role.role "
+        q += "name, last_name, age, email, phone, profesion, role.role "
     q += "FROM user join role on role.id = user.role_id"
     if user != "":
         q += " where email='"+user+"'"
@@ -213,9 +216,47 @@ def getHeadersAndValues(struct):
     headers = []
     values = []
     for k, v in struct.items():
+        if k.find("name_land_1") == 0:
+            continue
+        elif k.find("hec_land_1") == 0:
+            continue
         headers.append(k)
         values.append(v)
     return headers, values
+
+
+def listOfUsers():
+    q = "select user.id, name, role.role from user join role on user.role_id=role.id order by role.role"
+    user_dict, err = query.fetchall(q)
+    if err == -1:
+        print(err)
+        return -1
+    last_role = ""
+    dx = ""
+    count = 0
+    for i in user_dict:
+        role = i["role"]
+        if last_role != role:
+            dx += "\n"
+            if count == 1:
+                dx += "\t</select>"
+                dx += "\n"
+                dx += "</div>"
+                dx += "\n"
+            dx += "<div class=\"form-group col-md-6\">"
+            dx += "\n"
+            dx += "\t<label for=\""+role+"\">"+role+"</label>"
+            dx += "\n"
+            dx += "\t<select id=\""+role+"\" name=\"property_"+i18n.role(role)+"\" class=\"form-control form-control-lg\">"
+            dx += "\n"
+            count = 1
+            last_role = role
+
+        dx += "\t\t<option value=\""+str(i["id"])+"\">"+i["name"]+"</option>\n"
+    dx += "\t</select>"
+    dx += "\n"
+    dx += "</div>"
+    return dx
 
 
 def validateSession(session):

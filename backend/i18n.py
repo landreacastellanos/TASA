@@ -1,3 +1,5 @@
+# TODO: New usage i18n = [ "en":{...}, "es": {...} ]
+# Usage i18n["en"][".."]
 def i18n(key):
     i18n = {
         "name": "Nombre",
@@ -8,3 +10,15 @@ def i18n(key):
         "phone": "Telefono",
     }
     return i18n[key]
+
+
+def role(key):
+    role = {
+            "administrator": "admin",
+            "Capataz": "ca",
+            "Resp. Decisiones de Compra": "rdc",
+            "Dueño de la finca": "df",
+            "Socio Adicional": "sa",
+            "Vendedor": "v",
+    }
+    return role[key]
