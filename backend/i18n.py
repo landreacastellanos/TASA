@@ -14,7 +14,7 @@ def i18n(key):
 
 def role(key):
     role = {
-            "administrator": "admin",
+            "Administrador": "admin",
             "Capataz": "ca",
             "Resp. Decisiones de Compra": "rdc",
             "Dueño de la finca": "df",
