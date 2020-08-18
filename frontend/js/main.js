@@ -1,12 +1,21 @@
 // vim: sw=4 ts=4 expandtab
+// TODO: Simplify Those up, up_property, up_edit, functions in a single one
 function up(){
     saveUserForm.submit();
+}
+
+function up_property(){
+    validate_lands();
+    savePropertyForm.submit();
 }
 
 function load_properties(){
     ajax("GET", "property_menu", "", function(response){
         properties.innerHTML = response
-    })
+    });
+    ajax("GET", "userSelect", "", function(response){
+        list_users.innerHTML = response;
+    });    
 }
 
 function up_edit() {
@@ -21,10 +30,9 @@ function show_user() {
         if(input.checked == true) {
             ajax("GET", "user?user="+input.value, "", function(response){
                 showUser.innerHTML = response;
-                selectElement("role_id", parseInt(id_role.value));
+                selectElement("role_show_id", parseInt(show_id_role.value));
                 remove(userList);
                 show(user);
-                selectElement("role_id", parseInt(id_role.value));
             });
         }
         //console.log(checkbox_input[i]); 
@@ -53,31 +61,31 @@ function appendchild(element, node) {
 }
 
 function add() {
-    var classArray = ["form-group", "col-md-4"]
-    var land_group = create("div", classArray)
-    var ha_group = create("div", classArray)
-    var hide_group = create("div", classArray)
-
-    var classinput = ["form-control", "form-control-lg"]
-    var land_input = create("input", classinput);
-    var ha_input = create("input", classinput);
-
-    var label_land = document.createElement("label");
-    var label_ha = document.createElement("label");
-    label_land.innerText = "Nombre del Lote";
-    label_ha.innerText = "Hectareas del Lote";
-
-    land_group.appendChild(label_land);
-    land_group.appendChild(land_input);
-    
-    ha_group.appendChild(label_ha);
-    ha_group.appendChild(ha_input);
-
-    land.appendChild(land_group);
-    land.appendChild(ha_group);
-    land.appendChild(hide_group);
+    var lands = document.getElementById("lands");
+    var clone_name_land = lands.children.name_land.cloneNode(true);
+    var clone_hec_land = lands.children.hec_land.cloneNode(true);
+    lands.appendChild(clone_name_land);
+    lands.appendChild(clone_hec_land);
 }
 
+function validate_lands() {
+    var inputs = lands.querySelectorAll("input");
+    var j_lands = []
+    var l_name = "";
+    var l_hec = "";
+    for(var i = 0; i<inputs.length; i++){
+        var e = inputs[i];
+        if(e.name == "name_land_1") {
+            l_name = e.value;
+            e.disable = true;
+        }else if (e.name == "hec_land_1"){
+            l_hec = e.value;
+            e.disable = true;
+            j_lands.push({land_name:l_name, land_ha: l_hec});
+        }
+    }
+    l_lands.value = JSON.stringify(j_lands);
+}
 
 function edit() {
     var table = document.getElementById("userlist");
@@ -96,7 +104,7 @@ function fill_data(response) {
     addClass(panel_list, "hide");
     editUser.innerHTML = response;
     btn_approve.classList.remove("hide");
-    selectElement("role_id", parseInt(id_role.value));
+    selectElement("role_edit_id", parseInt(edit_id_role.value));
 
 }
 
