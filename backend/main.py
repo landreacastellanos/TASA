@@ -78,6 +78,8 @@ def propertyList():
 @app.route("/property_menu", methods=['GET'])
 def printPropertyMenu():
     propertyList = funcs.getPropertiesName()
+    if propertyList == -1:
+        return "Aún no hay propiedades"
     propertyLand = funcs.getLandByProperty()
     return render_template("property_menu.html", property_list=propertyList, property_land=propertyLand)
 
