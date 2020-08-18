@@ -35,9 +35,7 @@ create table property (
 	total_ha_property varchar(255),
 	sowing_system varchar(255),
 	created_date datetime,
-	vendor_id int,
 	primary key (id),
-	foreign key (vendor_id) references user(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table property_user (
@@ -95,4 +93,18 @@ insert into user(name, email, password, role_id) values('admin', 'admin@123', '1
 ALTER TABLE user add column phone VARCHAR(255);
 ALTER TABLE `tasa`.`user` 
 CHANGE COLUMN `phone` `phone` VARCHAR(255) NULL DEFAULT NULL AFTER `email`;
+
+sowing_system
+alter table property add column property_admin varchar(255);
+alter table property add column property_ca varchar(255);
+alter table property add column property_df varchar(255);
+alter table property add column property_rdc varchar(255);
+alter table property add column property_v varchar(255);
+
+
+alter table property change column `property_admin` `property_admin` varchar(255) null default null after sowing_system;
+alter table property change column `property_ca` `property_ca` varchar(255) null default null after sowing_system;
+alter table property change column `property_df` `property_df` varchar(255) null default null after sowing_system;
+alter table property change column `property_rdc` `property_rdc` varchar(255) null default null after sowing_system;
+alter table property change column `property_v` `property_v` varchar(255) null default null after sowing_system;
 
