@@ -13,17 +13,6 @@
 </head>
 
 <body>
-	<div class="col-md-12 col-md-offset-1">
-		{% with messages = get_flashed_messages() %}
-			{% if messages %}
-				{% for message  in messages %}
-					<div class="alert alert-success" role="alert">
-						{{ message }}
-					</div>
-				{% endfor %}
-			{% endif %}
-		{% endwith %}
-	</div>
 	<div class="login-box">
 		<div class="login-container">
 			<h2 class="titulo-foto"> Un futuro más eficiente </h2>
@@ -43,6 +32,17 @@
 				<span class="slider round"></span>
 			</label>
 			<h6 class="switch-message"> Mantenme conectado </h6>
+			<div class="col-md-12 col-md-offset-1">
+				{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						{% for message  in messages %}
+							<div class="alert alert-success" role="alert">
+								{{ message }}
+							</div>
+						{% endfor %}
+					{% endif %}
+				{% endwith %}
+			</div>
 		</div>
 	</div>
 </body>
