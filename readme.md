@@ -29,3 +29,5 @@ pip install Flask-Mail
 pip install pyjwt
 
 pip install Werkzeug
+
+pip install SQLAlchemy
