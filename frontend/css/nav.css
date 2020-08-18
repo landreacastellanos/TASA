@@ -32,7 +32,8 @@
   display:flex;
   justify-content: center;
   padding: 0.5% 0.5% 2%;
-  background-color: rgb(40,72,97, 0.5);
+  background-image: linear-gradient(to top, rgba(87,116,0,0.2), rgba(87,116,0,2));
+  /*background-color: rgb(40,72,97, 0.5);*/
   margin: 5% 15% 5%;
 }
 
@@ -45,17 +46,18 @@
   margin-top: 3%;
   font-size: 15pt;
   height: 50px;
-  width: 15.5%;
 }
 
 .save-btn {
   color: #fff;
-  background-color: #45AFE6;
-  margin-left: 20%;
+  width: 28.5%;
+  background-color: #86AE17;
+  margin-left: 5%;
 }
 
 .user-btn {
   color: #fff;
+  width: 15.5%;
   background-color: rgb(255,255,255, 0.2);
 }
 
@@ -78,15 +80,32 @@
   width: 100%;
 }
 
+.panel3 {
+ width: 35%;
+ background-color: #fff;
+}
+
 .panel2 {
  width: 35%;
  background: url(../images/Atech_Register.1.jpg) no-repeat center;
  background-size: cover;
 }
-
+.panel-user{
+  display: flex;
+  background: url(../images/Atech_Background.1.jpg) no-repeat center;
+  align-items: flex-end;
+  background-size: cover;
+}
+.panel-heading {
+  color: white;
+  font-weight: bold;
+  font-family: Lato;
+  padding-bottom: 12%;
+  font-size: 50px;
+}
 .center {
   text-align: center;
-  color:#45AFE6;
+  color:#86AE17;
 }
 
 .user-form-step1 {
@@ -119,10 +138,17 @@
 
 .main-headers {
  padding-bottom: 2%;
- color:#45AFE6;
+ color:#86AE17;
 }
-.table-hover tbody tr:hover {
- background-color: rgb(73,175,230, 0.2);
+.table-hover tr:hover {
+ border: 3px solid #86AE17;
+ background-color: none;
+ margin: 0;
+ padding: 0;
+}
+
+.table {
+  margin: 0;
 }
 
 .actions {
@@ -134,8 +160,13 @@
   color: white;
   width: 12%;
   margin-right: 1%;
-  background-color: rgb(73,175,230);
+  background-color: #86AE17;
 }
+
+.btn-delete {
+  background-color: #FB0200;
+}
+
 .form-btn {
   padding: 0;
 }
@@ -145,8 +176,110 @@
 .hidde {
   display: none;
 }
+.add-property {
+  flex-wrap: wrap;
+}
+.form-property {
+  width: 55%;
+}
+.form-property-2 {
+  width: 42%;
+}
+
+.add-btn {
+  color: #86AE17;
+  text-decoration: none;
+  padding-left: 85%;
+}
+
+.add-btn:hover {
+  color: #86AE17;
+  text-decoration: none;
+  padding-left: 85%;
+}
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+  color:#fff;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  background-color: #577400;
+}
+
+.property-item:focus, .property-item:hover {
+  background-color: #86AE17;
+}
 
 
+.land_item:focus, .land_item:hover {
+  background-color: #A7D32B;
+}
+
+/*Custom Checkbox*/
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #fff;
+  border: solid 1px;
+  border-radius: 15%;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #fff;
+  border: solid 1px #86AE17;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid #86AE17;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 
 @media (min-width: 992px){
 	.dropdown-menu .dropdown-toggle:after{

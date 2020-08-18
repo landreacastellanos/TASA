@@ -1,5 +1,5 @@
-<!doctype html>
 <!--ts=4 sw=4-->
+<!--doctype html-->
 <html>
 	<head>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -39,7 +39,7 @@
 							<a class="nav-link" id="home_tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
 						</li>
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Fincas</a>
+							<a class="nav-link" href="#" data-toggle="dropdown">Fincas</a>
 							<ul class="dropdown-menu">
 								<li>
 									<a class="dropdown-item" id="property_tab" data-toggle="tab" href="#property" role="tab" aria-controls="property" aria-selected="true">Registrar Finca</a>
@@ -88,6 +88,8 @@
 					</ul>
 				</div>
 			</nav>
+			<div> 
+			</div>
 		</div>
 		<div id="main-content">
 			<div class="tab-content" id="myTabContent">
@@ -144,76 +146,120 @@
 											<input type="password" class="form-control form-control-lg" name="password" id="password">
 										</div>									
 										<div class="form-group col-md-12">
-											<label for="password">Confirma tu Contraseña</label>
-											<input type="password" class="form-control form-control-lg" name="password" id="password">
+											<label for="confirm_password">Confirma tu Contraseña</label>
+											<input type="confirm_password" class="form-control form-control-lg" name="confirm_password" id="confirm_password">
 										</div>
 									</div>
 								</div>
 							</form>
 						</div>
-						<div class="panel2"></div>
+						<div class="panel2 panel-user">
+							<h1 class="panel-heading"> La sostenibilidad en la producción es nuestro propósito </h1>
+						</div>
 					</div>
 					<button type="button" class="btn custom-btn user-btn border border-white" onclick="list()"> <i class="far fa-folder-open"></i> Ver lista Usuarios </button>
-					<button type="button" class="btn custom-btn save-btn" onclick="up()"> Guardar Usuario <i class="far fa-check-circle"></i> </button>
+					<button type="button" class="btn custom-btn save-btn" onclick="up()"> <label> Guardar Usuario </label> <i class="far fa-check-circle"></i> </button>
 				</div>
 				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home_tab"></div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">.C3..</div>
 				<!--Property Tab -->
 				<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">
-					<div id="panel_add" class="panel1 panel-list">
-						<h3 class="main-headers"><i class="fas fa-mountain"></i> Registrar Finca </h3>
-						<div class="form-row user-form-step1">
-							<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
-							<div class="form-group col-md-6">
-								<label for="property_name">Nombre</label>
-								<input type="text" class="form-control form-control-lg" name="property_name" id="property_name">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="business_name">Razon Social</label>
-								<input type="text" class="form-control form-control-lg" name="business_name" id="bussiness_name">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="phone">Telefono</label>
-								<input type="phone" class="form-control form-control-lg" name="phone" id="phone">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="property_address">Dirección</label>
-								<input type="text" class="form-control form-control-lg" name="property_address" id="property_address">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="web_site">Dirección Web</label>
-								<input type="text" class="form-control form-control-lg" name="web_site" id="web_site">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="total_ha_property">Total Hectareas de  la Finca</label>
-								<input type="number" class="form-control form-control-lg" name="total_ha_property" id="total_ha_property">
-							</div>
-							<div class="form-group col-md-6">
-								<label for="sowing_system">Sistema de Siembra</label>
-								<select id="sowing_system" name="sowing_system" class="form-control form-control-lg">
-									<option> </option>
-									<option value="1">Arroz Secano</option>
-									<option value="2">Arroz de Riego</option>
-								</select>
+					<form enctype="multipart/form-data" action="/save_property" accept-charset="uft-8" method="post" id="savePropertyForm">
+					<div class="tab-form">
+						<div class="panel1">
+							<h3 class="center form-group col-md-12"> <i class="fas fa-seedling"></i> Agregar Finca </h3>
+							<div class="flex-container add-property">
+								<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
+								<div class="form-row form-property">
+									<div class="form-group col-md-6">
+										<label for="property_name">Nombre</label>
+										<input type="text" class="form-control form-control-lg" name="property_name" id="property_name">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="business_name">Razon Social</label>
+										<input type="text" class="form-control form-control-lg" name="business_name" id="bussiness_name">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="phone">Telefono</label>
+										<input type="phone" class="form-control form-control-lg" name="phone" id="phone">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="property_address">Dirección</label>
+										<input type="text" class="form-control form-control-lg" name="property_address" id="property_address">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="web_site">Dirección Web</label>
+										<input type="text" class="form-control form-control-lg" name="web_site" id="web_site">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="total_ha_property">Total Hectareas de  la Finca</label>
+										<input type="number" class="form-control form-control-lg" name="total_ha_property" id="total_ha_property">
+									</div>
+									<div class="form-group col-md-6">
+										<label for="sowing_system">Sistema de Siembra</label>
+										<select id="sowing_system" name="sowing_system" class="form-control form-control-lg">
+											<option> </option>
+											<option value="1">Arroz Secano</option>
+											<option value="2">Arroz de Riego</option>
+										</select>
+									</div>
+								</div>
+								<div class="separator"> </div>
+								<div class="form-row form-property-2" id="lands">
+									<div class="form-group col-md-6" name="name_land">
+										<label for="name">Nombre del Lote</label>
+										<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1">
+									</div>
+									<div class="form-group col-md-6" name="hec_land">
+										<label for="name">Hectareas Lote</label>
+										<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1">
+									</div>
+									<div class="form-group col-md-6" name="name_land">
+										<label for="name">Nombre del Lote</label>
+										<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1">
+									</div>
+									<div class="form-group col-md-6" name="hec_land">
+										<label for="name">Hectareas Lote</label>
+										<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1">
+									</div>
+									<div class="form-group col-md-6" name="name_land">
+										<label for="name">Nombre del Lote</label>
+										<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1">
+									</div>
+									<div class="form-group col-md-6" name="hec_land">
+										<label for="name">Hectareas Lote</label>
+										<input type="number" class="form-control form-control-lg" name="hec_land_1" id="hec_land_1">
+									</div>
+									<input type="hidden" name="lands" id="l_lands">
+									<input type="hidden" name="table_name" value="property">
+									
+								</div>
+								<button type="button" class="btn btn-link form-btn add-btn"  onclick="add()"> <i class="fas fa-plus-circle fa-2x align-icon"></i> Agregar Lotes </button>
 							</div>
 						</div>
-						<div class="dropdown-divider"></div>
-						<h3 class="main-headers"><i class="fas fa-mountain"></i> Registrar Lotes </h3>
-						<div class="form-row user-form-step1" id="land">
+						<div class="panel1 panel3">
+							<h3 class="center form-group col-md-12"> <i class="fas fa-user"></i> Seleccione Usuarios </h3>
+							<div class="flex-container add-property">
+								<label class="form-group col-md-12 l-label" style="padding-top: 4.5%;"> Usuarios de la Finca</label>
+								<div class="form-row" id="list_users">
+								</div>
+							</div>
 						</div>
-						<button type="button" class="btn btn-link form-btn"  onclick="add()"> <i class="fas fa-plus-circle fa-2x align-icon"></i> Agregar Lotes </button>
+						</form>
 					</div>
+					<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver Al Inicio </button>
+					<button type="button" class="btn custom-btn save-btn" onclick="up_property()"> <label> Guardar Finca </label> <i class="far fa-check-circle"></i> </button>
+		</div>
+			<!--Profile Tab -->
+		<div class="tab-pane fade" id="userList" role="tabpanel" aria-labelledby="property-tab">
+				<div id="panel_list" class="panel1 panel-list">
+				<h3 class="main-headers"><i class="far fa-folder-open"></i> Lista de Usuarios </h3>
+					<div id="userlist">
 				</div>
-				<!--Profile Tab -->
-				<div class="tab-pane fade" id="userList" role="tabpanel" aria-labelledby="property-tab">
-					<div id="panel_list" class="panel1 panel-list">
-						<h3 class="main-headers"><i class="far fa-user"></i> Lista de Usuarios </h3>
-						<div id="userlist">
-						</div>
-						<div class="actions">
-							<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
+					<div class="actions">
+						<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
 							<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
-							<button type="button" class="btn custom-btn btn-action"  onclick="list()"> <i class="fas fa-trash"></i> Eliminar </button>
+							<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="list()"> <i class="fas fa-trash"></i> Eliminar </button>
 						</div>
 					</div>
 					<div id="editUser">

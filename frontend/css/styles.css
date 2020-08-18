@@ -1,4 +1,7 @@
 /*vim: expandtab ts=2 sw=2 */
+*{
+  font-family: lato;
+}
 
 body {
   background: url("../images/Atech_Background.1.jpg") no-repeat center center fixed;
@@ -54,10 +57,9 @@ body {
 .registro-description {
   margin: 25px 37px auto;
   height: 10px;
-  width: 215px;
   color: black;
   font-family: Lato;
-  font-size: 10px;
+  font-size: 8.5pt;
   font-weight: bold;
   letter-spacing: 0;
 }
@@ -87,37 +89,44 @@ body {
 }
 
 .lost {
-  margin-left:161px;
+  margin-left:133px;
   height: 8px;
   width: 119px;
-  color: #AAADB0;
-  font-family: Lato;
-  font-size: 10px;
+  font-size: 10pt;
   font-weight: bold;
   letter-spacing: 0;
   line-height: 36px;
 }
 
+.lost > a {
+  color:#000;
+  text-decoration: none;
+}
+
 .submit {
-  margin-left: 85px;
-  height: 36px;
-  width: 154px;
-  background-color: #45AFE6;
+  margin-left: 23%;
+  margin-top: 10px;
+  height: 40px;
+  width: 180px;
+  background-color: #86AE17;
   font-family: Lato;
   font-size: 20px;
   font-weight: bold;
   line-height: 20px;
   border-radius:16px;
   color: #FFFFFF;
-
+}
+.submit:hover{
+  color:#fff;
 }
 .forgot {
   color: #AAADB0;	
   margin-top: 0px;
   font-family: Lato;
-  margin-left:105px;
-  font-size: 7px;
+  margin-left: 81px;
+  font-size: 12px;
   font-weight: bold;
+  padding-bottom: 20px;
 }
 
 .link {
