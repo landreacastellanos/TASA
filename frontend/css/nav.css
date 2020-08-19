@@ -214,6 +214,11 @@
   background-color: #A7D32B;
 }
 
+.logo {
+  margin-top: 3%;
+  margin-left: 4.5%;
+}
+
 /*Custom Checkbox*/
 /* The container */
 .container {
