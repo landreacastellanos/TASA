@@ -3,8 +3,14 @@
   font-family: lato;
 }
 
+.logo {
+  margin-top: 3%;
+  margin-left: 4.5%;
+}
+
+
 body {
-  background: url("../images/Atech_Background.1.jpg") no-repeat center center fixed;
+  background: url("../images/Atech_Background.1.jpg") no-repeat fixed;
   background-size: cover;
   margin:0;
   width:100%

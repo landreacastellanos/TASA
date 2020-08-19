@@ -13,20 +13,22 @@
 </head>
 
 <body>
+	<div class="logo">
+		<img src="/images/logo.png" alt="tasa" width="200" height="100">
+	</div>
 	<div class="login-box">
 		<div class="login-container">
 			<h2 class="titulo-foto"> Un futuro más eficiente </h2>
 		</div>
 		<div class="login-form">
 			<h3 class="registro"> Registro </h3>
-			<h6 class="registro-description"> Ingresa tu Email o usario junto con tu contraseña </h6>
+			<h6 class="registro-description"> Ingresa tu Email o Usuario junto con tu contraseña </h6>
 			<form action="/login" method="POST">
 				<input class="form usuario" name="user" type="text" placeholder="Usuario" />
 				<input class="form password" name="password" type="password" placeholder="Contraseña" />
 				<small class="lost"> <a href="/reset_password">¿Olvidaste tu contraseña?</a></small>
 				<input class="submit btn" type="submit" Value="Ingresar" />
 			</form>
-			<h6 class="forgot"> ¿Ya tienes cuenta? <a class="link" href="#"> Ingresa aquí </a> </h6>
 			<label class="switch">
 				<input type="checkbox">
 				<span class="slider round"></span>
