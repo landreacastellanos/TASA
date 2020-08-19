@@ -46,9 +46,7 @@ def updateUserPasswordByEmail(email, new_password):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
     pw_hash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
-    print(pw_hash)
     sql = "update user set password='"+pw_hash+"' where email='"+email+"'"
-    print(sql)
     cursor.execute(sql)
     db.commit()
     rows = cursor.rowcount
@@ -97,11 +95,9 @@ def saveUser(form, mode):
     form.pop("confirm_password")
     values = returnvalues(form, mode)
     querystr = query.insertUser(values, query.queryInsert())
-    print(querystr)
     cursor, err = query.runQuery(querystr)
     if err != 1:
         print(cursor)
-        print("here")
         return -1
     return "Great, now you are in the system!"
 
@@ -159,7 +155,7 @@ def saveProperty(form, table_name):
     if response == -1:
         print("Error Saving Lands")
         return -1
-    return "Propery Added"
+    return 1
 
 
 def saveLand(last_id, lands):
@@ -175,7 +171,6 @@ def saveLand(last_id, lands):
     for land in result:
         headers, values = getHeadersAndValues(land)
         statement = query.insert("land", ",".join(headers), "','".join(values))
-        print(statement)
         last_id, err = query.runQuery(statement)
         if last_id == -1:
             print("Land Error Happend: ", err)

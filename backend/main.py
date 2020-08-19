@@ -115,7 +115,11 @@ def save_property():
         return "Please Login"
 
     response = funcs.parseForm(request.form, funcs.saveProperty, INSERT)
-    return response
+    print(response)
+    if response != 1:
+        flash('No se Pudo Crear la Finca')
+        return redirect(url_for('index'))
+    return "<script> alert('La finca fue Creada'); location.href=\"/\" </script>"
 
 
 @app.route('/login', methods=['GET', 'POST'])
