@@ -75,6 +75,16 @@ def propertyList():
         return render_template("property.html", property_dict=property_dict[0])
 
 
+@app.route('/land', methods=['GET'])
+def landView():
+    property_id = request.args.get("id")
+    land_name = request.args.get("land_name")
+    html = funcs.searchLandByPropertyId(property_id, land_name)
+    if html == -1:
+        return "<script> alert('Lote no encontrado, refresque la pagina') </script>"
+    return render_template("land_view.html", land=html[0], i18n=i18n.i18n)
+
+
 @app.route("/property_menu", methods=['GET'])
 def printPropertyMenu():
     propertyList = funcs.getPropertiesName()

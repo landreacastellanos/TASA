@@ -8,6 +8,15 @@ def i18n(key):
         "profesion": "Profesión",
         "email": "Correo Electronico",
         "phone": "Telefono",
+        "property_name": "Nombre",
+        "business_name": "Razon Social",
+        "phone": "Telefono",
+        "property_address": "Dirección",
+        "total_ha_property": "Total ha Finca",
+        "sowing_system": "Sistema de Siembra",
+        "land_name": "Nombre Lote",
+        "land_ha": "Hectareas Lote",
+        "property_id": "Finca ID",
     }
     return i18n[key]
 

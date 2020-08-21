@@ -11,6 +11,7 @@ UPDATE = 1
 SEARCH = 2
 
 T = TypeVar('T')
+db = connection.connection()
 
 
 def parseGet(a):
@@ -32,7 +33,6 @@ def parseForm(form, callback, mode):
 
 
 def searchUserByEmail(user, mode):
-    db = connection.connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute("select * from user where email='"+user["user"]+"'", (),)
     rows = cursor.fetchall()
@@ -175,6 +175,24 @@ def saveLand(last_id, lands):
         if last_id == -1:
             print("Land Error Happend: ", err)
             return -1
+
+
+def searchLandByPropertyId(property_id, land_name):
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select property_id, \
+            property_name, business_name, phone, property_address, \
+            total_ha_property, sowing_system, land.land_name, land.land_ha \
+            from land join property on property.id=land.property_id \
+            where id='"+property_id+"' and land_name='"+land_name+"'")
+
+    land = cursor.fetchall()
+    if len(land) < 1:
+        return -1
+    if land[0]["sowing_system"] == "1":
+        land[0]["sowing_system"] = "Arroz Secano"
+    else:
+        land[0]["sowing_system"] = "Arroz de Riego"
+    return land
 
 
 def searchPropertyById(property_id):
