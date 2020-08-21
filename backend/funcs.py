@@ -239,7 +239,7 @@ def getHeadersAndValues(struct):
 
 
 def listOfUsers():
-    q = "select user.id, name, role.role from user join role on user.role_id=role.id order by role.role"
+    q = "select user.id, name, role.role from user join role on user.role_id=role.id where not role.id=1 order by role.role"
     user_dict, err = query.fetchall(q)
     if err == -1:
         print(err)

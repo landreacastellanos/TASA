@@ -29,5 +29,8 @@ def role(key):
             "Dueño de la finca": "df",
             "Socio Adicional": "sa",
             "Vendedor": "v",
+            "Influenciador de Decisiones de Compra": "idc",
+            "Encargado de Compras": "ec",
+            "Encargado de Pagos": "ep",
     }
     return role[key]
