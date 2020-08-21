@@ -58,7 +58,7 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informe de Visita</a>
-									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informe de Fotogria</a>
+									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informe de Fotografía</a>
 								</li>
 							</ul>
 						</li>
@@ -67,7 +67,7 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Historico de Visita</a>
-									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Historico de Fotogria</a>
+									<a class="dropdown-item" id="" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Historico de Fotografía</a>
 								</li>
 							</ul>
 						</li>
@@ -94,6 +94,7 @@
 			
 		</div>		
 		<div id="main-content">
+			<!--ADD-USER-TAB-->
 			<div class="tab-content" id="myTabContent">
 				<div class="tab-pane fade" id="profiles" role="tabpanel" aria-labelledby="profiles-tab">
 					<div class="tab-form">
@@ -162,7 +163,8 @@
 					<button type="button" class="btn custom-btn user-btn border border-white" onclick="list()"> <i class="far fa-folder-open"></i> Ver lista Usuarios </button>
 					<button type="button" class="btn custom-btn save-btn" onclick="up()"> <label> Guardar Usuario </label> <i class="far fa-check-circle"></i> </button>
 				</div>
-				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home_tab"></div>
+				<!--END tab to add user -->
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home_tab"></div>
 				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">.C3..</div>
 				<!--Property Tab -->
 				<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">
@@ -210,27 +212,27 @@
 								<div class="form-row form-property-2" id="lands">
 									<div class="form-group col-md-6" name="name_land">
 										<label for="name">Nombre del Lote</label>
-										<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1">
+										<input type="number" class="form-control form-control-lg" name="name_land_1" name="name_land_1" min="0">
 									</div>
 									<div class="form-group col-md-6" name="hec_land">
 										<label for="name">Hectareas Lote</label>
-										<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1">
+										<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1" min="0">
 									</div>
 									<div class="form-group col-md-6" name="name_land">
 										<label for="name">Nombre del Lote</label>
-										<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1">
+										<input type="number" class="form-control form-control-lg" name="name_land_1" name="name_land_1" min="0">
 									</div>
 									<div class="form-group col-md-6" name="hec_land">
 										<label for="name">Hectareas Lote</label>
-										<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1">
+										<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1" min="0">
 									</div>
 									<div class="form-group col-md-6" name="name_land">
 										<label for="name">Nombre del Lote</label>
-										<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1">
+										<input type="number" class="form-control form-control-lg" name="name_land_1" name="name_land_1" min="0">
 									</div>
 									<div class="form-group col-md-6" name="hec_land">
 										<label for="name">Hectareas Lote</label>
-										<input type="number" class="form-control form-control-lg" name="hec_land_1" id="hec_land_1">
+										<input type="number" class="form-control form-control-lg" name="hec_land_1" id="hec_land_1" min="0">
 									</div>
 									<input type="hidden" name="lands" id="l_lands">
 									<input type="hidden" name="table_name" value="property">
@@ -252,6 +254,11 @@
 					<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver Al Inicio </button>
 					<button type="button" class="btn custom-btn save-btn" onclick="up_property()"> <label> Guardar Finca </label> <i class="far fa-check-circle"></i> </button>
 		</div>
+		<!--Tab to see a land -->
+		<div class="tab-pane fade" id="seeLand" role="tabpanel" aria-labelledby="land_tab">
+			
+		</div>
+		<!--End Tab to see a land -->
 			<!--Profile Tab -->
 		<div class="tab-pane fade" id="userList" role="tabpanel" aria-labelledby="property-tab">
 				<div id="panel_list" class="panel1 panel-list">

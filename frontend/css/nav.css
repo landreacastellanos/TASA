@@ -249,6 +249,46 @@
   background-color: #A7D32B;
 }
 
+
+.stage-number {
+  background-color: #86AE17;
+  border-radius: 50%;
+  font-size: 25px;
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  color: white;
+}
+
+.stage-btn {
+  line-height: 1;
+  margin-top: 0;
+  width: 25.5%;
+  height: 30px;
+  float:right;
+}
+
+.number-back {
+  font-size: 22px;
+  text-align: center;
+}
+
+.item {
+  height: 30px;
+}
+
+.form-property-3 {
+  width: 50%;
+  padding-left:2%;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 .logo {
   margin-top: 3%;
   margin-left: 4.5%;
@@ -310,8 +350,8 @@
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 9px;
-  top: 5px;
+  left: 6px;
+  top: 1.5px;
   width: 5px;
   height: 10px;
   border: solid #86AE17;

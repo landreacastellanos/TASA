@@ -9,6 +9,14 @@ function up_property(){
     savePropertyForm.submit();
 }
 
+function load_land_info(property_id, land_name) {
+    clear();
+    show(seeLand)
+    ajax("GET", "land?id="+property_id+"&land_name="+land_name, "", function(response){
+       seeLand.innerHTML = response; 
+    })
+}
+
 function load_properties(){
     ajax("GET", "property_menu", "", function(response){
         properties.innerHTML = response
@@ -22,6 +30,17 @@ function up_edit() {
    updateUserForm.submit(); 
 }
 
+function clear(){
+    var tab_pane = document.querySelectorAll(".tab-pane");
+    for(var i = 0; i<tab_pane.length; i++) {
+        var classes = tab_pane[i].classList;
+        if(classes.contains("show") || classes.contains("active")) {
+            tab_pane[i].classList.remove("show");
+            tab_pane[i].classList.remove("active");
+        }
+    }
+}
+
 function show_user() {
     var table = document.getElementById("userlist");
     var checkbox_input = table.querySelectorAll('input[type=checkbox]');
@@ -32,6 +51,7 @@ function show_user() {
                 showUser.innerHTML = response;
                 selectElement("role_show_id", parseInt(show_id_role.value));
                 remove(userList);
+                clear();
                 show(user);
             });
         }
@@ -40,6 +60,7 @@ function show_user() {
 }
 
 function list() {
+    clear();
     remove(profiles)
     show(userList);
     ajax("POST", "userList", "", function(response){
@@ -117,6 +138,7 @@ function f_home() {
     addClass(editUser, "hide")
     remove(active_content);   
     remove(active_header);
+    clear();
     show(home);
     show(home_tab);
 }
