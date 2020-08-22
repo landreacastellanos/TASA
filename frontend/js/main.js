@@ -121,6 +121,19 @@ function edit() {
     editUser.classList.remove("hide");
 }
 
+function deleteUser() {
+    var table = document.getElementById("userlist");
+    var checkbox_input = table.querySelectorAll('input[type=checkbox]');
+    for(var i = 0; i < checkbox_input.length; i ++) {
+        var input = checkbox_input[i];
+        if(input.checked == true) {
+            ajax("DELETE", "deleteUser?user="+input.value, "", function(response){
+                userlist.innerHTML = response;
+             });
+        }
+    }
+}
+
 function fill_data(response) {
     addClass(panel_list, "hide");
     editUser.innerHTML = response;

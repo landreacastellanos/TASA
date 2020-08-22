@@ -109,6 +109,17 @@ def userList():
         response = funcs.userList()
     return render_template("table.html", user_list=response)
 
+@app.route('/deleteUser', methods=['DELETE'])
+def deleteUser():
+    if funcs.validateSession(session) == -1:
+        return "Please Login"
+    response = {}
+    if request.method == "DELETE":
+        user = request.args.get("user")
+        result = funcs.deactivateUser(user)
+        response = funcs.userList()
+    return render_template("table.html", user_list=response)
+
 
 @app.route('/user', methods=["GET"])
 def showUser():

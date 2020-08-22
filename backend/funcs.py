@@ -57,6 +57,20 @@ def updateUserPasswordByEmail(email, new_password):
 
     db.close()
 
+def deactivateUser(email):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    sql = "update user set active=0 where email='"+email+"'"
+    cursor.execute(sql)
+    db.commit()
+    rows = cursor.rowcount
+    if rows < 1:
+        return -1
+
+    return email
+
+    db.close()
+
 
 def searchUser(user, mode):
     db = connection.connection()
@@ -125,7 +139,7 @@ def userList(user=""):
         q += "name, last_name, age, email, phone, profesion, role.id "
     else:
         q += "name, last_name, age, email, phone, profesion, role.role "
-    q += "FROM user join role on role.id = user.role_id"
+    q += "FROM user join role on role.id = user.role_id and user.active = 1"
     if user != "":
         q += " where email='"+user+"'"
     rows, err = query.fetchall(q)
