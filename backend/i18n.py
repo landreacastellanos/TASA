@@ -28,7 +28,7 @@ def role(key):
             "Resp. Decisiones de Compra": "rdc",
             "Dueño de la finca": "df",
             "Socio Adicional": "sa",
-            "Vendedor": "v",
+            "Vendedor TASA": "v",
             "Influenciador de Decisiones de Compra": "idc",
             "Encargado de Compras": "ec",
             "Encargado de Pagos": "ep",
