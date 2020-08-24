@@ -33,6 +33,7 @@ def parseForm(form, callback, mode):
 
 
 def searchUserByEmail(user, mode):
+    db = connection.connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute("select * from user where email='"+user["user"]+"'", (),)
     rows = cursor.fetchall()
@@ -47,6 +48,20 @@ def updateUserPasswordByEmail(email, new_password):
     cursor = db.cursor(dictionary=True)
     pw_hash = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt()).decode()
     sql = "update user set password='"+pw_hash+"' where email='"+email+"'"
+    cursor.execute(sql)
+    db.commit()
+    rows = cursor.rowcount
+    if rows < 1:
+        return -1
+
+    return email
+
+    db.close()
+
+def deactivateUser(email):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    sql = "update user set active=0 where email='"+email+"'"
     cursor.execute(sql)
     db.commit()
     rows = cursor.rowcount
@@ -124,7 +139,7 @@ def userList(user=""):
         q += "name, last_name, age, email, phone, profesion, role.id "
     else:
         q += "name, last_name, age, email, phone, profesion, role.role "
-    q += "FROM user join role on role.id = user.role_id"
+    q += "FROM user join role on role.id = user.role_id and user.active = 1"
     if user != "":
         q += " where email='"+user+"'"
     rows, err = query.fetchall(q)
