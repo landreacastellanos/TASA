@@ -105,7 +105,6 @@ def saveUser(form, mode):
 def updateUser(form, mode):
     email = form["email"]
     form.pop("email")
-    form.pop("password-verify")
     if form["password"] == "":
         form.pop("password")
     values = returnvalues(form, mode)
@@ -256,7 +255,7 @@ def listOfUsers():
                 dx += "\n"
                 dx += "</div>"
                 dx += "\n"
-            dx += "<div class=\"form-group col-md-6\">"
+            dx += "<div class=\"form-group col-md-12\">"
             dx += "\n"
             dx += "\t<label for=\""+role+"\">"+role+"</label>"
             dx += "\n"
