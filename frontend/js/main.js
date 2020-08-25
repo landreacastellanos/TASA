@@ -6,6 +6,7 @@ function up(){
 
 function up_property(){
     validate_lands();
+    l_lands.value = JSON.stringify(g_lands);
     savePropertyForm.submit();
 }
 
@@ -82,16 +83,13 @@ function appendchild(element, node) {
 }
 
 function add() {
-    var lands = document.getElementById("lands");
-    var clone_name_land = lands.children.name_land.cloneNode(true);
-    var clone_hec_land = lands.children.hec_land.cloneNode(true);
-    lands.appendChild(clone_name_land);
-    lands.appendChild(clone_hec_land);
+    validate_lands()
 }
 
+var g_lands = []
 function validate_lands() {
     var inputs = lands.querySelectorAll("input");
-    var j_lands = []
+    //var j_lands = []
     var l_name = "";
     var l_hec = "";
     for(var i = 0; i<inputs.length; i++){
@@ -99,13 +97,18 @@ function validate_lands() {
         if(e.name == "name_land_1") {
             l_name = e.value;
             e.disable = true;
+            e.value = "";
         }else if (e.name == "hec_land_1"){
             l_hec = e.value;
             e.disable = true;
-            j_lands.push({land_name:l_name, land_ha: l_hec});
+            if(l_name != "" && l_hec != "") {
+                g_lands.push({land_name:l_name, land_ha: l_hec});
+            }
+            e.value = "";
         }
     }
-    l_lands.value = JSON.stringify(j_lands);
+    //l_lands.value = JSON.stringify(j_lands);
+    //g_lands = JSON.stringify(j_lands);
 }
 
 function edit() {
