@@ -271,7 +271,7 @@
 					<div class="actions">
 						<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
 							<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
-							<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="deleteUser()"> <i class="fas fa-trash"></i> Eliminar </button>
+							<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="confirm_delete()"> <i class="fas fa-trash"></i> Eliminar </button>
 						</div>
 					</div>
 					<div id="editUser">
@@ -294,3 +294,17 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 	</body>
 </html>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">Esta segur@ de eliminar este usuario ?</h4>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="deleteUser()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

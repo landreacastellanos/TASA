@@ -133,9 +133,21 @@ function deleteUser() {
             ajax("DELETE", "deleteUser?user="+input.value, "", function(response){
                 userlist.innerHTML = response;
              });
+             $('#deleteModal').modal('hide');
         }
     }
 }
+
+function confirm_delete() {
+    var table = document.getElementById("userlist");
+    var checkbox_input = table.querySelectorAll('input[type=checkbox]'); 
+    for(var i = 0; i < checkbox_input.length; i ++) {
+        var input = checkbox_input[i];
+        if(input.checked == true) {
+            $('#deleteModal').modal();
+        }
+    }
+ }
 
 function fill_data(response) {
     addClass(panel_list, "hide");
