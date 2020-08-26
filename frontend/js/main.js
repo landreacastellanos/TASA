@@ -69,6 +69,11 @@ function list() {
     
 }
 
+function addUser() {
+    clear();
+    show(profiles);
+}
+
 function create(type, classlist) {
     var element = document.createElement(type);
     for(var i = 0; i < classlist.length; i++){

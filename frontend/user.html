@@ -26,6 +26,7 @@
 						<label for="name">{{i18n(k)}}</label>
 						<input type="text" class="form-control form-control-lg" name="{{k}}" id="{{k}}" value="{{v}}">
 					</div>
+					<input type="hidden" name="old_{{k}}" id="old_{{k}}" value="{{v}}">
 					{% endif %}
 					{% endfor %}
 					<div class="form-group col-md-12">

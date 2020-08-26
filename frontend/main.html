@@ -70,8 +70,13 @@
 								</li>
 							</ul>
 						</li>
-						<li class="nav-item" role="presentation">
-							<a class="nav-link" id="profiles-tab" data-toggle="tab" href="#profiles" role="tab" aria-controls="profiles" aria-selected="true">Perfiles</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link" href="#" data-toggle="dropdown">Perfiles</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a class="dropdown-item" id="" data-toggle="tab" href="#userList" role="tab" aria-controls="userList" onclick="list();" aria-selected="true">Lista de usuarios con perfiles</a>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</div>
@@ -268,6 +273,7 @@
 					<div id="userlist">
 				</div>
 					<div class="actions">
+						<button type="button" class="btn custom-btn btn-action"  onclick="addUser()"> <i class="fas fa-user-plus"></i> Agregar Usuario </button>
 						<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
 							<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
 							<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="confirm_delete()"> <i class="fas fa-trash"></i> Eliminar </button>
