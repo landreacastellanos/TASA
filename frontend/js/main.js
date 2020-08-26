@@ -62,8 +62,7 @@ function show_user() {
 
 function list() {
     clear();
-    remove(profiles)
-    show(userList);
+    show(document.getElementById("userList"));
     ajax("POST", "userList", "", function(response){
        userlist.innerHTML = response;
     })

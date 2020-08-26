@@ -26,7 +26,6 @@
 			{% endif %}
 		{% endwith %}
 	</div>
-
 		<div class="logo">
 			<img src="/images/logo.png" alt="tasa" width="250" height="100">
 		</div>
@@ -308,3 +307,12 @@
     </div>
   </div>
 </div>
+	{% if action == 1 %}
+		<script> 
+			alert('Usuario Actualizado');
+			clear();
+			list();
+			window.history.pushState({}, "", "/");
+		</script>
+	{% endif%}
+
