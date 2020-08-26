@@ -275,7 +275,7 @@ def listOfUsers():
             dx += "\t<label for=\""+role+"\">"+role+"</label>"
             dx += "\n"
             dx += "\t<select id=\""+role+"\" name=\"property_"+i18n.role(role)+"\" class=\"form-control form-control-lg\">"
-            dx += "\t\t<option value=\"\">"+"</option>\n"
+            dx += "\t\t<option disabled selected>"+"</option>\n"
             dx += "\n"
             count = 1
             last_role = role
