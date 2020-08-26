@@ -63,8 +63,9 @@ def updateUser():
     # Parse Form
     result = funcs.parseForm(request.form, funcs.updateUser, UPDATE)
     if result == -1:
-        return "Some Error Happend, Please Contact the Admin"
-    return "<script> alert('"+result+"'); location.href=\'/\'; </script>"
+        return "<script> alert('Some Error Happend, Please Contact the Admin') </script>"
+    # "<script> alert('"+result+"'); location.href=\'/\'; </script>"
+    return render_template("main.html", user=session["user"], action=UPDATE)
 
 
 @app.route('/property', methods=['GET', 'POST'])
