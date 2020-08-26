@@ -10,6 +10,7 @@ SEARCH = 2
 def insertUser(values, action):
     s = "','"
     values.append(funcs.now())
+    values.append("1")
     dx = s.join(values)
     # query = "INSERT INTO user (
     # name, last_name, age, profesion, email, password, role_id, created_date
@@ -31,7 +32,7 @@ def update(values, action, email):
 # the for all those crud function
 def queryInsert():
     return ''' INSERT INTO user
-(name, last_name, age, profesion, phone,email,role_id, password, created_date)
+(name, last_name, age, profesion, phone,email,role_id, password, created_date, active)
  values(\' '''
 
 

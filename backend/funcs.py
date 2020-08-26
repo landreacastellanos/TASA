@@ -114,7 +114,7 @@ def saveUser(form, mode):
     if err != 1:
         print(cursor)
         return -1
-    return "Great, now you are in the system!"
+    return "Usuario Agregago al Sistema!"
 
 
 def updateUser(form, mode):
