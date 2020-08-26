@@ -119,7 +119,10 @@ def saveUser(form, mode):
 
 def updateUser(form, mode):
     email = form["email"]
-    form.pop("email")
+    old_email = form["old_email"]
+    if email != old_email:
+        email = old_email
+    form.pop("old_email")
     if form["password"] == "":
         form.pop("password")
     values = returnvalues(form, mode)
