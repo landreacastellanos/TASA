@@ -141,7 +141,7 @@ def userList(user=""):
         q += "name, last_name, age, email, phone, profesion, role.role "
     q += "FROM user join role on role.id = user.role_id and user.active = 1"
     if user != "":
-        q += " where email='"+user+"' order by name desc"
+        q += " where email='"+user+"' order by name"
     rows, err = query.fetchall(q)
     if err == -1:
         print(err)
