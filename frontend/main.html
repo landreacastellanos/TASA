@@ -268,29 +268,33 @@
 		<!--End Tab to see a land -->
 			<!--Profile Tab -->
 		<div class="tab-pane fade" id="userList" role="tabpanel" aria-labelledby="property-tab">
-				<div id="panel_list" class="panel1 panel-list">
+			<div id="panel_list" class="panel1 panel-list">
 				<h3 class="main-headers"><i class="far fa-folder-open"></i> Lista de Usuarios </h3>
-					<div id="userlist">
-				</div>
-					<div class="actions">
-						<button type="button" class="btn custom-btn btn-action"  onclick="addUser()"> <i class="fas fa-user-plus"></i> Agregar Usuario </button>
-						<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
-							<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
-							<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="confirm_delete()"> <i class="fas fa-trash"></i> Eliminar </button>
-						</div>
-					</div>
-					<div id="editUser">
-					</div>
-					<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
-					<button type="button" id="btn_approve" class="btn custom-btn save-btn hide" onclick="up_edit()"> Guardar Cambios <i class="far fa-check-circle"></i> </button>
-				</div>
-				<!--Profile Tab -->
-				<div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
-					<div id="showUser" class="panel1 panel-list">
-					</div>
-					<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+				<div id="userlist"></div>
+				<button type="button" class="btn custom-btn"  onclick="page(0)"> <i class="fas fa-arrow-left"></i></button>
+				<button type="button" class="btn custom-btn"  onclick="page(1)"> <i class="fas fa-arrow-right"></i></button>
+				<div class="actions">
+					<button type="button" class="btn custom-btn btn-action"  onclick="addUser()"> <i class="fas fa-user-plus"></i> Agregar Usuario </button>
+					<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
+					<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
+					<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="confirm_delete()"> <i class="fas fa-trash"></i> Eliminar </button>
 				</div>
 			</div>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+		</div>
+		<!--Show User-->
+		<div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
+			<div id="showUser" class="panel1 panel-list">
+			</div>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+		</div>
+		
+		<!--Edit User-->
+		<div class="tab-pane fade" id="edituser" role="tabpanel" aria-labelledby="user-tab">
+			<div id="editUser">
+			</div>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+			<button type="button" id="btn_approve" class="btn custom-btn save-btn hide" onclick="up_edit()"> Guardar Cambios <i class="far fa-check-circle"></i> </button>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script>window.jQuery || document.write('<script src="/css/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
@@ -303,12 +307,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="text-align:center;">
-        <h4 class="modal-title" id="deleteModalLabel">Esta segur@ de eliminar este usuario ?</h4>
+        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">Esta segur@ de eliminar este usuario ?</h4>
       </div>
      
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" onclick="deleteUser()">Eliminar</button>
+        <button type="button" class="btn btn-primary" onclick="deleteUser()">Eliminar</button>
       </div>
     </div>
   </div>

@@ -40,6 +40,7 @@ function clear(){
             tab_pane[i].classList.remove("active");
         }
     }
+    window.location.hash= "";
 }
 
 function show_user() {
@@ -51,7 +52,7 @@ function show_user() {
             ajax("GET", "user?user="+input.value, "", function(response){
                 showUser.innerHTML = response;
                 selectElement("role_show_id", parseInt(show_id_role.value));
-                remove(userList);
+                //remove(userList);
                 clear();
                 show(user);
             });
@@ -63,10 +64,33 @@ function show_user() {
 function list() {
     clear();
     show(document.getElementById("userList"));
-    ajax("POST", "userList", "", function(response){
-       userlist.innerHTML = response;
-    })
-    
+    page(1);
+}
+
+function page(add) {
+    var offset = window.location.hash;
+    var page = ""
+    if(offset == ""){
+        page = "0";
+        window.location.hash = page;
+    }else {
+        offset = offset.split("#");
+        if(add == "0"){
+            page = parseInt(offset[1])-7
+            if(page<0){
+                window.location.hash = "0"
+                page = 0;
+            }
+            window.location.hash = page 
+        }else {
+            page = parseInt(offset[1])+7
+            window.location.hash = page 
+            //window.location.hash = new_offset;
+        }
+    }    
+    ajax("GET", "userList?offset="+page,"", function(response){
+        userlist.innerHTML = response;
+    });
 }
 
 function addUser() {
@@ -121,11 +145,10 @@ function edit() {
     for(var i = 0; i < checkbox_input.length; i ++) {
         var input = checkbox_input[i];
         if(input.checked == true) {
-            ajax("GET", "userList?user="+input.value, "", fill_data);
+            ajax("GET", "editUser?user="+input.value, "", fill_data);
         }
         //console.log(checkbox_input[i]); 
     }
-    editUser.classList.remove("hide");
 }
 
 function deleteUser() {
@@ -158,7 +181,8 @@ function fill_data(response) {
     editUser.innerHTML = response;
     btn_approve.classList.remove("hide");
     selectElement("role_edit_id", parseInt(edit_id_role.value));
-
+    clear();
+    show(edituser);
 }
 
 function f_home() {
@@ -168,12 +192,13 @@ function f_home() {
     panel_list.classList.remove("hide");
     var active_header = document.querySelectorAll(".navbar-nav>li.nav-item>.active")[0];
     addClass(editUser, "hide")
-    remove(active_content);   
-    remove(active_header);
+    //remove(active_content);   
+    //remove(active_header);
     clear();
     show(home);
     show(home_tab);
 }
+
 
 // Only apply this functions for tab-panel or if there a class name fade
 function show(element){
