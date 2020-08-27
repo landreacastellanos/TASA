@@ -17,6 +17,7 @@ def i18n(key):
         "land_name": "Nombre Lote",
         "land_ha": "Hectareas Lote",
         "property_id": "Finca ID",
+        "role": "Rol",
     }
     return i18n[key]
 

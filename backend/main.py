@@ -103,12 +103,20 @@ def userList():
         return "Please Login"
     response = {}
     if request.method == "GET":
-        user = request.args.get("user")
-        response = funcs.userList(user)
-        return render_template("user.html", user=response[0], i18n=i18n.i18n)
+        offset = request.args.get("offset")
+        response = funcs.userList(offset)
+        return render_template("table.html", user_list=response)
     if request.method == "POST":
         response = funcs.userList()
     return render_template("table.html", user_list=response)
+
+
+@app.route('/editUser', methods=['GET', 'POST'])
+def editUser():
+    user = request.args.get("user")
+    response = funcs.userList(user=user)
+    return render_template("user.html", user=response[0], i18n=i18n.i18n)
+
 
 @app.route('/deleteUser', methods=['DELETE'])
 def deleteUser():
@@ -126,7 +134,7 @@ def deleteUser():
 def showUser():
     if request.method == "GET":
         user = request.args.get("user")
-        response = funcs.userList(user)
+        response = funcs.userList(user=user)
         return render_template("show_user.html", user=response[0], i18n=i18n.i18n)
 
 

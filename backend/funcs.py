@@ -135,7 +135,7 @@ def updateUser(form, mode):
     return "User Updated"
 
 
-def userList(user=""):
+def userList(offset=0, user=""):
     # q = QueryString
     q = "SELECT "
     if user != "":
@@ -144,7 +144,10 @@ def userList(user=""):
         q += "name, last_name, age, email, phone, profesion, role.role "
     q += "FROM user join role on role.id = user.role_id and user.active = 1"
     if user != "":
-        q += " where email='"+user+"' order by name"
+        q += " where email='"+user+"' "
+
+    q += " order by trim(name)"
+    q += " limit 7 offset " + str(offset)
     rows, err = query.fetchall(q)
     if err == -1:
         print(err)
