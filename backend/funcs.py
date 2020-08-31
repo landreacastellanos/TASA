@@ -204,7 +204,11 @@ def searchLandByPropertyId(property_id, land_name):
             total_ha_property, sowing_system, land.land_name, land.land_ha \
             from land join property on property.id=land.property_id \
             where property.id='"+property_id+"' and land_name='"+land_name+"'")
-
+    print("select property_id, \
+            property_name, business_name, phone, property_address, \
+            total_ha_property, sowing_system, land.land_name, land.land_ha \
+            from land join property on property.id=land.property_id \
+            where property.id='"+property_id+"' and land_name='"+land_name+"'")
     land = cursor.fetchall()
     if len(land) < 1:
         return -1
