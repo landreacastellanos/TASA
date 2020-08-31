@@ -160,6 +160,8 @@ def login():
         dict_form = funcs.parseForm(request.form, funcs.searchUser, SEARCH)
         if dict_form != -1:
             session['user'] = dict_form["email"]
+            session['role'] = dict_form["role_id"]
+            session['user_id'] = dict_form["id"]
             return redirect(url_for('index'))
 
         flash('Usuario no se encuentra en el sistema')
@@ -225,4 +227,6 @@ def printSelect():
 def logout():
     # remove the username from the session if it's there
     session.pop('user', None)
+    session.pop('role', None)
+    session.pop('user_id', None)
     return redirect(url_for('login'))

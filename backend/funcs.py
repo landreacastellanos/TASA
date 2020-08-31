@@ -76,7 +76,7 @@ def deactivateUser(email):
 def searchUser(user, mode):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select * from user where email='"+user["user"]+"'", (),)
+    cursor.execute("select * from user where email='"+user["user"]+"' and active=1", (),)
     rows = cursor.fetchall()
     if len(rows) < 1:
         return -1
