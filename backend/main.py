@@ -73,7 +73,7 @@ def propertyList():
     if request.method == "GET":
         property_id = request.args.get("id")
         property_dict = funcs.searchPropertyById(property_id)
-        return render_template("property.html", property_dict=property_dict[0])
+        return render_template("property.html", property_dict=property_dict[0], i18n=i18n.i18n)
 
 
 @app.route('/land', methods=['GET'])
