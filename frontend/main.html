@@ -187,7 +187,7 @@
 								<div class="form-row form-property">
 									<div class="form-group col-md-6">
 										<label for="property_name">Nombre</label>
-										<input type="text" class="form-control form-control-lg" name="property_name" id="property_name">
+										<input type="text" class="form-control form-control-lg" name="name" id="name">
 									</div>
 									<div class="form-group col-md-6">
 										<label for="business_name">Razon Social</label>
@@ -199,7 +199,7 @@
 									</div>
 									<div class="form-group col-md-6">
 										<label for="property_address">Dirección</label>
-										<input type="text" class="form-control form-control-lg" name="property_address" id="property_address">
+										<input type="text" class="form-control form-control-lg" name="address" id="address">
 									</div>
 									<div class="form-group col-md-6">
 										<label for="web_site">Dirección Web</label>
@@ -265,8 +265,16 @@
 					<button type="button" class="btn custom-btn save-btn" onclick="up_property()"> <label> Guardar Finca </label> <i class="far fa-check-circle"></i> </button>
 		</div>
 		<!--Tab to see a land -->
-		<div class="tab-pane fade" id="seeLand" role="tabpanel" aria-labelledby="land_tab">
-			
+		<div class="tab-pane fade" id="viewLand" role="tabpanel" aria-labelledby="land_tab">
+			<div id="seeLand">
+			</div>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver Al Inicio </button>
+		</div>
+		<!--Tab to see a Property -->
+		<div class="tab-pane fade" id="viewProperty" role="tabpanel" aria-labelledby="property_tab">
+			<div id="seeProperty">
+			</div>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver Al Inicio </button>
 		</div>
 		<!--End Tab to see a land -->
 			<!--Profile Tab -->
@@ -289,14 +297,14 @@
 		<div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
 			<div id="showUser" class="panel1 panel-list">
 			</div>
-			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="list()"> <i class="far fa-folder-open"></i> Ver lista Usuarios </button>
 		</div>
 		
 		<!--Edit User-->
 		<div class="tab-pane fade" id="edituser" role="tabpanel" aria-labelledby="user-tab">
 			<div id="editUser">
 			</div>
-			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="list()"> <i class="far fa-folder-open"></i> Ver lista Usuarios </button>
 			<button type="button" id="btn_approve" class="btn custom-btn save-btn hide" onclick="up_edit()"> Guardar Cambios <i class="far fa-check-circle"></i> </button>
 		</div>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
