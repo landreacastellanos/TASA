@@ -70,7 +70,7 @@
   /*background-image: linear-gradient(to top, rgba(87,116,0,0.2), rgba(87,116,0,2)); old*/
   background-image: linear-gradient(to top, rgba(87,116,0,0.5), rgba(87,116,0,1));
   /*background-color: rgb(40,72,97, 0.5);*/
-  margin: 5% 15% 5%;
+  margin: 5% 10% 5%;
 }
 
 .tab-content {
@@ -254,10 +254,8 @@
 .stage-number {
   background-color: #86AE17;
   border-radius: 50%;
-  font-size: 25px;
-  vertical-align: middle;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   position: absolute;
   color: white;
 }
@@ -266,22 +264,24 @@
   line-height: 1;
   margin-top: 0;
   width: 25.5%;
-  height: 30px;
+  height: 35px;
   float:right;
 }
 
 .number-back {
   font-size: 22px;
   text-align: center;
+  line-height: 2;
 }
 
 .item {
   height: 30px;
+  padding-bottom: 5%;
 }
 
 .form-property-3 {
   width: 50%;
-  padding-left:2%;
+  padding-left:1%;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
