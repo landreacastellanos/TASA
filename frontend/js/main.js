@@ -12,11 +12,21 @@ function up_property(){
 
 function load_land_info(property_id, land_name) {
     clear();
-    show(seeLand)
+    show(viewLand);
     ajax("GET", "land?id="+property_id+"&land_name="+land_name, "", function(response){
        seeLand.innerHTML = response; 
     })
 }
+
+function load_property_info(property_id) {
+    clear();
+    show(viewProperty);
+    ajax("GET", "property?id="+property_id, "", function(response){
+        seeProperty.innerHTML = response;
+        sowing_system.value = show_sowing_system.value;
+    })
+}
+
 
 function load_properties(){
     ajax("GET", "property_menu", "", function(response){
@@ -177,7 +187,6 @@ function confirm_delete() {
  }
 
 function fill_data(response) {
-    addClass(panel_list, "hide");
     editUser.innerHTML = response;
     btn_approve.classList.remove("hide");
     selectElement("role_edit_id", parseInt(edit_id_role.value));
