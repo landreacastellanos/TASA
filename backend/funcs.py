@@ -58,6 +58,7 @@ def updateUserPasswordByEmail(email, new_password):
 
     db.close()
 
+
 def deactivateUser(email):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
@@ -200,7 +201,8 @@ def saveLand(last_id, lands):
 def searchLandByPropertyId(property_id, land_name):
     cursor = db.cursor(dictionary=True)
     cursor.execute("select property_id, \
-            property_name, business_name, phone, property_address, \
+            name, business_name, phone, \
+            address, \
             total_ha_property, sowing_system, land.land_name, land.land_ha \
             from land join property on property.id=land.property_id \
             where property.id='"+property_id+"' and land_name='"+land_name+"'")
@@ -221,13 +223,26 @@ def searchPropertyById(property_id):
     property_dict = cursor.fetchall()
     if len(property_dict) < 1:
         return -1
+    property_lands = getLandByPropertyID(property_id)
+    property_dict[0]["lands"] = property_lands
+    property_dict[0]["sowing_system"] = i18n.sowing_system(property_dict[0]["sowing_system"])
     return property_dict
+
+
+def getLandByPropertyID(property_id):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("select land_name, land_ha from land where property_id="+property_id)
+    lands = cursor.fetchall()
+    if len(lands) < 1:
+        return -1
+    return lands
 
 
 def getPropertiesName():
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select id, property_name from property order by id")
+    cursor.execute("select id, name from property order by id")
     property_dict = cursor.fetchall()
     if len(property_dict) < 1:
         return -1
