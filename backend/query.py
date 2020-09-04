@@ -85,3 +85,32 @@ def select(table_name, headers):
 
 def selectwhere(table_name, headers, where):
     return format("select %s from %s where %s" % (headers, table_name, where))
+
+
+def queryProperty(property_id):
+    return format("select \
+        property.id, property.name, property.business_name, \
+        property.phone, property.address, property.web_site, \
+        property.total_ha_property, property.sowing_system, \
+        ca.name as property_ca, df.name as property_df, \
+        ec.name as property_ec, ep.name as property_ep, \
+        idc.name as property_idc, rdc.name as property_rdc, \
+        sa.name as property_sa, v.name as property_v \
+        from property  \
+            join user as ca \
+                on ca.id=property_ca  \
+            join user as df  \
+                on df.id=property_df  \
+            join user as ec \
+                on ec.id=property_ec  \
+            join user as ep \
+                on ep.id=property_ep  \
+            join user as idc \
+                on idc.id=property_idc \
+            join user as rdc \
+                on rdc.id=property_rdc \
+            join user as sa \
+                on sa.id=property_sa \
+            join user as v \
+                on v.id=property_v \
+            where property.id=%s" % property_id)
