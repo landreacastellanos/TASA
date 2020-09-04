@@ -1,28 +1,61 @@
-<div class="tab-pane fade" id="property" role="tabpanel" aria-labelledby="property-tab">
-	<div id="panel_add" class="panel1 panel-list">
-		<h3 class="main-headers"><i class="fas fa-mountain"></i> Editar Finca </h3>
-		<div class="form-row user-form-step1">
+<div class="tab-form">
+	<div class="panel1">
+		<h3 class="center form-group col-md-12"> <img src="/images/wheat_icon.svg" width="50" height="50"> Datos Finca </h3>
+		<div class="flex-container add-property">
 			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
-			{% for k, v in property_dict.items() %}
-			<div class="form-group col-md-6">
-				<label for="property_{{k}}">{{k}}</label>
-				<input type="text" class="form-control form-control-lg" name="property_{{k}}" id="property_{{k}}" value="{{v}}">
+			<div class="form-row form-property">
+	                       {% for k, v in property_dict.items() %}
+				{% if "property_" in k or k == "lands" %}
+				{% else %}
+				<div class="form-group col-md-6">
+					<label for="property_{{k}}">{{i18n(k)}}</label>
+					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+				</div>
+				{% endif %}
+				{% endfor %}
+				<!-- <div class="form-group col-md-6">
+					<label for="sowing_system">Sistema de Siembra</label>
+					<select id="sowing_system" name="sowing_system" class="form-control form-control-lg" disabled >
+						<option> </option>
+						<option value="1">Arroz Secano</option>
+						<option value="2">Arroz de Riego</option>
+					</select>
+				</div> -->
 			</div>
-			{% endfor %}
-			<div class="form-group col-md-6">
-				<label for="sowing_system">Sistema de Siembra</label>
-				<select id="sowing_system" name="sowing_system" class="form-control form-control-lg" value="2">
-					<option> </option>
-					<option value="1">Arroz Secano</option>
-					<option value="2">Arroz de Riego</option>
-				</select>
-			</div>
-		</div>
-		<div class="dropdown-divider"></div>
-		<h3 class="main-headers"><i class="fas fa-mountain"></i> Editar Lotes </h3>
-		<div class="form-row user-form-step1" id="land">
-		</div>
-		<button type="button" class="btn btn-link form-btn"  onclick="add()"> <i class="fas fa-plus-circle fa-2x align-icon"></i> Agregar Lotes </button>
-	</div>
-</div>
+			<div class="separator"> </div>
+			<div class="form-row form-property-2" id="lands">
+	                       {% for k in property_dict["lands"] %}
+				<div class="form-group col-md-6" name="name_land">
+					<label for="name">Nombre del Lote</label>
+					<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1" min="0" value="{{k['land_name']}}" disabled>
+				</div>
+				<div class="form-group col-md-6" name="hec_land">
+					<label for="name">Hectareas Lote</label>
+					<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1" min="0" value="{{k['land_ha']}}" disabled>
+				</div>
+				{%endfor%}
+				<input type="hidden" name="lands" id="l_lands">
+				<input type="hidden" name="table_name" value="property">
 
+			</div>
+		</div>
+	</div>
+	<div class="panel1 panel3">
+		<h3 class="center form-group col-md-12"> <i class="fas fa-user"></i> Usuarios </h3>
+		<div class="flex-container add-property">
+			<label class="form-group col-md-12 l-label" style="padding-top: 4.5%;"> Usuarios de la Finca</label>
+			<div class="form-row" id="list_users">
+	                       {% for k, v in property_dict.items() %}
+				{% if "property_" in k %}
+				<div class="form-group col-md-12">
+					<label for="property_{{k}}">{{i18n(k)}}</label>
+					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+				</div>
+				{%else%}
+				{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
