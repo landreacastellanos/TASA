@@ -219,6 +219,7 @@ def searchLandByPropertyId(property_id, land_name):
 def searchPropertyById(property_id):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
+    print(query.queryProperty(property_id))
     cursor.execute(query.queryProperty(property_id))
     property_dict = cursor.fetchall()
     if len(property_dict) < 1:
