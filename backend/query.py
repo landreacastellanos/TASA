@@ -32,7 +32,8 @@ def update(values, action, email):
 # the for all those crud function
 def queryInsert():
     return ''' INSERT INTO user
-(name, last_name, age, profesion, phone,email,role_id, password, created_date, active)
+    (name, last_name, age, profesion, \
+            phone,email,role_id, password, created_date, active)
  values(\' '''
 
 
@@ -114,3 +115,11 @@ def queryProperty(property_id):
             join user as v \
                 on v.id=property_v \
             where property.id=%s" % property_id)
+
+
+def searchStageProducts(stage_id, type_planting):
+    return format("select \
+            id, commercial_name, ing_active, provider, dose_by_ha \
+            from product \
+            where stage_id='%s' \
+            and type_planting_id='%s'" % (stage_id, type_planting))

@@ -229,6 +229,13 @@ def searchPropertyById(property_id):
     return property_dict
 
 
+def getStageByProperty(stage_id, type_planting, property_id, land_name):
+    propertyLand = searchLandByPropertyId(property_id, land_name)
+    q = query.searchStageProducts(stage_id, type_planting)
+    stageProducts = query.fetchall(q)
+    return(stageProducts, propertyLand)
+
+
 def getLandByPropertyID(property_id):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)

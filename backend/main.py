@@ -152,6 +152,24 @@ def save_property():
     return "<script> alert('La finca fue Creada'); location.href=\"/\" </script>"
 
 
+@app.route('/see_stage', methods=['GET', 'POST'])
+def seeStage():
+    stage_id = request.args.get("stage_id")
+    type_planting = request.args.get("type_planting")
+    property_id = request.args.get("property_id")
+    land_name = request.args.get("land_name")
+    # print(stage_id, sowing_system(type_planting), property_id, land_name)
+    type_planting = i18n.sowing_system(type_planting)
+    stageProducts, propertyLand = funcs.getStageByProperty(stage_id,
+                                                           type_planting,
+                                                           property_id,
+                                                           land_name)
+    response = render_template("property_stage.html",
+                               stage=stageProducts[0],
+                               property_land=propertyLand[0])
+    return response
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "GET":

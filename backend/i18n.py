@@ -54,5 +54,9 @@ def role(key):
 def sowing_system(sowing_system):
     if sowing_system == "1":
         return "Arroz Secano"
-    else:
+    elif sowing_system == "2":
         return "Arroz de Riego"
+    elif sowing_system == "Arroz Secano":
+        return "1"
+    elif sowing_system == "Arroz de Riego":
+        return "2"
