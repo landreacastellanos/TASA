@@ -6,7 +6,7 @@
 			<div class="form-row">
 				{% for k, v in land.items() %}
 				{% if k == "property_id" %}
-				<input type="hidden" name="property_{{k}}" id="property_{{k}}" value="{{v}}" disabled>
+				<input type="hidden" name="land_{{k}}" id="land_{{k}}" value="{{v}}" disabled>
 				{% else %}
 				<div class="form-group col-md-6">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
@@ -26,7 +26,7 @@
 					<label style="width: 100%"> <div class="stage-number"> <div class="number-back"> 1 </div> </div> <label style="    padding-left: 45px; line-height: 2.5;"> Fecha Siembra </label> <button class="btn custom-btn save-btn stage-btn"> Ver Más </button> </label>
 				</div>
 				<div class="form-group col-md-12 item">
-					<label style="width: 100%"> <div class="stage-number">  <div class="number-back"> 2 </div> </div> <label style="    padding-left: 45px; line-height: 2.5;"> Quema para Siembra </label> <button class="btn custom-btn save-btn stage-btn"> Ver Más </button> </label>
+					<label style="width: 100%"> <div class="stage-number">  <div class="number-back"> 2 </div> </div> <label style="    padding-left: 45px; line-height: 2.5;"> Quema para Siembra </label> <button class="btn custom-btn save-btn stage-btn" onclick="see_stage(1)"> Ver Más </button> </label>
 				</div>
 				<div class="form-group col-md-12 item">
 					<label style="width: 100%"> <div class="stage-number">  <div class="number-back"> 3 </div> </div> <label style="    padding-left: 45px; line-height: 2.5;"> Tratamiento de semillas </label> <button class="btn custom-btn save-btn stage-btn"> Ver Más </button> </label>

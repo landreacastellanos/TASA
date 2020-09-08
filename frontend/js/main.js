@@ -194,6 +194,25 @@ function fill_data(response) {
     show(edituser);
 }
 
+function add_item(item_id) {
+    if(document.getElementById("selected_item_"+item_id)) {
+        document.getElementById("selected_item_"+item_id).remove();
+        return
+    }
+    var item = "product_id_"+item_id;
+    var clonedNode = document.getElementById(item).cloneNode(true);
+    clonedNode.id="selected_item_"+item_id;
+    // Add input for the total kg/lt
+    var item_input = custom_total.cloneNode(true);
+    item_input.id = "total_kg_"+item_id;
+    item_input.firstElementChild.name = "total_kg_"+item_id;
+    clonedNode.appendChild(item_input);
+    segment_recipe.appendChild(clonedNode);
+    // Remove Checkbox for the second table
+    var c = document.getElementById("selected_item_"+item_id)
+    c.firstElementChild.remove();
+}
+
 function f_home() {
     var active_content = document.querySelectorAll("div.tab-content>.show")[0];
     // document.querySelectorAll("div.tab-content>.tab-pane>.hide")
@@ -228,6 +247,24 @@ function selectElement(id, valueToSelect) {
     let element = document.getElementById(id);
     element.value = valueToSelect;
 }
+
+
+// use load_land_info to go back the segments
+// after see a stage, 
+// and use the property_id and land_name 
+// to retrieve the info to print again in the stage view
+function see_stage(stage_id) {
+    var query = "stage_id="+stage_id
+    query += "&type_planting="+property_sowing_system.value
+    query += "&property_id="+land_property_id.value
+    query += "&land_name="+property_land_name.value
+    
+    ajax("GET", "see_stage?"+query, "", function(response){
+        clear();
+        show(viewStage);
+        seeStage.innerHTML = response;
+    })
+} 
 
 function ajax(method,url,json,callback){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance

@@ -112,6 +112,10 @@
   margin-right:20px;
 }
 
+.segment-panel {
+  width: 85%;
+}
+
 .panel-list {
   width: 100%;
 }
@@ -119,6 +123,20 @@
 .panel3 {
  width: 35%;
  background-color: #fff;
+}
+
+.borderless td, .borderless th, .borderless tr>th {
+ border:none
+}
+
+.segment-side-panel {
+ width: 20%;
+}
+
+.form-segment-table {
+ width: 48%;
+ margin-right: 2%;
+ margin-top: 5%;
 }
 
 .panel2 {
@@ -215,6 +233,10 @@
 .add-property {
   flex-wrap: wrap;
 }
+.form-segment {
+  width: 100%;
+}
+
 .form-property {
   width: 55%;
 }
@@ -282,6 +304,18 @@
 .form-property-3 {
   width: 50%;
   padding-left:1%;
+}
+
+.table-segment {
+  border: 3px solid;
+  border-color: #96B940;
+  border-radius: 6px 6px 6px 6px;
+  -moz-border-radius: 6px 6px 6px 6px;
+  -webkit-border-radius: 6px 6px 6px 6px;
+}
+
+.segment_input {
+  width: 100px;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -360,6 +394,10 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+.container-segment {
+ padding-left: 0px;
 }
 
 @media (min-width: 992px){
