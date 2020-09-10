@@ -278,9 +278,16 @@
 		</div>
 		<!--Tab to see a Stages -->
 		<div class="tab-pane fade" id="viewStage" role="tabpanel" aria-labelledby="stage_tab">
+			<form enctype="multipart/form-data" action="/add_stage" accept-charset="uft-8" method="post" id="segmentStageForm">
 			<div id="seeStage">
 			</div>
 			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_stages()"> Ir a Segmentos </button>
+			<div class="segment-actions">	
+				<label class="btn custom-btn save-btn segment-btn" style="width: 30%;">  <input type="file" style="display: none;" name="files" multiple/> +3 Fotografías <i class="fas fa-camera"></i> </label>
+				<button type="button" class="btn custom-btn save-btn segment-btn" onclick="upStage()"style="width: 26%; margin-right: 15.5%"> <label> Guardar </label> <i class="far fa-check-circle"></i> </button>
+				<button type="button" class="btn custom-btn save-btn segment-btn" style="width: 20%; margin-left: 10%;"> <label> Chat </label> <i class="far fa-comment-dots"></i> </button>
+			</div>
+			</form>
 		</div>
 		<!--End Tab to see a land -->
 			<!--Profile Tab -->
@@ -341,5 +348,13 @@
 			list();
 			window.history.pushState({}, "", "/");
 		</script>
+	{%elif action == 4 %}
+		<script> 
+			alert('Segmento Agregado');
+			clear();
+			load_land_info({{property_id}},{{land_name}});
+			window.history.pushState({}, "", "/");
+		</script>
 	{% endif%}
+
 

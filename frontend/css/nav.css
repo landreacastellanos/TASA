@@ -130,13 +130,43 @@
 }
 
 .segment-side-panel {
- width: 20%;
+ width: 30%;
+ padding: 2.5%;
+ margin-right: 0;
 }
 
 .form-segment-table {
  width: 48%;
  margin-right: 2%;
- margin-top: 5%;
+ margin-top: 5.5%;
+}
+
+.button_actions {
+ display: flex;
+ justify-content: center;
+}
+
+.observation_stage {
+ padding-top: 5%;
+ width: 100%;
+}
+
+.form_stage {
+ border: 5px solid #96B940;
+ border-radius: 6.5%;
+}
+
+.segment-btn {
+ width: 15%;
+}
+
+.segment-actions {
+display: flex;
+width: 45%;
+justify-content: flex-end;
+float: right;
+padding-top: 25px;
+margin-right: 8%;
 }
 
 .panel2 {

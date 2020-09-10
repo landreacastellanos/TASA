@@ -4,6 +4,10 @@ function up(){
     saveUserForm.submit();
 }
 
+function upStage(){
+    segmentStageForm.submit();
+}
+
 function up_property(){
     validate_lands();
     l_lands.value = JSON.stringify(g_lands);
@@ -76,6 +80,7 @@ function list() {
     show(document.getElementById("userList"));
     page(1);
 }
+
 
 function page(add) {
     var offset = window.location.hash;
@@ -207,7 +212,7 @@ function add_item(item_id) {
     item_input.id = "total_kg_"+item_id;
     item_input.firstElementChild.name = "total_kg_"+item_id;
     clonedNode.appendChild(item_input);
-    segment_recipe.appendChild(clonedNode);
+    segment_recipe.insertBefore(clonedNode, segment_recipe.firstElementChild);
     // Remove Checkbox for the second table
     var c = document.getElementById("selected_item_"+item_id)
     c.firstElementChild.remove();
@@ -225,6 +230,11 @@ function f_home() {
     clear();
     show(home);
     show(home_tab);
+}
+
+
+function f_stages(){
+	load_land_info(property_id.value,segment_land_name.value);
 }
 
 
@@ -263,6 +273,8 @@ function see_stage(stage_id) {
         clear();
         show(viewStage);
         seeStage.innerHTML = response;
+        segment_stage.value = stage_id;
+        segment_land_name.value = property_land_name.value;
     })
 } 
 
