@@ -180,7 +180,7 @@ def addStage():
     form = request.form
     files = request.files.getlist('files')
     result = funcs.addStageProperty(form, files)
-    if result != 1:
+    if result == -1:
         print("Error Reported")
         return "<script> alert('Ocurrio un Error');location.href='/';</script>"
     ln = request.form['land_name']

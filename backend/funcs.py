@@ -236,7 +236,6 @@ def allowed_file(filename):
 
 
 def addStageProperty(form, files):
-    print("wtf", form)
     values = []
     headers = []
     for k, v in form.items():
