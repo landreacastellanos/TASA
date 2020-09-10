@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 import funcs
 import i18n
 import send_email
-
+import query
 
 app = Flask(__name__, static_url_path="", static_folder="../frontend")
 app.template_folder = "../frontend"
@@ -18,13 +18,16 @@ INSERT = 0
 UPDATE = 1
 SEARCH = 2
 DELETE = 3
+STAGE = 4
 
+UPLOAD_FOLDER = '../images_stages/'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Admin123.@localhost/tasa'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'digitaltasa@gmail.com'
 app.config['MAIL_PASSWORD'] = 'Abc.123@?'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 mail = Mail()
 app.app_context().push()
 db = SQLAlchemy(app)
@@ -80,7 +83,8 @@ def propertyList():
 def landView():
     property_id = request.args.get("id")
     land_name = request.args.get("land_name")
-    html = funcs.searchLandByPropertyId(property_id, land_name)
+    q = query.getPropertyLandCalendar(property_id, land_name)
+    html = funcs.searchLandByPropertyId(q)
     if html == -1:
         return "<script> alert('Lote no encontrado, refresque la pagina') </script>"
     return render_template("land_view.html", land=html[0], i18n=i18n.i18n)
@@ -166,7 +170,23 @@ def seeStage():
                                                            land_name)
     response = render_template("property_stage.html",
                                stage=stageProducts[0],
-                               property_land=propertyLand[0])
+                               property_land=propertyLand[0],
+                               i18n=i18n.i18n)
+    return response
+
+
+@app.route('/add_stage', methods=['GET', 'POST'])
+def addStage():
+    form = request.form
+    files = request.files.getlist('files')
+    result = funcs.addStageProperty(form, files)
+    if result != 1:
+        print("Error Reported")
+        return "<script> alert('Ocurrio un Error');location.href='/';</script>"
+    ln = request.form['land_name']
+    pid = request.form['property_id']
+    response = render_template("main.html", user=session["user"],
+                               action=STAGE, property_id=pid, land_name=ln)
     return response
 
 

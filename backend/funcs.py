@@ -1,10 +1,13 @@
 from typing import TypeVar
+from werkzeug.utils import secure_filename
+
 import connection
 import bcrypt
 import query
 import time
 import json
 import i18n
+import os
 
 INSERT = 0
 UPDATE = 1
@@ -12,6 +15,9 @@ SEARCH = 2
 
 T = TypeVar('T')
 db = connection.connection()
+
+UPLOAD_FOLDER = '../images_stages/'
+ALLOWED_EXTENSIONS = {'jpg', 'png', 'gif', 'jpeg'}
 
 
 def parseGet(a):
@@ -198,14 +204,10 @@ def saveLand(last_id, lands):
             return -1
 
 
-def searchLandByPropertyId(property_id, land_name):
+# def searchLandByPropertyId(property_id, land_name):
+def searchLandByPropertyId(query):
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select property_id, \
-            name, business_name, phone, \
-            address, \
-            total_ha_property, sowing_system, land.land_name, land.land_ha \
-            from land join property on property.id=land.property_id \
-            where property.id='"+property_id+"' and land_name='"+land_name+"'")
+    cursor.execute(query)
     land = cursor.fetchall()
     if len(land) < 1:
         return -1
@@ -229,8 +231,72 @@ def searchPropertyById(property_id):
     return property_dict
 
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def addStageProperty(form, files):
+    print("wtf", form)
+    values = []
+    headers = []
+    for k, v in form.items():
+        if k.startswith("total_kg"):
+            v2 = []
+            header = ["property_id", "product_id", "total_kg_lt"]
+            # TODO: validate length of the split total_kg_[id_product]
+            # this is used to identified the product in the database
+            product_id = k.split("_")
+            v2.append(form["property_id"])
+            v2.append(product_id[2])
+            v2.append(v)
+            q = query.insert("property2product",
+                             ", ".join(header), "', '".join(v2))
+            cursor, err = query.runQuery(q)
+            if err != 1:
+                print("Error happend[ERR01]: ", err)
+        elif not(k.startswith("custom_")):
+            values.append(v)
+            headers.append(k)
+    ext_name = form["property_id"]+"_"+form["stage_id"]+"_"+form["land_name"]
+    path = upload_files_to_property(
+                                    files,
+                                    ext_name, form["property_id"])
+    headers.append("procedure_image")
+    values.append(path)
+    q = query.insert("property_procedure", ",".join(headers), "', '".join(values))
+    last_id, err = query.runQuery(q)
+    if err != 1:
+        print("Error insertint property_procedure [ERR02]: ", err)
+        return -1
+    return 1
+
+
+def upload_files_to_property(files, ext_name, property_id):
+    img_path = []
+    images = files
+    folder = UPLOAD_FOLDER+property_id
+    if not os.path.exists(folder):
+        os.mkdir(folder)
+
+    for image in images:
+        if image and allowed_file(image.filename):
+            filename = secure_filename(image.filename)
+            path = os.path.join(folder, ext_name+"_"+filename)
+            img_path.append(path)
+            image.save(path)
+        # images[image].save(some_destination)
+    return ", ".join(img_path)
+
+
 def getStageByProperty(stage_id, type_planting, property_id, land_name):
-    propertyLand = searchLandByPropertyId(property_id, land_name)
+    q = query.getPropertyStage(property_id, land_name)
+    propertyLand = searchLandByPropertyId(q)
+    if propertyLand[0]["property_ca"] == "":
+        del propertyLand[0]["property_ca"]
+        del propertyLand[0]["phone_ca"]
+    else:
+        del propertyLand[0]["property_df"]
+        del propertyLand[0]["phone_df"]
     q = query.searchStageProducts(stage_id, type_planting)
     stageProducts = query.fetchall(q)
     return(stageProducts, propertyLand)

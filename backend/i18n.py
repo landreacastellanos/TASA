@@ -14,7 +14,7 @@ def i18n(key):
         "phone": "Telefono",
         "address": "Dirección",
         "property_address": "Dirección de la Finca",
-        "total_ha_property": "Total ha Finca",
+        "total_ha_property": "Total Hectáreas Finca",
         "sowing_system": "Sistema de Siembra",
         "land_name": "Nombre Lote",
         "land_ha": "Hectareas Lote",
@@ -32,6 +32,8 @@ def i18n(key):
         "property_admin": "Administrador",
         "created_date": "Fecha de Creación",
         "lands": "Lotes",
+        "phone_ca": "Telefono Capataz",
+        "phone_df": "Telefono Dueño Finca",
     }
     return i18n[key]
 
