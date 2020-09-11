@@ -206,6 +206,7 @@ def saveLand(last_id, lands):
 
 # def searchLandByPropertyId(property_id, land_name):
 def searchLandByPropertyId(query):
+    db = connection.connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute(query)
     land = cursor.fetchall()
@@ -215,6 +216,7 @@ def searchLandByPropertyId(query):
         land[0]["sowing_system"] = "Arroz Secano"
     else:
         land[0]["sowing_system"] = "Arroz de Riego"
+    cursor.close()
     return land
 
 
@@ -228,6 +230,7 @@ def searchPropertyById(property_id):
     property_lands = getLandByPropertyID(property_id)
     property_dict[0]["lands"] = property_lands
     property_dict[0]["sowing_system"] = i18n.sowing_system(property_dict[0]["sowing_system"])
+    cursor.close()
     return property_dict
 
 
@@ -308,6 +311,7 @@ def getLandByPropertyID(property_id):
     lands = cursor.fetchall()
     if len(lands) < 1:
         return -1
+    cursor.close()
     return lands
 
 
