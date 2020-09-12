@@ -9,6 +9,7 @@ insert into type_planting (name) values('Arroz Secano'), ('Arroz de Riego');
 create table property2product (
 	property_id int,
 	product_id int,
+	land_name varchar(255),
 	total_kg_lt varchar(255),
 	foreign key(property_id) references property(id),
 	foreign key(product_id) references product(id)

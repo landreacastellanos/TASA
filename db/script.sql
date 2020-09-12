@@ -54,6 +54,8 @@ create table land (
 	property_id int,
 	land_name varchar(255),
 	land_ha varchar(255),
+	sowing_date date,
+	sowing_type varchar(255),
 	foreign key(property_id) references property(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
