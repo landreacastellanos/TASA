@@ -70,7 +70,7 @@
   /*background-image: linear-gradient(to top, rgba(87,116,0,0.2), rgba(87,116,0,2)); old*/
   background-image: linear-gradient(to top, rgba(87,116,0,0.5), rgba(87,116,0,1));
   /*background-color: rgb(40,72,97, 0.5);*/
-  margin: 5% 10% 5%;
+  margin: 5% 2.5% 5%;
 }
 
 .tab-content {
@@ -345,7 +345,7 @@ margin-right: 8%;
 }
 
 .segment_input {
-  width: 100px;
+  width: 80px;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
