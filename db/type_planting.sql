@@ -60,4 +60,10 @@ insert into product(stage_id, type_planting_id, commercial_name, ing_active, seg
 (1,1,'Stuble digest','Bacterias ','Bactericida','1 y 20 Lts','0,05','N/D','Soiltec','Soiltec','1'), 
 (1,1,'Tricho plus','Trichoderma H y V','Biologico','1 y 20 Lts','1 x 109 U.F.C./gr','N/D','Soiltec','Soiltec','0,15');
 
-
+insert into product(stage_id, type_planting_id, commercial_name, ing_active, segment, presentation, concentration, color, formulator, provider, dose_by_ha) values(1,2,'Cosmo agua','Regulador de ph','Regulador de ph','1 Kg','N/D','N/D','Cosmoagro','Cosmoagro','0,1'), 
+(1,2,'Cosmo In D','Coadyuvante','Coadyuvante','1 lt,4 lt, 20 Lts','N/D','N/D','Cosmoagro','Cosmoagro','0,2'), 
+(1,2,'Tornado 48 SL','Glifosato','Herbicida','19 lts ','480 grs','Verde','ABY tech SA','Sunjoycrop','4 a 5'), 
+(1,2,'Stuble digest','Bacterias ','Bactericida','Biologicos','0,05','N/D','Soilte','Soiltec','1'), 
+(1,2,'Tricho pus','Trichoderma H y V','Micro','Biologicos','1 x 109 U.F.C./gr','N/D','Soilte','Soiltec','0,15'), 
+(1,2,'Pilarice 10 WP','Piraxozulfuron','Preemergente','1 Kg','100 gr','Verde','Pilarquin','Pilarquin','0,4'), 
+(1,2,'Fritzz 25 SC','Oxifluorfen ','Activador','1lt y 5 Lts','250 gr','Verde','UH','UH','0,5-1,5'), 
