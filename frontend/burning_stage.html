@@ -1,0 +1,123 @@
+<div class="tab-form">
+	<!--<form enctype="multipart/form-data" action="/updateUser" accept-charset="uft-8" method="post" id="updateUserForm">-->
+	<div class="panel1 segment-panel">
+		<h3 class="form-group col-md-12" style="color:#86AE17;"> {{stage[0]["stage_name"]}}</h3>
+		<div class="flex-container add-property">
+			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
+			<div class="form-row form-segment">
+				{% for k, v in property_land.items() %}
+				{% if k == "property_id" %}
+				<input type="hidden" name="{{k}}" id="{{k}}" value="{{v}}">
+				{%else%}
+				<div class="form-group col-md-2">
+					<label for="property_{{k}}">{{i18n(k)}}</label>
+					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+				</div>
+				{%endif%}
+				{% endfor %}
+				<div class="form-group col-md-2">
+					<label for="apply_date">Fecha de Aplicación</label>
+					<input type="date" class="form-control form-control-lg" name="visit_date">
+				</div>
+				
+			</div>
+			<div class="form-segment-table">
+				<label class="col-md-12 l-label"> Técnicas Agrícolas sugeridas para este segmento </label>
+				<div class="table-container col-md-12 table-segment">
+				<table class="table borderless">
+					<thead>
+						<tr style="color:#96B940">
+							<th scope="col"></th>
+							<th scope="col">Producto</th>
+							<th scope="col">Ing Activo</th>
+							<th scope="col">Proveedor</th>
+							<th scope="col">DósisxHa</th>
+						</tr>
+					</thead>
+					<tbody id="recommend_recipe">
+						{% for i in stage %}
+						<tr id="product_id_{{i['id']}}">
+						{% for k, v in i.items() %}
+							{% if k == "id" %}
+							<td scope="row" id="item_checkbox_{{v}}"> 
+								<label class="container container-segment">
+									<input type="checkbox" value='{{v}}' id="item_id_{{v}}" onclick="add_item('{{v}}')">
+									<span class="checkmark"></span>
+								</label> 
+							</td>
+							{% elif k != "stage_name" %}
+							<td id="stage_{{k}}"> 
+								{{v}}
+							</td>
+							{% endif %}
+						{% endfor %}
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				</div>
+			</div>
+			<div class="form-segment-table">
+				<label class="col-md-12 l-label"> Escribe Tu decision y Guardala </label>
+				<div class="table-segment col-md-12" style="padding: 0;">
+				<table class="table borderless">
+					<thead>
+						<tr style="color:#96B940">
+							<th scope="col">Producto</th>
+							<th scope="col">Ing Activo</th>
+							<th scope="col">Proveedor</th>
+							<th scope="col">DósisxHa</th>
+							<th scope="col">Total kg/lt</th>
+						</tr>
+					</thead>
+					<tbody id="segment_recipe">
+						<div id="segment_input_fields">
+							<tr>
+								<td>
+									<input type="text" class="segment_input" name="custom_product_0" id="custom_product_0">
+								</td>
+								<td>
+									<input type="text" class="segment_input" name="custom_ing_active_0" id="custom_ing_active_0">
+								</td>
+								<td>
+									<input type="text" class="segment_input" name="custom_provider_0" id="custom_provider_0">
+								</td>
+								<td>
+									<input type="text" class="segment_input" name="custom_dose_by_ha_0" id="custom_dose_by_ha_0">
+								</td>
+								<td id="custom_total">
+									<input type="text" class="segment_input" name="custom_total_kg_0">
+								</td>
+							</tr>
+						</div>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel1 panel3 segment-side-panel">
+		<div class="image_before">
+			<img src="/images/before.png" width="420" height="350" alt="before">
+		</div>
+		<div class="image_after hide">
+			<img src="/images/before.png" width="420" height="350" alt="before">
+		</div>
+		<!--<div class="button_actions">
+			<i class="fas fa-camera fa-2x" style="color: #86AE17; padding-right: 25%; padding-top:5%;"></i>
+			<i class="fas fa-camera fa-2x" style="color: #86AE17; padding-top:5%;"></i>
+		</div>-->
+		<div class="button_actions">
+			<button type="button" class="btn custom-btn save-btn" onclick=""> <label> Antes </label> <i class="fas fa-camera"></i>   </button>
+			<button type="button" class="btn custom-btn save-btn" onclick=""> <label> Despues </label> <i class="fas fa-camera"></i>  </button>
+		</div>
+		<div class="observation_stage" id="list_users">
+			<div class="form-group col-md-12">
+				<label class="col-md-12 l-label"> Comentarios </label>
+				<textarea class="form-control form_stage" name="observation" id="observation" rows="12"></textarea>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="stage_id" id="segment_stage">
+	<input type="hidden" name="land_name" id="segment_land_name">
+</div>

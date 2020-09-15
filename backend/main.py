@@ -4,6 +4,7 @@ from flask import Flask
 from flask_mail import Mail
 from flask import request, session, redirect, url_for, render_template, flash
 from flask_sqlalchemy import SQLAlchemy
+from switch import switch
 
 import funcs
 import i18n
@@ -168,11 +169,18 @@ def seeStage():
                                                            type_planting,
                                                            property_id,
                                                            land_name)
-    response = render_template("property_stage.html",
-                               stage=stageProducts[0],
-                               property_land=propertyLand[0],
-                               i18n=i18n.i18n)
-    return response
+
+    with switch(int(stage_id)) as s:
+        if s.case(1, True):
+            return render_template("property_stage.html",
+                                                stage=stageProducts[0],
+                                                property_land=propertyLand[0],
+                                                i18n=i18n.i18n)
+        if s.case(14, True):
+            return render_template("property_stage.html",
+                                                 stage=stageProducts[0],
+                                                 property_land=propertyLand[0],
+                                                 i18n=i18n.i18n)
 
 
 @app.route('/add_stage', methods=['GET', 'POST'])
