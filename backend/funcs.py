@@ -241,36 +241,66 @@ def allowed_file(filename):
 def addStageProperty(form, files):
     values = []
     headers = []
+    custom = []
+    property_id = form['property_id']
+    land_id = form['land_id']
+    custom.append(form["stage_id"])
     for k, v in form.items():
         if k.startswith("total_kg"):
-            v2 = []
-            header = ["property_id", "product_id", "total_kg_lt"]
-            # TODO: validate length of the split total_kg_[id_product]
-            # this is used to identified the product in the database
             product_id = k.split("_")
-            v2.append(form["property_id"])
-            v2.append(product_id[2])
-            v2.append(v)
-            q = query.insert("property2product",
-                             ", ".join(header), "', '".join(v2))
-            cursor, err = query.runQuery(q)
-            if err != 1:
-                print("Error happend[ERR01]: ", err)
-        elif not(k.startswith("custom_")):
-            values.append(v)
+            addProperty2Product(property_id, land_id, product_id[2], v)
+        elif k.startswith("custom_"):
+            custom.append(v)
+        else:
             headers.append(k)
-    ext_name = form["property_id"]+"_"+form["stage_id"]+"_"+form["land_name"]
+            values.append(v)
+    custom.pop()
+    new_id_product = add_new_product(custom, property_id, land_id)
+    addProperty2Product(property_id, land_id, str(new_id_product), form['custom_total_kg_0'])
+    ext_name = form["property_id"]+"_"+form["stage_id"]+"_"+form["land_id"]
     path = upload_files_to_property(
                                     files,
                                     ext_name, form["property_id"])
     headers.append("procedure_image")
     values.append(path)
-    q = query.insert("property_procedure", ",".join(headers), "', '".join(values))
+    q = appendinsert("property_procedure", headers, values)
     last_id, err = query.runQuery(q)
     if err != 1:
         print("Error insertint property_procedure [ERR02]: ", err)
         return -1
     return 1
+
+
+def addProperty2Product(property_id, land_id, product_id, v):
+    v2 = []
+    header = ["property_id", "land_id", "product_id", "total_kg_lt"]
+    # TODO: validate length of the split total_kg_[id_product]
+    # this is used to identified the product in the database
+    v2.append(property_id)
+    v2.append(land_id)
+    v2.append(product_id)
+    v2.append(v)
+    q = query.insert("property2product",
+                     ", ".join(header), "', '".join(v2))
+    cursor, err = query.runQuery(q)
+    if err != 1:
+        print("Error happend[ERR01]: ", err)
+    print(cursor.lastrowid)
+
+
+def appendinsert(table_name, headers, values):
+    q = query.insert(table_name, ",".join(headers), "', '".join(values))
+    return q
+
+
+def add_new_product(values, property_id, land_id):
+    headers = ["stage_id", "commercial_name", "ing_active", "provider", "dose_by_ha"]
+    q = appendinsert("product", headers, values)
+    last_id, err = query.runQuery(q)
+    if err != 1:
+        print("Error inserting product [ERR03]: ", err)
+        return -1
+    return last_id.lastrowid
 
 
 def upload_files_to_property(files, ext_name, property_id):
@@ -293,11 +323,11 @@ def upload_files_to_property(files, ext_name, property_id):
 def getStageByProperty(stage_id, type_planting, property_id, land_name):
     q = query.getPropertyStage(property_id, land_name)
     propertyLand = searchLandByPropertyId(q)
-    if propertyLand[0]["property_ca"] == "":
-        del propertyLand[0]["property_ca"]
+    if propertyLand[0]["property_ca_contact"] == "":
+        del propertyLand[0]["property_ca_contact"]
         del propertyLand[0]["phone_ca"]
     else:
-        del propertyLand[0]["property_df"]
+        del propertyLand[0]["property_df_contact"]
         del propertyLand[0]["phone_df"]
     q = query.searchStageProducts(stage_id, type_planting)
     stageProducts = query.fetchall(q)
@@ -328,7 +358,7 @@ def getPropertiesName():
 def getLandByProperty():
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select property_id, land_name from land order by property_id")
+    cursor.execute("select property_id, id, land_name from land order by property_id")
     land_dict = cursor.fetchall()
     if len(land_dict) < 1:
         return -1
@@ -370,7 +400,7 @@ def listOfUsers():
             dx += "\n"
             dx += "\t<label for=\""+role+"\">"+role+"</label>"
             dx += "\n"
-            dx += "\t<select id=\""+role+"\" name=\"property_"+i18n.role(role)+"\" class=\"form-control form-control-lg\">"
+            dx += "\t<select id=\""+role+"\" name=\"property_"+i18n.role(role)+"\" class=\"form-control form-control-lg\" required>"
             dx += "\t\t<option disabled selected>"+"</option>\n"
             dx += "\n"
             count = 1

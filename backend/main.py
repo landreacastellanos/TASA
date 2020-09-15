@@ -82,8 +82,8 @@ def propertyList():
 @app.route('/land', methods=['GET'])
 def landView():
     property_id = request.args.get("id")
-    land_name = request.args.get("land_name")
-    q = query.getPropertyLandCalendar(property_id, land_name)
+    land_id = request.args.get("land_id")
+    q = query.getPropertyLandCalendar(property_id, land_id)
     html = funcs.searchLandByPropertyId(q)
     if html == -1:
         return "<script> alert('Lote no encontrado, refresque la pagina') </script>"
@@ -183,10 +183,10 @@ def addStage():
     if result == -1:
         print("Error Reported")
         return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-    ln = request.form['land_name']
+    ln = request.form['land_id']
     pid = request.form['property_id']
     response = render_template("main.html", user=session["user"],
-                               action=STAGE, property_id=pid, land_name=ln)
+                               action=STAGE, property_id=pid, land_id=ln)
     return response
 
 

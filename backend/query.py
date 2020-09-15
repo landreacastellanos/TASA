@@ -130,9 +130,9 @@ def searchStageProducts(stage_id, type_planting):
 def getPropertyStage(property_id, land_name):
     return "select property_id, \
             property.name, \
-            concat(ca.name, ' ', ca.last_name) as property_ca,\
+            concat(ca.name, ' ', ca.last_name) as property_ca_contact,\
             ca.phone as phone_ca, \
-            concat(df.name, ' ', df.last_name) as property_df,\
+            concat(df.name, ' ', df.last_name) as property_df_contact,\
             df.phone as phone_df, \
             sowing_system, total_ha_property, land.land_name, land.land_ha \
             from land \
@@ -145,10 +145,11 @@ def getPropertyStage(property_id, land_name):
             where property.id='"+property_id+"' and land_name='"+land_name+"'"
 
 
-def getPropertyLandCalendar(property_id, land_name):
+def getPropertyLandCalendar(property_id, land_id):
     return "select property_id, \
             name, business_name, phone, \
             address, \
-            total_ha_property, sowing_system, land.land_name, land.land_ha \
+            total_ha_property, sowing_system, \
+            land.id as land_id, land.land_name, land.land_ha \
             from land join property on property.id=land.property_id \
-            where property.id='"+property_id+"' and land_name='"+land_name+"'"
+            where property.id='"+property_id+"' and land.id='"+land_id+"'"

@@ -32,8 +32,10 @@ def i18n(key):
         "property_admin": "Administrador",
         "created_date": "Fecha de Creación",
         "lands": "Lotes",
-        "phone_ca": "Telefono Capataz",
-        "phone_df": "Telefono Dueño Finca",
+        "phone_ca": "Telefono Contacto",
+        "phone_df": "Telefono Contacto",
+        "property_ca_contact": "Contacto",
+        "property_df_contact": "Contacto",
     }
     return i18n[key]
 
