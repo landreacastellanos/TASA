@@ -14,10 +14,10 @@ function up_property(){
     savePropertyForm.submit();
 }
 
-function load_land_info(property_id, land_name) {
+function load_land_info(property_id, land_id) {
     clear();
     show(viewLand);
-    ajax("GET", "land?id="+property_id+"&land_name="+land_name, "", function(response){
+    ajax("GET", "land?id="+property_id+"&land_id="+land_id, "", function(response){
        seeLand.innerHTML = response; 
     })
 }
@@ -274,7 +274,7 @@ function see_stage(stage_id) {
         show(viewStage);
         seeStage.innerHTML = response;
         segment_stage.value = stage_id;
-        segment_land_name.value = property_land_name.value;
+        segment_land_id.value = land_id.value;
     })
 } 
 
