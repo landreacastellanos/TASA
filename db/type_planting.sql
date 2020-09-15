@@ -9,17 +9,18 @@ insert into type_planting (name) values('Arroz Secano'), ('Arroz de Riego');
 create table property2product (
 	property_id int,
 	product_id int,
-	land_name varchar(255),
+	land_id int,
 	total_kg_lt varchar(255),
 	foreign key(property_id) references property(id),
-	foreign key(product_id) references product(id)
+	foreign key(product_id) references product(id),
+	foreign key(land_id) references land(id)
 );	
 
 create table property_procedure (
 	id int auto_increment,
 	property_id int,
 	stage_id int,
-	land_name varchar(255),
+	land_id int,
 	visit_date datetime,
 	segment_start datetime,
 	segment_end datetime,
@@ -27,7 +28,8 @@ create table property_procedure (
 	procedure_image text,
 	primary key(id),
 	foreign key(property_id) references property(id),
-	foreign key(stage_id) references stage(id)
+	foreign key(stage_id) references stage(id),
+	foreign key(land_id) references land(id)
 );
 
 
@@ -68,3 +70,17 @@ insert into product(stage_id, type_planting_id, commercial_name, ing_active, seg
 (1,2,'Tricho pus','Trichoderma H y V','Micro','Biologicos','1 x 109 U.F.C./gr','N/D','Soilte','Soiltec','0,15'), 
 (1,2,'Pilarice 10 WP','Piraxozulfuron','Preemergente','1 Kg','100 gr','Verde','Pilarquin','Pilarquin','0,4'), 
 (1,2,'Fritzz 25 SC','Oxifluorfen ','Activador','1lt y 5 Lts','250 gr','Verde','UH','UH','0,5-1,5'), 
+
+
+
+--------------------- Stage 2 Products
+insert into product(stage_id, type_planting_id, commercial_name, ing_active, segment, presentation, concentration, color, formulator, provider, dose_by_ha) values(2,1,'Semillon','21.9 Zn+14.6 B+14.6 Mn','Nutricion de semillas','1 lts','186 grs','N/D','Aglukon','Aglukon','0,25'), 
+(2,1,'Robust ','Rizobacterias y Bacillus','Biologicos','1 y 20 lts','0,031','N/D','Soieltec','Soiltec','0,25'), 
+(2,1,'Tricho plus','Trichoderma H y V','Biologicos','1 kg','1 x 109 U.F.C./gr','N/D','Ssoiltec','Soiltec','0,15'), 
+(2,1,'Fipromaxx 80 WG','Fipronil','Insecticida','50 kg, 250 y Kg','800 gr','amarillo','DVA','DVA','0,07'),
+(2,2,'Semillon','21.9 Zn+14.6 B+14.6 Mn','Nutricion de semillas','1 lts','186 grs','N/D','Aglukon','Aglukon','0,25'), 
+(2,2,'Robust ','Rizobacterias','Rizobacterias','1 y 20 lts','S/N','N/D','Soilte','Soiltec','0,25'), 
+(2,2,'Tricho plus','Trichoderma H y V','Hongos','1 kg','1 x 109 U.F.C./gr','N/D','Soilte','Soiltec','0,15'), 
+(2,2,'Fipromaxx 80 WG','Fipronil 80','Insecticida','250 grs y Kg','800 gr','Amarilla','DVA','DVA','60-70');
+
+

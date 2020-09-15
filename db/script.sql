@@ -51,11 +51,13 @@ create table property_user (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table land (
+	id int auto_increment,
 	property_id int,
 	land_name varchar(255),
 	land_ha varchar(255),
 	sowing_date date,
 	sowing_type varchar(255),
+	primary key(id),
 	foreign key(property_id) references property(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
