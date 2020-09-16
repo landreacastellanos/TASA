@@ -6,6 +6,8 @@
 			<div class="form-row form-property">
 	                       {% for k, v in property_dict.items() %}
 				{% if "property_" in k or k == "lands" %}
+				{% elif k == "id" %}
+					<input type="hidden" name="property_{{k}}" id="property_{{k}}" value="{{v}}" disabled>
 				{% else %}
 				<div class="form-group col-md-6">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
@@ -24,6 +26,11 @@
 			</div>
 			<div class="separator"> </div>
 			<div class="form-row form-property-2" id="lands">
+			       {% if property_dict["lands"] == -1 %}
+				<div class="form-group col-md-12" name="name_land">
+			       		<h6> No hay más lotes </h6>
+				</div>
+				{%else %}
 	                       {% for k in property_dict["lands"] %}
 				<div class="form-group col-md-6" name="name_land">
 					<label for="name">Nombre del Lote</label>
@@ -34,9 +41,11 @@
 					<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1" min="0" value="{{k['land_ha']}}" disabled>
 				</div>
 				{%endfor%}
+				{%endif%}
 				<input type="hidden" name="lands" id="l_lands">
 				<input type="hidden" name="table_name" value="property">
-
+				<button type="button" class="btn custom-btn"  onclick="pageLand(0, 3)"> <i class="fas fa-arrow-left"></i></button>
+				<button type="button" class="btn custom-btn"  onclick="pageLand(1, 3)"> <i class="fas fa-arrow-right"></i></button>
 			</div>
 		</div>
 	</div>
@@ -55,6 +64,7 @@
 				{% endif %}
 				{% endfor %}
 			</div>
+			
 		</div>
 	</div>
 	</form>

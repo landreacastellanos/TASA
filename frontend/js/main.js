@@ -22,12 +22,17 @@ function load_land_info(property_id, land_id) {
     })
 }
 
+function pageLand(add, amount_records){
+    page(add, amount_records, 'property?id='+property_id.value+'&', seeProperty)
+}
+
 function load_property_info(property_id) {
     clear();
     show(viewProperty);
-    ajax("GET", "property?id="+property_id, "", function(response){
+    ajax("GET", "property?id="+property_id+"&offset=0", "", function(response){
+        window.location.hash = "0";   
         seeProperty.innerHTML = response;
-        sowing_system.value = show_sowing_system.value;
+        // sowing_system.value = show_sowing_system.value;
     })
 }
 
@@ -78,11 +83,11 @@ function show_user() {
 function list() {
     clear();
     show(document.getElementById("userList"));
-    page(1);
+    page(1, 7, "userList?", userlist);
 }
 
 
-function page(add) {
+function page(add, amount_records, endpoint, element) {
     var offset = window.location.hash;
     var page = ""
     if(offset == ""){
@@ -91,20 +96,20 @@ function page(add) {
     }else {
         offset = offset.split("#");
         if(add == "0"){
-            page = parseInt(offset[1])-7
+            page = parseInt(offset[1])-amount_records
             if(page<0){
                 window.location.hash = "0"
                 page = 0;
             }
             window.location.hash = page 
         }else {
-            page = parseInt(offset[1])+7
+            page = parseInt(offset[1])+amount_records
             window.location.hash = page 
             //window.location.hash = new_offset;
         }
     }    
-    ajax("GET", "userList?offset="+page,"", function(response){
-        userlist.innerHTML = response;
+    ajax("GET", endpoint+"offset="+page,"", function(response){
+        element.innerHTML = response;
     });
 }
 
