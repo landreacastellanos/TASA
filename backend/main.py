@@ -170,6 +170,10 @@ def seeStage():
                                                            property_id,
                                                            land_name)
 
+    print("hola")
+    print(propertyLand)
+    print("hola")
+
     with switch(int(stage_id)) as s:
         if s.case(1, True):
             return render_template("property_stage.html",
@@ -177,7 +181,7 @@ def seeStage():
                                                 property_land=propertyLand[0],
                                                 i18n=i18n.i18n)
         if s.case(14, True):
-            return render_template("property_stage.html",
+            return render_template("burning_stage.html",
                                                  stage=stageProducts[0],
                                                  property_land=propertyLand[0],
                                                  i18n=i18n.i18n)
