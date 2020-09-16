@@ -220,14 +220,14 @@ def searchLandByPropertyId(query):
     return land
 
 
-def searchPropertyById(property_id):
+def searchPropertyById(property_id, offset):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
     cursor.execute(query.queryProperty(property_id))
     property_dict = cursor.fetchall()
     if len(property_dict) < 1:
         return -1
-    property_lands = getLandByPropertyID(property_id)
+    property_lands = getLandByPropertyID(property_id, offset)
     property_dict[0]["lands"] = property_lands
     property_dict[0]["sowing_system"] = i18n.sowing_system(property_dict[0]["sowing_system"])
     cursor.close()
@@ -334,10 +334,12 @@ def getStageByProperty(stage_id, type_planting, property_id, land_name):
     return(stageProducts, propertyLand)
 
 
-def getLandByPropertyID(property_id):
+def getLandByPropertyID(property_id, offset):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select land_name, land_ha from land where property_id="+property_id)
+    q = "select land_name, land_ha from land where property_id="+property_id
+    q += " limit 3 offset " + str(offset)
+    cursor.execute(q)
     lands = cursor.fetchall()
     if len(lands) < 1:
         return -1
@@ -379,7 +381,7 @@ def getHeadersAndValues(struct):
 
 
 def listOfUsers():
-    q = "select user.id, name, role.role from user join role on user.role_id=role.id where not role.id=1 order by role.role"
+    q = "select user.id, name, role.role from user join role on user.role_id=role.id where not role.id=1 and active=1 order by role.role"
     user_dict, err = query.fetchall(q)
     if err == -1:
         print(err)
