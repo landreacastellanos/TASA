@@ -325,10 +325,8 @@ def getStageByProperty(stage_id, type_planting, property_id, land_name):
     propertyLand = searchLandByPropertyId(q)
     if propertyLand[0]["property_ca_contact"] == "":
         del propertyLand[0]["property_ca_contact"]
-        del propertyLand[0]["phone_ca"]
     else:
         del propertyLand[0]["property_df_contact"]
-        del propertyLand[0]["phone_df"]
     q = query.searchStageProducts(stage_id, type_planting)
     stageProducts = query.fetchall(q)
     return(stageProducts, propertyLand)
