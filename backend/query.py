@@ -93,10 +93,14 @@ def queryProperty(property_id):
         property.id, property.name, property.business_name, \
         property.phone, property.address, property.web_site, \
         property.total_ha_property, property.sowing_system, \
-        ca.name as property_ca, df.name as property_df, \
-        ec.name as property_ec, ep.name as property_ep, \
-        idc.name as property_idc, rdc.name as property_rdc, \
-        sa.name as property_sa, v.name as property_v \
+        concat(ca.name, ' ', ca.last_name) as property_ca, \
+        concat(df.name, ' ', df.last_name)as property_df, \
+        concat(ec.name, ' ', ec.last_name) as property_ec, \
+        concat(ep.name, ' ', ep.last_name) as property_ep, \
+        concat(idc.name, ' ', idc.last_name) as property_idc, \
+        concat(rdc.name, ' ', rdc.last_name) as property_rdc, \
+        concat(sa.name, ' ', sa.last_name) as property_sa, \
+        concat(v.name, ' ', v.last_name) as property_v \
         from property  \
             join user as ca \
                 on ca.id=property_ca  \
