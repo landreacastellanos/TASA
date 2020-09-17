@@ -5,21 +5,52 @@
 		<div class="flex-container add-property">
 			<label class="form-group col-md-12 l-label"> Datos básicos de la Finca</label>
 			<div class="form-row form-segment">
-				{% for k, v in property_land.items() %}
-				{% if k == "property_id" %}
-				<input type="hidden" name="{{k}}" id="{{k}}" value="{{v}}">
-				{%else%}
-				<div class="form-group col-md-2">
-					<label for="property_{{k}}">{{i18n(k)}}</label>
-					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+				<input type="hidden" name="property_id" id="property_id" value="{{property_land['property_id']}}">
+				<div class="form-group col-md-4">
+					<label for="Nombre de la finca">Nombre de la finca</label>
+					<input type="text" class="form-control form-control-lg" name="Nombre de la finca"
+						value="{{property_land['name']}}" disabled>
 				</div>
-				{%endif%}
-				{% endfor %}
+				<div class="form-group col-md-4">
+					<label for="Dirección">Dirección</label>
+					<input type="text" class="form-control form-control-lg" name="Dirección"
+						value="{{property_land['address']}}" disabled>
+				</div>
+				<div class="form-group col-md-4"></div>
+				<div class="form-group col-md-4">
+					<label for="Encargado finca">Encargado finca</label>
+					<input type="text" class="form-control form-control-lg" name="Encargado finca"
+						value="{{property_land['property_ca_contact']}}" disabled>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="Total Hectáreas finca">Total Hectáreas finca</label>
+					<input type="text" class="form-control form-control-lg" name="Total Hectáreas finca"
+						value="{{property_land['total_ha_property']}}" disabled>
+				</div>
 				<div class="form-group col-md-2">
-					<label for="apply_date">Fecha de Aplicación</label>
+					<label for="Nombre del lote">Nombre lote</label>
+					<input type="text" class="form-control form-control-lg" name="Nombre del lote"
+						value="{{property_land['land_name']}}" disabled>
+				</div>
+				<div class="form-group col-md-2">
+					<label for="Hectáreas lote">Hectáreas lote</label>
+					<input type="text" class="form-control form-control-lg" name="Hectáreas lote"
+						value="{{property_land['land_ha']}}" disabled>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="Tipo de siembra">Tipo de siembra</label>
+					<input type="text" class="form-control form-control-lg" name="Tipo de siembra"
+						value="{{property_land['sowing_system']}}" disabled>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="Ingresa la variedad">Ingresa la variedad</label>
+					<input type="text" class="form-control form-control-lg" name="Ingresa la variedad">
+				</div>
+				<div class="form-group col-md-4">
+					<label for="apply_date">Fecha</label>
 					<input type="date" class="form-control form-control-lg" name="visit_date">
 				</div>
-				
+
 			</div>
 		</div>
 	</div>
