@@ -212,15 +212,29 @@ function add_item(item_id) {
     var item = "product_id_"+item_id;
     var clonedNode = document.getElementById(item).cloneNode(true);
     clonedNode.id="selected_item_"+item_id;
+    total = calculate_total_kg(clonedNode.childNodes)
     // Add input for the total kg/lt
     var item_input = custom_total.cloneNode(true);
     item_input.id = "total_kg_"+item_id;
+    item_input.firstElementChild.value = total;
+
     item_input.firstElementChild.name = "total_kg_"+item_id;
     clonedNode.appendChild(item_input);
     segment_recipe.insertBefore(clonedNode, segment_recipe.firstElementChild);
     // Remove Checkbox for the second table
     var c = document.getElementById("selected_item_"+item_id)
     c.firstElementChild.remove();
+}
+
+function calculate_total_kg(cloned_childs) {
+    for(var i = 0; i<cloned_childs.length; i++) {
+        var element = cloned_childs[i]
+        if(element.id == "stage_dose_by_ha") {
+            var dose = element.innerText
+            total = parseInt(property_stage_land_ha.value)*parseFloat(dose.trim().replace(",", "."));
+            return total
+        }
+    }
 }
 
 function f_home() {

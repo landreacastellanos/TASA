@@ -11,7 +11,7 @@
 				{%else%}
 				<div class="form-group col-md-2">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
-					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+					<input type="text" class="form-control form-control-lg" name="property_{{k}}" id="property_stage_{{k}}" value="{{v}}" disabled>
 				</div>
 				{%endif%}
 				{% endfor %}
@@ -46,7 +46,7 @@
 								</label> 
 							</td>
 							{% elif k != "stage_name" %}
-							<td id="stage_{{k}}"> 
+							<td id="stage_{{k}}" name="stage_{{k}}"> 
 								{{v}}
 							</td>
 							{% endif %}
@@ -83,11 +83,12 @@
 									<input type="text" class="segment_input" name="custom_provider_0" id="custom_provider_0">
 								</td>
 								<td>
-									<input type="text" class="segment_input" name="custom_dose_by_ha_0" id="custom_dose_by_ha_0">
+									<input type="text" class="segment_input" name="custom_dose_by_ha_0" onchange="calculate()" id="custom_dose_by_ha_0">
 								</td>
 								<td id="custom_total">
 									<input type="text" class="segment_input" name="custom_total_kg_0">
 								</td>
+								<!--<i class="fas fa-plus" aria-hidden="true" style="margin-top: 90%; color: #86AE17;"></i>-->
 							</tr>
 						</div>
 					</tbody>
