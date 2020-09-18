@@ -36,6 +36,7 @@ def i18n(key):
         "phone_df": "Telefono Contacto",
         "property_ca_contact": "Contacto",
         "property_df_contact": "Contacto",
+        "address_land": "Dirección",
     }
     return i18n[key]
 
