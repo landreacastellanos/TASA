@@ -1,9 +1,9 @@
 <div class="tab-form">
 	<!--<form enctype="multipart/form-data" action="/updateUser" accept-charset="uft-8" method="post" id="updateUserForm">-->
 	<div class="panel1 segment-panel">
-		<h3 class="form-group col-md-12" style="color:#86AE17;"> Fecha de Siembra </h3>
+		<h3 class="form-group col-md-12" style="color:#86AE17;">Fecha de Siembra</h3>
 		<div class="flex-container add-property">
-			<label class="form-group col-md-12 l-label"> Datos básicos de la Finca</label>
+			<label class="form-group col-md-12 l-label">Datos básicos de la Finca</label>
 			<div class="form-row form-segment">
 				<input type="hidden" name="property_id" id="property_id" value="{{property_land['property_id']}}">
 				<div class="form-group col-md-4">
@@ -11,12 +11,11 @@
 					<input type="text" class="form-control form-control-lg" name="Nombre de la finca"
 						value="{{property_land['name']}}" disabled>
 				</div>
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-8">
 					<label for="Dirección">Dirección</label>
 					<input type="text" class="form-control form-control-lg" name="Dirección"
-						value="{{property_land['address']}}" disabled>
+						value="{{property_land['address_land']}}" disabled>
 				</div>
-				<div class="form-group col-md-4"></div>
 				<div class="form-group col-md-4">
 					<label for="Encargado finca">Encargado finca</label>
 					<input type="text" class="form-control form-control-lg" name="Encargado finca"
