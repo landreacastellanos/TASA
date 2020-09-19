@@ -187,16 +187,25 @@ def seeStage():
 @app.route('/add_stage', methods=['GET', 'POST'])
 def addStage():
     form = request.form
-    files = request.files.getlist('files')
-    result = funcs.addStageProperty(form, files)
-    if result == -1:
-        print("Error Reported")
-        return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-    ln = request.form['land_id']
-    pid = request.form['property_id']
-    response = render_template("main.html", user=session["user"],
-                               action=STAGE, property_id=pid, land_id=ln)
-    return response
+    stage_id = request.form['stage_id']
+    with switch(int(stage_id)) as s:
+        if s.case(1, True):
+            files = request.files.getlist('files')
+            result = funcs.addStageProperty(form, files)
+            if result == -1:
+                print("Error Reported")
+                return "<script> alert('Ocurrio un Error');location.href='/';</script>"
+            ln = request.form['land_id']
+            pid = request.form['property_id']
+            return render_template("main.html", user=session["user"],
+                                    action=STAGE, property_id=pid, land_id=ln)
+            
+        if s.case(14, True):
+            variety_land = request.form['variety_land']
+            print(stage_id)
+            print(variety_land)
+            return redirect(url_for('index'))
+
 
 
 @app.route('/login', methods=['GET', 'POST'])
