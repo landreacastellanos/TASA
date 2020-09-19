@@ -118,6 +118,7 @@ function addUser() {
     show(profiles);
 }
 
+
 function create(type, classlist) {
     var element = document.createElement(type);
     for(var i = 0; i < classlist.length; i++){
@@ -226,14 +227,42 @@ function add_item(item_id) {
     c.firstElementChild.remove();
 }
 
+var g_amount_new_products = 0;
+function addProduct(){
+    g_amount_new_products++;
+    var segment = segment_input_fields.cloneNode(true);
+    segment.id = segment.id.replace("fields", "fields_"+g_amount_new_products);
+    for (var i = 0; i<segment.children.length; i ++) {
+        segment.children[i].firstElementChild.name = segment.children[i].firstElementChild.name.replace("_0", "_"+g_amount_new_products);
+        segment.children[i].firstElementChild.id = segment.children[i].firstElementChild.id.replace("_0", "_"+g_amount_new_products);
+        segment.children[i].firstElementChild.value = "";
+        /* if(segment.children[i].id == "custom_dose") {
+            segment.children[i].id = "custom_dose_"+g_amount_new_products;
+        }
+        if(segment.children[i].id == "custom_total") {
+            segment.children[i].id = "custom_total_"+g_amount_new_products;
+        }*/
+    }
+    segment_recipe.appendChild(segment)
+}
+
 function calculate_total_kg(cloned_childs) {
     for(var i = 0; i<cloned_childs.length; i++) {
         var element = cloned_childs[i]
         if(element.id == "stage_dose_by_ha") {
             var dose = element.innerText
-            total = parseInt(property_stage_land_ha.value)*parseFloat(dose.trim().replace(",", "."));
+            var total = parseInt(property_stage_land_ha.value)*parseFloat(dose.trim().replace(",", "."));
             return total
         }
+    }
+}
+
+function calculate() {
+    var dose_elements = document.querySelectorAll("#custom_dose");
+    for(var i = 0; i<dose_elements.length; i++) {
+        var dose_input = dose_elements[i].firstElementChild.value;
+        var total = parseInt(property_stage_land_ha.value)*parseFloat(dose_input.trim().replace(",", "."));
+        var total_input = dose_elements[i].parentElement.lastElementChild.firstElementChild.value = total;
     }
 }
 

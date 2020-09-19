@@ -71,26 +71,24 @@
 						</tr>
 					</thead>
 					<tbody id="segment_recipe">
-						<div id="segment_input_fields">
-							<tr>
-								<td>
-									<input type="text" class="segment_input" name="custom_product_0" id="custom_product_0">
-								</td>
-								<td>
-									<input type="text" class="segment_input" name="custom_ing_active_0" id="custom_ing_active_0">
-								</td>
-								<td>
-									<input type="text" class="segment_input" name="custom_provider_0" id="custom_provider_0">
-								</td>
-								<td>
-									<input type="text" class="segment_input" name="custom_dose_by_ha_0" onchange="calculate()" id="custom_dose_by_ha_0">
-								</td>
-								<td id="custom_total">
-									<input type="text" class="segment_input" name="custom_total_kg_0">
-								</td>
-								<!--<i class="fas fa-plus" aria-hidden="true" style="margin-top: 90%; color: #86AE17;"></i>-->
-							</tr>
-						</div>
+						<tr id="segment_input_fields">
+							<td>
+								<input type="text" class="segment_input" name="custom_product_0" id="custom_product_0">
+							</td>
+							<td>
+								<input type="text" class="segment_input" name="custom_ing_active_0" id="custom_ing_active_0">
+							</td>
+							<td>
+								<input type="text" class="segment_input" name="custom_provider_0" id="custom_provider_0">
+							</td>
+							<td id="custom_dose">
+								<input type="text" class="segment_input" name="custom_dose_by_ha_0" onchange="calculate('custom_dose_by_ha_0')" id="custom_dose_by_ha_0">
+							</td>
+							<td id="custom_total">
+								<input type="text" class="segment_input" name="custom_total_kg_0" id="custom_total_kg_0">
+							</td>
+							<!--<i class="fas fa-plus" aria-hidden="true" style="margin-top: 90%; color: #86AE17;"></i>-->
+						</tr>
 					</tbody>
 				</table>
 				</div>
@@ -122,3 +120,26 @@
 	<input type="hidden" name="stage_id" id="segment_stage">
 	<input type="hidden" name="land_id" id="segment_land_id">
 </div>
+
+
+<div id="segment_input_fields_2" class="hide">
+	<tr>
+		<td>
+			<input type="text" class="segment_input" name="custom_product_0" id="custom_product_0">
+		</td>
+		<td>
+			<input type="text" class="segment_input" name="custom_ing_active_0" id="custom_ing_active_0">
+		</td>
+		<td>
+			<input type="text" class="segment_input" name="custom_provider_0" id="custom_provider_0">
+		</td>
+		<td id="custom_dose">
+			<input type="text" class="segment_input" name="custom_dose_by_ha_0" onchange="calculating()" id="custom_dose_by_ha_0">
+		</td>
+		<td id="custom_total">
+			<input type="text" class="segment_input" name="custom_total_kg_0" id="custom_total_kg_0">
+		</td>
+		<!--<i class="fas fa-plus" aria-hidden="true" style="margin-top: 90%; color: #86AE17;"></i>-->
+	</tr>
+</div>
+
