@@ -251,7 +251,8 @@ def addStageProperty(form, files):
             product_id = k.split("_")
             addProperty2Product(property_id, land_id, product_id[2], v)
         elif k.startswith("custom_"):
-            custom.append(v)
+            if v != "":
+                custom.append(v)
             if len(custom) == 6: # 6 Is equal to total of columns values with the minium of the product table
                 custom_total = custom.pop()
                 new_id_product = add_new_product(custom, property_id, land_id)
