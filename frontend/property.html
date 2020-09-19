@@ -25,7 +25,7 @@
 				</div> -->
 			</div>
 			<div class="separator"> </div>
-			<div class="form-row form-property-2" id="lands">
+			<div class="form-row form-property-2" id="view_lands">
 			       {% if property_dict["lands"] == -1 %}
 				<div class="form-group col-md-12" name="name_land">
 			       		<h6> No hay más lotes </h6>
@@ -58,7 +58,11 @@
 				{% if "property_" in k %}
 				<div class="form-group col-md-12">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
+					{% if v == "" %}
+					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="No Asignado" disabled>
+					{%else%}
 					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+					{%endif%}
 				</div>
 				{%else%}
 				{% endif %}
