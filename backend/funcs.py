@@ -245,18 +245,23 @@ def addStageProperty(form, files):
     property_id = form['property_id']
     land_id = form['land_id']
     custom.append(form["stage_id"])
+    new_id_product = 0
     for k, v in form.items():
         if k.startswith("total_kg"):
             product_id = k.split("_")
             addProperty2Product(property_id, land_id, product_id[2], v)
         elif k.startswith("custom_"):
             custom.append(v)
+            if len(custom) == 6: # 6 Is equal to total of columns values with the minium of the product table
+                custom_total = custom.pop()
+                new_id_product = add_new_product(custom, property_id, land_id)
+                custom = []
+                custom.append(form["stage_id"])
+                addProperty2Product(property_id, land_id, str(new_id_product), custom_total)
         else:
             headers.append(k)
             values.append(v)
-    custom.pop()
-    new_id_product = add_new_product(custom, property_id, land_id)
-    addProperty2Product(property_id, land_id, str(new_id_product), form['custom_total_kg_0'])
+    # new_id_product = add_new_product(custom, property_id, land_id)
     ext_name = form["property_id"]+"_"+form["stage_id"]+"_"+form["land_id"]
     path = upload_files_to_property(
                                     files,
