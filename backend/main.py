@@ -10,6 +10,7 @@ import funcs
 import i18n
 import send_email
 import query
+import json
 
 app = Flask(__name__, static_url_path="", static_folder="../frontend")
 app.template_folder = "../frontend"
@@ -87,9 +88,11 @@ def landView():
     land_id = request.args.get("land_id")
     q = query.getPropertyLandCalendar(property_id, land_id)
     html = funcs.searchLandByPropertyId(q)
+    filled_stages = funcs.search_property_procedure(property_id, land_id)
+    filled_stages = json.dumps(filled_stages)
     if html == -1:
         return "<script> alert('Lote no encontrado, refresque la pagina') </script>"
-    return render_template("land_view.html", land=html[0], i18n=i18n.i18n)
+    return render_template("land_view.html", land=html[0], stages=filled_stages, i18n=i18n.i18n)
 
 
 @app.route("/property_menu", methods=['GET'])
@@ -170,18 +173,29 @@ def seeStage():
                                                            type_planting,
                                                            property_id,
                                                            land_name)
-
-    with switch(int(stage_id)) as s:
-        if s.case(1, True):
-            return render_template("property_stage.html",
+    if int(stage_id) != 14: # 14 is sowing date segment id
+        return render_template("property_stage.html",
                                                 stage=stageProducts[0],
                                                 property_land=propertyLand[0],
                                                 i18n=i18n.i18n)
-        if s.case(14, True):
-            return render_template("burning_stage.html",
+    else:
+        return render_template("burning_stage.html",
                                                  stage=stageProducts[0],
                                                  property_land=propertyLand[0],
                                                  i18n=i18n.i18n)
+
+
+    # with switch(int(stage_id)) as s:
+    #    if s.case(1, True):
+    #        return render_template("property_stage.html",
+    #                                            stage=stageProducts[0],
+    #                                            property_land=propertyLand[0],
+    #                                            i18n=i18n.i18n)
+    #    if s.case(14, True):
+    #        return render_template("burning_stage.html",
+    #                                             stage=stageProducts[0],
+    #                                             property_land=propertyLand[0],
+    #                                             i18n=i18n.i18n)
 
 
 @app.route('/add_stage', methods=['GET', 'POST'])

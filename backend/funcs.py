@@ -385,7 +385,7 @@ def getHeadersAndValues(struct):
 
 
 def listOfUsers():
-    q = "select user.id, name, role.role from user join role on user.role_id=role.id where not role.id=1 and active=1 order by role.role"
+    q = "select user.id, concat(name, ' ', last_name) as name, role.role from user join role on user.role_id=role.id where not role.id=1 and active=1 order by role.role"
     user_dict, err = query.fetchall(q)
     if err == -1:
         print(err)
@@ -417,6 +417,16 @@ def listOfUsers():
     dx += "\n"
     dx += "</div>"
     return dx
+
+
+def search_property_procedure(property_id, land_id):
+    where = "property_id="+property_id
+    where += " and land_id="+land_id
+    q = query.selectwhere("property_procedure", "distinct stage_id", where)
+    rows, err = query.fetchall(q)
+    if len(rows) < 1:
+        return "-1"
+    return rows
 
 
 def validateSession(session):
