@@ -18,8 +18,21 @@ function load_land_info(property_id, land_id) {
     clear();
     show(viewLand);
     ajax("GET", "land?id="+property_id+"&land_id="+land_id, "", function(response){
-       seeLand.innerHTML = response; 
+        seeLand.innerHTML = response;
+        fill_stages();
     })
+}
+
+function fill_stages() {
+    var filled = JSON.parse(filled_stages.value);
+    for(i in filled) {
+        console.log(filled[i]);
+        var elements = document.getElementsByName("stage_"+filled[i].stage_id);
+        for(var j=0; j<elements.length; j++) {
+            console.log(elements[j]);
+            elements[j].style = "background-color: #FB0200;";
+        }
+    }
 }
 
 function pageLand(add, amount_records){
