@@ -136,7 +136,8 @@ def getPropertyStage(property_id, land_name):
             property.name, \
             concat(ca.name, ' ', ca.last_name) as property_ca_contact,\
             concat(df.name, ' ', df.last_name) as property_df_contact,\
-            sowing_system, total_ha_property, land.land_name, land.land_ha, property.address as address_land \
+            sowing_system, total_ha_property, land.land_name, land.land_ha,\
+            property.address as address_land, land.variety, land.seedtime, land.id as land_id\
             from land \
             join property \
                 on property.id=land.property_id \

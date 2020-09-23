@@ -216,9 +216,13 @@ def addStage():
             
         if s.case(14, True):
             variety_land = request.form['variety_land']
-            print(stage_id)
-            print(variety_land)
-            return redirect(url_for('index'))
+            seedtime = request.form['seedtime']
+            land_id = request.form['land_id']
+            result = funcs.updateSeedtimeByLandId(land_id, seedtime)
+            if result == -1:
+                print("Error Reported")
+                return "<script> alert('Ocurrio un Error');location.href='/';</script>"
+            return "<script> alert('Se ha guardado la fecha');location.href='/';</script>"
 
 
 

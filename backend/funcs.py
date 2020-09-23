@@ -64,6 +64,20 @@ def updateUserPasswordByEmail(email, new_password):
 
     db.close()
 
+def updateSeedtimeByLandId(id_land, seedtime):
+    db = connection.connection()
+    cursor = db.cursor(dictionary=True)
+    sql = "update land set seedtime='"+seedtime+"' where id="+id_land+""
+    cursor.execute(sql)
+    db.commit()
+    rows = cursor.rowcount
+    if rows < 1:
+        return -1
+
+    return id_land
+
+    db.close()
+
 
 def deactivateUser(email):
     db = connection.connection()
