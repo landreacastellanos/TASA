@@ -47,9 +47,9 @@
 						value="{{property_land['variety']}}" id="variety_land">
 				</div>
 				<div class="form-group col-md-4">
-					<label for="apply_date">Fecha</label>
-					<input type="date" class="form-control form-control-lg" name="apply_date"
-						value="{{property_land['apply_date']}}" id="apply_date">
+					<label for="seedtime">Fecha</label>
+					<input type="date" class="form-control form-control-lg" name="seedtime"
+						value="{{property_land['seedtime']}}" id="seedtime">
 				</div>
 
 			</div>
@@ -69,4 +69,5 @@
 	</div>
 	<input type="hidden" name="stage_id" id="segment_stage">
 	<input type="hidden" name="land_name" id="segment_land_name">
+	<input type="hidden" name="land_id" id="segment_land_id" value="{{property_land['land_id']}}">
 </div>
