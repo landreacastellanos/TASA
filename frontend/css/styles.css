@@ -24,8 +24,8 @@ body {
   /*background-color: DodgerBlue;*/
 }
 .login-container {
-  background-image: url("../images/Atech_Register.1.jpg");
-  background-size: cover;
+  background-image: url("../images/login.jpeg");
+  background-size: 299px 470px;
   height: 470px;
   width: 298px;
 }
