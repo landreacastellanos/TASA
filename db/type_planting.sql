@@ -54,6 +54,11 @@ insert into stage(stage_name) values('Aplicación de Embucahmiento');
 insert into stage(stage_name) values('Protección de Espiga o de Grano');
 
 
+alter table stage add column segment_days varchar(255);
+alter table stage add column notification_days varchar(255);
+
+alter table land add column seedtime date;
+alter table land add column variety varchar(255);
 
 ----------------------- Stage 1 products
 insert into product(stage_id, type_planting_id, commercial_name, ing_active, segment, presentation, concentration, color, formulator, provider, dose_by_ha) values(1,1,'Cosmo agua','Regulador de ph','Regulador de ph',' 1 Kg','N/D','N/D','Cosmoagro','Cosmoagro','0,1'), 
@@ -82,5 +87,8 @@ insert into product(stage_id, type_planting_id, commercial_name, ing_active, seg
 (2,2,'Robust ','Rizobacterias','Rizobacterias','1 y 20 lts','S/N','N/D','Soilte','Soiltec','0,25'), 
 (2,2,'Tricho plus','Trichoderma H y V','Hongos','1 kg','1 x 109 U.F.C./gr','N/D','Soilte','Soiltec','0,15'), 
 (2,2,'Fipromaxx 80 WG','Fipronil 80','Insecticida','250 grs y Kg','800 gr','Amarilla','DVA','DVA','60-70');
+
+
+
 
 

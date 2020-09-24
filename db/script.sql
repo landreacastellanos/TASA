@@ -102,14 +102,14 @@ alter table property add column property_idc varchar(255);
 alter table property add column property_ec varchar(255);
 alter table property add column property_ep varchar(255);
 
-alter table property change column `property_ca` `property_ca` varchar(255) null default null after sowing_system;
-alter table property change column `property_df` `property_df` varchar(255) null default null after property_ca;
-alter table property change column `property_ec` `property_ec` varchar(255) null default null after property_df;
-alter table property change column `property_ep` `property_ep` varchar(255) null default null after property_ec;
-alter table property change column `property_idc` `property_idc` varchar(255) null default null after property_ep;
-alter table property change column `property_rdc` `property_rdc` varchar(255) null default null after property_idc;
-alter table property change column `property_sa` `property_sa` varchar(255) null default null after property_rdc;
-alter table property change column `property_v` `property_v` varchar(255) null default null after property_sa;
+alter table property change column `property_ca` `property_ca` varchar(255) null default 56 after sowing_system;
+alter table property change column `property_df` `property_df` varchar(255) null default 56 after property_ca;
+alter table property change column `property_ec` `property_ec` varchar(255) null default 56 after property_df;
+alter table property change column `property_ep` `property_ep` varchar(255) null default 56 after property_ec;
+alter table property change column `property_idc` `property_idc` varchar(255) null default 56 after property_ep;
+alter table property change column `property_rdc` `property_rdc` varchar(255) null default 56 after property_idc;
+alter table property change column `property_sa` `property_sa` varchar(255) null default 56 after property_rdc;
+alter table property change column `property_v` `property_v` varchar(255) null default 56 after property_sa;
 alter table property drop column property_admin;
 alter table property change column property_name name varchar(255);
 alter table property change column property_address address varchar(255);
@@ -120,4 +120,8 @@ ALTER TABLE `tasa`.`property`
 DROP COLUMN `vendor_id`,
 DROP INDEX `vendor_id` ;
 ;
+
+
+
+
 
