@@ -30,6 +30,10 @@ body {
   width: 298px;
 }
 
+.disabled {
+  border-color: #FB0200;
+}
+
 .login-form {
   /*background-color:red;
   border-color:blue;*/
