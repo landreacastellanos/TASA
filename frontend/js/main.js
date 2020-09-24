@@ -5,6 +5,10 @@ function up(){
 }
 
 function upStage(){
+    if(visit_date.value == "") {
+        alert('Ingrese Fecha de Aplicación');
+        return
+    }
     segmentStageForm.submit();
 }
 
