@@ -335,9 +335,37 @@ function see_stage(stage_id) {
         show(viewStage);
         seeStage.innerHTML = response;
         segment_stage.value = stage_id;
-        segment_land_id.value = land_id.value;
+        segment_land_id.value = stage_land_id.value;
+        segment_set_dates();
     })
 } 
+
+function segment_set_dates() {
+    var days = segment_days.value.split(",");
+    var day_segment_end = days[0];
+    var day_segment_start = days[1];
+    var seed_time_start = Date.parse(property_stage_seedtime.value.replaceAll("-","/"));
+    var seed_time_end = Date.parse(property_stage_seedtime.value.replaceAll("-","/"));
+    seed_time_start = new Date(seed_time_start);
+    seed_time_end = new Date(seed_time_end);
+    if(day_segment_end.includes("+") || day_segment_start.includes("+")) {
+        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() + parseInt(day_segment_start.replace("-",""))));
+        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() + parseInt(day_segment_end.replace("-",""))));
+        segment_start.value = start.getFullYear() + "-" + ("0" + (start.getMonth() + 1)).slice(-2) + "-" + ("0" + start.getDate()).slice(-2)
+        segment_end.value = end.getFullYear() + "-" + ("0" + (end.getMonth() + 1)).slice(-2) + "-" + ("0" + end.getDate()).slice(-2)
+    }else {
+        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() - parseInt(day_segment_start.replace("-",""))));
+        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() - parseInt(day_segment_end.replace("-",""))));
+        segment_start.value = start.getFullYear() + "-" + ("0" + (start.getMonth() + 1)).slice(-2) + "-" + ("0" + start.getDate()).slice(-2)
+        segment_end.value = end.getFullYear() + "-" + ("0" + (end.getMonth() + 1)).slice(-2) + "-" + ("0" + end.getDate()).slice(-2)
+    }
+    segment_start.disabled = true;
+    segment_end.disabled = true;
+    segment_start.classList.add("disabled");
+    segment_end.classList.add("disabled");
+    segment_start_value.value = segment_start.value;
+    segment_end_value.value = segment_end.value;
+}
 
 function ajax(method,url,json,callback){
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
