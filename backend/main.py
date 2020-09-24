@@ -218,7 +218,7 @@ def addStage():
             variety_land = request.form['variety_land']
             seedtime = request.form['seedtime']
             land_id = request.form['land_id']
-            result = funcs.updateSeedtimeByLandId(land_id, seedtime)
+            result = funcs.updateSeedtimeByLandId(land_id, seedtime, variety_land)
             if result == -1:
                 print("Error Reported")
                 return "<script> alert('Ocurrio un Error');location.href='/';</script>"
