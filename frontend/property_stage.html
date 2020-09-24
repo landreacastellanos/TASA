@@ -6,8 +6,8 @@
 			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
 			<div class="form-row form-segment">
 				{% for k, v in property_land.items() %}
-				{% if k == "property_id" %}
-				<input type="hidden" name="{{k}}" id="{{k}}" value="{{v}}">
+				{% if k == "property_id" or k == "land_id" %}
+				<input type="hidden" name="{{k}}" id="stage_{{k}}" value="{{v}}">
 				{%else%}
 				<div class="form-group col-md-2">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
@@ -18,6 +18,16 @@
 				<div class="form-group col-md-2">
 					<label for="apply_date">Fecha de Aplicación</label>
 					<input type="date" required class="form-control form-control-lg" name="visit_date" id="visit_date">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="apply_date">Fecha Temprana </label>
+					<input type="date" required class="form-control form-control-lg" id="segment_start">
+					<input type="hidden" required class="form-control form-control-lg" name="segment_start" id="segment_start_value">
+				</div>
+				<div class="form-group col-md-2">
+					<label for="apply_date">Fecha Tardía </label>
+					<input type="date" required class="form-control form-control-lg" id="segment_end">
+					<input type="hidden" required class="form-control form-control-lg" name="segment_end" id="segment_end_value">
 				</div>
 				
 			</div>
@@ -38,14 +48,14 @@
 						{% for i in stage %}
 						<tr id="product_id_{{i['id']}}">
 						{% for k, v in i.items() %}
-							{% if k == "id" %}
+							{% if k == "id" and k != "segment_days" %}
 							<td scope="row" id="item_checkbox_{{v}}"> 
 								<label class="container container-segment">
 									<input type="checkbox" value='{{v}}' id="item_id_{{v}}" onclick="add_item('{{v}}')">
 									<span class="checkmark"></span>
 								</label> 
 							</td>
-							{% elif k != "stage_name" %}
+							{% elif k != "stage_name"  and k != "segment_days" %}
 							<td id="stage_{{k}}" name="stage_{{k}}"> 
 								{{v}}
 							</td>
@@ -119,6 +129,7 @@
 	</div>
 	<input type="hidden" name="stage_id" id="segment_stage">
 	<input type="hidden" name="land_id" id="segment_land_id">
+	<input type="hidden" name="segment_days" id="segment_days" value="{{segment_days}}" disabled>
 </div>
 
 
