@@ -37,6 +37,9 @@ def i18n(key):
         "property_ca_contact": "Contacto",
         "property_df_contact": "Contacto",
         "address_land": "Dirección",
+        "land_id": "lote_id",
+        "seedtime": "Fecha de Siembra",
+        "variety": "Variedad",
     }
     return i18n[key]
 
