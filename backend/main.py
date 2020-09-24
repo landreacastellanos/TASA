@@ -169,15 +169,17 @@ def seeStage():
     land_name = request.args.get("land_name")
     # print(stage_id, sowing_system(type_planting), property_id, land_name)
     type_planting = i18n.sowing_system(type_planting)
-    stageProducts, propertyLand = funcs.getStageByProperty(stage_id,
-                                                           type_planting,
-                                                           property_id,
-                                                           land_name)
+    stageProducts, propertyLand, segment_days = funcs.getStageByProperty(
+                                                            stage_id,
+                                                            type_planting,
+                                                            property_id,
+                                                            land_name)
     if int(stage_id) != 14: # 14 is sowing date segment id
         return render_template("property_stage.html",
                                                 stage=stageProducts[0],
                                                 property_land=propertyLand[0],
-                                                i18n=i18n.i18n)
+                                                i18n=i18n.i18n,
+                                                segment_days=segment_days)
     else:
         return render_template("burning_stage.html",
                                                  stage=stageProducts[0],
@@ -202,28 +204,28 @@ def seeStage():
 def addStage():
     form = request.form
     stage_id = request.form['stage_id']
-    with switch(int(stage_id)) as s:
-        if s.case(1, True):
-            files = request.files.getlist('files')
-            result = funcs.addStageProperty(form, files)
-            if result == -1:
-                print("Error Reported")
-                return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-            ln = request.form['land_id']
-            pid = request.form['property_id']
-            return render_template("main.html", user=session["user"],
+    print("form2", form)
+    # with switch(int(stage_id)) as s:
+    if int(stage_id) != 14:
+        files = request.files.getlist('files')
+        result = funcs.addStageProperty(form, files)
+        if result == -1:
+            print("Error Reported")
+            return "<script> alert('Ocurrio un Error');location.href='/';</script>"
+        ln = request.form['land_id']
+        pid = request.form['property_id']
+        return render_template("main.html", user=session["user"],
                                     action=STAGE, property_id=pid, land_id=ln)
-            
-        if s.case(14, True):
-            variety_land = request.form['variety_land']
-            seedtime = request.form['seedtime']
-            land_id = request.form['land_id']
-            result = funcs.updateSeedtimeByLandId(land_id, seedtime, variety_land)
-            if result == -1:
-                print("Error Reported")
-                return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-            return "<script> alert('Se ha guardado la fecha');location.href='/';</script>"
 
+    else:
+        variety_land = request.form['variety_land']
+        seedtime = request.form['seedtime']
+        land_id = request.form['land_id']
+        result = funcs.updateSeedtimeByLandId(land_id, seedtime)
+        if result == -1:
+            print("Error Reported")
+            return "<script> alert('Ocurrio un Error');location.href='/';</script>"
+        return "<script> alert('Se ha guardado la fecha');location.href='/';</script>"
 
 
 @app.route('/login', methods=['GET', 'POST'])

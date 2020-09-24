@@ -349,7 +349,9 @@ def getStageByProperty(stage_id, type_planting, property_id, land_name):
         del propertyLand[0]["property_df_contact"]
     q = query.searchStageProducts(stage_id, type_planting)
     stageProducts = query.fetchall(q)
-    segment_days = stageProducts[0][0]["segment_days"]
+    segment_days = ""
+    if stage_id != "14":
+        segment_days = stageProducts[0][0]["segment_days"]
     return(stageProducts, propertyLand, segment_days)
 
 
