@@ -224,7 +224,7 @@ def addStage():
         if result == -1:
             print("Error Reported")
             return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-        return "<script> alert('Se ha guardado la fecha');location.href='/';</script>"
+        return "<script> alert('Los datos de Fecha de Siembra han sido guardados');location.href='/';</script>"
 
 
 @app.route('/login', methods=['GET', 'POST'])
