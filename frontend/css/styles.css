@@ -31,9 +31,13 @@ body {
 }
 
 .disabled {
-  border-color: #FB0200;
+  color: #FB0200;
+  /* border-color: #FB0200; */
 }
 
+.form-control-lg {
+  font-size: 0.75rem;
+}
 .login-form {
   /*background-color:red;
   border-color:blue;*/

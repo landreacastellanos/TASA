@@ -1,36 +1,52 @@
 <div class="tab-form">
 	<!--<form enctype="multipart/form-data" action="/updateUser" accept-charset="uft-8" method="post" id="updateUserForm">-->
 	<div class="panel1 segment-panel">
-		<h3 class="form-group col-md-12" style="color:#86AE17;"> {{stage[0]["stage_name"]}}</h3>
+		<h3 class="form-group col-md-12" style="color:#86AE17;"> <img src="/images/wheat_icon.svg" width="50" height="50"> {{stage[0]["stage_name"]}}</h3>
 		<div class="flex-container add-property">
 			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
 			<div class="form-row form-segment">
 				{% for k, v in property_land.items() %}
-				{% if k == "property_id" or k == "land_id" %}
+				{% if k == "property_id" or k == "land_id" or k == "seedtime" %}
 				<input type="hidden" name="{{k}}" id="stage_{{k}}" value="{{v}}">
+				{%elif k == "total_ha_property" or k == "land_ha" or k == "land_name"  %}
 				{%else%}
-				<div class="form-group col-md-2">
+				<div style="width:20%; padding:0.5%;">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
 					<input type="text" class="form-control form-control-lg" name="property_{{k}}" id="property_stage_{{k}}" value="{{v}}" disabled>
 				</div>
 				{%endif%}
 				{% endfor %}
-				<div class="form-group col-md-2">
-					<label for="apply_date">Fecha de Aplicación</label>
+			</div>
+			<div class="form-row form-segment">
+				<div style="width:15%; padding:0.5%;">
+					<label for="apply_date" style="color: #86AE17;">Fecha de Aplicación</label>
 					<input type="date" required class="form-control form-control-lg" name="visit_date" id="visit_date">
 				</div>
-				<div class="form-group col-md-2">
-					<label for="apply_date">Fecha Temprana </label>
+				<div style="width:15%; padding:0.5%;">
+					<label for="apply_date" style="color: #86AE17;">Inicio de Segmento</label>
 					<input type="date" required class="form-control form-control-lg" id="segment_start">
 					<input type="hidden" required class="form-control form-control-lg" name="segment_start" id="segment_start_value">
 				</div>
-				<div class="form-group col-md-2">
-					<label for="apply_date">Fecha Tardía </label>
+				<div style="width:15%; padding:0.5%;">
+					<label for="apply_date" style="color: #86AE17;">Fin de Segmento</label>
 					<input type="date" required class="form-control form-control-lg" id="segment_end">
 					<input type="hidden" required class="form-control form-control-lg" name="segment_end" id="segment_end_value">
 				</div>
-				
+				<!-- Land Info --> 
+				<div style="width:18%; padding:0.5%;">
+					<label for="total_ha_property">Total Hec. de la Finca</label>
+					<input type="text" class="form-control form-control-lg" name="property_stage_total_ha_property" id="property_stage_total_ha_property" value="{{property_land['total_ha_property']}}" disabled>
+				</div>
+				<div style="width:18%; padding:0.5%;">
+					<label for="land_name">Nombre del Lote</label>
+					<input type="text" class="form-control form-control-lg" name="property_stage_land_name" id="property_stage_land_name" value="{{property_land['land_name']}}" disabled>
+				</div>
+				<div style="width:18%; padding:0.5%;">
+					<label for="land_ha">Hectareas Lote </label>
+					<input type="text" class="form-control form-control-lg" name="property_stage_land_ha" id="property_stage_land_ha"value="{{property_land['land_ha']}}" disabled>
+				</div>
 			</div>
+			
 			<div class="form-segment-table">
 				<label class="col-md-12 l-label"> Técnicas Agrícolas sugeridas para este segmento </label>
 				<div class="table-container col-md-12 table-segment">

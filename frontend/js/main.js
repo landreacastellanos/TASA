@@ -348,8 +348,8 @@ function segment_set_dates() {
     var days = segment_days.value.split(",");
     var day_segment_end = days[0];
     var day_segment_start = days[1];
-    var seed_time_start = Date.parse(property_stage_seedtime.value.replaceAll("-","/"));
-    var seed_time_end = Date.parse(property_stage_seedtime.value.replaceAll("-","/"));
+    var seed_time_start = Date.parse(stage_seedtime.value.replaceAll("-","/"));
+    var seed_time_end = Date.parse(stage_seedtime.value.replaceAll("-","/"));
     seed_time_start = new Date(seed_time_start);
     seed_time_end = new Date(seed_time_end);
     if(day_segment_end.includes("+") || day_segment_start.includes("+")) {
