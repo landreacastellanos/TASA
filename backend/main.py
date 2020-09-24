@@ -204,7 +204,6 @@ def seeStage():
 def addStage():
     form = request.form
     stage_id = request.form['stage_id']
-    print("form2", form)
     # with switch(int(stage_id)) as s:
     if int(stage_id) != 14:
         files = request.files.getlist('files')

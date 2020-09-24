@@ -134,11 +134,12 @@ def searchStageProducts(stage_id, type_planting):
 
 def getPropertyStage(property_id, land_name):
     return "select property_id, \
-            property.name, \
+            property.name as pro_name, \
             concat(ca.name, ' ', ca.last_name) as property_ca_contact,\
             concat(df.name, ' ', df.last_name) as property_df_contact,\
-            sowing_system, total_ha_property, land.land_name, land.land_ha,\
-            property.address as address_land, land.variety, land.seedtime, land.id as land_id\
+            sowing_system, 'sowing_type', land.variety, \
+            land.seedtime, total_ha_property,  \
+            land.land_name, land.land_ha, land.id as land_id \
             from land \
             join property \
                 on property.id=land.property_id \

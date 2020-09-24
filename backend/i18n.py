@@ -40,6 +40,8 @@ def i18n(key):
         "land_id": "lote_id",
         "seedtime": "Fecha de Siembra",
         "variety": "Variedad",
+        "sowing_type": "Tipo de Siembra",
+        "pro_name": "Nombre de la Finca",
     }
     return i18n[key]
 

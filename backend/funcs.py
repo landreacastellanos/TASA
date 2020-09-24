@@ -273,7 +273,7 @@ def addStageProperty(form, files):
                 custom = []
                 custom.append(form["stage_id"])
                 addProperty2Product(property_id, land_id, str(new_id_product), custom_total)
-        else:
+        elif not k == "seedtime":
             headers.append(k)
             values.append(v)
     # new_id_product = add_new_product(custom, property_id, land_id)
@@ -286,7 +286,7 @@ def addStageProperty(form, files):
     q = appendinsert("property_procedure", headers, values)
     last_id, err = query.runQuery(q)
     if err != 1:
-        print("Error insertint property_procedure [ERR02]: ", err)
+        print("Error inserting property_procedure [ERR02]: ", err)
         return -1
     return 1
 
