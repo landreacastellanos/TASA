@@ -45,7 +45,7 @@ def ping():
 def index():
     if 'user' not in session:
         return render_template('/index.html')
-    return render_template("main.html", user=session["user"])
+    return render_template("main.html", user=session["user"], role=session["role"])
     # return "Welcome: " + session["user"]
 
 
