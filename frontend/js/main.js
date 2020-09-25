@@ -295,7 +295,7 @@ function f_home() {
 
 
 function f_stages(){
-	load_land_info(property_id.value,segment_land_id.value);
+	load_land_info(stage_property_id.value,segment_land_id.value);
 }
 
 
