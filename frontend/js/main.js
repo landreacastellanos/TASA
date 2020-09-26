@@ -360,8 +360,10 @@ function see_stage(stage_id) {
         show(viewStage);
         seeStage.innerHTML = response;
         segment_stage.value = stage_id;
-        segment_land_id.value = stage_land_id.value;
-        segment_set_dates();
+        if (stage_id != 14) {
+            segment_land_id.value = stage_land_id.value;
+            segment_set_dates();
+        }
     })
 } 
 
