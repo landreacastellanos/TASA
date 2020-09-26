@@ -6,7 +6,7 @@ function up(){
 
 function upStage(){
     if(visit_date.value == "") {
-        visit_date.value = new Date();
+        visit_date.value = Date.now();
     }
     segmentStageForm.submit();
 }
