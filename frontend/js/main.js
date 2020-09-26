@@ -41,7 +41,7 @@ function fill_stages() {
         var elements = document.getElementsByName("stage_"+filled[i].stage_id);
         for(var j=0; j<elements.length; j++) {
             console.log(elements[j]);
-            elements[j].style = "background-color: #FB0200;";
+            // elements[j].style = "background-color: #FB0200;";
         }
     }
 }
