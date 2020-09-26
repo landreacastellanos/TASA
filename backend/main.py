@@ -204,6 +204,8 @@ def seeStage():
 def addStage():
     form = request.form
     stage_id = request.form['stage_id']
+    ln = request.form['land_id']
+    pid = request.form['property_id']
     # with switch(int(stage_id)) as s:
     if int(stage_id) != 14:
         files = request.files.getlist('files')
@@ -211,8 +213,6 @@ def addStage():
         if result == -1:
             print("Error Reported")
             return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-        ln = request.form['land_id']
-        pid = request.form['property_id']
         return render_template("main.html", user=session["user"],
                                     action=STAGE, property_id=pid, land_id=ln)
 
@@ -220,11 +220,13 @@ def addStage():
         variety_land = request.form['variety_land']
         seedtime = request.form['seedtime']
         land_id = request.form['land_id']
-        result = funcs.updateSeedtimeByLandId(land_id, seedtime, variety_land)
+        sowing_type = request.form['sowing_type']
+        result = funcs.updateSeedtimeByLandId(land_id, seedtime, variety_land, sowing_type)
         if result == -1:
             print("Error Reported")
             return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-        return "<script> alert('Los datos de Fecha de Siembra han sido guardados');location.href='/';</script>"
+        return render_template("main.html", user=session["user"],
+                                    action=14, property_id=pid, land_id=ln)
 
 
 @app.route('/login', methods=['GET', 'POST'])

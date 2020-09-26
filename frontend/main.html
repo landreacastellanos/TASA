@@ -357,6 +357,13 @@
 			load_land_info({{property_id}},{{land_id}});
 			window.history.pushState({}, "", "/");
 		</script>
+	{%elif action == 14 %}
+		<script> 
+			alert('Los datos de Fecha de Siembra han sido guardados');
+			clear();
+			load_land_info({{property_id}},{{land_id}});
+			window.history.pushState({}, "", "/");
+		</script>
 	{% endif%}
 
 

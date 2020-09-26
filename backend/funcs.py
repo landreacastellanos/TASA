@@ -64,10 +64,10 @@ def updateUserPasswordByEmail(email, new_password):
 
     db.close()
 
-def updateSeedtimeByLandId(id_land, seedtime, variety_land):
+def updateSeedtimeByLandId(id_land, seedtime, variety_land, sowing_type):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"' where id="+id_land+""
+    sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"', sowing_type="+sowing_type+" where id="+id_land+""
     cursor.execute(sql)
     db.commit()
     rows = cursor.rowcount
