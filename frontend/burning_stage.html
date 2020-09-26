@@ -90,3 +90,13 @@
 	<input type="hidden" name="land_name" id="segment_land_name">
 	<input type="hidden" name="land_id" id="segment_land_id" value="{{property_land['land_id']}}">
 </div>
+
+<script type="text/javascript">
+	var stage_id = document.getElementById("segment_stage").value;
+	var add_product = document.getElementById("add_product");
+	
+	console.log('hola' + stage_id);
+	if (stage_id == 14) {
+		add_product.style.display = "none";
+	  }
+</script>

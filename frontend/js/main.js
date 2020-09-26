@@ -15,6 +15,10 @@ function upStage(){
     segmentStageForm.submit();
 }
 
+function upBurningStage(){
+    segmentStageForm.submit();
+}
+
 function up_property(){
     validate_lands();
     l_lands.value = JSON.stringify(g_lands);
@@ -336,6 +340,20 @@ function see_stage(stage_id) {
     query += "&type_planting="+property_sowing_system.value
     query += "&property_id="+land_property_id.value
     query += "&land_name="+property_land_name.value
+
+    var add_product = document.getElementById("add_product");
+    var upStageId = document.getElementById("upStageId");
+    var upBurningStageId = document.getElementById("upBurningStageId");
+	
+	if (stage_id == 14) {
+        add_product.style.display = "none";
+        upStageId.style.display = "none";
+        upBurningStageId.style.display = "block";
+	} else {
+        add_product.style.display = "block";
+        upStageId.style.display = "block";
+        upBurningStageId.style.display = "none";
+    }
     
     ajax("GET", "see_stage?"+query, "", function(response){
         clear();
