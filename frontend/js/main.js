@@ -6,7 +6,11 @@ function up(){
 
 function upStage(){
     if(visit_date.value == "") {
-        visit_date.value = Date.now();
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        visit_date.value = today;
     }
     segmentStageForm.submit();
 }
