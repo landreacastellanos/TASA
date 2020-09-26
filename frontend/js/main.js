@@ -373,16 +373,19 @@ function segment_set_dates() {
     var day_segment_start = days[1];
     var seed_time_start = Date.parse(stage_seedtime.value.replaceAll("-","/"));
     var seed_time_end = Date.parse(stage_seedtime.value.replaceAll("-","/"));
+    var amount_days_start = parseInt(day_segment_start.slice(-1));
+    var amount_days_end = parseInt(day_segment_end.slice(-1));
     seed_time_start = new Date(seed_time_start);
     seed_time_end = new Date(seed_time_end);
+    // TODO: remove duplicity
     if(day_segment_end.includes("+") || day_segment_start.includes("+")) {
-        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() + parseInt(day_segment_start.replace("-",""))));
-        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() + parseInt(day_segment_end.replace("-",""))));
+        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() + amount_days_start));
+        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() + amount_days_end));
         segment_start.value = start.getFullYear() + "-" + ("0" + (start.getMonth() + 1)).slice(-2) + "-" + ("0" + start.getDate()).slice(-2)
         segment_end.value = end.getFullYear() + "-" + ("0" + (end.getMonth() + 1)).slice(-2) + "-" + ("0" + end.getDate()).slice(-2)
     }else {
-        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() - parseInt(day_segment_start.replace("-",""))));
-        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() - parseInt(day_segment_end.replace("-",""))));
+        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() - amount_days_start));
+        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() - amount_days_end));
         segment_start.value = start.getFullYear() + "-" + ("0" + (start.getMonth() + 1)).slice(-2) + "-" + ("0" + start.getDate()).slice(-2)
         segment_end.value = end.getFullYear() + "-" + ("0" + (end.getMonth() + 1)).slice(-2) + "-" + ("0" + end.getDate()).slice(-2)
     }
