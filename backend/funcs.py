@@ -71,7 +71,7 @@ def updateSeedtimeByLandId(id_land, seedtime, variety_land, sowing_type):
     cursor.execute(sql)
     db.commit()
     rows = cursor.rowcount
-    if rows < 1:
+    if rows < 0:
         return -1
 
     return id_land
