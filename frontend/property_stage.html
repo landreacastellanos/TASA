@@ -8,7 +8,7 @@
 				{% for k, v in property_land.items() %}
 				{% if k == "property_id" or k == "land_id" or k == "seedtime" %}
 				<input type="hidden" name="{{k}}" id="stage_{{k}}" value="{{v}}">
-				{%elif k == "total_ha_property" or k == "land_ha" or k == "land_name"  %}
+				{%elif k == "total_ha_property" or k == "land_ha" or k == "land_name" or k == "address_land"  %}
 				{%else%}
 				<div style="width:20%; padding:0.5%;">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
