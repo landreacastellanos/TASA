@@ -89,6 +89,7 @@
 				<table class="table borderless">
 					<thead>
 						<tr style="color:#96B940">
+							<!--<th scope="col"></th>-->
 							<th scope="col">Producto</th>
 							<th scope="col">Ing Activo</th>
 							<th scope="col">Proveedor</th>
@@ -97,7 +98,26 @@
 						</tr>
 					</thead>
 					<tbody id="segment_recipe">
+						{% for i in product2property %}
+						<tr id="segment_input_fields_{{i['product_id']}}">
+						{% for k, v in i.items() %}
+							{% if k == "product_id"%}
+							<!--<td scope="row" id="item_checkbox_{{v}}">
+								<button type="button" class="btn print-btn" onclick="remove_item('{{v}}')"> <i class="fas fa-minus"></i> </button>
+							</td>-->
+							<input type="hidden" name="{{k}}_{{v}}" id="{{k}}_{{v}}" value="{{v}}">
+							{%else%}
+							<td style="line-height:2;">
+								{{v}}
+							</td>
+							{%endif%}
+						{%endfor%}
+						</tr>
+						{%endfor%}
 						<tr id="segment_input_fields">
+							<!--<td scope="row" id="item_checkbox_{{v}}">
+								<button type="button" class="btn print-btn" onclick="remove_item()"> <i class="fas fa-minus"></i> </button>
+							</td>-->
 							<td>
 								<input type="text" class="segment_input" name="custom_product_0" id="custom_product_0">
 							</td>
