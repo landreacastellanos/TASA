@@ -341,6 +341,10 @@ def upload_files_to_property(files, ext_name, property_id):
 
 
 def getStageByProperty(stage_id, type_planting, property_id, land_name):
+    validateProducts = searchProduct2Property(property_id)
+    product2property = []
+    if validateProducts != 0:
+        product2property = validateProducts
     q = query.getPropertyStage(property_id, land_name)
     propertyLand = searchLandByPropertyId(q)
     if propertyLand[0]["property_ca_contact"] == "":
@@ -352,7 +356,15 @@ def getStageByProperty(stage_id, type_planting, property_id, land_name):
     segment_days = ""
     if stage_id != "14":
         segment_days = stageProducts[0][0]["segment_days"]
-    return(stageProducts, propertyLand, segment_days)
+    return(stageProducts, propertyLand, segment_days, product2property)
+
+
+def searchProduct2Property(property_id):
+    q = query.getProperty2Product(property_id)
+    rows, err = query.fetchall(q)
+    if len(rows) < 1:
+        return 0
+    return rows
 
 
 def getLandByPropertyID(property_id, offset):

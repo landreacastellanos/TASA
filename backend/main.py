@@ -169,7 +169,7 @@ def seeStage():
     land_name = request.args.get("land_name")
     # print(stage_id, sowing_system(type_planting), property_id, land_name)
     type_planting = i18n.sowing_system(type_planting)
-    stageProducts, propertyLand, segment_days = funcs.getStageByProperty(
+    stageProducts, propertyLand, segment_days, product2property = funcs.getStageByProperty(
                                                             stage_id,
                                                             type_planting,
                                                             property_id,
@@ -179,7 +179,8 @@ def seeStage():
                                                 stage=stageProducts[0],
                                                 property_land=propertyLand[0],
                                                 i18n=i18n.i18n,
-                                                segment_days=segment_days)
+                                                segment_days=segment_days,
+                                                product2property=product2property)
     else:
         return render_template("burning_stage.html",
                                                  stage=stageProducts[0],
