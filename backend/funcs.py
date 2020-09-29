@@ -374,7 +374,7 @@ def searchProduct2Property(property_id, stage_id, land_id):
 def getLandByPropertyID(property_id, offset):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    q = "select land_name, land_ha from land where property_id="+property_id
+    q = "select id,land_name, land_ha from land where property_id="+property_id
     q += " limit 3 offset " + str(offset)
     cursor.execute(q)
     lands = cursor.fetchall()
