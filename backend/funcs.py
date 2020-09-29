@@ -363,12 +363,11 @@ def searchProduct2Property(property_id, stage_id, land_id):
     rows, err = query.fetchall(q)
     if len(rows) < 1:
         print("empty")
-        # return ([], "")
     q = query.getPropertyProcedure(property_id, stage_id, land_id)
     rows_procedure, err = query.fetchall(q)
     if len(rows_procedure) < 1:
         print("empty comments")
-        # return (rows, "")
+        rows_procedure = ""
     return (rows, rows_procedure)
 
 
