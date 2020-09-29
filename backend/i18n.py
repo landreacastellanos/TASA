@@ -10,7 +10,7 @@ def i18n(key):
         "profesion": "Profesión",
         "email": "Correo Electronico",
         "phone": "Telefono",
-        "business_name": "Razon Social",
+        "business_name": "Razón Social",
         "phone": "Telefono",
         "address": "Dirección",
         "property_address": "Dirección de la Finca",

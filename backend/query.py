@@ -175,3 +175,9 @@ def getPropertyProcedure(property_id, stage_id, land_id):
     return "select observation from property_procedure where \
             property_id="+property_id+" and stage_id="+land_id+" and \
             land_id="+land_id
+
+
+def getPropertiesList(offset=0):
+    return "select id, name, business_name, phone, sowing_system \
+            from property order by id \
+            limit 7 offset "+str(offset)

@@ -97,11 +97,14 @@ def landView():
 
 @app.route("/property_menu", methods=['GET'])
 def printPropertyMenu():
-    propertyList = funcs.getPropertiesName()
+    offset = request.args.get("offset")
+    propertyList = funcs.getPropertiesName(offset)
     if propertyList == -1:
         return "Aún no hay propiedades"
-    propertyLand = funcs.getLandByProperty()
-    return render_template("property_menu.html", property_list=propertyList, property_land=propertyLand)
+    # propertyLand = funcs.getLandByProperty()
+    # return render_template("property_menu.html", property_list=propertyList,
+    # property_land=propertyLand)
+    return render_template("table_properties.html", property_list=propertyList, i18n=i18n.sowing_system)
 
 
 # TODO: Add Documentation of the endpoints of the api

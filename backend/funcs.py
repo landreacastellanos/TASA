@@ -384,10 +384,11 @@ def getLandByPropertyID(property_id, offset):
     return lands
 
 
-def getPropertiesName():
+def getPropertiesName(offset):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
-    cursor.execute("select id, name from property order by id")
+    # cursor.execute("select id, name from property order by id")
+    cursor.execute(query.getPropertiesList(offset))
     property_dict = cursor.fetchall()
     if len(property_dict) < 1:
         return -1
