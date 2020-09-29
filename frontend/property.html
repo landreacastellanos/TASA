@@ -32,13 +32,16 @@
 				</div>
 				{%else %}
 	                       {% for k in property_dict["lands"] %}
-				<div class="form-group col-md-6" name="name_land">
+				<div class="form-group col-md-5" name="name_land">
 					<label for="name">Nombre del Lote</label>
 					<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1" min="0" value="{{k['land_name']}}" disabled>
 				</div>
-				<div class="form-group col-md-6" name="hec_land">
+				<div class="form-group col-md-5" name="hec_land">
 					<label for="name">Hectareas Lote</label>
 					<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1" min="0" value="{{k['land_ha']}}" disabled>
+				</div>
+				<div class="form-group col-md-1" name="hec_land">
+					<button type="button" class="btn custom-btn" style="margin-top: 85%; background-color: #86AE17;" onclick="load_land_info(property_id.value, {{k['id']}})"> <i class="far fa-eye"></i></button>
 				</div>
 				{%endfor%}
 				{%endif%}
