@@ -62,9 +62,10 @@ function load_property_info(property_id) {
 
 
 function load_properties(){
-    ajax("GET", "property_menu", "", function(response){
+    // TODO: Old version is a list of the properties in the main menu
+    /*ajax("GET", "property_menu", "", function(response){
         properties.innerHTML = response
-    });
+    });*/
     ajax("GET", "userSelect", "", function(response){
         list_users.innerHTML = response;
     });    
@@ -86,21 +87,34 @@ function clear(){
     window.location.hash= "";
 }
 
-function show_user() {
-    var table = document.getElementById("userlist");
+function show_user(item_value) {
+    /*var table = document.getElementById("userlist");
     var checkbox_input = table.querySelectorAll('input[type=checkbox]');
     for(var i = 0; i < checkbox_input.length; i ++) {
         var input = checkbox_input[i];
         if(input.checked == true) {
-            ajax("GET", "user?user="+input.value, "", function(response){
+        */
+            ajax("GET", "user?user="+item_value, "", function(response){
                 showUser.innerHTML = response;
                 selectElement("role_show_id", parseInt(show_id_role.value));
                 //remove(userList);
                 clear();
                 show(user);
             });
-        }
+    /*}
         //console.log(checkbox_input[i]); 
+    }*/
+}
+
+function getItemSelected(item, f_callback){
+    var table = document.getElementById(item);
+    var checkbox_input = table.querySelectorAll('input[type=checkbox]');
+    for(var i = 0; i < checkbox_input.length; i ++) {
+        var input = checkbox_input[i];
+        if(input.checked == true) {
+            clear();
+            f_callback(input.value);
+        }
     }
 }
 
@@ -110,6 +124,12 @@ function list() {
     page(1, 7, "userList?", userlist);
 }
 
+function property_list() {
+    clear();
+    show(document.getElementById("propertyList"));
+    page(1, 7, "property_menu?", propertylist);
+
+}
 
 function page(add, amount_records, endpoint, element) {
     var offset = window.location.hash;
