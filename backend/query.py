@@ -161,9 +161,10 @@ def getPropertyLandCalendar(property_id, land_id):
             where property.id='"+property_id+"' and land.id='"+land_id+"'"
 
 
-def getProperty2Product(property_id):
+def getProperty2Product(property_id, stage_id):
     return "select product_id, product.commercial_name, ing_active, \
             provider, dose_by_ha, total_kg_lt from property2product \
             join product on \
             product.id=property2product.product_id \
-            where property_id="+property_id
+            where property_id="+property_id+" and \
+            property2product.stage_id ="+stage_id

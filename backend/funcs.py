@@ -258,12 +258,13 @@ def addStageProperty(form, files):
     custom = []
     property_id = form['property_id']
     land_id = form['land_id']
+    stage_id = form['stage_id']
     custom.append(form["stage_id"])
     new_id_product = 0
     for k, v in form.items():
         if k.startswith("total_kg"):
             product_id = k.split("_")
-            addProperty2Product(property_id, land_id, product_id[2], v)
+            addProperty2Product(property_id, land_id, product_id[2], stage_id, v)
         elif k.startswith("custom_"):
             if v != "":
                 custom.append(v)
@@ -272,7 +273,7 @@ def addStageProperty(form, files):
                 new_id_product = add_new_product(custom, property_id, land_id)
                 custom = []
                 custom.append(form["stage_id"])
-                addProperty2Product(property_id, land_id, str(new_id_product), custom_total)
+                addProperty2Product(property_id, land_id, str(new_id_product), stage_id, custom_total)
         elif not k == "seedtime":
             headers.append(k)
             values.append(v)
@@ -291,14 +292,15 @@ def addStageProperty(form, files):
     return 1
 
 
-def addProperty2Product(property_id, land_id, product_id, v):
+def addProperty2Product(property_id, land_id, product_id, stage_id, v):
     v2 = []
-    header = ["property_id", "land_id", "product_id", "total_kg_lt"]
+    header = ["property_id", "land_id", "product_id", "stage_id", "total_kg_lt"]
     # TODO: validate length of the split total_kg_[id_product]
     # this is used to identified the product in the database
     v2.append(property_id)
     v2.append(land_id)
     v2.append(product_id)
+    v2.append(stage_id)
     v2.append(v)
     q = query.insert("property2product",
                      ", ".join(header), "', '".join(v2))
@@ -341,7 +343,7 @@ def upload_files_to_property(files, ext_name, property_id):
 
 
 def getStageByProperty(stage_id, type_planting, property_id, land_name):
-    validateProducts = searchProduct2Property(property_id)
+    validateProducts = searchProduct2Property(property_id, stage_id)
     product2property = []
     if validateProducts != 0:
         product2property = validateProducts
@@ -359,8 +361,8 @@ def getStageByProperty(stage_id, type_planting, property_id, land_name):
     return(stageProducts, propertyLand, segment_days, product2property)
 
 
-def searchProduct2Property(property_id):
-    q = query.getProperty2Product(property_id)
+def searchProduct2Property(property_id, stage_id):
+    q = query.getProperty2Product(property_id, stage_id)
     rows, err = query.fetchall(q)
     if len(rows) < 1:
         return 0
