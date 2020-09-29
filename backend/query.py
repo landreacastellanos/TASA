@@ -132,7 +132,7 @@ def searchStageProducts(stage_id, type_planting):
             stage_id=stage.id" % (stage_id, type_planting))
 
 
-def getPropertyStage(property_id, land_name):
+def getPropertyStage(property_id, land_id):
     return "select property_id, \
             property.name as pro_name, \
             concat(ca.name, ' ', ca.last_name) as property_ca_contact,\
@@ -148,7 +148,7 @@ def getPropertyStage(property_id, land_name):
                 on ca.id=property_ca  \
             join user as df  \
                 on df.id=property_df  \
-            where property.id='"+property_id+"' and land_name='"+land_name+"'"
+            where property.id='"+property_id+"' and land.id='"+land_id+"'"
 
 
 def getPropertyLandCalendar(property_id, land_id):
@@ -161,10 +161,17 @@ def getPropertyLandCalendar(property_id, land_id):
             where property.id='"+property_id+"' and land.id='"+land_id+"'"
 
 
-def getProperty2Product(property_id, stage_id):
+def getProperty2Product(property_id, stage_id, land_id):
     return "select product_id, product.commercial_name, ing_active, \
             provider, dose_by_ha, total_kg_lt from property2product \
             join product on \
             product.id=property2product.product_id \
             where property_id="+property_id+" and \
-            property2product.stage_id ="+stage_id
+            property2product.stage_id ="+stage_id+" and \
+            land_id="+land_id
+
+
+def getPropertyProcedure(property_id, stage_id, land_id):
+    return "select observation from property_procedure where \
+            property_id="+property_id+" and stage_id="+land_id+" and \
+            land_id="+land_id

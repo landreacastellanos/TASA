@@ -167,20 +167,23 @@ def seeStage():
     type_planting = request.args.get("type_planting")
     property_id = request.args.get("property_id")
     land_name = request.args.get("land_name")
+    land_id = request.args.get("land_id")
     # print(stage_id, sowing_system(type_planting), property_id, land_name)
     type_planting = i18n.sowing_system(type_planting)
-    stageProducts, propertyLand, segment_days, product2property = funcs.getStageByProperty(
+    stageProducts, propertyLand, segment_days, product2property, obs = funcs.getStageByProperty(
                                                             stage_id,
                                                             type_planting,
                                                             property_id,
-                                                            land_name)
+                                                            land_name,
+                                                            land_id)
     if int(stage_id) != 14: # 14 is sowing date segment id
         return render_template("property_stage.html",
                                                 stage=stageProducts[0],
                                                 property_land=propertyLand[0],
                                                 i18n=i18n.i18n,
                                                 segment_days=segment_days,
-                                                product2property=product2property)
+                                                product2property=product2property,
+                                                observation=obs)
     else:
         return render_template("burning_stage.html",
                                                  stage=stageProducts[0],

@@ -342,12 +342,9 @@ def upload_files_to_property(files, ext_name, property_id):
     return ", ".join(img_path)
 
 
-def getStageByProperty(stage_id, type_planting, property_id, land_name):
-    validateProducts = searchProduct2Property(property_id, stage_id)
-    product2property = []
-    if validateProducts != 0:
-        product2property = validateProducts
-    q = query.getPropertyStage(property_id, land_name)
+def getStageByProperty(stage_id, type_planting, property_id, land_name, land_id):
+    (validateProducts, obs) = searchProduct2Property(property_id, stage_id, land_id)
+    q = query.getPropertyStage(property_id, land_id)
     propertyLand = searchLandByPropertyId(q)
     if propertyLand[0]["property_ca_contact"] == "":
         del propertyLand[0]["property_ca_contact"]
@@ -358,15 +355,21 @@ def getStageByProperty(stage_id, type_planting, property_id, land_name):
     segment_days = ""
     if stage_id != "14":
         segment_days = stageProducts[0][0]["segment_days"]
-    return(stageProducts, propertyLand, segment_days, product2property)
+    return(stageProducts, propertyLand, segment_days, validateProducts, obs)
 
 
-def searchProduct2Property(property_id, stage_id):
-    q = query.getProperty2Product(property_id, stage_id)
+def searchProduct2Property(property_id, stage_id, land_id):
+    q = query.getProperty2Product(property_id, stage_id, land_id)
     rows, err = query.fetchall(q)
     if len(rows) < 1:
-        return 0
-    return rows
+        print("empty")
+        # return ([], "")
+    q = query.getPropertyProcedure(property_id, stage_id, land_id)
+    rows_procedure, err = query.fetchall(q)
+    if len(rows_procedure) < 1:
+        print("empty comments")
+        # return (rows, "")
+    return (rows, rows_procedure)
 
 
 def getLandByPropertyID(property_id, offset):
