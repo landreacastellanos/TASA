@@ -1,0 +1,32 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Razón Social</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Tipo de Siembra</th>
+    </tr>
+  </thead>
+  <tbody class="table-hover">
+{% for i in property_list %}  
+    <tr>
+	<th scope="row"> 
+		<label class="container">
+  			<input type="checkbox" value='{{i["id"]}}'>
+  			<span class="checkmark"></span>
+		</label> 
+	</th>
+  {% for key, v in i.items() %}
+  	{% if key == "id" %}
+	{% elif key == "sowing_system" %}
+		<td> {{i18n(v)}} </td>
+	{%else%}
+        	<td>{{v}}</td>
+	{%endif%}
+  {% endfor %}
+    </tr>
+{% endfor %}
+    
+  </tbody>
+</table>

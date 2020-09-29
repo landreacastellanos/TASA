@@ -47,9 +47,10 @@
 									
 								</li>
 								{%endif%}
-								<li><a class="dropdown-item" href="#">Ver Fincas &raquo</a>
-									<ul class="submenu dropdown-menu" id="properties">
-									</ul>
+								<li>
+									<a class="dropdown-item" id="" data-toggle="tab" href="#propertyList" role="tab" aria-controls="propertyList" onclick="property_list();" aria-selected="true">Lista de Fincas </a>
+									<!--<ul class="submenu dropdown-menu" id="properties">
+									</ul>-->
 								</li>
 							</ul>
 						</li>
@@ -295,7 +296,24 @@
 			</form>
 		</div>
 		<!--End Tab to see a land -->
-			<!--Profile Tab -->
+		<!-- Property List Tab -->
+		<div class="tab-pane fade" id="propertyList" role="tabpanel" aria-labelledby="property-tab">
+			<div id="panel_list" class="panel1 panel-list">
+				<h3 class="main-headers"><i class="far fa-folder-open"></i> Lista Fincas </h3>
+				<div id="propertylist"></div>
+				<button type="button" class="btn custom-btn"  onclick="page(0, 7,'property_menu?', propertylist)"> <i class="fas fa-arrow-left"></i></button>
+				<button type="button" class="btn custom-btn"  onclick="page(1, 7,'property_menu?', propertylist)"> <i class="fas fa-arrow-right"></i></button>
+				<div class="actions">
+					<!--<button type="button" class="btn custom-btn btn-action"  onclick="addUser()"> <i class="fas fa-user-plus"></i> Agregar Usuario </button>-->
+					<!--<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>-->
+					<button type="button" class="btn custom-btn btn-action"  onclick="getItemSelected('propertylist', load_property_info)"> <i class="fas fa-search"></i> Consultar </button>
+					<!--<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="confirm_delete()"> <i class="fas fa-trash"></i> Eliminar </button>-->
+				</div>
+			</div>
+			<button type="button" class="btn custom-btn user-btn border border-white" onclick="f_home()"> Volver al Inicio </button>
+		</div>
+
+		<!--Profile Tab -->
 		<div class="tab-pane fade" id="userList" role="tabpanel" aria-labelledby="property-tab">
 			<div id="panel_list" class="panel1 panel-list">
 				<h3 class="main-headers"><i class="far fa-folder-open"></i> Lista de Usuarios </h3>
@@ -305,7 +323,7 @@
 				<div class="actions">
 					<button type="button" class="btn custom-btn btn-action"  onclick="addUser()"> <i class="fas fa-user-plus"></i> Agregar Usuario </button>
 					<button type="button" class="btn custom-btn btn-action"  onclick="edit()"> <i class="fas fa-pencil-alt"></i> Editar </button>
-					<button type="button" class="btn custom-btn btn-action"  onclick="show_user()"> <i class="fas fa-search"></i> Consultar </button>
+					<button type="button" class="btn custom-btn btn-action"  onclick="getItemSelected('userlist', show_user)"> <i class="fas fa-search"></i> Consultar </button>
 					<button type="button" class="btn custom-btn btn-action btn-delete"  onclick="confirm_delete()"> <i class="fas fa-trash"></i> Eliminar </button>
 				</div>
 			</div>
