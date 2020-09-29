@@ -276,7 +276,7 @@ function calculate_total_kg(cloned_childs) {
         if(element.id == "stage_dose_by_ha") {
             var dose = element.innerText
             var total = parseInt(property_stage_land_ha.value)*parseFloat(dose.trim().replace(",", "."));
-            return total
+            return total.toFixed(2)
         }
     }
 }
@@ -286,7 +286,7 @@ function calculate() {
     for(var i = 0; i<dose_elements.length; i++) {
         var dose_input = dose_elements[i].firstElementChild.value;
         var total = parseInt(property_stage_land_ha.value)*parseFloat(dose_input.trim().replace(",", "."));
-        var total_input = dose_elements[i].parentElement.lastElementChild.firstElementChild.value = total;
+        var total_input = dose_elements[i].parentElement.lastElementChild.firstElementChild.value = total.toFixed(2);
     }
 }
 
@@ -340,6 +340,7 @@ function see_stage(stage_id) {
     query += "&type_planting="+property_sowing_system.value
     query += "&property_id="+land_property_id.value
     query += "&land_name="+property_land_name.value
+    query += "&land_id="+land_id.value
 
     var add_product = document.getElementById("add_product");
     var upStageId = document.getElementById("upStageId");
