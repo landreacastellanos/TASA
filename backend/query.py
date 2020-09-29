@@ -173,7 +173,7 @@ def getProperty2Product(property_id, stage_id, land_id):
 
 def getPropertyProcedure(property_id, stage_id, land_id):
     return "select observation from property_procedure where \
-            property_id="+property_id+" and stage_id="+land_id+" and \
+            property_id="+property_id+" and stage_id="+stage_id+" and \
             land_id="+land_id
 
 
