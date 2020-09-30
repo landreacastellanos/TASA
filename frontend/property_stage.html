@@ -71,7 +71,7 @@
 									<span class="checkmark"></span>
 								</label> 
 							</td>
-							{% elif k != "stage_name"  and k != "segment_days" %}
+							{% elif k != "stage_name"  and k != "segment_days" and k != "after" and k != "before_img" %}
 							<td id="stage_{{k}}" name="stage_{{k}}"> 
 								{{v}}
 							</td>
@@ -142,19 +142,19 @@
 		</div>
 	</div>
 	<div class="panel1 panel3 segment-side-panel">
-		<div class="image_before">
-			<img src="/images/before.png" width="420" height="350" alt="before">
+		<div class="image_before show" id="before_image">
+			<img src="{{stage[0]['before_img']}}" width="420" height="350" alt="before">
 		</div>
-		<div class="image_after hide">
-			<img src="/images/before.png" width="420" height="350" alt="before">
+		<div class="image_after hide" id="after_image">
+			<img src="{{stage[0]['after']}}" width="420" height="350" alt="after">
 		</div>
 		<!--<div class="button_actions">
 			<i class="fas fa-camera fa-2x" style="color: #86AE17; padding-right: 25%; padding-top:5%;"></i>
 			<i class="fas fa-camera fa-2x" style="color: #86AE17; padding-top:5%;"></i>
 		</div>-->
 		<div class="button_actions">
-			<button type="button" class="btn custom-btn save-btn" onclick=""> <label> Antes </label> <i class="fas fa-camera"></i>   </button>
-			<button type="button" class="btn custom-btn save-btn" onclick=""> <label> Despues </label> <i class="fas fa-camera"></i>  </button>
+			<button type="button" class="btn custom-btn save-btn" onclick="show_images('before')"> <label> Antes </label> <i class="fas fa-camera"></i>   </button>
+			<button type="button" class="btn custom-btn save-btn" onclick="show_images('after')"> <label> Despues </label> <i class="fas fa-camera"></i>  </button>
 		</div>
 		<div class="observation_stage" id="list_users">
 			<div class="form-group col-md-12">
