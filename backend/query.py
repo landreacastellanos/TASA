@@ -123,7 +123,8 @@ def queryProperty(property_id):
 
 def searchStageProducts(stage_id, type_planting):
     return format("select \
-            stage.stage_name, product.id, \
+            stage.stage_name, stage.after, stage.before_img, \
+            product.id, \
             commercial_name, ing_active, provider, dose_by_ha, \
             stage.segment_days \
             from product, stage \
