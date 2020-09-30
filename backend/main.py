@@ -70,7 +70,7 @@ def updateUser():
     if result == -1:
         return "<script> alert('Some Error Happend, Please Contact the Admin') </script>"
     # "<script> alert('"+result+"'); location.href=\'/\'; </script>"
-    return render_template("main.html", user=session["user"], action=UPDATE)
+    return render_template("main.html", user=session["user"], role=session["role"], action=UPDATE)
 
 
 @app.route('/property', methods=['GET', 'POST'])
@@ -220,7 +220,7 @@ def addStage():
         if result == -1:
             print("Error Reported")
             return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-        return render_template("main.html", user=session["user"],
+        return render_template("main.html", user=session["user"], role=session["role"],
                                     action=STAGE, property_id=pid, land_id=ln)
 
     else:
@@ -232,7 +232,7 @@ def addStage():
         if result == -1:
             print("Error Reported")
             return "<script> alert('Ocurrio un Error');location.href='/';</script>"
-        return render_template("main.html", user=session["user"],
+        return render_template("main.html", user=session["user"], role=session["role"],
                                     action=14, property_id=pid, land_id=ln)
 
 
