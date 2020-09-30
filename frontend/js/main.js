@@ -350,6 +350,24 @@ function selectElement(id, valueToSelect) {
     element.value = valueToSelect;
 }
 
+function show_images(element) {
+    if(element == "before") {
+        after_image.classList.add("hide")
+        after_image.classList.remove("show")
+        before_image.classList.add("show")
+        before_image.classList.remove("hide")
+    }else {
+        after_image.classList.add("show")
+        after_image.classList.remove("hide")
+        before_image.classList.add("hide")
+        before_image.classList.remove("show")
+
+    }
+        /*hide_element.classList.add("hide")
+    hide_element.classList.remove("show")
+    show_element.classList.remove("hide")
+    show_element.classList.add("show")*/
+}
 
 // use load_land_info to go back the segments
 // after see a stage, 
