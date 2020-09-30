@@ -181,12 +181,12 @@ def seeStage():
                                                             land_id)
     if int(stage_id) != 14: # 14 is sowing date segment id
         return render_template("property_stage.html",
-                                                stage=stageProducts[0],
-                                                property_land=propertyLand[0],
-                                                i18n=i18n.i18n,
-                                                segment_days=segment_days,
-                                                product2property=product2property,
-                                                observation=obs)
+                               stage=stageProducts[0],
+                               property_land=propertyLand[0],
+                               i18n=i18n.i18n,
+                               segment_days=segment_days,
+                               product2property=product2property,
+                               observation=obs)
     else:
         return render_template("burning_stage.html",
                                                  stage=stageProducts[0],
