@@ -108,7 +108,7 @@ function show_user(item_value) {
 
 function getItemSelected(item, f_callback){
     var table = document.getElementById(item);
-    var checkbox_input = table.querySelectorAll('input[type=checkbox]');
+    var checkbox_input = table.querySelectorAll('input[type=radio]');
     for(var i = 0; i < checkbox_input.length; i ++) {
         var input = checkbox_input[i];
         if(input.checked == true) {
