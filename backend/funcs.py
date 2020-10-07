@@ -64,10 +64,14 @@ def updateUserPasswordByEmail(email, new_password):
 
     db.close()
 
-def updateSeedtimeByLandId(id_land, seedtime, variety_land, sowing_type):
+
+def updateSeedtimeByLandId(id_land, seedtime, variety_land, sowing_type, property_id, stage_id):
     db = connection.connection()
     cursor = db.cursor(dictionary=True)
     sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"', sowing_type='"+sowing_type+"' where id="+id_land+""
+    res = addSowingDate2PropertyProcedure(property_id, stage_id, id_land)
+    if res != 1:
+        return -1
     cursor.execute(sql)
     db.commit()
     rows = cursor.rowcount
@@ -77,6 +81,17 @@ def updateSeedtimeByLandId(id_land, seedtime, variety_land, sowing_type):
     return id_land
 
     db.close()
+
+
+def addSowingDate2PropertyProcedure(property_id, stage_id, land_id):
+    headers = ["property_id", "stage_id", "land_id"]
+    values = [property_id, stage_id, land_id]
+    q = appendinsert("property_procedure", headers, values)
+    last_id, err = query.runQuery(q)
+    if err != 1:
+        print("Error inserting property_procedure [ERR03]: ", err)
+        return -1
+    return 1
 
 
 def deactivateUser(email):
