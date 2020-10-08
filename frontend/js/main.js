@@ -37,10 +37,10 @@ function load_land_info(property_id, land_id) {
 function fill_stages() {
     var filled = JSON.parse(filled_stages.value);
     for(i in filled) {
-        console.log(filled[i]);
+        // console.log(filled[i]);
         var elements = document.getElementsByName("stage_"+filled[i].stage_id);
         for(var j=0; j<elements.length; j++) {
-            console.log(elements[j]);
+             // console.log(elements[j]);
             elements[j].style = "background-color: #FB0200;";
         }
     }
@@ -275,7 +275,7 @@ var g_amount_new_products = 0;
 function addProduct(){
     g_amount_new_products++;
     var segment = segment_input_fields.cloneNode(true);
-    segment.classList.remove("hidde");
+    // segment.classList.remove("hidde");
     segment.id = segment.id.replace("fields", "fields_"+g_amount_new_products);
     for (var i = 0; i<segment.children.length; i ++) {
         segment.children[i].firstElementChild.name = segment.children[i].firstElementChild.name.replace("_0", "_"+g_amount_new_products);
@@ -404,7 +404,9 @@ function see_stage(stage_id) {
             segment_land_id.value = stage_land_id.value;
             segment_set_dates();
         }
-        segment_input_fields.classList.add("hidde");
+        if(document.getElementsByName("product").length > 0) {
+            segment_input_fields.classList.add("hidde");
+        }
     })
 } 
 
