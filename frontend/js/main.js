@@ -422,8 +422,8 @@ function segment_set_dates() {
     seed_time_end = new Date(seed_time_end);
     // TODO: remove duplicity
     if(day_segment_end.includes("+") || day_segment_start.includes("+")) {
-        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() + amount_days_start));
-        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() + amount_days_end));
+        var start = new Date(seed_time_start.setDate(seed_time_start.getDate() + amount_days_end));
+        var end = new Date(seed_time_end.setDate(seed_time_end.getDate() + amount_days_start));
         segment_start.value = start.getFullYear() + "-" + ("0" + (start.getMonth() + 1)).slice(-2) + "-" + ("0" + start.getDate()).slice(-2)
         segment_end.value = end.getFullYear() + "-" + ("0" + (end.getMonth() + 1)).slice(-2) + "-" + ("0" + end.getDate()).slice(-2)
     }else {
