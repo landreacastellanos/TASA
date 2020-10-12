@@ -164,6 +164,19 @@ def save_property():
     return "<script> alert('La finca fue Creada'); location.href=\"/\" </script>"
 
 
+# TODO: Validate LOGIN
+@app.route('/update_property', methods=['POST'])
+def update_property():
+    if funcs.validateSession(session) == -1:
+        return "Please Login"    
+    response = funcs.parseForm(request.form, funcs.update_property, UPDATE)
+    print(response)
+    if response != 1:
+        flash('No se Pudo actualizar la Finca')
+        return redirect(url_for('index'))
+    return "<script> alert('La finca fue actulizada'); location.href=\"/\" </script>"
+
+
 @app.route('/see_stage', methods=['GET', 'POST'])
 def seeStage():
     stage_id = request.args.get("stage_id")

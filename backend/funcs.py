@@ -213,6 +213,30 @@ def saveProperty(form, table_name):
         return -1
     return 1
 
+    
+def update_property(form, table_name):
+    lands = form["lands"]
+    table_name = form["table_name"]
+    property_id = form["property_id"]
+    form.pop("lands")
+    form.pop("table_name")
+    form.pop("property_id")
+    
+    property_dict = form
+    headers, values = getHeadersAndValues(property_dict)
+    statement = query.update_data(table_name, headers, values,"id='"+property_id+"'")
+
+    last_id, err = query.runQuery(statement)
+    if last_id == -1:
+        print("Error Happend: ", err)
+        return -1
+    
+    response = updateLand(lands)
+    if response == -1:
+        print("Error Saving Lands")
+        return -1
+    return 1
+
 
 def saveLand(last_id, lands):
     decode_lands = json.loads(lands)
@@ -232,6 +256,20 @@ def saveLand(last_id, lands):
             print("Land Error Happend: ", err)
             return -1
 
+        
+def updateLand(lands):
+    decode_lands = json.loads(lands)
+    if len(decode_lands) == 0:
+        print("Error No added Lands")
+        return -1    
+
+    for land in decode_lands:
+        body = 'update land set land_name="{}",land_ha="{}" where id={}'.format(land['land_name'],land['land_ha'],land['id'])
+        statement = body
+        last_id, err = query.runQuery(statement)
+        if last_id == -1:
+            print("Land Error Happend: ", err)
+            return -1
 
 # def searchLandByPropertyId(property_id, land_name):
 def searchLandByPropertyId(query):
