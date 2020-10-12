@@ -1,9 +1,10 @@
+<form enctype="multipart/form-data" action="/update_property" accept-charset="uft-8" method="post" id="updatePropertyForm">
 <div class="tab-form">
 	<div class="panel1">
 		<h3 class="center form-group col-md-12"> <img src="/images/wheat_icon.svg" width="50" height="50"> Datos Finca </h3>
 		<div class="flex-container add-property">
 			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
-			<div class="form-row form-property">
+			<div class="form-row form-property property_update">
 	                       {% for k, v in property_dict.items() %}
 				{% if "property_" in k or k == "lands" %}
 				{% elif k == "id" %}
@@ -11,7 +12,7 @@
 				{% else %}
 				<div class="form-group col-md-6">
 					<label for="property_{{k}}">{{i18n(k)}}</label>
-					<input type="text" class="form-control form-control-lg" name="property_{{k}}" value="{{v}}" disabled>
+					<input type="text" class="form-control form-control-lg" name="{{k}}" value="{{v}}" disabled>
 				</div>
 				{% endif %}
 				{% endfor %}
@@ -34,18 +35,18 @@
 	                       {% for k in property_dict["lands"] %}
 				<div class="form-group col-md-5" name="name_land">
 					<label for="name">Nombre del Lote</label>
-					<input type="text" class="form-control form-control-lg" name="name_land_1" name="name_land_1" min="0" value="{{k['land_name']}}" disabled>
+					<input type="text" class="form-control form-control-lg" name="name_land_1" id="{{k['id']}}" name="name_land_1" min="0" value="{{k['land_name']}}" disabled>
 				</div>
 				<div class="form-group col-md-5" name="hec_land">
 					<label for="name">Hectareas Lote</label>
-					<input type="number" class="form-control form-control-lg" name="hec_land_1" name="hec_land_1" min="0" value="{{k['land_ha']}}" disabled>
+					<input type="number" class="form-control form-control-lg" name="hec_land_1" id="{{k['id']}}" name="hec_land_1" min="0" value="{{k['land_ha']}}" disabled>
 				</div>
 				<div class="form-group col-md-1" name="hec_land">
 					<button type="button" class="btn custom-btn" style="margin-top: 85%; background-color: #86AE17;" onclick="load_land_info(property_id.value, {{k['id']}})"> <i class="far fa-eye"></i></button>
 				</div>
 				{%endfor%}
 				{%endif%}
-				<input type="hidden" name="lands" id="l_lands">
+				<input type="hidden" name="lands" id="edit_l_lands">
 				<input type="hidden" name="table_name" value="property">
 				<button type="button" class="btn custom-btn"  onclick="pageLand(0, 3)"> <i class="fas fa-arrow-left"></i></button>
 				<button type="button" class="btn custom-btn"  onclick="pageLand(1, 3)"> <i class="fas fa-arrow-right"></i></button>
@@ -56,7 +57,7 @@
 		<h3 class="center form-group col-md-12"> <i class="fas fa-user"></i> Usuarios </h3>
 		<div class="flex-container add-property">
 			<label class="form-group col-md-12 l-label" style="padding-top: 4.5%;"> Usuarios de la Finca</label>
-			<div class="form-row" id="list_users">
+			<div class="form-row list_users" id="list_users">
 	                       {% for k, v in property_dict.items() %}
 				{% if "property_" in k %}
 				<div class="form-group col-md-12">
@@ -73,6 +74,6 @@
 			</div>
 			
 		</div>
-	</div>
-	</form>
+	</div>	
 </div>
+</form>
