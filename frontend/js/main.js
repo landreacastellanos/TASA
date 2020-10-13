@@ -1,6 +1,6 @@
 // vim: sw=4 ts=4 expandtab
 // TODO: Simplify Those up, up_property, up_edit, functions in a single one
-var edit = false
+var var_edit = false
 function up(){
     saveUserForm.submit();
 }
@@ -30,7 +30,7 @@ function up_property(){
 function edit_property(){    
 	var text = $("#editFinca > label").text()
 	if(text==" Editar Finca "){
-		edit=true
+		var_edit=true
 		$("input",$("#viewProperty")).removeAttr("disabled");
 		$(".list_users").empty();
 		load_properties();
@@ -50,7 +50,7 @@ function edit_property(){
 		validate_lands_edit();
 		edit_l_lands.value = JSON.stringify(e_g_lands);
 		updatePropertyForm.submit();
-		edit=false
+		var_edit=false
 		$("#editFinca > label").text(" Editar Finca ")
 		$("input",$("#viewProperty")).attr("disabled","disabled")
 	}
@@ -163,7 +163,7 @@ function list() {
 
 function property_list() {
 	$("#editFinca > label").text(" Editar Finca ");
-	edit=false;
+	var_edit=false;
     clear();
     show(document.getElementById("propertyList"));
     page(1, 7, "property_menu?", propertylist);
@@ -194,7 +194,7 @@ function page(add, amount_records, endpoint, element) {
     ajax("GET", endpoint+"offset="+page,"", function(response){
         element.innerHTML = response;
 		$("#editFinca > label").text(" Editar Finca ")
-		if(edit)
+		if(var_edit)
 			edit_property()
     });
 }
@@ -275,7 +275,7 @@ function validate_lands_edit() {
 
 function edit() {
     var table = document.getElementById("userlist");
-    var checkbox_input = table.querySelectorAll('input[type=checkbox]');
+    var checkbox_input = table.querySelectorAll('input[type=radio]');
     for(var i = 0; i < checkbox_input.length; i ++) {
         var input = checkbox_input[i];
         if(input.checked == true) {
@@ -287,7 +287,7 @@ function edit() {
 
 function deleteUser() {
     var table = document.getElementById("userlist");
-    var checkbox_input = table.querySelectorAll('input[type=checkbox]');
+    var checkbox_input = table.querySelectorAll('input[type=radio]');
     for(var i = 0; i < checkbox_input.length; i ++) {
         var input = checkbox_input[i];
         if(input.checked == true) {
@@ -301,7 +301,7 @@ function deleteUser() {
 
 function confirm_delete() {
     var table = document.getElementById("userlist");
-    var checkbox_input = table.querySelectorAll('input[type=checkbox]'); 
+    var checkbox_input = table.querySelectorAll('input[type=radio]'); 
     for(var i = 0; i < checkbox_input.length; i ++) {
         var input = checkbox_input[i];
         if(input.checked == true) {
