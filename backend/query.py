@@ -80,6 +80,19 @@ def insert(table_name, headers, value):
 values('%s')" % (table_name, headers, value))
 
 
+def update_data(table_name, headers, value,condition):
+    body = ''
+    for item in range(len(headers)):
+        column  = headers[item]
+        val  = value[item]
+        body += column+'="'+val+'",'
+    body = body[:-1]
+    query = format("UPDATE %s \
+SET %s where %s " % (table_name, body ,condition))
+
+    return query
+
+
 def select(table_name, headers):
     return format("select %s from %s" % (headers, table_name))
 

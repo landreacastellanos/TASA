@@ -1,5 +1,6 @@
 // vim: sw=4 ts=4 expandtab
 // TODO: Simplify Those up, up_property, up_edit, functions in a single one
+var edit = false
 function up(){
     saveUserForm.submit();
 }
@@ -23,6 +24,36 @@ function up_property(){
     validate_lands();
     l_lands.value = JSON.stringify(g_lands);
     savePropertyForm.submit();
+}
+
+
+function edit_property(){    
+	var text = $("#editFinca > label").text()
+	if(text==" Editar Finca "){
+		edit=true
+		$("input",$("#viewProperty")).removeAttr("disabled");
+		$(".list_users").empty();
+		load_properties();
+		$("#editFinca > label").text(" Guardar cambios ");	
+	    
+		ajax("GET", "userSelect", "", function(response){
+        $(".list_users").html(response);
+		}); 
+		var control = $("[name='sowing_system']",$(".property_update"))
+		var parent = control.parent()
+		control.remove("input")
+		parent.append('<select id="sowing_system" name="sowing_system" class="form-control form-control-lg"><option value="1">Arroz Secano</option><option value="2">Arroz de Riego</option></select>');
+		
+	}
+	else{
+		e_g_lands=[]
+		validate_lands_edit();
+		edit_l_lands.value = JSON.stringify(e_g_lands);
+		updatePropertyForm.submit();
+		edit=false
+		$("#editFinca > label").text(" Editar Finca ")
+		$("input",$("#viewProperty")).attr("disabled","disabled")
+	}
 }
 
 function load_land_info(property_id, land_id) {
@@ -125,6 +156,8 @@ function list() {
 }
 
 function property_list() {
+	$("#editFinca > label").text(" Editar Finca ");
+	edit=false;
     clear();
     show(document.getElementById("propertyList"));
     page(1, 7, "property_menu?", propertylist);
@@ -154,6 +187,9 @@ function page(add, amount_records, endpoint, element) {
     }    
     ajax("GET", endpoint+"offset="+page,"", function(response){
         element.innerHTML = response;
+		$("#editFinca > label").text(" Editar Finca ")
+		if(edit)
+			edit_property()
     });
 }
 
@@ -196,6 +232,33 @@ function validate_lands() {
             e.disable = true;
             if(l_name != "" && l_hec != "") {
                 g_lands.push({land_name:l_name, land_ha: l_hec});
+            }
+            e.value = "";
+        }
+    }
+    //l_lands.value = JSON.stringify(j_lands);
+    //g_lands = JSON.stringify(j_lands);
+}
+
+var e_g_lands = []
+function validate_lands_edit() {
+    var inputs = view_lands.querySelectorAll("input");
+    //var j_lands = []
+    var l_name = "";
+    var l_hec = "";
+	var l_id = "";
+    for(var i = 0; i<inputs.length; i++){
+        var e = inputs[i];
+        if(e.name == "name_land_1") {
+            l_name = e.value;
+			l_id = e.id;
+            e.disable = true;
+            e.value = "";
+        }else if (e.name == "hec_land_1"){
+            l_hec = e.value;
+            e.disable = true;
+            if(l_name != "" && l_hec != "") {
+                e_g_lands.push({id:l_id,land_name:l_name, land_ha: l_hec});
             }
             e.value = "";
         }
