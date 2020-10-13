@@ -102,6 +102,12 @@ function load_properties(){
     });    
 }
 
+function validate_password(){
+    if(password.value != confirm_password.value) {
+        alert('La Contraseña no Coinciden');
+    }
+}
+
 function up_edit() {
    updateUserForm.submit(); 
 }
