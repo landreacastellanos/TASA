@@ -416,8 +416,8 @@ function segment_set_dates() {
     var day_segment_start = days[1];
     var seed_time_start = Date.parse(stage_seedtime.value.replaceAll("-","/"));
     var seed_time_end = Date.parse(stage_seedtime.value.replaceAll("-","/"));
-    var amount_days_start = parseInt(day_segment_start.slice(-1));
-    var amount_days_end = parseInt(day_segment_end.slice(-1));
+    var amount_days_start = parseInt(day_segment_start.slice(1));
+    var amount_days_end = parseInt(day_segment_end.slice(1));
     seed_time_start = new Date(seed_time_start);
     seed_time_end = new Date(seed_time_end);
     // TODO: remove duplicity
