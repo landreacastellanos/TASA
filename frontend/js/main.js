@@ -2,7 +2,9 @@
 // TODO: Simplify Those up, up_property, up_edit, functions in a single one
 var var_edit = false
 function up(){
-    saveUserForm.submit();
+    if(validate_password() != false) {
+        saveUserForm.submit();
+    }
 }
 
 function upStage(){
@@ -105,6 +107,7 @@ function load_properties(){
 function validate_password(){
     if(password.value != confirm_password.value) {
         alert('La Contraseña no Coinciden');
+        return false;
     }
 }
 
