@@ -105,7 +105,7 @@ function load_properties(){
 }
 
 function validate_password(){
-    if(password.value != confirm_password.value) {
+    if(password.value != confirm_password.value || confirm_password.value == "") {
         alert('La Contraseña no Coinciden');
         return false;
     }
