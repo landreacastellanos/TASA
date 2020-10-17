@@ -168,7 +168,7 @@ def getPropertyStage(property_id, land_id):
 def getPropertyLandCalendar(property_id, land_id):
     return "select property_id, \
             name, business_name, phone, \
-            address, \
+            address, variety, \
             total_ha_property, sowing_system, \
             land.id as land_id, land.land_name, land.land_ha \
             from land join property on property.id=land.property_id \
