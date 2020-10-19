@@ -239,3 +239,8 @@ input:checked + .slider:before {
 #content{
    background: rgb(255 255 255 / 35%);
 }
+
+label.alert_red {
+    color: red;
+    font-style: italic;
+}

@@ -152,7 +152,7 @@ def getPropertyStage(property_id, land_id):
             concat(ca.name, ' ', ca.last_name) as property_ca_contact,\
             concat(df.name, ' ', df.last_name) as property_df_contact,\
             sowing_system, land.sowing_type, land.variety, \
-            land.seedtime, total_ha_property,  \
+            land.seedtime, land.realtime, total_ha_property,  \
             property.address as address_land, \
             land.land_name, land.land_ha, land.id as land_id, land.sowing_type as sowing_type \
             from land \

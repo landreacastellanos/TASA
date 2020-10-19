@@ -1,6 +1,6 @@
 <div class="tab-form">
 	<!--<form enctype="multipart/form-data" action="/updateUser" accept-charset="uft-8" method="post" id="updateUserForm">-->
-	<div class="panel1 segment-panel">
+	<div class="panel1 segment-panel" id="burning_stage">
 		<h3 class="form-group col-md-12" style="color:#86AE17;"><img src="/images/wheat_icon.svg" width="50"
 				height="50">Fecha de Siembra</h3>
 		<div class="flex-container add-property">
@@ -49,7 +49,7 @@
 						value="{{property_land['variety']}}" id="variety_land">
 				</div>
 				<div class="form-group col-md-4">
-					<label for="seedtime">Fecha de siembra</label>
+					<label for="seedtime">Fecha planeada</label>
 					<input type="date" class="form-control form-control-lg" name="seedtime"
 						value="{{property_land['seedtime']}}" id="seedtime" required>
 				</div>
@@ -72,6 +72,15 @@
 							{% endif %}
 						{% endif %}
 				</div>
+				<div class="form-group col-md-4">
+				</div>
+				<div class="form-group col-md-4">
+					<label>Fecha real</label>
+					<input type="date" id="realtime" class="form-control form-control-lg" name="realtime"
+						value="{{property_land['realtime']}}" id="realtime">
+					<br />
+					<label id="alert_label" class="alert_red">Recuerde que despues de diligenciar la fecha real, se dara por finalizada esta etapa y no podra volver a realizar cambios.</label>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -82,10 +91,6 @@
 		<div class="image_after hide">
 			<img src="/images/burning_planting.jpg" width="420" height="350" alt="before">
 		</div>
-		<!--<div class="button_actions">
-			<i class="fas fa-camera fa-2x" style="color: #86AE17; padding-right: 25%; padding-top:5%;"></i>
-			<i class="fas fa-camera fa-2x" style="color: #86AE17; padding-top:5%;"></i>
-		</div>-->
 	</div>
 	<input type="hidden" name="stage_id" id="segment_stage">
 	<input type="hidden" name="land_name" id="segment_land_name">
@@ -95,7 +100,7 @@
 <script type="text/javascript">
 	var stage_id = document.getElementById("segment_stage").value;
 	var add_product = document.getElementById("add_product");
-	
+	console.log(realtime.value)
 	console.log('hola' + stage_id);
 	if (stage_id == 14) {
 		add_product.style.display = "none";

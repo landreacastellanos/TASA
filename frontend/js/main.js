@@ -479,6 +479,19 @@ function see_stage(stage_id) {
         if(document.getElementsByName("product").length > 0) {
             segment_input_fields.classList.add("hidde");
         }
+		realtime_value = realtime.value
+		if(realtime_value != "")
+		{
+			alert_label.style.display = "none"
+			$("input",$("#burning_stage")).attr("disabled","disabled")
+		}
+		else{
+			alert_label.style.display = "auto"
+			$("#seedtime").removeAttr("disabled")
+			$("#variety_land").removeAttr("disabled")
+			$("#sowing_type").removeAttr("disabled")
+			$("#realtime").removeAttr("disabled")
+		}
     })
 } 
 

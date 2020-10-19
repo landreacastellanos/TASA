@@ -241,7 +241,10 @@ def addStage():
         seedtime = request.form['seedtime']
         land_id = request.form['land_id']
         sowing_type = request.form['sowing_type']
-        result = funcs.updateSeedtimeByLandId(land_id, seedtime, variety_land, sowing_type, pid, stage_id)
+        realtime = None
+        if(request.form['realtime'] != ''):
+            realtime = request.form['realtime']
+        result = funcs.updateSeedtimeByLandId(land_id, seedtime, variety_land, sowing_type, pid, stage_id,realtime)
         if result == -1:
             print("Error Reported")
             return "<script> alert('Ocurrio un Error');location.href='/';</script>"
