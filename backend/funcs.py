@@ -71,10 +71,10 @@ def updateSeedtimeByLandId(id_land, seedtime, variety_land, sowing_type, propert
     sql=''
     if(realtime is not None):
         # sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"',realtime='"+realtime+"', sowing_type='"+sowing_type+"' where id="+id_land+""
-        sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"',realtime='"+realtime+"' where id="+id_land+""
+        sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"',realtime='"+realtime+"', sowing_type='"+sowing_type+"' where id="+id_land+""
     else:
         # sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"', sowing_type='"+sowing_type+"' where id="+id_land+""
-        sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"' where id="+id_land+""
+        sql = "update land set seedtime='"+seedtime+"', variety='"+variety_land+"', sowing_type='"+sowing_type+"' where id="+id_land+""
     res = addSowingDate2PropertyProcedure(property_id, stage_id, id_land)
     if res != 1:
         return -1

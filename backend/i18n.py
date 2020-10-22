@@ -42,6 +42,7 @@ def i18n(key):
         "variety": "Variedad",
         "sowing_type": "Tipo de Siembra",
         "pro_name": "Nombre de la Finca",
+        "realtime": "Fecha real",
     }
     return i18n[key]
 

@@ -6,7 +6,7 @@
 			<label class="form-group col-md-12 l-label"> Datos de la Finca</label>
 			<div class="form-row form-segment">
 				{% for k, v in property_land.items() %}
-				{% if k == "property_id" or k == "land_id" or k == "seedtime" %}
+				{% if k == "property_id" or k == "land_id" or k == "seedtime" or k == "realtime" %}
 				<input type="hidden" name="{{k}}" id="stage_{{k}}" value="{{v}}">
 				{%elif k == "total_ha_property" or k == "land_ha" or k == "land_name" or k == "address_land"  %}
 				{%else%}
