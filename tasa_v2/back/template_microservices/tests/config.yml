@@ -1,0 +1,45 @@
+pyms:
+  services:
+    requests:
+      data: ""
+    swagger:
+        path: "project/swagger"
+        file: "swagger.yml"
+        url: "/swagger/"
+        project_dir: "project"
+    tracer:
+        client: "jaeger"
+        host: "localhost"
+        component_name: "platform_settings"
+    metrics: true
+
+  config:
+    ELASTICACHE_REDIS_ENDPOINT: "ec-storage-cache-001.zfybl7.0001.use1.cache.amazonaws.com"
+    ELASTICACHE_ARN: "arn:aws:elasticache:us-east-1:583767213990:cluster:ec-storage-cache-001"
+    APP_NAME: "platform_settings"
+    APP_VERSION: "1.0"
+    APPLICATION_ROOT : "/platform_settings"
+    ELASTICACHE_AWS_ACCESS_KEY_ID: "AKIAYP2Z4Y6TMNKJXVFN"
+    ELASTICACHE_AWS_SECRET_ACCESS_KEY: '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'
+    ELASTICACHE_REGION_NAME: 'us-east-1'
+    AWS_ACCESS_KEY_ID: "AKIAYP2Z4Y6TMNKJXVFN"
+    AWS_SECRET_ACCESS_KEY: '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'
+    QUEUE_COMMAND_NAME: "sqs-command"
+    QUEUE_LOGS_NAME: "sqs-logs"
+    QUEUE_METERING_NAME: "sqs-metering"
+    QUEUE_NOTIFIER_NAME: "sqs-notifier"
+    QUEUE_READINGS_NAME: "sqs-readings"
+    QUEUE_PROCESS_NAME: "sqs-process"
+    REGION_NAME: 'us-east-1'
+    CONNECTIONS_STRINGS:
+      POSTGRESQL_DB_PAP_PS: "postgres,pg8000,PAP:PRIME@192.168.1.104:5432/DB_PAP_PS,schema=PS"
+      REDIS_DB_DOMAINS: "host=localhost,port=6379,db=0"
+      EC_STORAGE_CACHE: "arn:aws:elasticache:us-east-1:583767213990:cluster:ec-storage-cache-001"
+    DEBUG: true
+    SECRET_KEY: "gjr39dkjn344_!67#"
+    TESTING: true
+    SQLALCHEMY_DATABASE_URI: "sqlite:///:memory:"
+    SQLALCHEMY_TRACK_MODIFICATIONS: true
+    ENTITIES_DEFINITIONS_PATH: "static/entities_definitions.json"
+    VALIDATION_SCHEMES_PATH: "static/validation_schemes.json"
+    KEY_PRIVATE: "adf9c706bf09a12c"

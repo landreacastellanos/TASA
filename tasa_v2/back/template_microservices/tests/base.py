@@ -1,6 +1,6 @@
-#/tests/base.py
+# /tests/base.py
 
-from flask_testing import TestCase
+from  flask_testing import TestCase
 
 from project.app import create_app
 
