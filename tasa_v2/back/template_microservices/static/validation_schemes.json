@@ -1,0 +1,451 @@
+{
+   "deviceElectricMeter": {
+      "type": "object",
+      "required": [
+         "brand",
+         "model",
+         "deviceCategory",
+         "deviceId",
+         "deviceMaster",
+         "deviceDescription",
+         "deviceStatus"
+      ],
+      "editables": [
+         "deviceDescription",
+         "serial",
+         "accountNumber",
+         "deviceStatus",
+         "deviceComments",
+         "agentId",
+         "agentDescription",
+         "authenticationUser",
+         "communicationCode",
+         "master",
+         "ipHostname",
+         "port",
+         "telephoneNumber",
+         "commAddress",
+         "useAreaCode",
+         "areaCode",
+         "communicationManager",
+         "imei",
+         "baudRate",
+         "dataBits",
+         "stopBits",
+         "parity",
+         "dataTerminalReady",
+         "carrierDetect",
+         "requestToSend",
+         "timeout",
+         "tries",
+         "framesPERPacket"
+      ],
+      "properties": {
+         "brand": {
+            "type": "string",
+            "domain": "f'domain_brand",
+            "example": "Elster"
+         },
+         "model": {
+            "type": "string",
+            "example": "2019-32-aecd",
+            "domain": "f'domain_model"
+         },
+         "communicationCode": {
+            "type": "string",
+            "example": "GPRS",
+            "domain": "f'domain_communication_code"
+         },
+         "deviceCategory": {
+            "type": "string",
+            "example": "METER",
+            "enum": [
+               "METER",
+               "CONCENTRATOR"
+            ]
+         },
+         "deviceId": {
+            "type": "string"
+         },
+         "agentRoles": {
+            "type": "array"
+         },
+         "deviceMaster": {
+            "type": "string",
+            "example": "Device"
+         },
+         "deviceDescription": {
+            "type": "string",
+            "example": "Description one",
+            "maxLength": 50
+         },
+         "serial": {
+            "type": "string",
+            "example": "123-455-asfe",
+            "maxLength": 50
+         },
+         "accountNumber": {
+            "type": "string",
+            "example": "123kduaf-13312.",
+            "maxLength": 50
+         },
+         "deviceStatus": {
+            "type": "string",
+            "example": "ON",
+            "enum": [
+               "ENABLE",
+               "DISABLE",
+               "maintenance"
+            ],
+            "default": "ENABLE"
+         },
+         "deviceComments": {
+            "type": "string",
+            "example": "ion-3021",
+            "maxLength": 498
+         },
+         "agentId": {
+            "type": "string",
+            "maxLength": 30
+         },
+         "agentDescription": {
+            "type": "string",
+            "maxLength": 50
+         },
+         "ratiosType": {
+            "type": "string"
+         },
+         "ratiosPrimary": {
+            "type": "string"
+         },
+         "authenticationUser": {
+            "type": "string",
+            "example": "write Automatic",
+            "maxLength": 6
+         },
+         "authenticationPassword": {
+            "type": "string",
+            "example": "8237kaue*",
+            "maxLength": 50
+         },
+         "master": {
+            "type": "integer",
+            "example": 12
+         },
+         "ipHostname": {
+            "type": "string",
+            "example": "192.168.52.0",
+            "maxLength": 100
+         },
+         "port": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 65535,
+            "example": 234,
+            "default": 1
+         },
+         "telephoneNumber": {
+            "type": "string",
+            "example": "312kk432",
+            "maxLength": 100
+         },
+         "commAddress": {
+            "type": "string",
+            "example": "hexa",
+            "default": "f'default_communication_address"
+         },
+         "useAreaCode": {
+            "type": "boolean",
+            "example": true,
+            "default": false
+         },
+         "areaCode": {
+            "type": "string",
+            "example": "area 3",
+            "maxLength": 5
+         },
+         "communicationManager": {
+            "type": "boolean",
+            "example": true,
+            "default": false
+         },
+         "imei": {
+            "type": "integer",
+            "maximum": 15,
+            "example": 2
+         },
+         "ratiosSecondary": {
+            "type": "string"
+         },
+         "ratio": {
+            "type": "string"
+         },
+         "authenticationLevel": {
+            "type": "string"
+         },
+         "baudRate": {
+            "type": "integer",
+            "example": 324,
+            "enum": [
+               300,
+               1200,
+               2400,
+               4800,
+               7200,
+               9600,
+               14400,
+               19200,
+               28800,
+               33600,
+               8400,
+               57600,
+               115200
+            ],
+            "default": "f'default_baud_speed"
+         },
+         "dataBits": {
+            "type": "integer",
+            "example": 567,
+            "enum": [
+               5,
+               6,
+               7,
+               8
+            ],
+            "default": "f'default_data_bits"
+         },
+         "stopBits": {
+            "type": "integer",
+            "example": 12,
+            "enum": [
+               1,
+               2,
+               1.5
+            ]
+         },
+         "parity": {
+            "type": "string",
+            "example": "parity",
+            "enum": [
+               "Even",
+               "Odd",
+               "Mark",
+               "Space",
+               "None"
+            ]
+         },
+         "dataTerminalReady": {
+            "type": "boolean",
+            "example": true,
+            "default": "f'default_data_terminal_ready_dtr",
+            "parametersDefault": [
+               "communicationCode"
+            ]
+         },
+         "carrierDetect": {
+            "type": "boolean",
+            "example": false,
+            "default": "f'default_detect_communication",
+            "parametersDefault": [
+               "communicationCode"
+            ]
+         },
+         "requestToSend": {
+            "type": "boolean",
+            "example": false,
+            "default": "f'default_ask_to_send_rts",
+            "parametersDefault": [
+               "communicationCode"
+            ]
+         },
+         "timeout": {
+            "type": "integer",
+            "example": 123,
+            "minimum": 10,
+            "maximum": 30000,
+            "default": "f'default_time_out_ms",
+            "parametersDefault": [
+               "communicationCode"
+            ]
+         },
+         "tries": {
+            "type": "integer",
+            "example": 5,
+            "minimum": 0,
+            "maximum": 99,
+            "default": "f'default_retries_times",
+            "parametersDefault": [
+               "communicationCode"
+            ]
+         },
+         "framesPERPacket": {
+            "type": "integer",
+            "example": 45678,
+            "maximum": 7,
+            "minimum": 1,
+            "default": 3
+         }
+      }
+   },
+   "servicePoint": {
+      "required": [
+         "servicePointId",
+         "servicePointDescription"
+      ],
+      "properties": {
+         "servicePointId": {
+            "dbName": "number_spo",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+         },
+         "servicePointDescription": {
+            "dbName": "description_spo",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 50
+         }
+      }
+   },
+   "configSystem": {
+      "type": "object",
+      "required": [
+         "idType",
+         "name",
+         "configuration"
+      ],
+      "properties": {
+         "idType": {
+            "type": "integer"
+         },
+         "name": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 25
+         },
+         "description": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 25
+         },
+         "configuration": {
+            "type": "array"
+         }
+      }
+   },
+   "servicePointVariable": {
+      "type": "object",
+      "required": [
+         "readingType",
+         "variableId",
+         "unitOfMeasure"
+      ],
+      "properties": {
+         "readingType": {
+            "type": "string"
+         },
+         "variableId": {
+            "type": "string"
+         },
+         "customName": {
+            "type": "string"
+         },
+         "unitOfMeasure": {
+            "type": "integer",
+            "example": 1
+         },
+         "multiplersValues": {
+            "type": "object"
+         },
+         "ownerData": {
+            "dbName": "owner_data",
+            "type": "string"
+         },
+         "userCreate": {
+            "dbName": "user_create",
+            "type": "string"
+         }
+      }
+   },
+   "configThresholds":{
+      "required": [
+         "loadBefore",
+         "loadAfter",
+         "readingsEventsBefore",
+         "readingsEventsAfter"
+      ],
+      "type": "object",
+      "properties" :{
+          "loadBefore": {
+             "type": "integer",
+             "minimum": 1,
+             "maximum": 2000
+          },
+          "loadAfter": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 90
+          },
+          "readingsEventsBefore": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2000
+          },
+          "readingsEventsAfter": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 90
+          }
+      }
+
+   },
+   "gridSystem": {
+      "type": "object",
+      "required": [
+         "controlType",
+         "controlId",
+         "controlState"
+      ],
+      "editables": [
+         "controlState"
+      ],
+      "properties": {
+         "controlType": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 25
+         },
+         "controlId": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 25
+         },
+         "controlState": {
+            "type": "object"
+         }
+      }
+   },
+   "configFilters":{
+      "required": [
+         "config",
+         "nameFilters",
+         "operatorFilters"
+      ],
+      "type": "object",
+      "properties" :{
+          "nameFilters": {
+             "type": "string",
+             "minLength": 1,
+             "maxLength": 30
+          },
+          "operatorFilters": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1
+          },
+          "config": {
+            "type": "string"
+          }
+      }
+   }
+}

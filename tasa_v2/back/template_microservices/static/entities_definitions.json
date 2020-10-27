@@ -1,61 +1,96 @@
 {
-    "servicePoint": {
-        "tableName": "ms_service_point_spo",
-        "type": "object",
-        "title": "The Root Schema",
-        "description": "The root schema comprises the entire JSON document.",
-        "default": {},
-        "additionalProperties": true,
-        "primaryKey": [
-            "id_spo"
-        ],
-        "uniques": [
-            "number_spo"
-        ],
-        "required": [
-            "id_spo",
-            "number_spo",
-            "owner_data"
-        ],
-        "properties": {
-            "id_spo": {
-                "$id": "#/properties/id_spo",
-                "type": "integer",
-                "title": "The Id_spo Schema",
-                "description": "An explanation about the purpose of this instance."
-            },
-            "description_spo": {
-                "$id": "#/properties/description_spo",
-                "type": "string",
-                "title": "The Description_spo Schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": "No aplica",
-                "minLength": 3,
-                "maxLength": 50
-            },
-            "number_spo": {
-                "$id": "#/properties/number_spo",
-                "type": "string",
-                "title": "The Number_spo Schema",
-                "description": "An explanation about the purpose of this instance.",
-                "minLength": 3,
-                "maxLength": 50
-            },
-            "serial_spo": {
-                "$id": "#/properties/serial_spo",
-                "type": "string",
-                "title": "The Serial_spo Schema",
-                "description": "An explanation about the purpose of this instance.",
-                "minLength": 3,
-                "maxLength": 50
-            },
-            "owner_data": {
-                "$id": "#/properties/owner_data",
-                "type": "string",
-                "title": "The Owner_data Schema",
-                "description": "An explanation about the purpose of this instance.",
-                "maxLength": 50
-            }
-        }
-    }
+   "roles": {
+      "tableName": "role",
+      "type": "object",
+      "properties": {
+         "role": {
+            "dbName": "role",
+            "type": "string"
+         },
+         "key": {
+            "dbName": "id",
+            "type": "string"
+         }
+      }
+   },
+   "user":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "string"
+         },
+         "active":{
+            "dbName": "role_id",
+            "type": "boolean"
+         }
+      }
+   },
+   "Createuser":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "age": {
+            "dbName": "age",
+            "type": "integer"
+         },
+         "profesion": {
+            "dbName": "profesion",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "string"
+         },
+         "active":{
+            "dbName": "role_id",
+            "type": "boolean"
+         },
+         "phone":{
+            "dbName": "phone",
+            "type": "number"
+         },
+         "created_date":{
+            "dbName": "created_date",
+            "type": "dateTime"
+         }
+      }
+   }
 }
