@@ -1,67 +1,44 @@
 # encoding: utf-8
-from project.resources.utils.data_utils import DataUtils
+import os
+
+from flask import current_app
+
 from project.resources.utils.generals_utils import GeneralsUtils
-from project.resources.utils.registry_utils import RegistryUtils
 
 
 class ConfigurationManger():
 
+    CONFIG_CONNECTIONS_STRINGS_KEY = "CONNECTIONS_STRINGS"
+
     @staticmethod
     def get_connection_string(connection_string_name):
-        #T
-        DATABASE_SYSTEMS = ('postgres',)
-        #T
-        DRIVERS = ('psycopg2',)
+        if connection_string_name in os.environ:
+            return os.environ[connection_string_name]
 
-        connection_string = DataUtils.get_global_data(connection_string_name)
+        connection_string =\
+            GeneralsUtils.get_global_data(connection_string_name)
 
-        if connection_string == None:
-            connections_strings = DataUtils.\
-                get_configuration_setting("CONNECTIONS_STRINGS")
-
+        if connection_string is None:
+            connections_strings = ConfigurationManger.\
+               get_config(ConfigurationManger.CONFIG_CONNECTIONS_STRINGS_KEY)
             if not GeneralsUtils.\
-                validate_attribute(connection_string_name, connections_strings):
-                raise Exception
+               validate_attribute(connection_string_name,
+                                  connections_strings):
+                raise Exception("ConfigurationManger.get_connection_string "
+                                + "error. connection_string_name: "
+                                + connection_string_name)
 
         connection_string = connections_strings[connection_string_name]
 
-        connection_string_parts = connection_string.split(",")
-
-        if len(connection_string_parts) != 3:
-            raise Exception
-
-        database_system = connection_string_parts[0]
-
-        driver = connection_string_parts[1]
-
-        params = connection_string_parts[2]
-
-        if database_system not in DATABASE_SYSTEMS:
-            raise Exception
-
-        if driver not in DRIVERS:
-            raise Exception
-
-        return "{}+{}://{}".format(database_system, driver, params)
+        return connection_string
 
     @staticmethod
-    def get_entity_definitions(entity_name):
-        entity_definition = DataUtils.get_global_data("entity_definition_" + entity_name)
+    def get_config(key):
+        if key in os.environ:
+            return os.environ[key]
 
-        if not entity_definition == None:
-            return entity_definition
+        if not GeneralsUtils.validate_attribute(key, current_app.config):
+            raise Exception("ConfigurationManger.get_config error. Key: "
+                            + key)
 
-        entities_definitions = DataUtils.get_global_data("entities_definitions")
-
-        if entities_definitions == None:
-            entities_definitions_path = DataUtils.get_configuration_setting(
-                "ENTITIES_DEFINITIONS_PATH")
-
-            entities_definitions = GeneralsUtils.read_file(entities_definitions_path)
-
-            DataUtils.set_global_data("entities_definitions", entities_definitions)
-
-        if entity_name not in entities_definitions:
-            raise Exception
-
-        return entities_definitions[entity_name]
+        return current_app.config[key]

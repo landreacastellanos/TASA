@@ -1,0 +1,198 @@
+/**
+Pallet of colors that we will use
+.alert {
+  background-color: map-get($theme-colors, "danger");
+}
+*/
+$theme-colors: (
+  // I recommend use ma$mat-medicilios 500
+    'primary': #00b8d4,
+  'secondary': #0088a3,
+  'danger': #f44336
+);
+
+$dark-primary-text: rgba(black, 0.87);
+$dark-secondary-text: rgba(black, 0.54);
+$dark-disabled-text: rgba(black, 0.38);
+$dark-dividers: rgba(black, 0.12);
+$dark-focused: rgba(black, 0.12);
+$light-primary-text: white;
+$light-secondary-text: rgba(white, 0.7);
+$light-disabled-text: rgba(white, 0.5);
+$light-dividers: rgba(white, 0.12);
+$light-focused: rgba(white, 0.12);
+
+$default-font: Roboto, 'Helvetica Neue', sans-serif;
+$form-title-font: 'Raleway', sans-serif;
+$form-field-font: 'Raleway', sans-serif;
+$form-label-font: 'Raleway', sans-serif;
+$menu-font: 'Raleway', sans-serif;
+$header-title-font: 'Raleway', sans-serif;
+$footer-font: 'Raleway', sans-serif;
+$logo-font: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+$mat-black-custom: (
+  50:  #e7e7e7,
+  100:  #d6d6d6,
+  200:  #b9b9b9,
+  300:  #acacac,
+  400:  #969696,
+  500:  #818181,
+  600:  #707070,
+  700:  #636363,
+  800:  #575757,
+  900:  #464646,
+  A100: #272727,
+  A200: #141414,
+  A400: #0f0f0f,
+  A700: #000000,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$mat-green-custom: (
+  50: rgb(186, 252, 121),
+  100: #9c6,
+  200: #0a8,
+  300: rgb(115, 177, 118)
+  400: rgb(61, 206, 206),
+  500: #3aa,
+  600: #099,
+  700: rgb(0, 78, 0),
+  800: #030,
+  900: #033,
+  A100: rgb(161, 216, 107),
+  A200: rgb(38, 124, 124),
+  A400: rgb(0, 143, 74)
+  A700: rgb(2, 54, 54),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$mat-red-custom: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #f44336,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  A100: #ff8a80,
+  A200: #ff5252,
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+
+$mat-purple-custom: (
+  50:  #9f6de9,
+  100:  #8e62d1,
+  200:  #8e62d1,
+  300:  #855bc4,
+  400:  #7c54b8,
+  500:  #6f4ca5,
+  600:  #674697,
+  700:  #634491,
+  800:  #5d4088,
+  900:  #563d7c,
+  A100: #543a7a,
+  A200: #493369,
+  A400: #422f5f,
+  A700: #3b2a55,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$mat-blue-custom: (
+  50:  #0087fd,
+  100:  #0184f7,
+  200:  #0283f3,
+  300:  #027de7,
+  400:  #0075db,
+  500:  #0066c0,
+  600:  #005daf,
+  700:  #004e92,
+  800:  #004079,
+  900:  #00305a,
+  A100: #00223f,
+  A200: #00182c,
+  A400: #00111f,
+  A700: #000a13,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);

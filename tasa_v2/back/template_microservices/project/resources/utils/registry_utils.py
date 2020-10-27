@@ -3,6 +3,7 @@ import sys
 import traceback
 from datetime import datetime
 
+
 class RegistryUtils():
 
     @staticmethod
@@ -14,26 +15,26 @@ class RegistryUtils():
         if isinstance(report, list):
             for item in report:
                 print(item)
-        
-        else:   
+
+        else:
             print(report)
 
     @staticmethod
-    def manage_exception():
-        exception_type, exception_value, exception_traceback = sys.exc_info()
+    def manage_error(data=None, error=None):
+        error_type, error_value, error_traceback = sys.exc_info()
 
-        exceptions_report = []
+        errors_report = []
 
-        for traceback_information in traceback.extract_tb(exception_traceback):
+        for traceback_information in traceback.extract_tb(error_traceback):
             file_name, line_number, function_name, source = traceback_information
 
-            if ('self' in exception_traceback.tb_frame.f_locals):
-                class_name = exception_traceback.tb_frame.f_locals['self']
+            if ('self' in error_traceback.tb_frame.f_locals):
+                class_name = error_traceback.tb_frame.f_locals['self']
 
             else:
                 class_name = None
 
-            exception_report = {
+            error_report = {
                     file_name: os.path.basename(file_name),
                     class_name: str(class_name),
                     function_name: function_name,
@@ -41,13 +42,33 @@ class RegistryUtils():
                     source: source
                 }
 
-            if not exception_value is None and\
-                not exception_value.args is None and\
-                isinstance(exception_value.args, list) and\
-                len(exception_value.args) > 0:
-                
-                exception_report["exception_arguments"] = exception_value.args
+            if not error_value is None and\
+                not error_value.args is None and\
+                isinstance(error_value.args, list) and\
+                len(error_value.args) > 0:
 
-            exceptions_report.append(exception_report)
+                error_report["exception_arguments"] = error_value.args
 
-        RegistryUtils.report_event("error", exceptions_report)
+            errors_report.append(error_report)
+
+        RegistryUtils.report_event("error", errors_report)
+
+    @staticmethod
+    def generate_message_error(default_message, error):
+        # Summary: This method is in charge of generating an error
+        # message, in case any action executed in the system has a fault.
+        # parameters:
+        # -default_message (String): a default message 
+        # -error (string): a error type
+        # return:
+        # -(<message_error 'String'>): a message, whit the error of the result.
+        message_error = ""
+
+        if len(error.args) > 0:
+            message_error = default_message + ": " + ", ".join(error.args)
+
+        else:
+            message_error = default_message
+
+        return message_error
+
