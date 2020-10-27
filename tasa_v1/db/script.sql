@@ -31,11 +31,11 @@ create table property (
 	business_name varchar(255),
 	phone varchar(255),
 	property_address varchar(255),
-	web_site varchar(255), 
+	web_site varchar(255),
 	total_ha_property varchar(255),
 	sowing_system varchar(255),
 	created_date datetime,
-	primary key (id),
+	primary key (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table property_user (
@@ -89,7 +89,7 @@ insert into role(role) values('administrator');
 insert into user(name, email, password, role_id) values('admin', 'admin@123', '123', 1);
 
 ALTER TABLE user add column phone VARCHAR(255);
-ALTER TABLE `tasa`.`user` 
+ALTER TABLE `tasa`.`user`
 CHANGE COLUMN `phone` `phone` VARCHAR(255) NULL DEFAULT NULL AFTER `email`;
 
 alter table property add column property_ca varchar(255);
@@ -110,15 +110,15 @@ alter table property change column `property_idc` `property_idc` varchar(255) nu
 alter table property change column `property_rdc` `property_rdc` varchar(255) null default 56 after property_idc;
 alter table property change column `property_sa` `property_sa` varchar(255) null default 56 after property_rdc;
 alter table property change column `property_v` `property_v` varchar(255) null default 56 after property_sa;
-alter table property drop column property_admin;
+-- alter table property drop column property_admin;
 alter table property change column property_name name varchar(255);
 alter table property change column property_address address varchar(255);
 
-ALTER TABLE `tasa`.`property` 
-DROP FOREIGN KEY `property_ibfk_1`;
-ALTER TABLE `tasa`.`property` 
-DROP COLUMN `vendor_id`,
-DROP INDEX `vendor_id` ;
+-- ALTER TABLE `tasa`.`property`
+-- DROP FOREIGN KEY `property_ibfk_1`;
+-- ALTER TABLE `tasa`.`property`
+-- DROP COLUMN `vendor_id`,
+-- DROP INDEX `vendor_id` ;
 ;
 
 
