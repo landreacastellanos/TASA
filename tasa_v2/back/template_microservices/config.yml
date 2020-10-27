@@ -7,9 +7,9 @@ pyms:
         project_dir: "project"
 
   config:
-    APP_NAME: "arroz_service"
+    APP_NAME: "rice_service"
     APP_VERSION: "1.0"
-    APPLICATION_ROOT : "/arroz_service"
+    APPLICATION_ROOT : "/microserviceRice"
     CONNECTIONS_STRINGS:
       POSTGRESQL_DB_PAP_PS: "mysql,pymysql,root:A1019145950a@localhost:3306/tasa_v2"
     DEBUG: true
