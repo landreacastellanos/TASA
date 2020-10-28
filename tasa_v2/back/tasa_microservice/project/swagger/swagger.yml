@@ -1,0 +1,214 @@
+---
+  swagger: '2.0'
+  info:
+    description: This is a microservice in Python about RoceServices
+    version: 1.0.0
+    title: Roce Service Microservices
+  tags:
+    - name: Roce
+      description: ''
+    - name: Grids
+      description: Service methods that provide data to build grids on the graphic interface
+  schemes:
+    - http
+  paths:
+    /get_roles:
+      get:
+          tags:
+            - "Roles"
+          summary: "Roles"
+          operationId: "get_roles"
+          description: "Roles"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_roles'
+          x-swagger-router-controller: "project.views.role" 
+    /login:
+      post:
+          tags:
+            - "Login"
+          summary: "Login"
+          operationId: "login"
+          description: "Login"
+          produces:
+            - "application/json"
+          parameters:
+            - in: body
+              name: login
+              required: true
+              schema:
+                  $ref: '#/definitions/UserLogin'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.login"
+    /create_user:
+      post:
+          tags:
+            - "Create"
+          summary: "Create"
+          operationId: "create_user"
+          description: "Create"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: login
+              required: true
+              schema:
+                  $ref: '#/definitions/CreateUser'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"                                
+  definitions:
+    responseDetail:
+      type: object
+      properties:
+        code:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+    result_roles:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/RolesSecurity'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    result_user:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Login'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"      
+    Roles:
+      description: "Roles."
+      type: "object"
+      properties:
+        role:
+          type: "string"
+          example: "admi"
+        key:
+          type: "integer"
+          example: 1
+    UserLogin:
+      description: "Login Users."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "admi"
+        password:
+          type: "string"
+          example: "123asd"
+        number:
+          type: "integer"
+          example: 1
+    Login:
+      description: "Login"
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "admi"
+        password:
+          type: "string"
+          example: "123asd"
+        number:
+          type: "integer"
+          example: 1    
+    RolesSecurity:
+      description: "Role Security"
+      type: "object"
+      properties:
+        role:
+          type: "array"
+          items:
+            $ref: '#/definitions/Roles' 
+        token:
+          type: "string"
+          example: "123asd"
+    CreateUser:
+      description: "Role Security"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        password:
+          type: "string"
+          example: "123"
+        created_date:
+          type: string
+          example: "2017-01-01 05:05:09.000000"
+          format: date-time
+        role_id:
+          type: "integer"
+          example: 1
+        active:
+          type: "boolean"
+          example: True           

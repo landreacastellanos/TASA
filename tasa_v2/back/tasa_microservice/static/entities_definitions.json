@@ -1,0 +1,96 @@
+{
+   "roles": {
+      "tableName": "role",
+      "type": "object",
+      "properties": {
+         "role": {
+            "dbName": "role",
+            "type": "string"
+         },
+         "key": {
+            "dbName": "id",
+            "type": "string"
+         }
+      }
+   },
+   "user":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "active":{
+            "dbName": "active",
+            "type": "boolean"
+         }
+      }
+   },
+   "Createuser":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "age": {
+            "dbName": "age",
+            "type": "integer"
+         },
+         "profesion": {
+            "dbName": "profesion",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "active":{
+            "dbName": "active",
+            "type": "boolean"
+         },
+         "phone":{
+            "dbName": "phone",
+            "type": "number"
+         },
+         "created_date":{
+            "dbName": "created_date",
+            "type": "dateTime"
+         }
+      }
+   }
+}
