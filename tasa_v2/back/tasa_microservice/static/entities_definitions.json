@@ -80,7 +80,7 @@
             "type": "integer"
          },
          "active":{
-            "dbName": "user",
+            "dbName": "active",
             "type": "boolean"
          },
          "phone":{
