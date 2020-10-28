@@ -2,15 +2,6 @@ from flask import Response
 
 from project.resources.utils.generals_utils import GeneralsUtils
 
-class Variable():
-    variable_id = ""
-    custom_name = ""
-    unit_of_measure = ""
-    reading_type = ""
-    id_vdi = -1
-    id_vcn = -1
-    relation = False
-
 class ResponseWrapper(Response):
     api_version = ""
     details = []

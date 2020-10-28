@@ -39,10 +39,10 @@
          },
          "role_id":{
             "dbName": "role_id",
-            "type": "string"
+            "type": "integer"
          },
          "active":{
-            "dbName": "role_id",
+            "dbName": "active",
             "type": "boolean"
          }
       }
@@ -77,10 +77,10 @@
          },
          "role_id":{
             "dbName": "role_id",
-            "type": "string"
+            "type": "integer"
          },
          "active":{
-            "dbName": "role_id",
+            "dbName": "user",
             "type": "boolean"
          },
          "phone":{
