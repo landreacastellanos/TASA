@@ -39,9 +39,9 @@ class LoginService:
     def validation_login(self, data, password):
         value = True
         
-        if len(data) ==0:
-            value = False
+        if len(data)==0:
+            return False
         password_validation = Encryption().decrypt_value(data[0]['password']).decode("utf-8")
         if password_validation != password:
-            value = False
+            return False
         return value        
