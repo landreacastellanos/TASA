@@ -14,6 +14,7 @@ class LoginService:
             "data": [],
             "details": []
         }
+
         result = self.__repository_roles.select(
             options={"filters":
                              [['email', "equals", data['user'].lower()]]
@@ -30,7 +31,7 @@ class LoginService:
         results['data'] = list(map(lambda x: {
                 "nombre": x['name'] +" " + x['last_name'],
                 "role": x['role_id'],
-                "token": SecurityToken.get_token()},
+                "token": SecurityToken.get_token(data['user'])},
                 result))
         return results
 

@@ -12,8 +12,9 @@ class SecurityToken:
         return ConfigurationManger.get_config("ALGORITHMS")
 
     @staticmethod
-    def get_token():
-        return jwt.encode({'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1200)}, 'secret').decode('utf-8')
+    def get_token(value):
+        return jwt.encode({'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=60), 'val': value}, 
+                          SecurityToken.get_key()).decode("utf-8")
 
     @staticmethod
     def validate_token():
@@ -21,6 +22,6 @@ class SecurityToken:
         try:
             data = jwt.decode(token_passed,SecurityToken.get_key(),
                            algorithm=SecurityToken.get_algorithms())
-            return (True, SecurityToken.get_token())
+            return (True, SecurityToken.get_token(data['val']), data['val'])
         except jwt.exceptions.ExpiredSignatureError:
-            return (False, 401)
+            return (False, 401, '')
