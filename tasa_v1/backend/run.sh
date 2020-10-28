@@ -3,4 +3,4 @@ export DB_HOST="162.243.174.116"
 export DB_NAME="tasa"
 export DB_USER="tasa_admin"
 export DB_PASSWORD="Admin123."
-flask run
+flask run --host=0.0.0.0
