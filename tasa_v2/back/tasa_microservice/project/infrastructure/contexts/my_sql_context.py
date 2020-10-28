@@ -6,7 +6,7 @@ from project.configuration_manager import ConfigurationManger
 from project.resources.utils.generals_utils import GeneralsUtils
 
 
-class PostgreSqlContext():
+class MySqlContext():
 
     __session_maker = None
 
