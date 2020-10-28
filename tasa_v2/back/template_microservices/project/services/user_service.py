@@ -25,7 +25,7 @@ class UserService():
                 }
             )
             return result
-        data_validation = self.validation_data(data)
+        data_validation = self.validation_data(data, validationToken[2])
 
         if len(data_validation['details'])>0:
             return data_validation
@@ -40,6 +40,7 @@ class UserService():
                 }
             )
             return result
+
         result['data'].append(
             {   
                 "token": validationToken[1]
@@ -69,29 +70,30 @@ class UserService():
     def verify_data(self, data):
         data = self.__repository_user.select(
             options={"filters":
-                             [['email', "equals", data['email']]]
+                             [['email', "equals", data]]
                              }) 
         return True if len(data) > 0 else False
 
-    def validation_data(self, data):
+    def validation_data(self, data, user):
         result = {
             "data": [],
             "details": []
         }
-
-        if self.verify_data(data):
+        
+        if data['role_id'] != Keys.admi.value or not self.verify_data(user):
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "El usuario no tiene permisos"
+                }
+            )
+        elif self.verify_data(data['email']):
             result['details'].append(
                 {
                     "key": 400,
                     "value": "Este correo se encuentra en uso"
                 }
             )
-        elif data['role_id'] != Keys.admi.value:
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": "El usuario no tiene permisos de creación"
-                }
-            )
-
+        
+        
         return result
