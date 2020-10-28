@@ -2,7 +2,7 @@ from pyms.flask.app import Microservice
 from project.models.init_database import database
 
 
-class PlatformSettingsMicroservice(Microservice):
+class TasaMicroservice(Microservice):
     def init_libs(self):
 
         database.init_app(self.application)
@@ -16,7 +16,7 @@ def create_app():
     :return:
     """
 
-    microservice = PlatformSettingsMicroservice(path=__file__)
+    microservice = TasaMicroservice(path=__file__)
     app = microservice.create_app()
 
     return app

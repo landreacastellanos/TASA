@@ -1,6 +1,0 @@
--r base.txt
-flake8==3.7.9
-pylint==2.4.4
-autopep8==1.5.1
-pytest==5.4.1
-pysftp==0.2.9
