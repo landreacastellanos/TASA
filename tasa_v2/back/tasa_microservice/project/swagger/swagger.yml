@@ -202,13 +202,6 @@
         password:
           type: "string"
           example: "123"
-        created_date:
-          type: string
-          example: "2017-01-01 05:05:09.000000"
-          format: date-time
         role_id:
           type: "integer"
-          example: 1
-        active:
-          type: "boolean"
-          example: True           
+          example: 1          
