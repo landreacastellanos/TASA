@@ -102,6 +102,7 @@ development/
 
 # mypy
 .mypy_cache/
+
 template_microservices/development/
 template_microservices/development/Scripts/chardetect.exe
 template_microservices/development/Scripts/connexion.exe

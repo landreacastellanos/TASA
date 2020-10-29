@@ -12,8 +12,8 @@ class SecurityToken:
         return ConfigurationManger.get_config("ALGORITHMS")
 
     @staticmethod
-    def get_token(value,expiration=3600):
-        return jwt.encode({'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=expiration), 'val': value}, 
+    def get_token(value):
+        return jwt.encode({'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=3600), 'val': value}, 
                           SecurityToken.get_key()).decode("utf-8")
 
     @staticmethod
