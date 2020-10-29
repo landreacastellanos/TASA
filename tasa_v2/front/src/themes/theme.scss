@@ -35,7 +35,7 @@ $mat-black-custom: (
   50:  #e7e7e7,
   100:  #d6d6d6,
   200:  #b9b9b9,
-  300:  #acacac,
+  300:  hsl(0, 0%, 67%),
   400:  #969696,
   500:  #818181,
   600:  #707070,
@@ -65,27 +65,27 @@ $mat-black-custom: (
 );
 
 $mat-green-custom: (
-  50: rgb(186, 252, 121),
-  100: #9c6,
-  200: #0a8,
-  300: rgb(115, 177, 118)
-  400: rgb(61, 206, 206),
-  500: #3aa,
-  600: #099,
-  700: rgb(0, 78, 0),
-  800: #030,
-  900: #033,
-  A100: rgb(161, 216, 107),
-  A200: rgb(38, 124, 124),
-  A400: rgb(0, 143, 74)
-  A700: rgb(2, 54, 54),
+  50: hsl(80, 79%, 75%),
+  100: hsl(77, 75%, 67%),
+  200: hsl(76, 73%, 59%),
+  300: hsl(77, 75%, 51%),
+  400: hsl(77, 75%, 45%),
+  500: hsl(76, 77%, 39%),
+  600: hsl(77, 81%, 36%),
+  700: hsl(77, 85%, 31%),
+  800: hsl(77, 91%, 27%),
+  900: hsl(78, 100%, 19%),
+  A100: hsl(91, 100%, 68%),
+  A200: hsl(105, 100%, 54%),
+  A400: hsl(105, 100%, 36%),
+  A700: hsl(99, 100%, 31%),
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
     200: $dark-primary-text,
     300: $dark-primary-text,
     400: $dark-primary-text,
-    500: $dark-primary-text,
+    500: $light-primary-text,
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
@@ -96,7 +96,6 @@ $mat-green-custom: (
     A700: $dark-primary-text,
   ),
 );
-
 $mat-red-custom: (
   50: #ffebee,
   100: #ffcdd2,

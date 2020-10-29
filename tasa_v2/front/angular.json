@@ -24,7 +24,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/themes/styles.scss"
+              "src/themes/styles.scss",
+              "src/themes/colors.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           },
@@ -88,7 +90,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/themes/styles.scss"
+              "src/themes/styles.scss",
+              "src/themes/colors.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
           }

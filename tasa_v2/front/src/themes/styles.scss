@@ -1,8 +1,23 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 html, body {
   margin: 0px;
   padding: 0px;
 }
 body{
   font-family: Roboto, 'Helvetice New', 'Arial', sans-serif
+}
+
+.container-login{
+  .mat-form-field-appearance-fill .mat-form-field-flex{
+    background-color: transparent;
+  }
+}
+
+.initial-header{
+  height: 100px;
+
+  img{
+    height: 90px;
+  }
 }
