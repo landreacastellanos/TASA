@@ -57,6 +57,48 @@
                 items:
                   $ref: '#/definitions/result_user'
           x-swagger-router-controller: "project.views.login"
+    /restore_password:
+      post:
+          tags:
+            - "Login"
+          summary: "restore_password"
+          operationId: "restore_password"
+          description: "restore_password"
+          produces:
+            - "application/json"
+          parameters:
+            - in: body
+              name: user
+              required: true
+              schema:
+                  $ref: '#/definitions/UserToken'
+          responses:
+            '200':
+              description: response result successful
+          x-swagger-router-controller: "project.views.login"
+    /reset_password:
+      post:
+          tags:
+            - "Login"
+          summary: "reset_password"
+          operationId: "reset_password"
+          description: "reset_password"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: user
+              required: true
+              schema:
+                  $ref: '#/definitions/ResetUser'
+          responses:
+            '200':
+              description: response result successful
+          x-swagger-router-controller: "project.views.login"
     /create_user:
       post:
           tags:
@@ -153,6 +195,26 @@
         number:
           type: "integer"
           example: 1
+    UserToken:
+      description: "Reset User password."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "abc@abc.com"
+        restore_form:
+          type: "string"
+          example: "http://localhost/restore"
+    ResetUser:
+      description: "Reset User password."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "abc@abc.com"
+        password:
+          type: "string"
+          example: "abc123"
     Login:
       description: "Login"
       type: "object"

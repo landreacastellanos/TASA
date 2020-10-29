@@ -1,17 +1,62 @@
-# Save User
+# TASAv1 BACKEND
+
+## Install
+
+Create virtualenv and install dependencies
+
+### Create environment
+
+```bash
+cd tasa_v1/backend/
+virtualenv -p python3
+source bin/activate
+```
+
+### Install MySql
+
+Follow the [documentation](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+
+MAC pro tip
+
+```bash
+brew install mysql
+brew services start mysql
+```
+
+### Install dependencies
+
+```bash
+pip install -r requeriments.txt
+```
+
+### Initialize BD
+
+search in [bd](../bd) folder the scripts to initialize mysql database or skip this and connect to remote db.
+
+**NOTE:** you would run sql scripts in crazy combinations
+
+## Run
+
+Override correct env values on [run.sh](./run.sh) and then run
+
+``` bash
+bash run.sh  
+```
+
+## Save User
 curl -XPOST -H 'Cookie: session=eyJ1c2VyIjoiYWRtaW5AMTIzIn0.XxB_Iw.F5Y5cauXMvoAH3esJYhwiAGJBr8' -d 'name=Julian&last_name=Linares&age=22&profesion=web&email=julianlg97@hotmail.com&password=abc123&role_id=1' 'localhost:5000/saveUser'
 
-# Update User 
+## Update User 
 curl -XPOST -H 'Cookie: session=eyJ1c2VyIjoiYWRtaW5AMTIzIn0.XxB_Iw.F5Y5cauXMvoAH3esJYhwiAGJBr8' -d 'name=Enrique&last_name=Linares&age=24&profesion=MovilApp&email=julianlg97@hotmail.com&password=abc1234&role_id=1' 'localhost:5000/updateUser'
 
-# User List
+## User List
 curl -XPOST -H 'Cookie: session=eyJ1c2VyIjoiYWRtaW5AMTIzIn0.XxB_Iw.F5Y5cauXMvoAH3esJYhwiAGJBr8' 'localhost:5000/userList'
 
-# User [Email]
+## User [Email]
 curl -XGET -H 'Cookie: session=eyJ1c2VyIjoiYWRtaW5AMTIzIn0.XxB_Iw.F5Y5cauXMvoAH3esJYhwiAGJBr8' 'localhost:5000/userList?user=julianlg97%40hotmail.com'
 
 
-# Save Property
+## Save Property
 curl -H 'Cookie: session=eyJ1c2VyIjoiQWRtaW5AdGFzYS5jb20ifQ.Xzh-Rg.KN_0lyW5tJJGy22Bup0xe_JT_3g' --location --request POST 'http://127.0.0.1:5000/save_property' --form 'property_name=Tierrita Natural' --form 'business_name=No Name' --form 'phone=9090990' --form 'property_address=av siempre viva' --form 'web_site=something' --form 'total_ha_property=100' --form 'sowing_system=1' --form 'vendor_id=2' --form 'lands=[{"land_name":"lote_1", "land_ha":"90"}, {"land_name":"lote2", "land_ha":"70"}, {"land_name":"lote80", "land_ha":"100"}]' --form 'table_name=property'
 curl 'http://localhost:5000/save_property' \
   -H 'Connection: keep-alive' \
@@ -35,7 +80,7 @@ curl 'http://localhost:5000/save_property' \
   curl -H 'Cookie: session=eyJ1c2VyIjoiQWRtaW5AdGFzYS5jb20ifQ.Xzh-Rg.KN_0lyW5tJJGy22Bup0xe_JT_3g' --location --request POST 'http://127.0.0.1:5000/save_property' --form 'property_name=Tierrita Natural' --form 'business_name=No Name' --form 'phone=9090990' --form 'property_address=av siempre viva' --form 'web_site=something' --form 'total_ha_property=100' --form 'sowing_system=1' --form 'vendor_id=2' --form 'lands=[{"land_name":"lote_1", "land_ha":"90"}, {"land_name":"lote2", "land_ha":"70"}, {"land_name":"lote80", "land_ha":"100"}]' --form 'table_name=property'
 
 
-# Add Stage
+## Add Stage
 
 curl 'http://localhost:5000/add_stage' \
   -H 'Connection: keep-alive' \
