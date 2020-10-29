@@ -4,3 +4,5 @@ images_stages/
 .DS_Store
 .vscode/settings.json
 tasa_v2/back/tasa_microservice/env_development/
+
+tasa_v2/back/tasa_microservice/__pycache__/
