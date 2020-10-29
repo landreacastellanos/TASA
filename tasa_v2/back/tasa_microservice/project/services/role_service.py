@@ -52,7 +52,7 @@ class RoleService():
             result['details'].append(
                 {
                     "key": validationToken[1],
-                    "value": "Token Experied"
+                    "value": "Token Invalido"
                 }
             )
         elif not self.verify_data(validationToken[2]):

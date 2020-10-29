@@ -1,3 +1,4 @@
+import datetime
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.encryption_utils import Encryption
@@ -5,7 +6,7 @@ from project.resources.utils.security_token import SecurityToken
 from project.models.enum.keys_enum import Keys
 
 class UserService():
-
+    USER_ACTIVE = True
     def __init__(self):
         self.__repository_user = CommonRepository(
          entity_name="Createuser")
@@ -21,7 +22,7 @@ class UserService():
             result['details'].append(
                 {
                     "key": validationToken[1],
-                    "value": "Token Experied"
+                    "value": "Token Invalido"
                 }
             )
             return result
@@ -63,6 +64,8 @@ class UserService():
         return result 
 
     def complete_data(self, data):
+        data['active'] = self.USER_ACTIVE
+        data['created_date'] = datetime.datetime.now().__str__()
         data['password'] = Encryption().encrypt_value(data['password']).decode("utf-8")
         data['email'] = data['email'].lower() 
         return data
