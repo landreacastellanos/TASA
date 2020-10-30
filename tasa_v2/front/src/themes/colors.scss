@@ -19,21 +19,12 @@ $light-warn: mat-palette($mat-red-custom);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $theme: mat-light-theme(
-  light-primary,
-  light-accent,
-  light-warn
+  $light-primary,
+  $light-accent,
+  $light-warn
 );
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($theme);
-
-.my-primary-text,
-h1 {
-  color: mat-color($primary);
-}
-
-.my-accent-text {
-  color: mat-color($accent);
-}

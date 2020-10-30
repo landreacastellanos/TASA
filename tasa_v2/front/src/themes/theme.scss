@@ -6,9 +6,9 @@ Pallet of colors that we will use
 */
 $theme-colors: (
   // I recommend use ma$mat-medicilios 500
-    'primary': #00b8d4,
-  'secondary': #0088a3,
-  'danger': #f44336
+    'primary': #87b017,
+    'secondary': #7c7c7c,
+    'danger': #f44336
 );
 
 $dark-primary-text: rgba(black, 0.87);
@@ -35,7 +35,7 @@ $mat-black-custom: (
   50:  #e7e7e7,
   100:  #d6d6d6,
   200:  #b9b9b9,
-  300:  #acacac,
+  300:  #ababab,
   400:  #969696,
   500:  #818181,
   600:  #707070,
@@ -65,27 +65,27 @@ $mat-black-custom: (
 );
 
 $mat-green-custom: (
-  50: rgb(186, 252, 121),
-  100: #9c6,
-  200: #0a8,
-  300: rgb(115, 177, 118)
-  400: rgb(61, 206, 206),
-  500: #3aa,
-  600: #099,
-  700: rgb(0, 78, 0),
-  800: #030,
-  900: #033,
-  A100: rgb(161, 216, 107),
-  A200: rgb(38, 124, 124),
-  A400: rgb(0, 143, 74)
-  A700: rgb(2, 54, 54),
+  50: #d0f28d,
+  100: #c6ea6c,
+  200: #bae34a,
+  300: #abe024,
+  400: #98c91d,
+  500: #87b017,
+  600: #7ca611,
+  700: #6c920c,
+  800: #608406,
+  900: #446100,
+  A100: #abff5c,
+  A200: #4fff14,
+  A400: #2eb800,
+  A700: #379e00,
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
     200: $dark-primary-text,
     300: $dark-primary-text,
     400: $dark-primary-text,
-    500: $dark-primary-text,
+    500: $light-primary-text,
     600: $light-primary-text,
     700: $light-primary-text,
     800: $light-primary-text,
@@ -96,7 +96,6 @@ $mat-green-custom: (
     A700: $dark-primary-text,
   ),
 );
-
 $mat-red-custom: (
   50: #ffebee,
   100: #ffcdd2,
