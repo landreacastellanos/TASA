@@ -125,7 +125,29 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_user'
-          x-swagger-router-controller: "project.views.user"                                
+          x-swagger-router-controller: "project.views.user"
+    /isAuthenticated:
+      get:
+          tags:
+            - "Create"
+          summary: "Create"
+          operationId: "validation_user"
+          description: "Create"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"                                      
   definitions:
     responseDetail:
       type: object
