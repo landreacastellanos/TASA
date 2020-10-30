@@ -18,10 +18,12 @@ class SecurityToken:
 
     @staticmethod
     def validate_token():
-        token_passed = request.headers['Token']
-        try:
-            data = jwt.decode(token_passed,SecurityToken.get_key(),
-                           algorithm=SecurityToken.get_algorithms())
-            return (True, SecurityToken.get_token(data['val']), data['val'])
-        except jwt.exceptions.ExpiredSignatureError:
-            return (False, 401, '')
+        token_passed = request.headers['Token'] if 'Token' in request.headers else None
+        if token_passed is not None:
+            try:
+                data = jwt.decode(token_passed,SecurityToken.get_key(),
+                            algorithm=SecurityToken.get_algorithms())
+                return (True, SecurityToken.get_token(data['val']), data['val'])
+            except jwt.exceptions.ExpiredSignatureError:
+                return (False, 401, '')
+        return (False, 401, '')
