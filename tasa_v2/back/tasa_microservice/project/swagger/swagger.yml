@@ -126,7 +126,7 @@
                 items:
                   $ref: '#/definitions/result_user'
           x-swagger-router-controller: "project.views.user"
-    /isAuthenticated:
+    /is_authenticated:
       get:
           tags:
             - "Create"
