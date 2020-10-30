@@ -6,9 +6,9 @@ Pallet of colors that we will use
 */
 $theme-colors: (
   // I recommend use ma$mat-medicilios 500
-    'primary': #00b8d4,
-  'secondary': #0088a3,
-  'danger': #f44336
+    'primary': #87b017,
+    'secondary': #7c7c7c,
+    'danger': #f44336
 );
 
 $dark-primary-text: rgba(black, 0.87);
@@ -35,7 +35,7 @@ $mat-black-custom: (
   50:  #e7e7e7,
   100:  #d6d6d6,
   200:  #b9b9b9,
-  300:  hsl(0, 0%, 67%),
+  300:  #ababab,
   400:  #969696,
   500:  #818181,
   600:  #707070,
@@ -65,20 +65,20 @@ $mat-black-custom: (
 );
 
 $mat-green-custom: (
-  50: hsl(80, 79%, 75%),
-  100: hsl(77, 75%, 67%),
-  200: hsl(76, 73%, 59%),
-  300: hsl(77, 75%, 51%),
-  400: hsl(77, 75%, 45%),
-  500: hsl(76, 77%, 39%),
-  600: hsl(77, 81%, 36%),
-  700: hsl(77, 85%, 31%),
-  800: hsl(77, 91%, 27%),
-  900: hsl(78, 100%, 19%),
-  A100: hsl(91, 100%, 68%),
-  A200: hsl(105, 100%, 54%),
-  A400: hsl(105, 100%, 36%),
-  A700: hsl(99, 100%, 31%),
+  50: #d0f28d,
+  100: #c6ea6c,
+  200: #bae34a,
+  300: #abe024,
+  400: #98c91d,
+  500: #87b017,
+  600: #7ca611,
+  700: #6c920c,
+  800: #608406,
+  900: #446100,
+  A100: #abff5c,
+  A200: #4fff14,
+  A400: #2eb800,
+  A700: #379e00,
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,

@@ -2,12 +2,12 @@
     <div class="initial-header col-12">
         <img src="../../../assets/img/logo.png" alt="">
     </div>
-    <div class="card-login col-12 col-sm-9 col-md-6">
+    <div class="card-login col-12 col-sm-9 col-md-7 col-lg-6">
         <div class="row">
             <div class="image-login col-6">
-                <img src="../../../assets/img/Atech_Register.2.jpg" alt="">
+                <img src="../../../assets/img/login.jpeg" alt="">
                 <div class="logo-login">
-                    <img src="../../../assets/img/TasaApp.png" alt="">
+                    <img src="../../../assets/img/TASA.PNG" alt="">
                 </div>
             </div>
             <div class="form-login col-12 col-sm-10 col-md-6">
@@ -15,30 +15,31 @@
                     <h2 class="title">
                         Iniciar sesión
                     </h2>
-                    <p>
-                        Ingresa tu Email o Usuario junto con tu contraseña
+                    <p class="text">
+                        Ingresa tu documento de identificación y tu contraseña
                     </p>
                 </div>
                 <form #myForm="ngForm" [formGroup]="loginForm">
                     <div class="row justify-content-center">
                         <div class="containerForm col-12 ">
-                            <mat-form-field class="col-12 formOutline" appearance="fill">
-                                <input appAutofocus matInput placeholder="Correo"
-                                    formControlName="email" type="text" class="inputOutline" required
-                                    (focus)="focusLogin()">
+                            <mat-label>Usuario</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input appAutofocus matInput placeholder="Usuario"
+                                    formControlName="userName" type="text" class="inputOutline" required>
                             </mat-form-field>
-                            <div class="warning" *ngIf="loginForm.controls.email.errors?.required && save">
+                            <div class="warning" *ngIf="loginForm.controls.userName.errors?.required && save">
                                 Este campo es requerido
                             </div>
-                            <div class="warning" *ngIf="loginForm.controls.email.errors?.maxlength && save">
+                            <div class="warning" *ngIf="loginForm.controls.userName.errors?.maxlength && save">
                                 Máximo 60 caracteres
                             </div>
                         </div>
                         <div class="containerForm col-12">
-                            <mat-form-field class="col-12 formOutline" appearance="fill">
+                            <mat-label>Contraseña</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
                                 <input matInput placeholder="Contraseña"
                                     formControlName="password" class="inputOutline" required
-                                    [type]="hideLogin ? 'password' : 'text'" (focus)="focusLogin()">
+                                    [type]="hideLogin ? 'password' : 'text'">
                                 <button mat-icon-button matSuffix (click)="hideLogin = !hideLogin"
                                     [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideLogin">
                                     <mat-icon>{{hideLogin ? 'visibility_off' : 'visibility'}}</mat-icon>

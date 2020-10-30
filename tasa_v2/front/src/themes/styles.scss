@@ -1,5 +1,7 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import './theme.scss';
+
 html, body {
   margin: 0px;
   padding: 0px;
@@ -8,16 +10,39 @@ body{
   font-family: Roboto, 'Helvetice New', 'Arial', sans-serif
 }
 
-.container-login{
-  .mat-form-field-appearance-fill .mat-form-field-flex{
-    background-color: transparent;
-  }
-}
-
 .initial-header{
   height: 100px;
 
   img{
     height: 90px;
+  }
+}
+
+.mat-form-field{
+  padding: 0 !important;
+}
+
+mat-label{
+  font-size: 14px !important;
+  color: map-get($theme-colors, 'secondary');
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper{
+  padding-bottom: 0;
+}
+
+.warning{
+  font-size: 10px;
+  color: map-get($theme-colors, 'danger');
+}
+
+@media (max-width: 768px) {
+  .initial-header{
+    height: 80px;
+  
+    img{
+      height: 60px;
+      margin-top: 20px;
+    }
   }
 }
