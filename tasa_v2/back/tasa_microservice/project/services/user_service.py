@@ -62,6 +62,30 @@ class UserService():
                 }
             )
         return result 
+    
+    def validation_user(self):
+        result = {
+            "data": [],
+            "details": []
+        }
+        validationToken = SecurityToken().validate_token() 
+        if not validationToken[0]:
+            result['data'].append(
+                {
+                    "authenticator ": False
+                }
+            )
+        
+            return result
+        result['data'].append(
+                {
+                    "authenticator ": True
+                }
+            )
+        return result
+
+
+
 
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE
