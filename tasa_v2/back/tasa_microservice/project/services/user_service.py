@@ -79,7 +79,7 @@ class UserService():
             return result
         result['data'].append(
                 {
-                    "authenticator ": True
+                    "authenticator": True
                 }
             )
         return result
