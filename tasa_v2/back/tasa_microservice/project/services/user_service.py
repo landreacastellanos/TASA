@@ -72,14 +72,14 @@ class UserService():
         if not validationToken[0]:
             result['data'].append(
                 {
-                    "authenticator ": False
+                    "authenticator": False
                 }
             )
         
             return result
         result['data'].append(
                 {
-                    "authenticator ": True
+                    "authenticator": True
                 }
             )
         return result
