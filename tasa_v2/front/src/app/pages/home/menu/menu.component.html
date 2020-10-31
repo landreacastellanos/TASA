@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand"[routerLink]="['/']" ><img src="../../../assets/img/logo.png" alt=""></a>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/']" >INICIO</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          FINCAS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Registrar finca</a>
+          <a class="dropdown-item" href="#">Lista de fincas</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">INFORMES</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          HISTÓRICOS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Histórico de visita</a>
+          <a class="dropdown-item" href="#">Histórico de fotografía</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">PERFILES</a>
+      </li>
+    </ul>
+  </div>
+  <div class="header-actions nav-link">
+    <a class="icon" href="/">
+      <img src="../../../assets/img/calendar.svg" alt="calendar">
+    </a>
+    <a class="icon" href="/">
+      <img src="../../../assets/img/bell.svg" alt="bell">
+    </a>
+  </div>
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#"><i class="fa fa-user-o"></i> Cerrar sesión</a>
+    </li>
+  </ul>
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
