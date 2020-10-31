@@ -45,21 +45,24 @@ export class DataApiService {
       .get<ResponseBack>(this.urlApi + extension, { headers: this.headers })
       .toPromise().then(result => {
         if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].values, 'x', {
+          this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
+            panelClass: ['snackbar-warn']
           });
+          return null;
         }
-        if (result && result.data && result.data.length > 0) {
+        if (result && result.data) {
           return result.data;
         } else {
-          return [];
+          return null;
         }
 
       }).catch(err => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
+          panelClass: ['snackbar-warn']
         });
-        return [];
+        return null;
       });
   }
 
@@ -68,21 +71,24 @@ export class DataApiService {
       .get<ResponseBack>(this.urlApi + extension + '/' + id, { headers: this.headers })
       .toPromise().then(result => {
         if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].values, 'x', {
+          this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
+            panelClass: ['snackbar-warn']
           });
+          return null;
         }
-        if (result && result.data && result.data.length > 0) {
+        if (result && result.data) {
           return result.data;
         } else {
-          return [];
+          return null;
         }
 
       }).catch(err => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
+          panelClass: ['snackbar-warn']
         });
-        return [];
+        return null;
       });
   }
 
@@ -91,21 +97,24 @@ export class DataApiService {
       .post<ResponseBack>(this.urlApi + extension, element, { headers: this.headers })
       .toPromise().then(result => {
         if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].values, 'x', {
+          this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
+            panelClass: ['snackbar-warn']
           });
+          return null;
         }
-        if (result && result.data && result.data.length > 0) {
+        if (result && result.data) {
           return result.data;
         } else {
-          return [];
+          return null;
         }
 
       }).catch(err => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
+          panelClass: ['snackbar-warn']
         });
-        return [];
+        return null;
       });
   }
 
@@ -114,21 +123,24 @@ export class DataApiService {
       .put<ResponseBack>(this.urlApi + extension, element, { headers: this.headers })
       .toPromise().then(result => {
         if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].values, 'x', {
+          this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
+            panelClass: ['snackbar-warn']
           });
+          return null;
         }
-        if (result && result.data && result.data.length > 0) {
+        if (result && result.data) {
           return result.data;
         } else {
-          return [];
+          return null;
         }
 
       }).catch(err => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
+          panelClass: ['snackbar-warn']
         });
-        return [];
+        return null;
       });
   }
 
@@ -137,21 +149,24 @@ export class DataApiService {
       .delete<ResponseBack>(this.urlApi + extension, { headers: this.headers })
       .toPromise().then(result => {
         if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].values, 'x', {
+          this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
+            panelClass: ['snackbar-warn']
           });
+          return null;
         }
-        if (result && result.data && result.data.length > 0) {
+        if (result && result.data) {
           return result.data;
         } else {
-          return [];
+          return null;
         }
 
       }).catch(err => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
+          panelClass: ['snackbar-warn']
         });
-        return [];
+        return null;
       });
   }
 }
