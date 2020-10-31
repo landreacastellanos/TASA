@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public login() {
+  public login(): Promise<void> {
     this.configService.loading = true;
     this.hideLogin = true;
     this.save = true;
@@ -44,19 +44,23 @@ export class LoginComponent implements OnInit {
       (data) => {
         if (data && data.length > 0) {
           this.storageService.setValue('token', data[0].token);
-          this.storageService.setValue('user', { name: data[0].nombre, roleId: data[0].role});
+          return this.authService.roles().then(
+            (roles) => {
+              this.storageService.setValue('token', roles[0].token);
+              this.storageService.setValue('roles', roles[0].role);
+              const roleName = this.storageService.settings.roles.find(role => role.key === data[0].role);
+              this.storageService.setValue('user', { name: data[0].nombre, roleId: roleName.key, role: roleName.role });
+              this.configService.loading = false;
+              this.router.navigate(['']);
+            });
+        } else {
+          this.configService.loading = false;
         }
-        return this.authService.roles().then(
-          (roles) => {
-            this.storageService.setValue('token', roles[0].token);
-            this.storageService.setValue('roles', roles[0].role);
-            this.configService.loading = false;
-          });
       });
   }
 
-  public forgotPass() {
-    this.router.navigate(['/home']);
+  public forgotPass(): void {
+    this.router.navigate(['/restore-password']);
   }
 
 }
