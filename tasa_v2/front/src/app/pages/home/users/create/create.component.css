@@ -1,0 +1,103 @@
+.form-personal-data {
+  margin-left: 15px;
+}
+
+.form-subtitle {
+  display: block;
+}
+
+.row {
+  align-content: flex-start;
+}
+
+.formOutline {
+  width: 100%;
+}
+
+.form-body {
+  background-color: white;
+}
+
+.center-children {
+  padding-top: 16px;
+  text-align: center;
+  color: #87b017;
+}
+
+header,
+nav {
+  text-align: center;
+  background: white;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.container-text {
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  color: #fff;
+  margin: auto;
+  border: 3px solid transparent;
+  border-bottom-width: 60px;
+  text-align: center;
+  font-size: 30px;
+  background: url(../../../../../assets/img/Atech_Background.1.jpg) padding-box,
+    linear-gradient(to bottom, green 0%, rgba(0, 0, 0, 0) 100%) border-box;
+}
+.card-container {
+  background-size: auto;
+    margin-left: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;  
+    border-left-style: none;
+  margin-top: 16px;
+  border: 10px solid transparent;
+  border-bottom-width: 60px;
+  background: url(../../../../../assets/img/Atech_Background.1.jpg) padding-box
+      fixed,
+    linear-gradient(to bottom, #87b017 0%, rgba(0, 0, 0, 0) 150%) border-box;
+  background-size: cover;
+}
+
+
+.button {
+  background-repeat: repeat;
+  fill: currentColor;
+  border: none;
+  margin: auto;
+  background: none;
+}
+
+button.second-button {
+  background-repeat: repeat;
+  fill: currentColor;
+  border: none;
+  margin: auto;
+  background: none;
+}
+
+.mat-icon {
+  content: "\f2c0";
+  font-size: larger;
+}
+
+.material-icons{
+  vertical-align: text-bottom;
+  font-size: larger;
+}
+
+.a{
+    margin-top: 1rem;
+    margin-bottom: unset;
+    padding: 1rem;
+}
+
+.h2{
+  padding: 1rem;
+}
+
+div.no-left-border{
+  border-left-style: none;
+}
