@@ -18,3 +18,11 @@ def validation_user():
         result = exception.args[0]
         return result
     return result
+
+def close_session():
+    try:
+        result = UserService().close_session()
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result

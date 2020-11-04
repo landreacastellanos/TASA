@@ -47,7 +47,7 @@
          }
       }
    },
-   "Createuser":{
+   "createUser":{
       "tableName": "user",
       "type": "object",
       "properties": {
@@ -90,6 +90,27 @@
          "created_date":{
             "dbName": "created_date",
             "type": "dateTime"
+         }
+      }
+   },
+   "security":{
+      "tableName": "security",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "token": {
+            "dbName": "token",
+            "type": "string"
+         },
+         "active": {
+            "dbName": "active",
+            "type": "boolean"
          }
       }
    }
