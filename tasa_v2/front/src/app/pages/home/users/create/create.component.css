@@ -1,13 +1,11 @@
-.form-personal-data {
-  margin-left: 15px;
-}
-
 .form-subtitle {
   display: block;
 }
 
 .row {
   align-content: flex-start;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .formOutline {
@@ -24,27 +22,6 @@
   color: #87b017;
 }
 
-header,
-nav {
-  text-align: center;
-  background: white;
-  margin: 20px 0;
-  padding: 10px;
-}
-
-.container-text {
-  width: 200px;
-  height: 50px;
-  cursor: pointer;
-  color: #fff;
-  margin: auto;
-  border: 3px solid transparent;
-  border-bottom-width: 60px;
-  text-align: center;
-  font-size: 30px;
-  background: url(../../../../../assets/img/Atech_Background.1.jpg) padding-box,
-    linear-gradient(to bottom, green 0%, rgba(0, 0, 0, 0) 100%) border-box;
-}
 .card-container {
   background-size: auto;
     margin-left: 0px;
@@ -78,23 +55,12 @@ button.second-button {
   background: none;
 }
 
-.mat-icon {
-  content: "\f2c0";
-  font-size: larger;
-}
-
 .material-icons{
   vertical-align: text-bottom;
   font-size: larger;
 }
 
-.a{
-    margin-top: 1rem;
-    margin-bottom: unset;
-    padding: 1rem;
-}
-
-.h2{
+h2{
   padding: 1rem;
 }
 
