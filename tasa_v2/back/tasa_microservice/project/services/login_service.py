@@ -36,12 +36,14 @@ class LoginService:
                 }
             )
             return results
-
-        results['data'] = list(map(lambda x: {
-                "name": x['name'] +" " + x['last_name'],
-                "role": x['role_id'],
-                "token": SecurityToken.get_token(data['user'])},
-                result))
+        if len(result)>0:
+            token = SecurityToken.get_token(data['user'])
+            SecurityToken.add_token(token)
+            results['data'] = list(map(lambda x: {
+                    "name": x['name'] +" " + x['last_name'],
+                    "role": x['role_id'],
+                    "token": token},
+                    result))
         return results
 
     def validation_login(self, data, password):

@@ -81,7 +81,9 @@ def after_request_function(response):
             response_data_formated["data"] = response_data_origin
 
         if "details" in response_data_origin and\
-           isinstance(response_data_origin["details"], list):
+           isinstance(response_data_origin["details"], list) and\
+           len(response_data_origin["details"]) >= 1:
+            response_data_formated["statusCode"] = response_data_origin["details"][0]["key"]
             response_data_formated["details"] = response_data_origin["details"]
 
         elif "detail" in response_data_origin and\
