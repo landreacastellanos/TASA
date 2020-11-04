@@ -113,9 +113,9 @@ class Repository():
                 raise Exception("When requesting a deletion it is mandatory to specify the id of the record to delete")   
             
 
-        if "options" in options and\
-           operation == "update" or \
-           operation == "delete":
+        if ("options" in options) and\
+           (operation == "update" or \
+           operation == "delete"):
             statement = SqlalchemyUtils.generate_where_statement(entity_name,
                                                                  options,
                                                                  statement,

@@ -7,9 +7,10 @@ from project.models.enum.keys_enum import Keys
 
 class UserService():
     USER_ACTIVE = True
+
     def __init__(self):
         self.__repository_user = CommonRepository(
-         entity_name="Createuser")
+         entity_name="createUser")
 
     def create_user(self, data):
         result = {
@@ -18,10 +19,10 @@ class UserService():
         }
 
         validationToken = SecurityToken().validate_token() 
-        if not validationToken[0]:
+        if not validationToken[0] or not SecurityToken().verify_exist_token():
             result['details'].append(
                 {
-                    "key": validationToken[1],
+                    "key": 400,
                     "value": "Token Invalido"
                 }
             )
@@ -47,6 +48,7 @@ class UserService():
                 "token": validationToken[1]
             }
         )
+        
         if data:
            result['details'].append(
                 {
@@ -57,10 +59,12 @@ class UserService():
         else:
             result['details'].append(
                 {
-                    "key": 204,
+                    "key": 400,
                     "value": "Usuario no creado "
                 }
             )
+    
+        SecurityToken().add_token(validationToken[3], validationToken[1])
         return result 
     
     def validation_user(self):
@@ -69,23 +73,19 @@ class UserService():
             "details": []
         }
         validationToken = SecurityToken().validate_token() 
-        if not validationToken[0]:
+        if not validationToken[0] or not SecurityToken().verify_exist_token():
             result['data'].append(
                 {
                     "authenticator": False
                 }
             )
-        
-            return result
-        result['data'].append(
+        else:
+            result['data'].append(
                 {
                     "authenticator": True
                 }
             )
         return result
-
-
-
 
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE
@@ -99,7 +99,7 @@ class UserService():
             options={"filters":
                              [['email', "equals", data]]
                              }) 
-        return True if len(data) > 0 else False
+        return (True, data) if len(data) > 0 else (False, data)
 
     def validation_data(self, data, user):
         result = {
@@ -107,20 +107,44 @@ class UserService():
             "details": []
         }
         
-        if data['role_id'] != Keys.admi.value or not self.verify_data(user):
+        role = self.verify_data(user)[1][0]['role_id']\
+            if len(self.verify_data(user)[1]) > 0 else 0
+
+        if not self.verify_data(user)[0] or role != Keys.admi.value:
             result['details'].append(
                 {
-                    "key": 400,
+                    "key": 401,
                     "value": "El usuario no tiene permisos"
                 }
             )
-        elif self.verify_data(data['email']):
+        elif self.verify_data(data['email'])[0]:
             result['details'].append(
                 {
                     "key": 400,
                     "value": "Este correo se encuentra en uso"
                 }
             )
-        
-        
+        return result
+    
+    def close_session(self):
+        result = {
+            "data": [],
+            "details": []
+        }
+
+        validationToken = SecurityToken().finish_token() 
+        if validationToken:
+            result['details'].append(
+                {
+                    "key": 200,
+                    "value": True
+                }
+            )
+        else:
+           result['details'].append(
+                {
+                    "key": 400,
+                    "value": False
+                }
+            )
         return result

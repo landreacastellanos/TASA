@@ -147,7 +147,29 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_user'
-          x-swagger-router-controller: "project.views.user"                                      
+          x-swagger-router-controller: "project.views.user"
+    /close_session:
+      get:
+          tags:
+            - "Create"
+          summary: "Create"
+          operationId: "close_session"
+          description: "Create"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"                                           
   definitions:
     responseDetail:
       type: object
@@ -214,9 +236,6 @@
         password:
           type: "string"
           example: "123asd"
-        number:
-          type: "integer"
-          example: 1
     UserToken:
       description: "Reset User password."
       type: "object"
