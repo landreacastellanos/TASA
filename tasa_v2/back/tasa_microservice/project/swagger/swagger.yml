@@ -102,7 +102,7 @@
     /create_user:
       post:
           tags:
-            - "Create"
+            - "User"
           summary: "Create"
           operationId: "create_user"
           description: "Create"
@@ -173,7 +173,7 @@
     /get_user:
       get:
           tags:
-            - "Create"
+            - "User"
           summary: "Create"
           operationId: "get_user"
           description: "get_user"
@@ -191,7 +191,7 @@
                 type: array
                 items:
                   $ref: '#/definitions/resultCreate'
-          x-swagger-router-controller: "project.views.user"                                                
+          x-swagger-router-controller: "project.views.user"
     /get_planting_type:
       get:
         tags:
@@ -212,7 +212,28 @@
                 type: array
                 items:
                   $ref: '#/definitions/TypePlanting'
-        x-swagger-router-controller: "project.views.properties"                                     
+        x-swagger-router-controller: "project.views.properties"
+    /get_users_properties:
+      get:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "get_users"
+        description: "get users"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            type: "string"
+            name: "Token"
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/UserDetail_properties'
+        x-swagger-router-controller: "project.views.properties"                                                
   definitions:
     responseDetail:
       type: object
@@ -454,19 +475,6 @@
           type: "string"
     Users:
       description: "User"
-          example: 1          
-    TypePlanting:
-      description: "Type planting"
-      type: "object"
-      properties:
-        id:
-          type: "integer"
-          example: "1"
-        name:
-          type: "string"
-          example: "Arroz secano"
-    UserDetail:
-      description: "User Detail"
       type: "object"
       properties:
         id:
@@ -493,6 +501,23 @@
         role_id:
           type: "integer"
           example: 1
+    TypePlanting:
+      description: "Type planting"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: "1"
+        name:
+          type: "string"
+          example: "Arroz secano"
+    UserDetail_properties:
+      description: "User Detail"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: "1"
         name:
           type: "string"
           example: "Diego Bustamante"
