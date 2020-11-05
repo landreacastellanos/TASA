@@ -190,8 +190,50 @@
               schema:
                 type: array
                 items:
-                  $ref: '#/definitions/resultCreate'
-          x-swagger-router-controller: "project.views.user"                                                
+                  $ref: '#/definitions/result_users'
+          x-swagger-router-controller: "project.views.user"
+    /get_planting_type:
+      get:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "get_type_planting"
+        description: "get planting type"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            type: "string"
+            name: "Token"
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/TypePlanting'
+        x-swagger-router-controller: "project.views.properties"
+    /get_users:
+      get:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "get_users"
+        description: "get users"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            type: "string"
+            name: "Token"
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/UserDetail'
+        x-swagger-router-controller: "project.views.properties"                                                 
   definitions:
     responseDetail:
       type: object
@@ -459,3 +501,47 @@
         role_id:
           type: "integer"
           example: 1
+    TypePlanting:
+      description: "Type planting"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: "1"
+        name:
+          type: "string"
+          example: "Arroz secano"
+    UserDetail:
+      description: "User Detail"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        role_id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Diego Bustamante"
+        rol:
+          type: "integer"
+          example: "1"
