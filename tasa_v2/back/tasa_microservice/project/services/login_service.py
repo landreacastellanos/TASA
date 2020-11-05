@@ -109,3 +109,46 @@ class LoginService:
         result['data'].append('Contraseña actualizada.')
         
         return result
+
+    def close_session(self):
+        result = {
+            "data": [],
+            "details": []
+        }
+
+        validationToken = SecurityToken().finish_token() 
+        if validationToken:
+            result['details'].append(
+                {
+                    "key": 200,
+                    "value": True
+                }
+            )
+        else:
+           result['details'].append(
+                {
+                    "key": 400,
+                    "value": False
+                }
+            )
+        return result
+    
+    def validation_user(self):
+        result = {
+            "data": [],
+            "details": []
+        }
+        validationToken = SecurityToken().validate_token() 
+        if not validationToken[0] or not SecurityToken().verify_exist_token():
+            result['data'].append(
+                {
+                    "authenticator": False
+                }
+            )
+        else:
+            result['data'].append(
+                {
+                    "authenticator": True
+                }
+            )
+        return result
