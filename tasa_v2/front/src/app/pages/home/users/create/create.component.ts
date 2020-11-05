@@ -20,14 +20,14 @@ interface Car {
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css'],
+  styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
 
   public loginForm: FormGroup;
   public save = false;
-  public hideLogin = true;
-
+  public hidePassword = true;
+  public hideRepeadPassword = true;
   food: Food[] = [
     { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }]
   userFg: FormGroup;

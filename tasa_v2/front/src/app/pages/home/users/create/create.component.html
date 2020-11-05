@@ -87,6 +87,7 @@
                 <div class="warning">Este campo es requerido</div>
               </div>
             </div>
+            <div class="vl"></div>
             <div class="form-account col-6 row">
               <div class="form-subtitle col-12">
                 <h5>Cuenta</h5>
@@ -115,21 +116,20 @@
                     matInput
                     placeholder="Contraseña"
                     formControlName="password"
-                    type="password"
                     class="inputOutline"
                     required
-                    [type]="hideLogin ? 'password' : 'text'"
+                    [type]="hidePassword ? 'password' : 'text'"
                   />
                   <button
                     class="button"
                     mat-icon
                     matSuffix
-                    (click)="hideLogin = !hideLogin"
+                    (click)="hidePassword = !hidePassword"
                     [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hideLogin"
+                    [attr.aria-pressed]="hidePassword"
                   >
                     <mat-icon>{{
-                      hideLogin ? "visibility_off" : "visibility"
+                      hidePassword ? "visibility_off" : "visibility"
                     }}</mat-icon>
                   </button>
                 </mat-form-field>
@@ -146,21 +146,20 @@
                     matInput
                     placeholder="Confirma tu contraseña"
                     formControlName="passwordRepeat"
-                    type="password"
                     class="inputOutline"
                     required
-                    [type]="hideLogin ? 'password' : 'text'"
+                    [type]="hideRepeadPassword ? 'password' : 'text'"
                   />
                   <button
-                    class="second-button"
+                    class="button second-button"
                     mat-icon
                     matSuffix
-                    (click)="hideLogin = !hideLogin"
+                    (click)="hideRepeadPassword = !hideRepeadPassword"
                     [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hideLogin"
+                    [attr.aria-pressed]="hideRepeadPassword"
                   >
                     <mat-icon>{{
-                      hideLogin ? "visibility_off" : "visibility"
+                      hideRepeadPassword ? "visibility_off" : "visibility"
                     }}</mat-icon>
                   </button>
                 </mat-form-field>

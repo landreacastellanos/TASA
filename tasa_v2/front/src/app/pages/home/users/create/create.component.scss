@@ -24,11 +24,11 @@
 
 .card-container {
   background-size: auto;
-    margin-left: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin-right: 0px;  
-    border-left-style: none;
+  margin-left: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-right: 0px;
+  border-left-style: none;
   margin-top: 16px;
   border: 10px solid transparent;
   border-bottom-width: 60px;
@@ -38,6 +38,15 @@
   background-size: cover;
 }
 
+button {
+  .second-button {
+    background-repeat: repeat;
+    fill: currentColor;
+    border: none;
+    margin: auto;
+    background: none;
+  }
+}
 
 .button {
   background-repeat: repeat;
@@ -47,23 +56,25 @@
   background: none;
 }
 
-button.second-button {
-  background-repeat: repeat;
-  fill: currentColor;
-  border: none;
-  margin: auto;
-  background: none;
-}
-
-.material-icons{
+.material-icons {
   vertical-align: text-bottom;
   font-size: larger;
 }
 
-h2{
+h2 {
   padding: 1rem;
 }
 
-div.no-left-border{
+div.no-left-border {
   border-left-style: none;
+}
+
+.vl {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  height: 61%;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+  top: 0;
+  top: 35%;
 }
