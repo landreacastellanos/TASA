@@ -1,2 +1,4 @@
-<ngx-loading [show]="configService.loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
-<router-outlet></router-outlet>
+<div class="app-container">
+  <ngx-loading [show]="configService.loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+  <router-outlet></router-outlet>
+</div>

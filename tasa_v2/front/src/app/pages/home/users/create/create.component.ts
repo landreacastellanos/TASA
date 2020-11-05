@@ -1,8 +1,10 @@
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { confirmPassword } from './confirm-password.validator';
-import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Role } from '../../../../shared/models/role';
+import { RoleService } from '../../../../shared/services/role.service';
+import { UserService } from '../user.service';
 
 
 
@@ -18,7 +20,7 @@ interface Car {
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
 })
 export class CreateComponent implements OnInit {
 
@@ -29,7 +31,11 @@ export class CreateComponent implements OnInit {
   food: Food[] = [
     { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }]
   userFg: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private _userService: UserService,
+    private _roleService: RoleService
+    ) { }
 
 
   ngOnInit() {
@@ -48,12 +54,24 @@ export class CreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log({ form: this.userFg });
-
+    const randNum = Math.floor(Math.random() * 1000);
+    return this._userService.create({
+      age: randNum,
+      email: `juanse_${randNum}@yopmail.com`,
+      last_name: `dussan_${randNum}`,
+      name: `juanse_${randNum}`,
+      password: `juanse_${randNum}@yopmail.com`,
+      phone: randNum,
+      profesion: `profesion_${randNum}`,
+      role_id: 6,
+    });
   }
 
   print(value) {
     console.debug(value)
   }
 
+  get roles(): Promise<Role[]> {
+    return this._roleService.allRolesPromise;
+  }
 }
