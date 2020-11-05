@@ -10,7 +10,7 @@ class RoleService():
          entity_name="roles")
 
         self.__repository_user = CommonRepository(
-         entity_name="Createuser") 
+         entity_name="createUser") 
 
     def get_roles(self):
         """
@@ -24,7 +24,7 @@ class RoleService():
         validationToken = SecurityToken().validate_token()
         data_validation = self.validation_data(validationToken)
    
-        if len(data_validation['details'])>0:
+        if len(data_validation['details'])>0 :
             return data_validation
            
         result['data'].append(
@@ -33,6 +33,7 @@ class RoleService():
                 "token": validationToken[1]
             }
         )
+        SecurityToken().add_token(validationToken[3], validationToken[1])
         return result
 
     def verify_data(self, data):
@@ -48,11 +49,11 @@ class RoleService():
             "details": []
         }
         
-        if not validationToken[0] :
+        if not validationToken[0] or not SecurityToken().verify_exist_token() :
             result['details'].append(
                 {
-                    "key": validationToken[1],
-                    "value": "Token Experied"
+                    "key": 400,
+                    "value": "Token Invalido"
                 }
             )
         elif not self.verify_data(validationToken[2]):

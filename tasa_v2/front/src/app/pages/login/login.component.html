@@ -1,1 +1,70 @@
-<p>login works!</p>
+<div class="container-login row justify-content-center">
+    <div class="initial-header col-12">
+        <img src="../../../assets/img/logo.png" alt="">
+    </div>
+    <div class="card-login col-12 col-sm-9 col-md-7 col-lg-6">
+        <div class="row">
+            <div class="image-login col-6">
+                <img src="../../../assets/img/login.jpeg" alt="">
+                <div class="logo-login">
+                    <img src="../../../assets/img/TASA.PNG" alt="">
+                </div>
+            </div>
+            <div class="form-login col-12 col-sm-10 col-md-6">
+                <div class="text-login">
+                    <h2 class="title">
+                        Iniciar sesión
+                    </h2>
+                    <p class="text">
+                        Ingresa tu documento de identificación y tu contraseña
+                    </p>
+                </div>
+                <form #myForm="ngForm" [formGroup]="loginForm">
+                    <div class="row justify-content-center">
+                        <div class="containerForm col-12 ">
+                            <mat-label>Usuario</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input appAutofocus matInput placeholder="Usuario"
+                                    formControlName="userName" type="text" class="inputOutline" required>
+                            </mat-form-field>
+                            <div class="warning" *ngIf="loginForm.controls.userName.errors?.required && save">
+                                Este campo es requerido
+                            </div>
+                            <div class="warning" *ngIf="loginForm.controls.userName.errors?.maxlength && save">
+                                Máximo 60 caracteres
+                            </div>
+                        </div>
+                        <div class="containerForm col-12">
+                            <mat-label>Contraseña</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input matInput placeholder="Contraseña"
+                                    formControlName="password" class="inputOutline" required
+                                    [type]="hideLogin ? 'password' : 'text'">
+                                <button mat-icon-button matSuffix (click)="hideLogin = !hideLogin"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideLogin">
+                                    <mat-icon>{{hideLogin ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <div class="warning"
+                                *ngIf="loginForm.controls.password.errors?.required && save">
+                                Este campo es requerido
+                            </div>
+                            <div class="warning"
+                                *ngIf="loginForm.controls.password.errors?.maxlength && save">
+                                Máximo 60 caracteres
+                            </div>
+                        </div>
+                    </div>
+                    <div class="forgotPass">
+                        <button mat-button class="col-12 col-sm-12"
+                            (click)="forgotPass()">¿Olvidaste tu contraseña?</button>
+                    </div>
+                    <div class="buttonContinue row justify-content-center">
+                        <button mat-raised-button color="primary" class="col-11 col-sm-6 col-md-6"
+                            (click)="login()">Ingresar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

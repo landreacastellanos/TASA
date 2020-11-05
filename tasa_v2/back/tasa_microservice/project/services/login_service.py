@@ -15,7 +15,15 @@ class LoginService:
             "data": [],
             "details": []
         }
-
+        if "user" not in data or "password" not in data:
+            results['details'].append(
+                {
+                    "key": 400,
+                    "value": "Usuario o contraseña incorrectos"
+                }
+            )
+            return results
+        
         result = self.__repository_roles.select(
             options={"filters":
                              [['email', "equals", data['user'].lower()]]
@@ -28,22 +36,24 @@ class LoginService:
                 }
             )
             return results
-
-        results['data'] = list(map(lambda x: {
-                "nombre": x['name'] +" " + x['last_name'],
-                "role": x['role_id'],
-                "token": SecurityToken.get_token(data['user'])},
-                result))
+        if len(result)>0:
+            token = SecurityToken.get_token(data['user'])
+            SecurityToken.add_token(token)
+            results['data'] = list(map(lambda x: {
+                    "name": x['name'] +" " + x['last_name'],
+                    "role": x['role_id'],
+                    "token": token},
+                    result))
         return results
 
     def validation_login(self, data, password):
         value = True
         
-        if len(data) ==0:
-            value = False
+        if len(data)==0:
+            return False
         password_validation = Encryption().decrypt_value(data[0]['password']).decode("utf-8")
         if password_validation != password:
-            value = False
+            return False
         return value        
 
     def restore_password(self, data):

@@ -10,3 +10,19 @@ def create_user():
         result = exception.args[0]
         return result
     return result
+
+def validation_user():
+    try:
+        result = UserService().validation_user()
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result
+
+def close_session():
+    try:
+        result = UserService().close_session()
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result
