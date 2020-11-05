@@ -233,7 +233,7 @@
                 type: array
                 items:
                   $ref: '#/definitions/UserDetail'
-        x-swagger-router-controller: "project.views.properties"                                                 
+        x-swagger-router-controller: "project.views.properties"
   definitions:
     responseDetail:
       type: object
