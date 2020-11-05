@@ -1,4 +1,18 @@
 {
+   "type_planting": {
+      "tableName": "type_planting",
+      "type": "object",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         }
+      }
+   },
    "roles": {
       "tableName": "role",
       "type": "object",
