@@ -29,11 +29,9 @@ class RoleService():
            
         result['data'].append(
             {
-                "role": self.__repository_roles.select(),
-                "token": validation_token[1]
+                "role": self.__repository_roles.select()
             }
         )
-        SecurityToken().add_token(validation_token[3], validation_token[1])
         return result
 
     def verify_data(self, data):
@@ -63,6 +61,5 @@ class RoleService():
                     "value": "El usuario no tiene permisos"
                 }
             )
-        
         
         return result

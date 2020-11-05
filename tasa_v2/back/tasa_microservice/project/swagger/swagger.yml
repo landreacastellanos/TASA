@@ -271,9 +271,8 @@
         status:
           type: "integer"
         data:
-          type: "array"
-          items:
-            $ref: '#/definitions/resultCreateUser'
+          type: "string"
+          example: "[]"
         details:
           type: "array"
           items:
@@ -358,9 +357,6 @@
           type: "array"
           items:
             $ref: '#/definitions/Roles' 
-        token:
-          type: "string"
-          example: "123asd"
     CreateUser:
       description: "Role Security"
       type: "object"
@@ -449,13 +445,6 @@
         value:
           type: "string"
           example: "usuario creado"
-    resultCreateUser:
-      description: "resultCreateUser"
-      type: "object"
-      properties:
-        token:
-          type: "string"
-          example: "sdasda"
     result_users:
       type: "object"
       properties:

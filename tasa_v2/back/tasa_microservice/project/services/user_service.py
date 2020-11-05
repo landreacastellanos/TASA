@@ -47,12 +47,6 @@ class UserService():
                 }
             )
             return result
-
-        result['data'].append(
-            {   
-                "token": validation_token[1]
-            }
-        )
         
         if data:
            result['details'].append(
@@ -92,6 +86,7 @@ class UserService():
 
         result['data'] = data
         return result
+
     #region ValidationData
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE
