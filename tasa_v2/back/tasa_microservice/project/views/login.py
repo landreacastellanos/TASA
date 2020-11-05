@@ -28,3 +28,19 @@ def reset_password():
         result = exception.args[0]
         return result
     return result
+
+def validation_user():
+    try:
+        result = LoginService().validation_user()
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result
+
+def close_session():
+    try:
+        result = LoginService().close_session()
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result
