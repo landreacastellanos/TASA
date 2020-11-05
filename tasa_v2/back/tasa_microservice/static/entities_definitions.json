@@ -1,4 +1,18 @@
 {
+   "type_planting": {
+      "tableName": "type_planting",
+      "type": "object",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         }
+      }
+   },
    "roles": {
       "tableName": "role",
       "type": "object",
@@ -111,6 +125,44 @@
          "active": {
             "dbName": "active",
             "type": "boolean"
+         }
+      }
+   },
+   "Users":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "id":{
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "age": {
+            "dbName": "age",
+            "type": "integer"
+         },
+         "profesion": {
+            "dbName": "profesion",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "phone":{
+            "dbName": "phone",
+            "type": "number"
          }
       }
    }

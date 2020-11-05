@@ -11,17 +11,9 @@ def create_user():
         return result
     return result
 
-def validation_user():
+def get_user():
     try:
-        result = UserService().validation_user()
-    except Exception as exception:
-        result = exception.args[0]
-        return result
-    return result
-
-def close_session():
-    try:
-        result = UserService().close_session()
+        result = UserService().get_user()
     except Exception as exception:
         result = exception.args[0]
         return result
