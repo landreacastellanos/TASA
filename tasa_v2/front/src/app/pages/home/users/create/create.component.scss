@@ -32,10 +32,15 @@
   margin-top: 16px;
   border: 10px solid transparent;
   border-bottom-width: 60px;
+  background: linear-gradient(to bottom, #87b017 0%, rgba(0, 0, 0, 0) 150%) border-box;
+}
+
+.sponsors{
+  border-left: 10px solid transparent;
   background: url(../../../../../assets/img/Atech_Background.1.jpg) padding-box
       fixed,
     linear-gradient(to bottom, #87b017 0%, rgba(0, 0, 0, 0) 150%) border-box;
-  background-size: cover;
+  
 }
 
 button {
@@ -101,39 +106,33 @@ div.no-left-border {
   border-radius: 18px;
 }
 
-.mat-icon {
-
-    vertical-align: text-bottom;
-    font-size: xx-large;
-  }
-
-  .save-changes{
-    vertical-align: middle;
-    font-size: 24px;
-  }
-
-  span.text-box{
-    padding-left: 30px;
-    font-size: large;
-  }
-
-  div.padding-row{
-    padding-left: 20px;
+.save-changes {
+  vertical-align: middle;
+  font-size: 24px;
 }
 
-.size-icon-check{
+span.text-box {
+  padding-left: 30px;
+  font-size: large;
+}
+
+div.padding-row {
+  padding-left: 20px;
+}
+
+.size-icon-check {
   font-size: 24px;
   vertical-align: text-top;
 }
 
-.size-icon-folder{
+.size-icon-folder {
   vertical-align: text-top;
   font-size: 20px;
 }
 
-button.transparent-blackground{
+button.transparent-blackground {
   bottom: 50px;
-    left: 20px;
+  left: 20px;
   background-color: rgb(0 0 0 / 0%);
 }
 
@@ -145,7 +144,7 @@ button.transparent-blackground{
   width: 500px;
 }
 
-button.position-green-button{
+button.position-green-button {
   bottom: 50px;
-    left: 120px;
+  left: 120px;
 }

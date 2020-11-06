@@ -218,64 +218,10 @@
               </div>
             </div>
           </div>
-          <div class="containerForm col-6">
-            <mat-label>Contraseña</mat-label>
-            <mat-form-field class="col-12 formOutline" appearance="outline">
-              <input
-                appAutofocus
-                matInput
-                placeholder="Contraseña"
-                formControlName="password"
-                class="inputOutline"
-                required
-                [type]="hidePassword ? 'password' : 'text'"
-              />
-              <button
-                class="button"
-                mat-icon
-                matSuffix
-                (click)="hidePassword = !hidePassword"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hidePassword"
-              >
-                <mat-icon>{{
-                  hidePassword ? "visibility_off" : "visibility"
-                }}</mat-icon>
-              </button>
-            </mat-form-field>
-            <div class="warning">Este campo es requerido</div>
-          </div>
-          <div class="containerForm col-6">
-            <p><strong>Agregar desplegable perfil</strong></p>
-          </div>
-          <div class="containerForm col-6">
-            <mat-label>Confirma tu contraseña</mat-label>
-            <mat-form-field class="col-12 formOutline" appearance="outline">
-              <input
-                appAutofocus
-                matInput
-                placeholder="Confirma tu contraseña"
-                formControlName="passwordRepeat"
-                class="inputOutline"
-                required
-                [type]="hideRepeadPassword ? 'password' : 'text'"
-              />
-              <button
-                class="button second-button"
-                mat-icon
-                matSuffix
-                (click)="hideRepeadPassword = !hideRepeadPassword"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hideRepeadPassword"
-              >
-                <mat-icon>{{
-                  hideRepeadPassword ? "visibility_off" : "visibility"
-                }}</mat-icon>
-              </button>
-            </mat-form-field>
-            <div class="warning">Este campo es requerido</div>
-          </div>
         </div>
+      </div>
+      <div class="sponsors col-4 ">
+        ALSJKHlasnlan
       </div>
     </div>
     <button class="transparent-blackground" mat-raised-button color="primary">
@@ -286,6 +232,5 @@
       <span class="px-5">Guardar cambios</span>
       <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
     </button>
-    <button type="submit" style="height: 60px; width: 120px"></button>
   </form>
 </div>
