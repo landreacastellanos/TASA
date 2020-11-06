@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
           this.storageService.setValue('token', data[0].token);
           return this.authService.roles().then(
             (roles) => {
-              this.storageService.setValue('token', roles[0].token);
               this.storageService.setValue('roles', roles[0].role);
               const roleName = this.storageService.settings.roles.find(role => role.key === data[0].role);
               this.storageService.setValue('user', { name: data[0].nombre, roleId: roleName.key, role: roleName.role });
