@@ -62,8 +62,6 @@ class UserService():
                     "value": "Usuario no creado "
                 }
             )
-    
-        SecurityToken().add_token(validation_token[3], validation_token[1])
         return result
     
     def get_user(self):
