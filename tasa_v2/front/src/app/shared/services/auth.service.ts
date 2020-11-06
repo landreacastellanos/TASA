@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { RolesBackResponse } from '../models/roles-back-response';
 import { DataApiService } from './data-api.service';
 
 @Injectable({
@@ -12,12 +13,10 @@ export class AuthService {
   ) { }
 
   public login(userValue: string, passwordValue: string): Promise<any> {
-    // tslint:disable-next-line: object-literal-shorthand
     return this.dataApiService.post({ user: userValue, password: passwordValue, number: 1 }, 'login');
   }
 
-  public roles(): Promise<any> {
-    // tslint:disable-next-line: object-literal-shorthand
+  public roles(): Promise<RolesBackResponse> {
     return this.dataApiService.getAll('get_roles');
   }
 

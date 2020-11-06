@@ -3,70 +3,102 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { confirmPassword } from './confirm-password.validator';
 import { FormGroup } from '@angular/forms';
 import { Role } from '../../../../shared/models/role';
-import { RoleService } from '../../../../shared/services/role.service';
 import { UserService } from '../user.service';
+import { StorageService } from '../../../../shared/services/storage.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent implements OnInit {
-
   public loginForm: FormGroup;
   public save = false;
   public hidePassword = true;
   public hideRepeadPassword = true;
-  userFg: FormGroup;
-  submitted = false;
+  public userFg: FormGroup;
+  public submitted = false;
+
   constructor(
     private fb: FormBuilder,
-    private _userService: UserService,
-    private _roleService: RoleService
-    ) { }
-
+    private storageService: StorageService,
+    private router: Router,
+    private userService: UserService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
-    this.userFg = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
-      phone: ['', [Validators.minLength(7)]],
-      age: [''],
-      profession: [''],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      passwordRepeat: ['', [Validators.required]],
-      role_id: [0, [Validators.required]]
-    },{ validators:[confirmPassword] });
+    this.userFg = this.fb.group(
+      {
+        name: ['', [Validators.required, Validators.minLength(3)]],
+        lastName: ['', [Validators.required, Validators.minLength(3)]],
+        phone: [undefined, [Validators.minLength(7)]],
+        age: [undefined],
+        profession: [''],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required]],
+        passwordRepeat: ['', [Validators.required]],
+        role_id: [undefined, [Validators.required]],
+      },
+      { validators: [confirmPassword] }
+    );
     console.log(this.userFg);
-
   }
 
   onSubmit() {
     const randNum = Math.floor(Math.random() * 1000);
     console.log(this.userFg);
     this.submitted = true;
-    return this._userService.create({
-      age: randNum,
-      email: `juanse_${randNum}@yopmail.com`,
-      last_name: `dussan_${randNum}`,
-      name: `juanse_${randNum}`,
-      password: `juanse_${randNum}@yopmail.com`,
-      phone: randNum,
-      profesion: `profesion_${randNum}`,
-      role_id: 1,
+    if (!this.userFg.valid) {
+      return this.validationError();
+    }
+
+    const {
+      profession,
+      passwordRepeat,
+      lastName,
+      ...userCreate
+    } = this.userFg.value;
+    return this.userService
+      .create({
+        profesion: profession,
+        last_name: lastName,
+        pancho: 'asdsd',
+        ...userCreate,
+      })
+      .then((data) => {
+        if (data === null) {
+          return this.snackBar.open('Hubo un error', 'x', {
+            duration: 2000,
+            panelClass: ['snackbar-warn'],
+          });
+        }
+        this.snackBar.open('Usuario creado', 'x', {
+          duration: 2000,
+          panelClass: ['snackbar-success'],
+        });
+        this.goBack();
+      });
+  }
+
+  validationError() {
+    return this.snackBar.open('Rectifica los campos', 'x', {
+      duration: 2000,
+      panelClass: ['snackbar-warn'],
     });
   }
 
-  print(value) {
-    console.debug(value)
+  goBack() {
+    this.router.navigate(['/users/']);
   }
 
-  get roles(): Promise<Role[]> {
-    return this._roleService.allRolesPromise;
+  get roles(): Role[] {
+    return this.storageService.settings.roles;
   }
 
-  get controls(){
+  get controls() {
     return this.userFg.controls;
   }
 }
