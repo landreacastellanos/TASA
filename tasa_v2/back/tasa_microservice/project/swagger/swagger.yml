@@ -55,7 +55,7 @@
               schema:
                 type: array
                 items:
-                  $ref: '#/definitions/result_user'
+                  $ref: '#/definitions/result_login'
           x-swagger-router-controller: "project.views.login"
     /restore_password:
       post:
@@ -102,7 +102,7 @@
     /create_user:
       post:
           tags:
-            - "Create"
+            - "User"
           summary: "Create"
           operationId: "create_user"
           description: "Create"
@@ -129,10 +129,10 @@
     /is_authenticated:
       get:
           tags:
-            - "Create"
-          summary: "Create"
+            - "Login"
+          summary: "Login"
           operationId: "validation_user"
-          description: "Create"
+          description: "validation_user"
           produces:
             - "application/json"
           parameters:
@@ -146,15 +146,15 @@
               schema:
                 type: array
                 items:
-                  $ref: '#/definitions/result_user'
-          x-swagger-router-controller: "project.views.user"
+                  $ref: '#/definitions/result_authenticated'
+          x-swagger-router-controller: "project.views.login"
     /close_session:
       get:
           tags:
-            - "Create"
+            - "Login"
           summary: "Create"
           operationId: "close_session"
-          description: "Create"
+          description: "close_session"
           produces:
             - "application/json"
           parameters:
@@ -168,7 +168,29 @@
               schema:
                 type: array
                 items:
-                  $ref: '#/definitions/result_user'
+                  $ref: '#/definitions/result_close'
+          x-swagger-router-controller: "project.views.login"
+    /get_user:
+      get:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "get_user"
+          description: "get_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/resultCreate'
           x-swagger-router-controller: "project.views.user"
     /get_planting_type:
       get:
@@ -322,13 +344,30 @@
         data:
           type: "array"
           items:
-            $ref: '#/definitions/Login'
+            $ref: '#/definitions/resultCreateUser'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/resultCreate'
+        method:
+          type: "string"
+    result_login:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Login_result'
         details:
           type: "array"
           items:
               $ref: '#/definitions/responseDetail'
         method:
-          type: "string"      
+          type: "string"            
     Roles:
       description: "Roles."
       type: "object"
@@ -369,19 +408,19 @@
         password:
           type: "string"
           example: "abc123"
-    Login:
+    Login_result:
       description: "Login"
       type: "object"
       properties:
-        user:
+        name:
           type: "string"
           example: "admi"
-        password:
-          type: "string"
-          example: "123asd"
-        number:
+        role:
           type: "integer"
-          example: 1    
+          example: 1
+        token:
+          type: "string"
+          example: "admi"          
     RolesSecurity:
       description: "Role Security"
       type: "object"
@@ -420,7 +459,119 @@
           example: "123"
         role_id:
           type: "integer"
-          example: 1          
+          example: 1
+    result_authenticated:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/authenticated'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    authenticated:
+      description: "Role Security"
+      type: "object"
+      properties:
+        authenticator:
+          type: "boolean"
+          example: "true"
+    result_close:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "string"
+          example: "[]"
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseCloseSession'
+        method:
+          type: "string"
+    responseCloseSession:
+      description: "Role Security"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: "200"
+        value:
+          type: "boolean"
+          example: "true"
+    resultCreate:
+      description: "resultCreate"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: "200"
+        value:
+          type: "string"
+          example: "usuario creado"
+    resultCreateUser:
+      description: "resultCreateUser"
+      type: "object"
+      properties:
+        token:
+          type: "string"
+          example: "sdasda"
+    result_users:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Users'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    Users:
+      description: "User"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        role_id:
+          type: "integer"
+          example: 1
     TypePlanting:
       description: "Type planting"
       type: "object"

@@ -28,9 +28,14 @@ class UserService():
             )
             return result
         data_validation = self.validation_data(data, validationToken[2])
+        data_email = self.validation_email(data)
 
         if len(data_validation['details'])>0:
             return data_validation
+
+        if len(data_email['details'])>0:
+            return data_email
+
         data = self.complete_data(data)
         try:
             data = self.__repository_user.insert(data)
@@ -65,28 +70,29 @@ class UserService():
             )
     
         SecurityToken().add_token(validationToken[3], validationToken[1])
-        return result 
+        return result
     
-    def validation_user(self):
+    def get_user(self):
         result = {
             "data": [],
             "details": []
         }
+
         validationToken = SecurityToken().validate_token() 
         if not validationToken[0] or not SecurityToken().verify_exist_token():
-            result['data'].append(
+            result['details'].append(
                 {
-                    "authenticator": False
+                    "key": 400,
+                    "value": "Token Invalido"
                 }
             )
-        else:
-            result['data'].append(
-                {
-                    "authenticator": True
-                }
-            )
-        return result
+            return result
+        
+        data = self.__repository_user.select(entity_name="Users")
 
+        result['data'] = data
+        return result
+    #region ValidationData
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE
         data['created_date'] = datetime.datetime.now().__str__()
@@ -117,34 +123,21 @@ class UserService():
                     "value": "El usuario no tiene permisos"
                 }
             )
-        elif self.verify_data(data['email'])[0]:
+        return result
+    
+    def validation_email(self, data):
+        result = {
+            "data": [],
+            "details": []
+        }
+
+        if self.verify_data(data['email'])[0]:
             result['details'].append(
                 {
                     "key": 400,
                     "value": "Este correo se encuentra en uso"
                 }
             )
-        return result
-    
-    def close_session(self):
-        result = {
-            "data": [],
-            "details": []
-        }
 
-        validationToken = SecurityToken().finish_token() 
-        if validationToken:
-            result['details'].append(
-                {
-                    "key": 200,
-                    "value": True
-                }
-            )
-        else:
-           result['details'].append(
-                {
-                    "key": 400,
-                    "value": False
-                }
-            )
         return result
+    #endregion
