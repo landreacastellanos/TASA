@@ -204,6 +204,7 @@
         parameters:
           - in: "header"
             type: "string"
+            required: true
             name: "Token"
         responses:
           '200':
@@ -212,6 +213,29 @@
                 type: array
                 items:
                   $ref: '#/definitions/TypePlanting'
+        x-swagger-router-controller: "project.views.properties"
+    /create_property:
+      post:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "create_property"
+        description: "create properties"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            type: "string"
+            required: true
+            name: "Token"
+          - in: "body"
+            name: properties
+            required: true
+            schema:
+                $ref: '#/definitions/properties_insert'
+        responses:
+          '200':
+            description: response result successful
         x-swagger-router-controller: "project.views.properties"
     /get_users_properties:
       get:
@@ -224,6 +248,7 @@
           - "application/json"
         parameters:
           - in: "header"
+            required: true
             type: "string"
             name: "Token"
         responses:
@@ -232,9 +257,55 @@
             schema:
                 type: array
                 items:
-                  $ref: '#/definitions/UserDetail'
-        x-swagger-router-controller: "project.views.properties"
+                  $ref: '#/definitions/UserDetail_properties'
+        x-swagger-router-controller: "project.views.properties"                                         
   definitions:
+    properties_insert:
+      type: object
+      properties:
+        name:
+          type: "string"
+        business_name:
+          type: "string"
+        direction:
+          type: "string"
+        phone:
+          type: "number"
+        web_page:
+          type: "string"
+        email:
+          type: "string"
+        hectares_total:
+          type: "number"
+        manager:
+          type: "integer"
+        property_owner:
+          type: "integer"
+        sowing_system:
+          type: "integer"
+        purchasing_manager:
+          type: "integer"
+        pay_manager:
+          type: "integer"
+        parthner_add:
+          type: "integer"
+        decision_influencer:
+          type: "integer"
+        seller:
+          type: "integer"
+        responsible_purchasing :
+          type: "integer"
+        batchs:
+          type: "array"
+          items:
+            $ref: '#/definitions/batch'
+    batch:
+      type: object
+      properties:
+        name:
+          type: string
+        hectares_number:
+          type: number
     responseDetail:
       type: object
       properties:
@@ -526,5 +597,18 @@
           type: "number"
           example: 123
         role_id:
+          type: "integer"
+          example: 1
+    UserDetail_properties:
+      description: "User Detail"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Diego Bustamante" 
+        rol:
           type: "integer"
           example: 1
