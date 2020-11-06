@@ -18,8 +18,8 @@ class UserService():
             "details": []
         }
 
-        validationToken = SecurityToken().validate_token() 
-        if not validationToken[0] or not SecurityToken().verify_exist_token():
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
             result['details'].append(
                 {
                     "key": 400,
@@ -27,7 +27,7 @@ class UserService():
                 }
             )
             return result
-        data_validation = self.validation_data(data, validationToken[2])
+        data_validation = self.validation_data(data, validation_token[2])
         data_email = self.validation_email(data)
 
         if len(data_validation['details'])>0:
@@ -47,12 +47,6 @@ class UserService():
                 }
             )
             return result
-
-        result['data'].append(
-            {   
-                "token": validationToken[1]
-            }
-        )
         
         if data:
            result['details'].append(
@@ -69,7 +63,7 @@ class UserService():
                 }
             )
     
-        SecurityToken().add_token(validationToken[3], validationToken[1])
+        SecurityToken().add_token(validation_token[3], validation_token[1])
         return result
     
     def get_user(self):
@@ -78,8 +72,8 @@ class UserService():
             "details": []
         }
 
-        validationToken = SecurityToken().validate_token() 
-        if not validationToken[0] or not SecurityToken().verify_exist_token():
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
             result['details'].append(
                 {
                     "key": 400,
@@ -92,6 +86,7 @@ class UserService():
 
         result['data'] = data
         return result
+
     #region ValidationData
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE

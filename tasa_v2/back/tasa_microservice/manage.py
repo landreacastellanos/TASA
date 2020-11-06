@@ -104,7 +104,7 @@ def after_request_function(response):
     return response
 
 app.config["CORS_HEADERS"] = "Content-Type"
-cors = CORS(app, resources={r"/arroz_service/*": {"origins": "*"}})
+cors = CORS(app, resources={r"/tasa_service/*": {"origins": "*"}})
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -119,9 +119,6 @@ app.response_class = ResponseWrapper
 manager = Manager(app)
 
 mail = Mail(app)
-
-
-
 
 if __name__ == "__main__":
     manager.run()
