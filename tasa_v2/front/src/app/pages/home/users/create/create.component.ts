@@ -6,17 +6,6 @@ import { Role } from '../../../../shared/models/role';
 import { RoleService } from '../../../../shared/services/role.service';
 import { UserService } from '../user.service';
 
-
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
-
-interface Car {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -28,9 +17,8 @@ export class CreateComponent implements OnInit {
   public save = false;
   public hidePassword = true;
   public hideRepeadPassword = true;
-  food: Food[] = [
-    { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }, { value: '2', viewValue: '3' }]
   userFg: FormGroup;
+  submitted = false;
   constructor(
     private fb: FormBuilder,
     private _userService: UserService,
@@ -43,18 +31,21 @@ export class CreateComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       phone: ['', [Validators.minLength(7)]],
-      age: ['', [Validators.max(99), Validators.min(18)]],
-      profession: ['', [Validators.required]],
+      age: [''],
+      profession: [''],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      passwordRepeat: ['', [Validators.required, Validators.minLength(8), confirmPassword]],
+      password: ['', [Validators.required]],
+      passwordRepeat: ['', [Validators.required]],
+      role_id: [0, [Validators.required]]
+    },{ validators:[confirmPassword] });
+    console.log(this.userFg);
 
-
-    });
   }
 
   onSubmit() {
     const randNum = Math.floor(Math.random() * 1000);
+    console.log(this.userFg);
+    this.submitted = true;
     return this._userService.create({
       age: randNum,
       email: `juanse_${randNum}@yopmail.com`,
@@ -63,7 +54,7 @@ export class CreateComponent implements OnInit {
       password: `juanse_${randNum}@yopmail.com`,
       phone: randNum,
       profesion: `profesion_${randNum}`,
-      role_id: 6,
+      role_id: 1,
     });
   }
 
@@ -73,5 +64,9 @@ export class CreateComponent implements OnInit {
 
   get roles(): Promise<Role[]> {
     return this._roleService.allRolesPromise;
+  }
+
+  get controls(){
+    return this.userFg.controls;
   }
 }
