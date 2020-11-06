@@ -21,19 +21,17 @@ class RoleService():
             "details": []
         }
 
-        validationToken = SecurityToken().validate_token()
-        data_validation = self.validation_data(validationToken)
+        validation_token = SecurityToken().validate_token()
+        data_validation = self.validation_data(validation_token)
    
         if len(data_validation['details'])>0 :
             return data_validation
            
         result['data'].append(
             {
-                "role": self.__repository_roles.select(),
-                "token": validationToken[1]
+                "role": self.__repository_roles.select()
             }
         )
-        SecurityToken().add_token(validationToken[3], validationToken[1])
         return result
 
     def verify_data(self, data):
@@ -43,26 +41,25 @@ class RoleService():
                              }) 
         return True if len(data) > 0 else False
 
-    def validation_data(self, validationToken):
+    def validation_data(self, validation_token):
         result = {
             "data": [],
             "details": []
         }
         
-        if not validationToken[0] or not SecurityToken().verify_exist_token() :
+        if not validation_token[0] or not SecurityToken().verify_exist_token() :
             result['details'].append(
                 {
                     "key": 400,
                     "value": "Token Invalido"
                 }
             )
-        elif not self.verify_data(validationToken[2]):
+        elif not self.verify_data(validation_token[2]):
             result['details'].append(
                 {
                     "key": 400,
                     "value": "El usuario no tiene permisos"
                 }
             )
-        
         
         return result

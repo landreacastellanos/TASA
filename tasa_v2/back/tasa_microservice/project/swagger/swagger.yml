@@ -232,8 +232,8 @@
             schema:
                 type: array
                 items:
-                  $ref: '#/definitions/UserDetail_properties'
-        x-swagger-router-controller: "project.views.properties"                                                
+                  $ref: '#/definitions/UserDetail'
+        x-swagger-router-controller: "project.views.properties"
   definitions:
     responseDetail:
       type: object
@@ -271,9 +271,8 @@
         status:
           type: "integer"
         data:
-          type: "array"
-          items:
-            $ref: '#/definitions/resultCreateUser'
+          type: "string"
+          example: "[]"
         details:
           type: "array"
           items:
@@ -358,9 +357,6 @@
           type: "array"
           items:
             $ref: '#/definitions/Roles' 
-        token:
-          type: "string"
-          example: "123asd"
     CreateUser:
       description: "Role Security"
       type: "object"
@@ -449,13 +445,6 @@
         value:
           type: "string"
           example: "usuario creado"
-    resultCreateUser:
-      description: "resultCreateUser"
-      type: "object"
-      properties:
-        token:
-          type: "string"
-          example: "sdasda"
     result_users:
       type: "object"
       properties:
@@ -511,16 +500,31 @@
         name:
           type: "string"
           example: "Arroz secano"
-    UserDetail_properties:
+    UserDetail:
       description: "User Detail"
       type: "object"
       properties:
         id:
           type: "integer"
-          example: "1"
+          example: 1
         name:
           type: "string"
-          example: "Diego Bustamante"
-        rol:
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
           type: "integer"
-          example: "1"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        role_id:
+          type: "integer"
+          example: 1
