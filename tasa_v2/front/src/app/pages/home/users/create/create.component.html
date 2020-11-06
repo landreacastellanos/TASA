@@ -1,178 +1,181 @@
 <div class="container">
   <form class="form-container" [formGroup]="userFg">
-      <div class="card-container row">
-        <div class="form-body col-8">
-          <div class="center-children">
-            <h2>
-              <i class="material-icons">person_outline</i>&nbsp; Crear usuario
-            </h2>
-          </div>
-          <div class="form-inputs row">
-            <div class="form-personal-data col-6 row">
-              <div class="form-subtitle col-12">
-                <h5>Datos personales</h5>
-                <hr />
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>
-                  Nombre
-                </mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Nombre"
-                    formControlName="name"
-                    type="text"
-                    class="inputOutline"
-                    required
-                  />
-                </mat-form-field>
-                <div class="warning">Este campo es requerido</div>
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>Apellido</mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Apellido"
-                    formControlName="lastName"
-                    type="text"
-                    class="inputOutline"
-                    required
-                  />
-                </mat-form-field>
-                <div class="warning">Este campo es requerido</div>
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>Telefono</mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Telefono"
-                    formControlName="phone"
-                    type=""
-                    class="inputOutline"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>Edad</mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Edad"
-                    formControlName="age"
-                    type="number"
-                    class="inputOutline"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>Profesion</mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Profesion"
-                    formControlName="profession"
-                    type="text"
-                    class="inputOutline"
-                    required
-                  />
-                </mat-form-field>
-                <div class="warning">Este campo es requerido</div>
-              </div>
+    <div class="card-container row">
+      <div class="form-body col-8">
+        <div class="center-children">
+          <h2>
+            <i class="material-icons">person_outline</i>&nbsp; Crear usuario
+          </h2>
+        </div>
+        <div class="form-inputs row">
+          <div class="form-personal-data col-6 row">
+            <div class="form-subtitle col-12">
+              <h5>Datos personales</h5>
+              <hr />
             </div>
-            <div class="vl"></div>
-            <div class="form-account col-6 row">
-              <div class="form-subtitle col-12">
-                <h5>Cuenta</h5>
-                <hr />
-              </div>
-              <div class="containerForm col-12">
-                <mat-label>E-mail</mat-label>
-                <mat-form-field class="formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="E-mail"
-                    formControlName="email"
-                    type="text"
-                    class="inputOutline"
-                    required
-                  />
-                </mat-form-field>
-                <div class="warning">Este campo es requerido</div>
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>Contraseña</mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Contraseña"
-                    formControlName="password"
-                    class="inputOutline"
-                    required
-                    [type]="hidePassword ? 'password' : 'text'"
-                  />
-                  <button
-                    class="button"
-                    mat-icon
-                    matSuffix
-                    (click)="hidePassword = !hidePassword"
-                    [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hidePassword"
-                  >
-                    <mat-icon>{{
-                      hidePassword ? "visibility_off" : "visibility"
-                    }}</mat-icon>
-                  </button>
-                </mat-form-field>
-                <div class="warning">Este campo es requerido</div>
-              </div>
-              <div class="containerForm col-6">
-                <p><strong>Agregar desplegable perfil</strong></p>
-              </div>
-              <div class="containerForm col-6">
-                <mat-label>Confirma tu contraseña</mat-label>
-                <mat-form-field class="col-12 formOutline" appearance="outline">
-                  <input
-                    appAutofocus
-                    matInput
-                    placeholder="Confirma tu contraseña"
-                    formControlName="passwordRepeat"
-                    class="inputOutline"
-                    required
-                    [type]="hideRepeadPassword ? 'password' : 'text'"
-                  />
-                  <button
-                    class="button second-button"
-                    mat-icon
-                    matSuffix
-                    (click)="hideRepeadPassword = !hideRepeadPassword"
-                    [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hideRepeadPassword"
-                  >
-                    <mat-icon>{{
-                      hideRepeadPassword ? "visibility_off" : "visibility"
-                    }}</mat-icon>
-                  </button>
-                </mat-form-field>
-                <div class="warning">Este campo es requerido</div>
-              </div>
+            <div class="containerForm col-6">
+              <mat-label> Nombre </mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Nombre"
+                  formControlName="name"
+                  type="text"
+                  class="inputOutline"
+                  required
+                />
+              </mat-form-field>
+              <div class="warning">Este campo es requerido</div>
+            </div>
+            <div class="containerForm col-6">
+              <mat-label>Apellido</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Apellido"
+                  formControlName="lastName"
+                  type="text"
+                  class="inputOutline"
+                  required
+                />
+              </mat-form-field>
+              <div class="warning">Este campo es requerido</div>
+            </div>
+            <div class="containerForm col-6">
+              <mat-label>Telefono</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Telefono"
+                  formControlName="phone"
+                  type=""
+                  class="inputOutline"
+                />
+              </mat-form-field>
+            </div>
+            <div class="containerForm col-6">
+              <mat-label>Edad</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Edad"
+                  formControlName="age"
+                  type="number"
+                  class="inputOutline"
+                />
+              </mat-form-field>
+            </div>
+            <div class="containerForm col-6">
+              <mat-label>Profesion</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Profesion"
+                  formControlName="profession"
+                  type="text"
+                  class="inputOutline"
+                  required
+                />
+              </mat-form-field>
+              <div class="warning">Este campo es requerido</div>
+            </div>
+          </div>
+          <div class="vl"></div>
+          <div class="form-account col-6 row">
+            <div class="form-subtitle col-12">
+              <h5>Cuenta</h5>
+              <hr />
+            </div>
+            <div class="containerForm col-12">
+              <mat-label>E-mail</mat-label>
+              <mat-form-field class="formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="E-mail"
+                  formControlName="email"
+                  type="text"
+                  class="inputOutline"
+                  required
+                />
+              </mat-form-field>
+              <div class="warning">Este campo es requerido</div>
+            </div>
+            <div class="containerForm col-6">
+              <mat-label>Contraseña</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Contraseña"
+                  formControlName="password"
+                  class="inputOutline"
+                  required
+                  [type]="hidePassword ? 'password' : 'text'"
+                />
+                <button
+                  class="button"
+                  mat-icon
+                  matSuffix
+                  (click)="hidePassword = !hidePassword"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword"
+                >
+                  <mat-icon>{{
+                    hidePassword ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <div class="warning">Este campo es requerido</div>
+            </div>
+            <div class="containerForm col-6">
+              <p><strong>Agregar desplegable perfil</strong></p>
+            </div>
+            <div class="containerForm col-6">
+              <mat-label>Confirma tu contraseña</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  placeholder="Confirma tu contraseña"
+                  formControlName="passwordRepeat"
+                  class="inputOutline"
+                  required
+                  [type]="hideRepeadPassword ? 'password' : 'text'"
+                />
+                <button
+                  class="button second-button"
+                  mat-icon
+                  matSuffix
+                  (click)="hideRepeadPassword = !hideRepeadPassword"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hideRepeadPassword"
+                >
+                  <mat-icon>{{
+                    hideRepeadPassword ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <div class="warning">Este campo es requerido</div>
             </div>
           </div>
         </div>
-        <div class="sponsor-container col-4 no-left-border">kjdjfcnklsjncksja</div>
       </div>
-    <div class="buttons-container"></div>
+    </div>
+    <button class="transparent-blackground" mat-raised-button color="primary">
+      <mat-icon class="size-icon-folder">folder_open </mat-icon>Ver lista de usuarios
+    </button>
+    <button class="position-green-button" mat-raised-button color="primary">
+      <span class="px-5">Guardar cambios</span>
+      <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+    </button>
   </form>
 </div>
 
 <button (click)="onSubmit()">onSubmit</button>
-{{roles | async | json}}
+{{ roles | async | json }}

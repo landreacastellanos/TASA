@@ -39,6 +39,24 @@
 }
 
 button {
+  .new-button {
+    background: none;
+    background-repeat: repeat;
+    fill: currentColor;
+    border: none;
+    margin: auto;
+    background: none;
+  }
+
+  .new-button2 {
+    background: none;
+    background-repeat: repeat;
+    fill: currentColor;
+    border: none;
+    margin: auto;
+    background: none;
+  }
+
   .second-button {
     background-repeat: repeat;
     fill: currentColor;
@@ -77,4 +95,57 @@ div.no-left-border {
   margin-left: -3px;
   top: 0;
   top: 35%;
+}
+
+.mat-raised-button {
+  border-radius: 18px;
+}
+
+.mat-icon {
+
+    vertical-align: text-bottom;
+    font-size: xx-large;
+  }
+
+  .save-changes{
+    vertical-align: middle;
+    font-size: 24px;
+  }
+
+  span.text-box{
+    padding-left: 30px;
+    font-size: large;
+  }
+
+  div.padding-row{
+    padding-left: 20px;
+}
+
+.size-icon-check{
+  font-size: 24px;
+  vertical-align: text-top;
+}
+
+.size-icon-folder{
+  vertical-align: text-top;
+  font-size: 20px;
+}
+
+button.transparent-blackground{
+  bottom: 50px;
+    left: 20px;
+  background-color: rgb(0 0 0 / 0%);
+}
+
+.relative2 {
+  position: relative;
+  top: -20px;
+  left: 20px;
+  background-color: white;
+  width: 500px;
+}
+
+button.position-green-button{
+  bottom: 50px;
+    left: 120px;
 }
