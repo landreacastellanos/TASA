@@ -32,15 +32,17 @@
   margin-top: 16px;
   border: 10px solid transparent;
   border-bottom-width: 60px;
-  background: linear-gradient(to bottom, #87b017 0%, rgba(0, 0, 0, 0) 150%) border-box;
+  background: linear-gradient(to bottom, #87b017 0%, rgba(0, 0, 0, 0) 150%)
+    border-box;
 }
 
-.sponsors{
+.sponsors {
   border-left: 10px solid transparent;
+  background-size: auto;
   background: url(../../../../../assets/img/Atech_Background.1.jpg) padding-box
       fixed,
     linear-gradient(to bottom, #87b017 0%, rgba(0, 0, 0, 0) 150%) border-box;
-  
+  background-size: cover;
 }
 
 button {
