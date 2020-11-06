@@ -74,3 +74,4 @@ class SecurityToken:
                              [['token', "equals", token]]
                              })
         return result[0]['active'] if len(result) > 0 else False
+    
