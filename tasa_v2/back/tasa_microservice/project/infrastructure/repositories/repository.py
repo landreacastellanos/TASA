@@ -174,7 +174,7 @@ class Repository():
         if query_result.rowcount == 0: 
             raise Exception
 
-        return True
+        return (True,query_result.lastrowid)
 
     def select(self, entity_name=None, options=None):
         # T

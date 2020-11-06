@@ -127,5 +127,111 @@
             "type": "boolean"
          }
       }
+   },
+   "land":{
+      "tableName": "land",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "property_id": {
+            "dbName": "property_id",
+            "type": "integer"
+         },
+         "land_name": {
+            "dbName": "land_name",
+            "type": "string"
+         },
+         "land_ha": {
+            "dbName": "land_ha",
+            "type": "number"
+         },
+         "variety": {
+            "dbName": "variety",
+            "type": "string"
+         },
+         "realtime": {
+            "dbName": "realtime",
+            "type": "dateTime"
+         }
+      }
+   },
+   "properties":{
+      "tableName": "property",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "business_name": {
+            "dbName": "business_name",
+            "type": "string"
+         },
+         "phone": {
+            "dbName": "phone",
+            "type": "number"
+         },
+         "address": {
+            "dbName": "address",
+            "type": "string"
+         },
+         "web_site": {
+            "dbName": "web_site",
+            "type": "string"
+         },
+         "sowing_system": {
+            "dbName": "sowing_system",
+            "type": "integer"
+         },
+         "manager": {
+            "dbName": "property_ca",
+            "type": "integer"
+         },
+         "property_owner": {
+            "dbName": "property_df",
+            "type": "integer"
+         },
+         "purchasing_manager": {
+            "dbName": "property_ec",
+            "type": "integer"
+         },
+         "pay_manager": {
+            "dbName": "property_ep",
+            "type": "integer"
+         },
+         "responsible_purchasing": {
+            "dbName": "property_idc",
+            "type": "integer"
+         },
+         "decision_influencer": {
+            "dbName": "property_rdc",
+            "type": "integer"
+         },
+         "parthner_add": {
+            "dbName": "property_sa",
+            "type": "integer"
+         },
+         "seller": {
+            "dbName": "property_v",
+            "type": "integer"
+         },
+         "created_date":{
+            "dbName": "created_date",
+            "type": "dateTime"
+         }
+      }
    }
 }
