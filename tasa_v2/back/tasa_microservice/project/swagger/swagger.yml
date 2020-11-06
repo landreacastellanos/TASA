@@ -599,3 +599,16 @@
         role_id:
           type: "integer"
           example: 1
+    UserDetail_properties:
+      description: "User Detail"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Diego Bustamante" 
+        rol:
+          type: "integer"
+          example: 1
