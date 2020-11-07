@@ -41,3 +41,16 @@ def create_property():
         result = exception.args[0]
         results['details'].append(result)
     return results
+
+def get_properties():
+    results = {
+            "data": [],
+            "details": []
+        }
+    try:        
+        result = PropertiesServices().get_properties()
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results
