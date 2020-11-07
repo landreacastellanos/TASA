@@ -31,4 +31,8 @@ export class AuthService {
   public resetPassword(userValue: string, passwordValue: string): Promise<any> {
     return this.dataApiService.post({ user: userValue, password: passwordValue }, 'reset_password');
   }
+
+  public closeSession(): Promise<any> {
+    return this.dataApiService.getAll('close_session');
+  }
 }
