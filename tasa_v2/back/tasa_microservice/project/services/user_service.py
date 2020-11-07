@@ -49,7 +49,7 @@ class UserService():
             return result
         
         if data:
-           result['details'].append(
+           result['data'].append(
                 {
                     "key": 200,
                     "value": "Usuario Creado"
@@ -85,12 +85,75 @@ class UserService():
         result['data'] = data
         return result
 
+    def update_user(self, data):
+        result = {
+            "data": [],
+            "details": []
+        }
+
+         if 'id' in data:
+             result['details'].append(
+                {
+                    "key": 400,
+                    "value": "id requerido
+                }
+            )
+            return result
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Token Invalido"
+                }
+            )
+            return result
+        data_validation = self.validation_data(data, validation_token[2])
+        data_email = self.validation_email_update(data)
+
+        if len(data_validation['details'])>0:
+            return data_validation
+
+        if len(data_email['details'])>0:
+            return data_email
+
+        data = self.complete_data(data)
+        try:
+            data = self.__repository_user.update(data['id'], data)
+        except Exception as ex:
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Error modificando usuario "+ ex
+                }
+            )
+            return result
+        
+        if data:
+           result['data'].append(
+                {
+                    "key": 200,
+                    "value": "Usuario Modificado"
+                }
+            )
+        else:
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Usuario no modificado"
+                }
+            )
+        return result
+
     #region ValidationData
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE
         data['created_date'] = datetime.datetime.now().__str__()
-        data['password'] = Encryption().encrypt_value(data['password']).decode("utf-8")
-        data['email'] = data['email'].lower() 
+        if 'password' in data:
+            data['password'] = Encryption().encrypt_value(data['password']).decode("utf-8")
+        if 'email' in data:
+            data['email'] = data['email'].lower() 
         return data
 
     def verify_data(self, data):
@@ -133,4 +196,21 @@ class UserService():
             )
 
         return result
+
+    def validation_email_update(self, data):
+        result = {
+            "data": [],
+            "details": []
+        }
+        if 'email' in data:
+            result_data = self.verify_data(data['email'])
+            if result_data[0] and result_data[0]['id'] != data['id']:
+                result['details'].append(
+                    {
+                        "key": 400,
+                        "value": "Este correo se encuentra en uso"
+                    }
+                )
+
+        return result    
     #endregion

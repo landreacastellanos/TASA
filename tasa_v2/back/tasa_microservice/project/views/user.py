@@ -18,3 +18,12 @@ def get_user():
         result = exception.args[0]
         return result
     return result
+
+def update_user():
+    request_data = GeneralsUtils.get_request_body(connexion.request)
+    try:
+        result = UserService().update_user(request_data)
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result

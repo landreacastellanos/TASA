@@ -126,6 +126,33 @@
                 items:
                   $ref: '#/definitions/result_user'
           x-swagger-router-controller: "project.views.user"
+    /update_user:
+      patch:
+          tags:
+            - "User"
+          summary: "Update"
+          operationId: "update_user"
+          description: "Update"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: update
+              required: true
+              schema:
+                  $ref: '#/definitions/UpdateUser'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"    
     /is_authenticated:
       get:
           tags:
@@ -385,6 +412,37 @@
         role_id:
           type: "integer"
           example: 1
+    UpdateUser:
+      description: "Role Security"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        password:
+          type: "string"
+          example: "123"
+        role_id:
+          type: "integer"
+          example: 1    
     result_authenticated:
       type: "object"
       properties:
