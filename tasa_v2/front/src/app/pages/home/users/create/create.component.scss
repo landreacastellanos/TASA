@@ -13,7 +13,7 @@
   margin: 2.5%;
 }
 
-.containerForm{
+.containerForm {
   margin: 6px 0;
 }
 
@@ -41,6 +41,13 @@
   background-size: auto;
   background: url(../../../../../assets/img/Atech_Background.1.jpg);
   background-size: cover;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: normal;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
 }
 
 .material-icons {
@@ -93,14 +100,13 @@ div.padding-row {
 }
 
 button.transparent-blackground {
-  background-color: rgba(134,174,23,0.3)
+  background-color: rgba(134, 174, 23, 0.3);
 }
-
 
 button.white-border {
   border: 1px solid #f8f9fa;
 }
 
-button{
+button {
   outline: none;
 }
