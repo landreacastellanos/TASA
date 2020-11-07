@@ -118,7 +118,7 @@ class LoginService:
 
         validation_token = SecurityToken().finish_token() 
         if validation_token:
-            result['details'].append(
+            result['data'].append(
                 {
                     "key": 200,
                     "value": True
