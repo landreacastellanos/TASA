@@ -3,12 +3,6 @@
   font-family: 'Lato', sans-serif;
 }
 
-.logo {
-  margin-top: 3%;
-  margin-left: 4.5%;
-}
-
-
 body {
   background: url("../images/Atech_Background.1.jpg") no-repeat fixed;
   background-size: cover;
@@ -255,4 +249,29 @@ label.alert_red {
   display: inline-block;
   position: relative;
   bottom: 18px;
+}
+
+
+/* RESPONSIVE */
+
+.d-none {
+  display: none!important;
+}
+
+@media (min-width: 768px) {
+  .d-md-only {
+    display: block!important;
+  }
+  .d-md-none {
+    display: none!important;
+  }
+}
+
+@media (min-width: 992px) {
+  .d-lg-only {
+    display: block!important;
+  }
+  .d-lg-none {
+    display: none!important;
+  }
 }

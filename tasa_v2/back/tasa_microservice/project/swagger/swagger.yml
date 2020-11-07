@@ -1,0 +1,614 @@
+---
+  swagger: '2.0'
+  info:
+    description: This is a microservice in Python about RoceServices
+    version: 1.0.0
+    title: Roce Service Microservices
+  tags:
+    - name: Roce
+      description: ''
+    - name: Grids
+      description: Service methods that provide data to build grids on the graphic interface
+  schemes:
+    - http
+  paths:
+    /get_roles:
+      get:
+          tags:
+            - "Roles"
+          summary: "Roles"
+          operationId: "get_roles"
+          description: "Roles"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_roles'
+          x-swagger-router-controller: "project.views.role" 
+    /login:
+      post:
+          tags:
+            - "Login"
+          summary: "Login"
+          operationId: "login"
+          description: "Login"
+          produces:
+            - "application/json"
+          parameters:
+            - in: body
+              name: login
+              required: true
+              schema:
+                  $ref: '#/definitions/UserLogin'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_login'
+          x-swagger-router-controller: "project.views.login"
+    /restore_password:
+      post:
+          tags:
+            - "Login"
+          summary: "restore_password"
+          operationId: "restore_password"
+          description: "restore_password"
+          produces:
+            - "application/json"
+          parameters:
+            - in: body
+              name: user
+              required: true
+              schema:
+                  $ref: '#/definitions/UserToken'
+          responses:
+            '200':
+              description: response result successful
+          x-swagger-router-controller: "project.views.login"
+    /reset_password:
+      post:
+          tags:
+            - "Login"
+          summary: "reset_password"
+          operationId: "reset_password"
+          description: "reset_password"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: user
+              required: true
+              schema:
+                  $ref: '#/definitions/ResetUser'
+          responses:
+            '200':
+              description: response result successful
+          x-swagger-router-controller: "project.views.login"
+    /create_user:
+      post:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "create_user"
+          description: "Create"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: login
+              required: true
+              schema:
+                  $ref: '#/definitions/CreateUser'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"
+    /is_authenticated:
+      get:
+          tags:
+            - "Login"
+          summary: "Login"
+          operationId: "validation_user"
+          description: "validation_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_authenticated'
+          x-swagger-router-controller: "project.views.login"
+    /close_session:
+      get:
+          tags:
+            - "Login"
+          summary: "Create"
+          operationId: "close_session"
+          description: "close_session"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_close'
+          x-swagger-router-controller: "project.views.login"
+    /get_user:
+      get:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "get_user"
+          description: "get_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/resultCreate'
+          x-swagger-router-controller: "project.views.user"
+    /get_planting_type:
+      get:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "get_type_planting"
+        description: "get planting type"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            type: "string"
+            required: true
+            name: "Token"
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/TypePlanting'
+        x-swagger-router-controller: "project.views.properties"
+    /create_property:
+      post:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "create_property"
+        description: "create properties"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            type: "string"
+            required: true
+            name: "Token"
+          - in: "body"
+            name: properties
+            required: true
+            schema:
+                $ref: '#/definitions/properties_insert'
+        responses:
+          '200':
+            description: response result successful
+        x-swagger-router-controller: "project.views.properties"
+    /get_users_properties:
+      get:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "get_users"
+        description: "get users"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/UserDetail_properties'
+        x-swagger-router-controller: "project.views.properties"                                         
+  definitions:
+    properties_insert:
+      type: object
+      properties:
+        name:
+          type: "string"
+        business_name:
+          type: "string"
+        direction:
+          type: "string"
+        phone:
+          type: "number"
+        web_page:
+          type: "string"
+        email:
+          type: "string"
+        hectares_total:
+          type: "number"
+        manager:
+          type: "integer"
+        property_owner:
+          type: "integer"
+        sowing_system:
+          type: "integer"
+        purchasing_manager:
+          type: "integer"
+        pay_manager:
+          type: "integer"
+        parthner_add:
+          type: "integer"
+        decision_influencer:
+          type: "integer"
+        seller:
+          type: "integer"
+        responsible_purchasing :
+          type: "integer"
+        batchs:
+          type: "array"
+          items:
+            $ref: '#/definitions/batch'
+    batch:
+      type: object
+      properties:
+        name:
+          type: string
+        hectares_number:
+          type: number
+    responseDetail:
+      type: object
+      properties:
+        code:
+          type: string
+        values:
+          type: array
+          items:
+            type: string
+        type:
+          type: string
+    result_roles:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/RolesSecurity'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    result_user:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "string"
+          example: "[]"
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/resultCreate'
+        method:
+          type: "string"
+    result_login:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Login_result'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"            
+    Roles:
+      description: "Roles."
+      type: "object"
+      properties:
+        role:
+          type: "string"
+          example: "admi"
+        key:
+          type: "integer"
+          example: 1
+    UserLogin:
+      description: "Login Users."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "admi"
+        password:
+          type: "string"
+          example: "123asd"
+    UserToken:
+      description: "Reset User password."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "abc@abc.com"
+        restore_form:
+          type: "string"
+          example: "http://localhost/restore"
+    ResetUser:
+      description: "Reset User password."
+      type: "object"
+      properties:
+        user:
+          type: "string"
+          example: "abc@abc.com"
+        password:
+          type: "string"
+          example: "abc123"
+    Login_result:
+      description: "Login"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "admi"
+        role:
+          type: "integer"
+          example: 1
+        token:
+          type: "string"
+          example: "admi"          
+    RolesSecurity:
+      description: "Role Security"
+      type: "object"
+      properties:
+        role:
+          type: "array"
+          items:
+            $ref: '#/definitions/Roles' 
+    CreateUser:
+      description: "Role Security"
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        password:
+          type: "string"
+          example: "123"
+        role_id:
+          type: "integer"
+          example: 1
+    result_authenticated:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/authenticated'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    authenticated:
+      description: "Role Security"
+      type: "object"
+      properties:
+        authenticator:
+          type: "boolean"
+          example: "true"
+    result_close:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "string"
+          example: "[]"
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseCloseSession'
+        method:
+          type: "string"
+    responseCloseSession:
+      description: "Role Security"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: "200"
+        value:
+          type: "boolean"
+          example: "true"
+    resultCreate:
+      description: "resultCreate"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: "200"
+        value:
+          type: "string"
+          example: "usuario creado"
+    result_users:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/Users'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    Users:
+      description: "User"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        role_id:
+          type: "integer"
+          example: 1
+    TypePlanting:
+      description: "Type planting"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: "1"
+        name:
+          type: "string"
+          example: "Arroz secano"
+    UserDetail:
+      description: "User Detail"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        role_id:
+          type: "integer"
+          example: 1
+    UserDetail_properties:
+      description: "User Detail"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Diego Bustamante" 
+        rol:
+          type: "integer"
+          example: 1
