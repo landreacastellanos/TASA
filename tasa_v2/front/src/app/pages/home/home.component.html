@@ -1,4 +1,6 @@
-<div class="home-container">
+<div
+  [ngClass]="{ 'home-container': true,  
+  'home-initial-container': configService.initialPage}">
   <app-menu></app-menu>
   <router-outlet></router-outlet>
 </div>
