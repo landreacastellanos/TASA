@@ -112,4 +112,37 @@ class PropertiesServices:
             )
         
         return results
+
+    def get_properties(self):
+
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+
+        planting_type = self.__repository_planting.select_all()
+        plant = self.__repository_properties.select_all()
+
+        data = list(map(lambda  x:{ 
+                                "id": x['id'],
+                                "name": x['name'],
+                                "business_name": x['business_name'], 
+                                "type_planting": self.get_type_planting_name(planting_type,x['sowing_system'])['name']
+                            } ,plant))        
+
+        return data
+    
+    def get_type_planting_name(self,list,id):
+        for item in list:
+            if(item['id'] == id):
+                return item
+
+
     
