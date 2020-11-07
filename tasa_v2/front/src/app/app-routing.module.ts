@@ -16,7 +16,7 @@ const routes: Routes = [
     },
     {
         path: 'restore-password', loadChildren:
-            () => import('./pages/restore-password/restore-password.module').then(m => m.RestorePasswordModule), canActivate : [LoginGuard]
+            () => import('./pages/restore-password/restore-password.module').then(m => m.RestorePasswordModule), canActivate: [LoginGuard]
     },
     { path: '**', redirectTo: 'not-found' },
 ];
