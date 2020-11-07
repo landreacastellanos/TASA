@@ -1,22 +1,19 @@
 <div class="card-container p-1">
   <form [formGroup]="userFg" (ngSubmit)="onSubmit()">
     <div class="row no-gutters">
-      <div class="form-body col-8 py-3">
+      <div class="form-body col-12 col-md-8 py-3">
         <div class="center-children mt-2">
           <h4><i class="material-icons">person_outline</i> Crear usuario</h4>
         </div>
         <div class="form-inputs row py-3">
-          <div class="form-personal-data col-6 row">
+          <div class="form-personal-data col-12 col-md-6 row">
             <div class="form-subtitle col-12">
               <strong>Datos personales</strong>
-              <hr class="mt-0"/>
+              <hr class="mt-0" />
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size"> Nombre </mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input
                   appAutofocus
                   matInput
@@ -39,12 +36,9 @@
                 Debe contener al menos 3 caracteres
               </div>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Apellido</mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input
                   matInput
                   formControlName="lastName"
@@ -66,12 +60,9 @@
                 Debe contener al menos 3 caracteres
               </div>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Telefono</mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input
                   matInput
                   formControlName="phone"
@@ -86,12 +77,9 @@
                 Debe contener al menos 7 caracteres
               </div>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Edad</mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input
                   matInput
                   formControlName="age"
@@ -100,7 +88,7 @@
                 />
               </mat-form-field>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Profesion</mat-label>
               <mat-form-field
                 class="col-12 formOutline profesion-size"
@@ -115,18 +103,16 @@
               </mat-form-field>
             </div>
           </div>
-          <div class="vl"></div>
-          <div class="form-account col-6 row">
+          <div class="vl d-none d-md-block"></div>
+          <div class="form-account col-12 row col-md-6">
             <div class="form-subtitle col-12">
+              <hr class="d-block d-md-none" />
               <strong>Cuenta</strong>
-              <hr class="mt-0"/>
+              <hr class="mt-0" />
             </div>
-            <div class="containerForm col-12">
+            <div class="containerForm col-12 col-md-12">
               <mat-label class="text-size">E-mail</mat-label>
-              <mat-form-field
-                class="formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="formOutline" appearance="outline">
                 <input
                   matInput
                   formControlName="email"
@@ -148,12 +134,9 @@
                 Email inválido
               </div>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Contraseña</mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input
                   matInput
                   formControlName="password"
@@ -171,7 +154,7 @@
                   type="button"
                 >
                   <mat-icon>{{
-                    hidePassword ?"visibility_off" :"visibility"
+                    hidePassword ? "visibility_off" : "visibility"
                   }}</mat-icon>
                 </button>
               </mat-form-field>
@@ -182,12 +165,9 @@
                 Este campo es requerido
               </div>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Perfil</mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <mat-select formControlName="role_id" required>
                   <mat-option *ngFor="let role of roles" [value]="role.key">
                     {{ role.role }}
@@ -201,12 +181,9 @@
                 Este campo es requerido
               </div>
             </div>
-            <div class="containerForm col-6">
+            <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Confirma tu contraseña</mat-label>
-              <mat-form-field
-                class="col-12 formOutline"
-                appearance="outline"
-              >
+              <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input
                   matInput
                   formControlName="passwordRepeat"
@@ -224,7 +201,7 @@
                   type="button"
                 >
                   <mat-icon>{{
-                    hideRepeadPassword ?"visibility_off" :"visibility"
+                    hideRepeadPassword ? "visibility_off" : "visibility"
                   }}</mat-icon>
                 </button>
               </mat-form-field>
@@ -244,8 +221,12 @@
           </div>
         </div>
       </div>
-      <div class="col-4 pl-sm-1 pr-sm-0 mh-100">
-        <div class="sponsors h-100"><span class="p-3">La sostenibilidad en la producción es nuestro propósito</span></div>
+      <div class="col-12 pl-md-1 pr-md-0 mh-100 col-md-4">
+        <div class="sponsors h-100">
+          <span class="p-3"
+            >La sostenibilidad en la producción es nuestro propósito</span
+          >
+        </div>
       </div>
     </div>
     <div class="m-3">
@@ -260,7 +241,7 @@
         usuarios
       </button>
       <button
-        class="no-outline ml-sm-5 rounded-button"
+        class="no-outline ml-md-5 rounded-button mt-3"
         mat-raised-button
         color="primary"
         type="submit"
