@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Role } from '../../../../shared/models/role';
 import { User } from '../../../../shared/models/user';
 import { LoadingService } from '../../../../shared/services/loading.service';
+import { StorageService } from '../../../../shared/services/storage.service';
 import { UserService } from '../user.service';
 
 export interface UserData {
@@ -22,26 +23,20 @@ export interface UserData {
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements AfterViewInit {
+  id: string;
   constructor(
     private loadingService: LoadingService,
     private router: Router,
     private userService: UserService,
+    private storageService: StorageService
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listUsers as User[]);
   }
-  // TODO: get from back
-  roles: Role[] = [
-    { key: 1, role: 'Administrador' },
-    { key: 2, role: 'Capataz' },
-    { key: 3, role: 'Resp. Decisiones de Compra' },
-    { key: 4, role: 'Dueño de la finca' },
-    { key: 5, role: 'Socio Adicional' },
-    { key: 6, role: 'Vendedor TASA' },
-    { key: 7, role: 'Influenciador de Decisiones de Compra' },
-    { key: 8, role: 'Encargado de Compras' },
-    { key: 9, role: 'Encargado de Pagos' },
-  ];
+
+  get roles(): Role[] {
+    return this.storageService.getValue('roles');
+  }
 
   listUsers: User[] = [];
 
@@ -77,15 +72,17 @@ export class ListComponent implements AfterViewInit {
         this.loadingService.setloading(false);
       });
   }
-
-  goBack(){
+  goBack() {
     this.router.navigate(['/']);
-
   }
 
   getRoleName(roleId: Role['key']): Role['role'] {
     const role = this.roles.find((roleItem) => roleItem.key === roleId);
     return role?.role;
+  }
+
+  onClickEdit() {
+    this.router.navigate(['/users/edit', this.selection.selected[0].id]);
   }
 
   // Filter
