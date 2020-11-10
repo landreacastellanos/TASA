@@ -2,7 +2,8 @@
   <div class="card-body p-4">
     <div class="text-primary">
       <h4>
-        <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon> Crear usuario
+        <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon> Crear
+        usuario
       </h4>
     </div>
     <div class="containerForm">
@@ -102,9 +103,35 @@
       </table>
 
       <mat-paginator pageSize="6"></mat-paginator>
+      <div class="buttonContinue row justify-content-end">
+        <button
+          mat-raised-button
+          color="primary"
+          class="border-button col-4 col-sm-6 col-md-1 ml-md-3"
+        >
+        <mat-icon>perm_identity</mat-icon>
+          Crear
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class="border-button col-4 col-sm-6 col-md-1 ml-md-3"
+        >
+        <mat-icon>edit_outline</mat-icon>
+          Editar
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          class=" delete-button col-4 col-sm-6 col-md-1 ml-md-3 mr-md-3"
+        >
+        <mat-icon>delete_outline</mat-icon>
+          Eliminar
+        </button>
+      </div>
     </div>
   </div>
-  <div class="m-3">
+  <div class="row justify-content-between m-3">
     <button
       class="transparent-blackground white-border rounded-button"
       mat-raised-button
@@ -114,6 +141,14 @@
     >
       Volver al inicio
     </button>
+    <button
+      class="no-outline ml-md-5 rounded-button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >
+      <span class="px-5">Guardar cambios</span>
+      <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+    </button>
   </div>
-
 </div>

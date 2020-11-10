@@ -96,3 +96,24 @@ tr {
 .role {
   width: 12.5%;
 }
+
+.size-icon-check {
+  border-radius: 100px;
+  font-size: 30px;
+  vertical-align: text-top;
+  position: fixed;
+  bottom: 10px;
+  right: 0;
+  width: 37px;
+  outline: none;
+}
+
+.delete-button{
+  background-color: red;
+  border-radius: 100px;
+
+}
+
+.border-button{
+  border-radius: 100px;
+}
