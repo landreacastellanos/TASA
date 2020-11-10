@@ -27,3 +27,19 @@ def update_user():
         result = exception.args[0]
         return result
     return result
+
+def get_info_user(id):
+    try:
+        result = UserService().get_info_user(id)
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result
+
+def delete_user(id):
+    try:
+        result = UserService().delete_user(id)
+    except Exception as exception:
+        result = exception.args[0]
+        return result
+    return result

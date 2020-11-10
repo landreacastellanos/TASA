@@ -7,7 +7,7 @@ from project.models.enum.keys_enum import Keys
 
 class UserService():
     USER_ACTIVE = True
-
+    TOKEN_ERROR = "Token invalido"
     def __init__(self):
         self.__repository_user = CommonRepository(
          entity_name="createUser")
@@ -23,11 +23,11 @@ class UserService():
             result['details'].append(
                 {
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_ERROR
                 }
             )
             return result
-        data_validation = self.validation_data(data, validation_token[2])
+        data_validation = self.validation_data(validation_token[2])
         data_email = self.validation_email(data)
 
         if len(data_validation['details'])>0:
@@ -75,7 +75,7 @@ class UserService():
             result['details'].append(
                 {
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_ERROR
                 }
             )
             return result
@@ -91,25 +91,25 @@ class UserService():
             "details": []
         }
 
-         if 'id' in data:
+        if 'id' in data:
              result['details'].append(
                 {
                     "key": 400,
-                    "value": "id requerido
+                    "value": "id requerido"
                 }
             )
-            return result
+        return result
 
         validation_token = SecurityToken().validate_token() 
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             result['details'].append(
                 {
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_ERROR
                 }
             )
             return result
-        data_validation = self.validation_data(data, validation_token[2])
+        data_validation = self.validation_data(validation_token[2])
         data_email = self.validation_email_update(data)
 
         if len(data_validation['details'])>0:
@@ -146,6 +146,74 @@ class UserService():
             )
         return result
 
+    def get_info_user(self, id):
+        result = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": self.TOKEN_ERROR
+                }
+            )
+            return result
+        
+        data = self.__repository_user.select(entity_name="Users", options={"filters":
+                             [['id', "equals", id]]
+                             }) 
+        result['data'] = data
+        return result
+
+    def delete_user(self, id):
+        result = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": self.TOKEN_ERROR
+                }
+            )
+            return result
+        data_validation = self.validation_data(validation_token[2])
+
+        if len(data_validation['details'])>0:
+            return data_validation
+        try:
+            data = self.__repository_user.delete(id)
+        except Exception as ex:
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Error eliminado usuario "
+                }
+            )
+            return result
+        
+        if data:
+           result['data'].append(
+                {
+                    "key": 200,
+                    "value": "Usuario eliminado"
+                }
+            )
+        else:
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Usuario no eliminado"
+                }
+            )
+        return result
+
     #region ValidationData
     def complete_data(self, data):
         data['active'] = self.USER_ACTIVE
@@ -163,7 +231,7 @@ class UserService():
                              }) 
         return (True, data) if len(data) > 0 else (False, data)
 
-    def validation_data(self, data, user):
+    def validation_data(self, user):
         result = {
             "data": [],
             "details": []

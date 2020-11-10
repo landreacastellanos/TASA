@@ -307,7 +307,59 @@
                 type: array
                 items:
                   $ref: '#/definitions/Properties'
-        x-swagger-router-controller: "project.views.properties"                                      
+        x-swagger-router-controller: "project.views.properties"
+    /get_info_user:
+      get:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "get_info_user"
+          description: "get_info_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+            - in: "query"
+              type: "integer"
+              name: "id"
+              required: false  
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/resultCreate'
+          x-swagger-router-controller: "project.views.user" 
+    /delete_user:
+      delete:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "delete_user"
+          description: "delete_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+            - in: "query"
+              type: "integer"
+              name: "id"
+              required: false  
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_delete'
+          x-swagger-router-controller: "project.views.user"                                              
   definitions:
     properties_insert:
       type: object
@@ -711,3 +763,30 @@
         type_planting:
           type: "string"
           example: "Secano"
+    result_delete:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/DeleteUser'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string" 
+    DeleteUser:
+      description: "User Detail"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: 100
+        value:
+          type: "string"
+          example: "Usuario eliminado"         
