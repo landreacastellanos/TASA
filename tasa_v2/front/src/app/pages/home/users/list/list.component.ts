@@ -1,10 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Role } from '../../../../shared/models/role';
-import { UserCreate } from '../../../../shared/models/user-create';
+import { User } from '../../../../shared/models/user';
+import { LoadingService } from '../../../../shared/services/loading.service';
+import { UserService } from '../user.service';
 
 export interface UserData {
   id: string;
@@ -13,68 +15,19 @@ export interface UserData {
   color: string;
 }
 
-/** Constants used to fill up our data base. */
-const COLORS: string[] = [
-  'maroon',
-  'red',
-  'orange',
-  'yellow',
-  'olive',
-  'green',
-  'purple',
-  'fuchsia',
-  'lime',
-  'teal',
-  'aqua',
-  'blue',
-  'navy',
-  'black',
-  'gray',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
-
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
-  };
-}
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class ListComponent implements AfterViewInit {
+  constructor(
+    private loadingService: LoadingService,
+    private userService: UserService
+  ) {
+    // Assign the data to the data source for the table to render
+    this.dataSource = new MatTableDataSource(this.listUsers as User[]);
+  }
   // TODO: get from back
   roles: Role[] = [
     { key: 1, role: 'Administrador' },
@@ -88,19 +41,7 @@ export class ListComponent {
     { key: 9, role: 'Encargado de Pagos' },
   ];
 
-  listUsers = new Array(122).fill(0).map(() => {
-    const randNum = Math.floor(Math.random() * 1000);
-    return {
-      age: randNum,
-      email: `juanse_${randNum}@yopmail.com`,
-      last_name: `dussan_${randNum}`,
-      name: `juanse_${randNum}`,
-      password: `juanse_${randNum}@yopmail.com`,
-      phone: randNum,
-      profesion: `profesion_${randNum}`,
-      role_id: 6,
-    };
-  });
+  listUsers: User[] = [];
 
   displayedColumns: string[] = [
     'select',
@@ -112,26 +53,31 @@ export class ListComponent {
     'profesion',
     'role',
   ];
-  dataSource: MatTableDataSource<UserCreate>;
+  dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.listUsers as UserCreate[]);
-  }
+  // Selection
+  selection = new SelectionModel<User>(false, []);
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.loadingService.setloading(true);
+    this.userService
+      .getUsers()
+      .then((users) => {
+        this.listUsers = users;
+      })
+      .finally(() => {
+        this.dataSource = new MatTableDataSource(this.listUsers as User[]);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.loadingService.setloading(false);
+      });
   }
 
   getRoleName(roleId: Role['key']): Role['role'] {
-    const role = this.roles.find((roleItem) => roleItem.key === roleId)
+    const role = this.roles.find((roleItem) => roleItem.key === roleId);
     return role?.role;
   }
 
@@ -144,9 +90,6 @@ export class ListComponent {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  // Selection
-  selection = new SelectionModel<UserCreate>(false, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -163,7 +106,7 @@ export class ListComponent {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: UserCreate): string {
+  checkboxLabel(row?: User): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
