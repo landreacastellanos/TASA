@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Role } from '../../../../shared/models/role';
 import { User } from '../../../../shared/models/user';
 import { LoadingService } from '../../../../shared/services/loading.service';
@@ -23,7 +24,8 @@ export interface UserData {
 export class ListComponent implements AfterViewInit {
   constructor(
     private loadingService: LoadingService,
-    private userService: UserService
+    private router: Router,
+    private userService: UserService,
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listUsers as User[]);
@@ -74,6 +76,11 @@ export class ListComponent implements AfterViewInit {
         this.dataSource.sort = this.sort;
         this.loadingService.setloading(false);
       });
+  }
+
+  goBack(){
+    this.router.navigate(['/']);
+
   }
 
   getRoleName(roleId: Role['key']): Role['role'] {

@@ -5,6 +5,11 @@
   background-color: white;
 }
 
+.size-icon-folder{
+  vertical-align: sub;
+  font-size: 27px;
+}
+
 table {
   width: 100%;
 }
@@ -14,16 +19,16 @@ table {
   width: 100%;
 }
 
-table, tbody {
+table,
+tbody {
   border-collapse: separate;
-  border-spacing: 0 0.2rem!important;
-
+  border-spacing: 0 0.2rem !important;
 }
-th{
+th {
   color: black;
   padding: 0px;
 }
-tr.mat-header-row{
+tr.mat-header-row {
   height: 30px;
 }
 tr.active {
@@ -64,3 +69,30 @@ tr {
   }
 }
 
+// Columns styles
+// 12.5% == 100%/8
+
+.select {
+  width: 6, 25%;
+}
+.name {
+  width: 12.5%;
+}
+.last_name {
+  width: 12.5%;
+}
+.age {
+  width: 6, 25%;
+}
+.email {
+  width: 25%;
+}
+.phone {
+  width: 12.5%;
+}
+.profesion {
+  width: 12.5%;
+}
+.role {
+  width: 12.5%;
+}

@@ -215,3 +215,36 @@ mat-label{
 .no-margin .mat-checkbox-layout{
   margin: 0!important;
 }
+
+// base pages
+.card-container {
+  .card-body{
+    background-color: white;
+  }
+  background-image: linear-gradient(
+    to top,
+    rgba(87, 116, 0, 0.5),
+    rgba(87, 116, 0, 1)
+  );
+  margin: 2.5%;
+}
+
+button.rounded-button {
+  border-radius: 18px;
+}
+
+button.transparent-blackground {
+  background-color: rgba(134, 174, 23, 0.3)!important;
+}
+
+button.white-border {
+  border: 1px solid #f8f9fa;
+}
+
+
+// base forms
+
+.formOutline {
+  width: 100%;
+  font-size: 12px!important;
+}
