@@ -133,7 +133,8 @@ class PropertiesServices:
         data = list(map(lambda  x:{ 
                                 "id": x['id'],
                                 "name": x['name'],
-                                "business_name": x['business_name'], 
+                                "business_name": x['business_name'],
+                                "phone": x['phone'],
                                 "type_planting": self.get_type_planting_name(planting_type,x['sowing_system'])['name']
                             } ,plant))        
 
