@@ -1,13 +1,6 @@
-@import "../../../../../themes/theme.scss";
-
 .list-container {
   display: block;
   background-color: white;
-}
-
-.size-icon-folder{
-  vertical-align: sub;
-  font-size: 27px;
 }
 
 // Columns styles
@@ -36,15 +29,4 @@
 }
 .role {
   width: 12.5%;
-}
-
-.delete-button{
-  
-  border-radius: 100px;
-  outline-style: none;
-}
-
-.border-button{
-  outline-style: none;
-  border-radius: 100px;
 }
