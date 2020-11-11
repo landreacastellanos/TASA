@@ -64,7 +64,22 @@
    "createUser":{
       "tableName": "user",
       "type": "object",
+      "editable":[
+         "name",
+         "email",
+         "last_name",
+         "age",
+         "profesion",
+         "password",
+         "role_id",
+         "phone"
+      ],
+      "primaryKey":"id",
       "properties": {
+         "id":{
+            "dbName": "id",
+            "type": "integer"
+         },
          "name": {
             "dbName": "name",
             "type": "string"
