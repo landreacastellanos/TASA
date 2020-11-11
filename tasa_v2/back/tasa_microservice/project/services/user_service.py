@@ -91,14 +91,14 @@ class UserService():
             "details": []
         }
 
-        if 'id' in data:
-             result['details'].append(
+        if 'id' not in data:
+            result['details'].append(
                 {
                     "key": 400,
                     "value": "id requerido"
                 }
             )
-        return result
+            return result
 
         validation_token = SecurityToken().validate_token() 
         if not validation_token[0] or not SecurityToken().verify_exist_token():
