@@ -144,5 +144,71 @@ class PropertiesServices:
             if(item['id'] == id):
                 return item
 
+    def get_property(self, id):
 
-    
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+
+        lands = self.__repository_land.select(entity_name="land", options={"filters":
+                             [['property_id', "equals", id]]
+                             })
+        property = self.__repository_properties.select_one(int(id), entity_name="properties")
+        property = property[0]
+
+        batchs = list(map(lambda  x:{ 
+                                "id": x['id'],
+                                "name": x['land_name'],
+                                "hectares_number": x['land_ha']
+                            } ,lands))
+        property['batchs'] = batchs
+
+        results["data"].append(property)
+        return results
+     
+    def delete_property(self, id):
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+        
+        role = self.verify_data(validation_token[2])
+
+        if role[0] and role[1]['role_id'] != Keys.admi.value:
+            results['details'].append(
+                {
+                    "key": 401,
+                    "value": "El usuario no tiene permisos"
+                }
+            )
+            return results
+        
+        lands = self.__repository_land.select(entity_name="land", options={"filters":
+                             [['property_id', "equals", id]]
+                             })
+        
+        for item in lands:
+            self.__repository_land.delete(item['id'])
+
+        self.__repository_properties.delete(id)
+
+        results['data'].append({
+                                "key": 100,
+                                "value": "Finca eliminado"
+                                })
+        return results
