@@ -98,10 +98,12 @@ tr {
 }
 
 .delete-button{
-  background-color: map-get($theme-colors, "danger");
+  
   border-radius: 100px;
+  outline-style: none;
 }
 
 .border-button{
+  outline-style: none;
   border-radius: 100px;
 }
