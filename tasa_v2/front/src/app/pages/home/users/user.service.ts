@@ -13,30 +13,18 @@ export class UserService {
     return this.dataApiService.post(userCreate, 'create_user');
   }
 
-  public edit(userCreate: UserCreate) {
-    console.error('FIXME: edit', { userCreate });
-
-    return Promise.resolve('OK');
-    // return this.dataApiService.post(userCreate, 'edit_user');
+  public edit(userUpdate: User) {
+    console.error('FIXME: edit', { userUpdate });
+    return this.dataApiService.patch(userUpdate, `update_user?id=${userUpdate.id}`);
   }
 
   public getUsers(): Promise<User[]> {
     return this.dataApiService.getAll('get_user');
   }
 
-  public getUsersById(id: string | number): Promise<User> {
-    console.error('FIXME: getUsersById', { id });
-
-    return Promise.resolve({
-      age: 1,
-      email: 'jonathanrodrigr@gmail.com',
-      id: 68,
-      last_name: 'Rodriguez',
-      name: 'Jonathan',
-      phone: 123,
-      profesion: 'Ingeniero',
-      role_id: 1,
-    });
-    // return this.dataApiService.getAll(´get_user/${id}´);
+  public getUsersById(id: string | number): Promise<any> {
+    return this.dataApiService
+      .getById('get_info_user', `${id}`)
+      .then((data) => data[0]);
   }
 }
