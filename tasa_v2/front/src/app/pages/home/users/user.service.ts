@@ -14,7 +14,7 @@ export class UserService {
   }
 
   public edit(userUpdate: User) {
-    console.error('FIXME: not well implemented edit', { userUpdate });
+    console.error('FIXME: not well implemented edit, verify back', { userUpdate });
     return this.dataApiService.patch(
       userUpdate,
       `update_user?id=${userUpdate.id}`
@@ -22,7 +22,6 @@ export class UserService {
   }
 
   public delete(userUpdate: User) {
-    console.error('FIXME: not well implemented edit', { userUpdate });
     return this.dataApiService.delete(`delete_user`, `${userUpdate.id}`);
   }
 
