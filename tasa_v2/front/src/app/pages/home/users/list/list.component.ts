@@ -8,6 +8,8 @@ import { Role } from '../../../../shared/models/role';
 import { User } from '../../../../shared/models/user';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { UserService } from '../user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 export interface UserData {
   id: string;
@@ -22,10 +24,24 @@ export interface UserData {
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements AfterViewInit {
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: 'Do you confirm the deletion of this data?',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Yes clicked');
+        // DO SOMETHING
+      }
+    });
+  }
+
   constructor(
+    public dialog: MatDialog,
     private loadingService: LoadingService,
     private router: Router,
-    private userService: UserService,
+    private userService: UserService
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listUsers as User[]);
@@ -78,9 +94,8 @@ export class ListComponent implements AfterViewInit {
       });
   }
 
-  goBack(){
+  goBack() {
     this.router.navigate(['/']);
-
   }
 
   getRoleName(roleId: Role['key']): Role['role'] {
