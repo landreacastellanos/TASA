@@ -54,3 +54,29 @@ def get_properties():
         result = exception.args[0]
         results['details'].append(result)
     return results
+
+def get_property(id):
+    results = {
+            "data": [],
+            "details": []
+        }
+    try:        
+        result = PropertiesServices().get_property(id)
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results
+
+def delete_property(id):
+    results = {
+            "data": [],
+            "details": []
+        }
+    try:        
+        result = PropertiesServices().delete_property(id)
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results

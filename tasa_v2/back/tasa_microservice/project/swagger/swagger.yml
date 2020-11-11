@@ -259,7 +259,55 @@
             name: properties
             required: true
             schema:
-                $ref: '#/definitions/properties_insert'
+                $ref: '#/definitions/property'
+        responses:
+          '200':
+            description: response result successful
+        x-swagger-router-controller: "project.views.properties"
+    /get_property:
+      get:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "get_property"
+        description: "get property"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "id"
+            required: true  
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/property'
+        x-swagger-router-controller: "project.views.properties"
+    /delete_property:
+      delete:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "delete_property"
+        description: "delete property"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "id"
+            required: true  
         responses:
           '200':
             description: response result successful
@@ -361,9 +409,11 @@
                   $ref: '#/definitions/result_delete'
           x-swagger-router-controller: "project.views.user"                                              
   definitions:
-    properties_insert:
+    property:
       type: object
       properties:
+        id:
+          type: "integer"
         name:
           type: "string"
         business_name:
@@ -403,6 +453,8 @@
     batch:
       type: object
       properties:
+        id:
+          type: "integer"
         name:
           type: string
         hectares_number:
