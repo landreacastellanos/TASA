@@ -272,7 +272,7 @@ class UserService():
         }
         if 'email' in data:
             result_data = self.verify_data(data['email'])
-            if result_data[0] and result_data[0]['id'] != data['id']:
+            if result_data[0] and result_data[1][0]['id'] != data['id']:
                 result['details'].append(
                     {
                         "key": 400,
