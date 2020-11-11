@@ -1,6 +1,8 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import './theme.scss';
 @import '~bootstrap/scss/bootstrap';
+@import './tables.scss';
+@import './foms.scss';
 
 html, body {
   margin: 0px;
@@ -221,6 +223,10 @@ mat-label{
   .card-body{
     background-color: white;
   }
+  .size-icon-title{
+    vertical-align: sub;
+    font-size: 27px;
+  }
   background-image: linear-gradient(
     to top,
     rgba(87, 116, 0, 0.5),
@@ -246,9 +252,3 @@ button.white-border {
 }
 
 
-// base forms
-
-.formOutline {
-  width: 100%;
-  font-size: 12px!important;
-}
