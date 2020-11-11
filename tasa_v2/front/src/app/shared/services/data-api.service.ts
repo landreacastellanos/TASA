@@ -187,9 +187,16 @@ export class DataApiService {
       });
   }
 
-  public delete(extension: string, id: string): Promise<any> {
+  public delete(
+    extension: string,
+    id: string,
+    extraParams?: HttpParams
+  ): Promise<any> {
     return this.http
-      .delete<ResponseBack>(this.urlApi + extension, { headers: this.headers })
+      .delete<ResponseBack>(this.urlApi + extension, {
+        headers: this.headers,
+        params: { id, ...extraParams },
+      })
       .toPromise()
       .then((result) => {
         if (result && result.details && result.details.length > 0) {

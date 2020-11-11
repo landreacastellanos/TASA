@@ -11,6 +11,7 @@ import { StorageService } from '../../../../shared/services/storage.service';
 import { UserService } from '../user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface UserData {
   id: string;
@@ -32,6 +33,7 @@ export class ListComponent implements AfterViewInit {
     private loadingService: LoadingService,
     private router: Router,
     private userService: UserService,
+    private snackBar: MatSnackBar,
     private storageService: StorageService
   ) {
     // Assign the data to the data source for the table to render
@@ -128,8 +130,24 @@ export class ListComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Yes clicked');
+        this.deleteUser();
       }
+    });
+  }
+
+  onClickCreate() {
+    this.router.navigate(['users/create']);
+  }
+
+  deleteUser() {
+    this.userService.delete(this.selection.selected[0]).then((data) => {
+      if (data) {
+        this.snackBar.open('Usuario eliminado', 'x', {
+          duration: 2000,
+          panelClass: ['snackbar-success'],
+        });
+      }
+      this.ngAfterViewInit();
     });
   }
 }

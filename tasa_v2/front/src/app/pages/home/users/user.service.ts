@@ -14,8 +14,16 @@ export class UserService {
   }
 
   public edit(userUpdate: User) {
-    console.error('FIXME: edit', { userUpdate });
-    return this.dataApiService.patch(userUpdate, `update_user?id=${userUpdate.id}`);
+    console.error('FIXME: not well implemented edit', { userUpdate });
+    return this.dataApiService.patch(
+      userUpdate,
+      `update_user?id=${userUpdate.id}`
+    );
+  }
+
+  public delete(userUpdate: User) {
+    console.error('FIXME: not well implemented edit', { userUpdate });
+    return this.dataApiService.delete(`delete_user`, `${userUpdate.id}`);
   }
 
   public getUsers(): Promise<User[]> {
