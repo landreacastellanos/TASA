@@ -90,6 +90,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
           mat-row
+          (click)="selection.toggle(row)"
           [ngClass]="selection.isSelected(row) ? 'active' : ''"
           *matRowDef="let row; columns: displayedColumns"
         ></tr>
@@ -104,19 +105,16 @@
 
       <mat-paginator pageSize="6"></mat-paginator>
       <div class="buttonContinue row justify-content-end">
-        <button
-          mat-raised-button
-          color="primary"
-          class="border-button col-4 col-sm-6 col-md-1 ml-md-3"
-        >
+        <button mat-raised-button color="primary" class="border-button ml-3">
           <mat-icon>perm_identity</mat-icon>
           Crear
         </button>
         <button
           type="button"
+          (click)="onClickEdit()"
           mat-raised-button
           color="primary"
-          class="border-button col-4 col-sm-6 col-md-1 ml-md-3"
+          class="border-button ml-3"
         >
           <mat-icon>edit_outline</mat-icon>
           Editar
@@ -142,15 +140,6 @@
       type="button"
     >
       Volver al inicio
-    </button>
-    <button
-      class="no-outline ml-md-5 rounded-button"
-      mat-raised-button
-      color="primary"
-      type="submit"
-    >
-      <span class="px-5">Guardar cambios</span>
-      <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
     </button>
   </div>
 </div>
