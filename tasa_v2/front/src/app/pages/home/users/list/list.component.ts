@@ -26,18 +26,6 @@ export interface UserData {
 })
 export class ListComponent implements AfterViewInit {
   id: string;
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '350px',
-      data: 'Do you confirm the deletion of this data?',
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Yes clicked');
-        // DO SOMETHING
-      }
-    });
-  }
 
   constructor(
     public dialog: MatDialog,
@@ -133,5 +121,15 @@ export class ListComponent implements AfterViewInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.name
     }`;
+  }
+  openDialogDelete(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log('Yes clicked');
+      }
+    });
   }
 }
