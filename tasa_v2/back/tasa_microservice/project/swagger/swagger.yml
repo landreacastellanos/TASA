@@ -126,6 +126,33 @@
                 items:
                   $ref: '#/definitions/result_user'
           x-swagger-router-controller: "project.views.user"
+    /update_user:
+      patch:
+          tags:
+            - "User"
+          summary: "Update"
+          operationId: "update_user"
+          description: "Update"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: update
+              required: true
+              schema:
+                  $ref: '#/definitions/UpdateUser'
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_user'
+          x-swagger-router-controller: "project.views.user"    
     /is_authenticated:
       get:
           tags:
@@ -280,7 +307,59 @@
                 type: array
                 items:
                   $ref: '#/definitions/Properties'
-        x-swagger-router-controller: "project.views.properties"                                      
+        x-swagger-router-controller: "project.views.properties"
+    /get_info_user:
+      get:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "get_info_user"
+          description: "get_info_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+            - in: "query"
+              type: "integer"
+              name: "id"
+              required: false  
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/resultCreate'
+          x-swagger-router-controller: "project.views.user" 
+    /delete_user:
+      delete:
+          tags:
+            - "User"
+          summary: "Create"
+          operationId: "delete_user"
+          description: "delete_user"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+            - in: "query"
+              type: "integer"
+              name: "id"
+              required: false  
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_delete'
+          x-swagger-router-controller: "project.views.user"                                              
   definitions:
     properties_insert:
       type: object
@@ -478,6 +557,37 @@
         role_id:
           type: "integer"
           example: 1
+    UpdateUser:
+      description: "Role Security"
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "Jonathan" 
+        last_name:
+          type: "string"
+          example: "Rodriguez"
+        age:
+          type: "integer"
+          example: 1
+        profesion:
+          type: "string"
+          example: "Ingeniero"
+        email:
+          type: "string"
+          example: "Jonathanrodrigr@gmail.com"
+        phone:
+          type: "number"
+          example: 123
+        password:
+          type: "string"
+          example: "123"
+        role_id:
+          type: "integer"
+          example: 1    
     result_authenticated:
       type: "object"
       properties:
@@ -653,3 +763,30 @@
         type_planting:
           type: "string"
           example: "Secano"
+    result_delete:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/DeleteUser'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string" 
+    DeleteUser:
+      description: "User Detail"
+      type: "object"
+      properties:
+        key:
+          type: "integer"
+          example: 100
+        value:
+          type: "string"
+          example: "Usuario eliminado"         

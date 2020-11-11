@@ -5,14 +5,14 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/home" >INICIO</a>
       </li>
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" routerLinkActive="active">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkFincas" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           FINCAS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkFincas">
-          <a class="dropdown-item" href="#">Registrar finca</a>
-          <a class="dropdown-item" href="#">Lista de fincas</a>
+          <a class="dropdown-item" routerLink="/farms/create"  >Registrar finca</a>
+          <a class="dropdown-item" routerLink="/farms/list" >Lista de fincas</a>
         </div>
       </li>
       <li class="nav-item">
@@ -34,7 +34,7 @@
 
       <hr class="d-lg-none">
       <li class="nav-item d-lg-none">
-        <a class="nav-link" href="#"><i class="fa fa-user-o"></i> Cerrar sesión</a>
+        <a class="nav-link" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar sesión</a>
       </li>
     </ul>
   </div>
@@ -48,7 +48,7 @@
   </div>
   <ul class="navbar-nav d-lg-block d-none">
     <li class="nav-item">
-      <a class="nav-link" href="#"><i class="fa fa-user-o"></i> Cerrar sesión</a>
+      <a class="nav-link" href="#"(click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar sesión</a>
     </li>
   </ul>
 
