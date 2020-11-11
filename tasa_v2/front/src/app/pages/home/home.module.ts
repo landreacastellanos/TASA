@@ -9,7 +9,7 @@ import { MenuComponent } from './menu/menu.component';
 @NgModule({
   declarations: [
     HomeComponent,
-    MenuComponent
+    MenuComponent,
   ],
   imports: [
     HomeRoutingModule,

@@ -4,3 +4,16 @@
   height: 100vh;
   overflow-y: scroll;
 }
+
+@media (max-width: 768px) {
+  .home-container {
+    background-image: none;
+    background-color: white;
+  }
+
+  .home-initial-container {
+    background-image: url("../../../assets/img/Inicio\ móvil\ 24\ Oct\ 2020.jpg");
+    background-size: 100% 100%;
+    height: 100vh;
+  }
+}
