@@ -91,14 +91,14 @@ class UserService():
             "details": []
         }
 
-        if 'id' in data:
-             result['details'].append(
+        if 'id' not in data:
+            result['details'].append(
                 {
                     "key": 400,
                     "value": "id requerido"
                 }
             )
-        return result
+            return result
 
         validation_token = SecurityToken().validate_token() 
         if not validation_token[0] or not SecurityToken().verify_exist_token():
@@ -272,7 +272,7 @@ class UserService():
         }
         if 'email' in data:
             result_data = self.verify_data(data['email'])
-            if result_data[0] and result_data[0]['id'] != data['id']:
+            if result_data[0] and result_data[1][0]['id'] != data['id']:
                 result['details'].append(
                     {
                         "key": 400,
