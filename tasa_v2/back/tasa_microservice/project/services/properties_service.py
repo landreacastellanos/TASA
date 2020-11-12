@@ -213,3 +213,64 @@ class PropertiesServices:
                                 "value": "Finca eliminado"
                                 })
         return results
+
+    def update_property(self, data):
+
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+        
+        role = self.verify_data(validation_token[2])
+
+        if role[0] and role[1]['role_id'] != Keys.admi.value:
+            results['details'].append(
+                {
+                    "key": 401,
+                    "value": "El usuario no tiene permisos"
+                }
+            )
+            return results
+
+        property_data={
+            "name":str(data['name']),
+            "business_name":str(data['business_name']),
+            "phone":float(data['phone']),
+            "address":str(data['address']),
+            "web_site":str(data['web_site']),
+            "sowing_system":int(data['sowing_system']),
+            "manager":int(data['manager']),
+            "property_owner":int(data['property_owner']),
+            "purchasing_manager":int(data['purchasing_manager']),
+            "pay_manager":int(data['pay_manager']),
+            "responsible_purchasing":int(data['responsible_purchasing']),
+            "decision_influencer":int(data['decision_influencer']),
+            "parthner_add":int(data['parthner_add']),
+            "seller":int(data['seller'])
+        }
+
+        self.__repository_properties.update(data['id'],property_data)
+
+        for item in data['batchs']:
+            batch = {
+                'land_name':item['name'],
+                'land_ha': float(item['hectares_number'])
+            }
+            if("id" in item):
+                self.__repository_land.update(item['id'],batch)
+            else:
+                batch['property_id']=data['id']
+                self.__repository_land.insert(batch)
+        
+        results['data'].append({
+                                "key": 200,
+                                "value": "Finca actualizada"
+                                })
+        return results

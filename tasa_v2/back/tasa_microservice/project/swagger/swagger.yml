@@ -290,6 +290,29 @@
                 items:
                   $ref: '#/definitions/property'
         x-swagger-router-controller: "project.views.properties"
+    /update_property:
+      patch:
+        tags:
+          - "Properties"
+        summary: "Properties"
+        operationId: "update_property"
+        description: "get property"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: body
+            name: update
+            required: true
+            schema:
+               $ref: '#/definitions/property'
+        responses:
+          '200':
+            description: response result successful
+        x-swagger-router-controller: "project.views.properties"
     /delete_property:
       delete:
         tags:

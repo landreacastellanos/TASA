@@ -80,3 +80,13 @@ def delete_property(id):
         result = exception.args[0]
         results['details'].append(result)
     return results
+
+def update_property():
+    request_data = GeneralsUtils.get_request_body(connexion.request)
+    try:        
+        result = PropertiesServices().update_property(request_data)
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results
