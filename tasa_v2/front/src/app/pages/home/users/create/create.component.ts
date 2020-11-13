@@ -14,8 +14,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent implements OnInit {
-  public loginForm: FormGroup;
-  public save = false;
   public hidePassword = true;
   public hideRepeadPassword = true;
   public userFg: FormGroup;
@@ -44,7 +42,6 @@ export class CreateComponent implements OnInit {
       },
       { validators: [confirmPassword] }
     );
-    console.log(this.userFg);
   }
 
   onSubmit() {
