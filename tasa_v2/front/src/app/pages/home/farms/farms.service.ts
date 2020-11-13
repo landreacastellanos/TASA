@@ -22,4 +22,8 @@ export class FarmsService {
   public saveFarm(farm: FarmsCreate): Promise<any> {
     return this.dataApiService.post(farm, 'create_property');
   }
+
+  public getFarms(): Promise<Farm[]> {
+    return this.dataApiService.getAll('get_properties');
+  }
 }

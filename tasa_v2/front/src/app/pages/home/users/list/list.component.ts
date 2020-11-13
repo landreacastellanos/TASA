@@ -9,13 +9,9 @@ import { User } from '../../../../shared/models/user';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { StorageService } from '../../../../shared/services/storage.service';
 import { UserService } from '../user.service';
-
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -24,14 +20,18 @@ export interface UserData {
 })
 export class ListComponent implements AfterViewInit {
   id: string;
+
   constructor(
+    public dialog: MatDialog,
     private loadingService: LoadingService,
     private router: Router,
     private userService: UserService,
+    private snackBar: MatSnackBar,
     private storageService: StorageService
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listUsers as User[]);
+    this.loadingService.setloading(true);
   }
 
   get roles(): Role[] {
@@ -59,7 +59,6 @@ export class ListComponent implements AfterViewInit {
   selection = new SelectionModel<User>(false, []);
 
   ngAfterViewInit() {
-    this.loadingService.setloading(true);
     this.userService
       .getUsers()
       .then((users) => {
@@ -95,27 +94,39 @@ export class ListComponent implements AfterViewInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: User): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      return `all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.name
     }`;
+  }
+  openDialogDelete(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteUser();
+      }
+    });
+  }
+
+  onClickCreate() {
+    this.router.navigate(['users/create']);
+  }
+
+  deleteUser() {
+    this.userService.delete(this.selection.selected[0]).then((data) => {
+      if (data) {
+        this.snackBar.open('Usuario eliminado', 'x', {
+          duration: 2000,
+          panelClass: ['snackbar-success'],
+        });
+      }
+      this.ngAfterViewInit();
+    });
   }
 }

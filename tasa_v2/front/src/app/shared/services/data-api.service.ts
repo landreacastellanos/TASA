@@ -1,28 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { StorageService } from './storage.service';
 import { environment } from 'src/environments/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ResponseBack } from '../models/response-back-model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataApiService {
-
   public urlApi = environment.urlApi;
 
   constructor(
     private http: HttpClient,
     public storageService: StorageService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   get headers(): HttpHeaders {
     if (this.getToken()) {
       return new HttpHeaders({
         'Content-Type': 'application/json',
-        'Token': `${this.getToken()}`
+        Token: `${this.getToken()}`,
       });
     } else {
       return new HttpHeaders({
@@ -43,11 +42,12 @@ export class DataApiService {
   public getAll(extension: string): Promise<any> {
     return this.http
       .get<ResponseBack>(this.urlApi + extension, { headers: this.headers })
-      .toPromise().then(result => {
+      .toPromise()
+      .then((result) => {
         if (result && result.details && result.details.length > 0) {
           this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
-            panelClass: ['snackbar-warn']
+            panelClass: ['snackbar-warn'],
           });
           return null;
         }
@@ -56,24 +56,32 @@ export class DataApiService {
         } else {
           return null;
         }
-
-      }).catch(err => {
+      })
+      .catch((err) => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
-          panelClass: ['snackbar-warn']
+          panelClass: ['snackbar-warn'],
         });
         return null;
       });
   }
 
-  public getById(extension: string, id: string): Promise<any> {
+  public getById(
+    extension: string,
+    id: string,
+    extraParams?: HttpParams
+  ): Promise<any> {
     return this.http
-      .get<ResponseBack>(this.urlApi + extension + '/' + id, { headers: this.headers })
-      .toPromise().then(result => {
+      .get<ResponseBack>(this.urlApi + extension, {
+        headers: this.headers,
+        params: { id, ...extraParams },
+      })
+      .toPromise()
+      .then((result) => {
         if (result && result.details && result.details.length > 0) {
           this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
-            panelClass: ['snackbar-warn']
+            panelClass: ['snackbar-warn'],
           });
           return null;
         }
@@ -82,11 +90,11 @@ export class DataApiService {
         } else {
           return null;
         }
-
-      }).catch(err => {
+      })
+      .catch((err) => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
-          panelClass: ['snackbar-warn']
+          panelClass: ['snackbar-warn'],
         });
         return null;
       });
@@ -94,12 +102,15 @@ export class DataApiService {
 
   public post(element, extension: string): Promise<any> {
     return this.http
-      .post<ResponseBack>(this.urlApi + extension, element, { headers: this.headers })
-      .toPromise().then(result => {
+      .post<ResponseBack>(this.urlApi + extension, element, {
+        headers: this.headers,
+      })
+      .toPromise()
+      .then((result) => {
         if (result && result.details && result.details.length > 0) {
           this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
-            panelClass: ['snackbar-warn']
+            panelClass: ['snackbar-warn'],
           });
           return null;
         }
@@ -108,11 +119,40 @@ export class DataApiService {
         } else {
           return null;
         }
-
-      }).catch(err => {
+      })
+      .catch((err) => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
-          panelClass: ['snackbar-warn']
+          panelClass: ['snackbar-warn'],
+        });
+        return null;
+      });
+  }
+
+  public patch(element, extension: string): Promise<any> {
+    return this.http
+      .patch<ResponseBack>(this.urlApi + extension, element, {
+        headers: this.headers,
+      })
+      .toPromise()
+      .then((result) => {
+        if (result && result.details && result.details.length > 0) {
+          this.snackBar.open(result.details[0].value, 'x', {
+            duration: 2000,
+            panelClass: ['snackbar-warn'],
+          });
+          return null;
+        }
+        if (result && result.data) {
+          return result.data;
+        } else {
+          return null;
+        }
+      })
+      .catch((err) => {
+        this.snackBar.open('Ocurrio un error', 'x', {
+          duration: 2000,
+          panelClass: ['snackbar-warn'],
         });
         return null;
       });
@@ -120,12 +160,15 @@ export class DataApiService {
 
   public update(element, extension: string): Promise<any> {
     return this.http
-      .put<ResponseBack>(this.urlApi + extension, element, { headers: this.headers })
-      .toPromise().then(result => {
+      .put<ResponseBack>(this.urlApi + extension, element, {
+        headers: this.headers,
+      })
+      .toPromise()
+      .then((result) => {
         if (result && result.details && result.details.length > 0) {
           this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
-            panelClass: ['snackbar-warn']
+            panelClass: ['snackbar-warn'],
           });
           return null;
         }
@@ -134,24 +177,32 @@ export class DataApiService {
         } else {
           return null;
         }
-
-      }).catch(err => {
+      })
+      .catch((err) => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
-          panelClass: ['snackbar-warn']
+          panelClass: ['snackbar-warn'],
         });
         return null;
       });
   }
 
-  public delete(extension: string, id: string): Promise<any> {
+  public delete(
+    extension: string,
+    id: string,
+    extraParams?: HttpParams
+  ): Promise<any> {
     return this.http
-      .delete<ResponseBack>(this.urlApi + extension, { headers: this.headers })
-      .toPromise().then(result => {
+      .delete<ResponseBack>(this.urlApi + extension, {
+        headers: this.headers,
+        params: { id, ...extraParams },
+      })
+      .toPromise()
+      .then((result) => {
         if (result && result.details && result.details.length > 0) {
           this.snackBar.open(result.details[0].value, 'x', {
             duration: 2000,
-            panelClass: ['snackbar-warn']
+            panelClass: ['snackbar-warn'],
           });
           return null;
         }
@@ -160,11 +211,11 @@ export class DataApiService {
         } else {
           return null;
         }
-
-      }).catch(err => {
+      })
+      .catch((err) => {
         this.snackBar.open('Ocurrio un error', 'x', {
           duration: 2000,
-          panelClass: ['snackbar-warn']
+          panelClass: ['snackbar-warn'],
         });
         return null;
       });

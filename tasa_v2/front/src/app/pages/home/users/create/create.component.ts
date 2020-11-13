@@ -87,19 +87,21 @@ export class CreateComponent implements OnInit {
     const {
       profession,
       passwordRepeat,
-      password,
       lastName,
       ...userCreate
     } = this.userFg.value;
 
-    const userSeralized: UserCreate = {
+    const userSeralized = {
       profesion: profession,
       last_name: lastName,
       pancho: 'asdsd',
       ...userCreate,
     };
-    if (!userSeralized.password) {
-      delete userSeralized.password;
+    if (this.mode === 'edit') {
+      userSeralized.id = parseInt(this.id);
+      if (!userSeralized.password) {
+        delete userSeralized.password;
+      }
     }
 
     const promise =
