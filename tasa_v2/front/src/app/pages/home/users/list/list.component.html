@@ -104,32 +104,37 @@
       </table>
 
       <mat-paginator pageSize="6"></mat-paginator>
-      <div class="buttonContinue row justify-content-end">
+    </div>
+    <div class="row justify-content-end mr-3">
+      <div class="col-4 col-md-1">
         <button
           (click)="onClickCreate()"
           mat-raised-button
           color="primary"
-          class="rounded-button ml-3"
+          class="rounded-button"
         >
-          <mat-icon>perm_identity</mat-icon>
+          <mat-icon>add</mat-icon>
           Crear
         </button>
+      </div>
+      <div class="col-4 col-md-1">
         <button
-          type="button"
           (click)="onClickEdit()"
           mat-raised-button
           color="primary"
-          class="rounded-button ml-3"
+          class="rounded-button"
         >
           <mat-icon>edit_outline</mat-icon>
           Editar
         </button>
+      </div>
+
+      <div class="col-4 col-md-1">
         <button
           (click)="openDialogDelete()"
           mat-raised-button
-          type="button"
           color="warn"
-          class="rounded-button mx-3"
+          class="rounded-button"
         >
           <mat-icon>delete_outline</mat-icon>
           Eliminar

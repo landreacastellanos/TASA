@@ -56,6 +56,10 @@ tr {
   min-width: 48px;
 }
 
+.mat-paginator-container{
+  flex-wrap: initial!important;
+}
+
 @media (max-width: 768px) {
   .select{
     padding-left: 14px!important;

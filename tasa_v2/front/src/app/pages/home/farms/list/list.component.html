@@ -2,7 +2,8 @@
   <div class="card-body p-4">
     <div class="text-primary">
       <h4>
-        <mat-icon class="size-icon-title mr-2">folder_open </mat-icon> Lista Fincas
+        <mat-icon class="size-icon-title mr-2">folder_open </mat-icon> Lista
+        Fincas
       </h4>
     </div>
     <div class="containerForm">
@@ -46,7 +47,9 @@
 
         <!-- business_name column -->
         <ng-container matColumnDef="business_name">
-          <th mat-header-cell class="business_name" *matHeaderCellDef>Razón social</th>
+          <th mat-header-cell class="business_name" *matHeaderCellDef>
+            Razón social
+          </th>
           <td mat-cell class="business_name" *matCellDef="let row">
             {{ row.business_name }}
           </td>
@@ -60,8 +63,12 @@
 
         <!-- type_planting column -->
         <ng-container matColumnDef="type_planting">
-          <th mat-header-cell class="type_planting" *matHeaderCellDef>Tipo de siembra</th>
-          <td mat-cell class="type_planting" *matCellDef="let row">{{ row.type_planting }}</td>
+          <th mat-header-cell class="type_planting" *matHeaderCellDef>
+            Tipo de siembra
+          </th>
+          <td mat-cell class="type_planting" *matCellDef="let row">
+            {{ row.type_planting }}
+          </td>
         </ng-container>
 
         <!-- Commons -->
@@ -82,21 +89,36 @@
       </table>
 
       <mat-paginator pageSize="6"></mat-paginator>
-      <div class="row justify-content-end">
-        <button mat-raised-button color="primary" class="rounded-button ml-3">
+    </div>
+    <div class="row justify-content-end mr-3">
+      <div class="col-4 col-md-1">
+        <button
+          mat-raised-button
+          color="primary"
+          class="rounded-button"
+        >
           <mat-icon>add</mat-icon>
           Crear
         </button>
+      </div>
+      <div class="col-4 col-md-1">
         <button
           (click)="onClickEdit()"
           mat-raised-button
           color="primary"
-          class="rounded-button ml-3"
+          class="rounded-button"
         >
           <mat-icon>edit_outline</mat-icon>
           Editar
         </button>
-        <button mat-raised-button color="warn" class="rounded-button mx-3">
+      </div>
+
+      <div class="col-4 col-md-1">
+        <button
+          mat-raised-button
+          color="warn"
+          class="rounded-button"
+        >
           <mat-icon>delete_outline</mat-icon>
           Eliminar
         </button>
