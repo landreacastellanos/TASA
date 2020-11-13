@@ -131,6 +131,7 @@ export class DataApiService {
   }
 
   public patch(element, extension: string): Promise<any> {
+    this.cleanObject(element);
     return this.http
       .patch<ResponseBack>(this.urlApi + extension, element, {
         headers: this.headers,
@@ -160,6 +161,7 @@ export class DataApiService {
   }
 
   public update(element, extension: string): Promise<any> {
+    this.cleanObject(element);
     return this.http
       .put<ResponseBack>(this.urlApi + extension, element, {
         headers: this.headers,

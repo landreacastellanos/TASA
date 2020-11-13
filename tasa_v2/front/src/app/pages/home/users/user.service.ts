@@ -14,7 +14,6 @@ export class UserService {
   }
 
   public edit(userUpdate: User) {
-    console.error('FIXME: not well implemented edit, verify back', { userUpdate });
     return this.dataApiService.patch(
       userUpdate,
       `update_user`
