@@ -51,3 +51,15 @@ tr {
     border-right: solid 2px rgba(0, 0, 0, 0.12);
   }
 }
+
+.select{
+  min-width: 48px;
+}
+
+@media (max-width: 768px) {
+  .select{
+    padding-left: 14px!important;
+  }
+}
+
+

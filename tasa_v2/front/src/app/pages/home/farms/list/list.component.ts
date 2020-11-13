@@ -26,6 +26,7 @@ export class ListComponent implements AfterViewInit {
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listFarms);
+    this.loadingService.setloading(true);
   }
 
   listFarms: Farm[] = [];
@@ -46,7 +47,6 @@ export class ListComponent implements AfterViewInit {
   selection = new SelectionModel<Farm>(false, []);
 
   ngAfterViewInit() {
-    this.loadingService.setloading(true);
     this.farmsService
       .getFarms()
       .then((data) => {

@@ -31,6 +31,7 @@ export class ListComponent implements AfterViewInit {
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listUsers as User[]);
+    this.loadingService.setloading(true);
   }
 
   get roles(): Role[] {
@@ -58,7 +59,6 @@ export class ListComponent implements AfterViewInit {
   selection = new SelectionModel<User>(false, []);
 
   ngAfterViewInit() {
-    this.loadingService.setloading(true);
     this.userService
       .getUsers()
       .then((users) => {

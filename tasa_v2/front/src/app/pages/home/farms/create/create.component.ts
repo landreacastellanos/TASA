@@ -4,16 +4,10 @@ import { ConfigurationService } from 'src/app/shared/services/configuration.serv
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
 })
 export class CreateComponent implements OnInit {
+  constructor(public configService: ConfigurationService) {}
 
-  constructor(
-    public configService: ConfigurationService
-  ) { }
-
-  ngOnInit(): void {
-    this.configService.initialPage = false;
-  }
-
+  ngOnInit(): void {}
 }
