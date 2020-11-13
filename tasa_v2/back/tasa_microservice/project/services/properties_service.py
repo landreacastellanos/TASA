@@ -78,14 +78,21 @@ class PropertiesServices:
         property_data={
             "name":str(data['name']),
             "business_name":str(data['business_name']),
-            "phone":float(data['phone']),
-            "address":str(data['direction']),
-            "web_site":str(data['web_page']),
             "sowing_system":int(data['sowing_system']),
             "property_owner":data['property_owner'],
             "seller":int(data['seller']),
+            "total":data['hectares_total'],
             "created_date": datetime.now()
         }
+
+        if("phone" in data):
+            property_data['phone']=data['phone']
+
+        if("direction" in data):
+            property_data['address']=data['direction']
+        
+        if("web_page" in data):
+            property_data['web_site']=data['web_page']
 
         if("purchasing_manager" in data):
             property_data['purchasing_manager']=data['purchasing_manager']
@@ -254,14 +261,21 @@ class PropertiesServices:
         property_data={
             "name":str(data['name']),
             "business_name":str(data['business_name']),
-            "phone":float(data['phone']),
-            "address":str(data['direction']),
-            "web_site":str(data['web_page']),
             "sowing_system":int(data['sowing_system']),
-            "property_owner":data['property_owner'],
+            "total":data['property_owner'],
+            "property_owner":data['hectares_total'],
             "seller":int(data['seller']),
             "created_date": datetime.now()
         }
+
+        if("phone" in data):
+            property_data['phone']=data['phone']
+
+        if("direction" in data):
+            property_data['address']=data['direction']
+        
+        if("web_page" in data):
+            property_data['web_site']=data['web_page']
 
         if("purchasing_manager" in data):
             property_data['purchasing_manager']=data['purchasing_manager']
