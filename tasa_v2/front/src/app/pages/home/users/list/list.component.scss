@@ -1,109 +1,10 @@
-@import "../../../../../themes/theme.scss";
-
 .list-container {
   display: block;
   background-color: white;
 }
 
-.size-icon-folder{
-  vertical-align: sub;
-  font-size: 27px;
-}
-
-table {
-  width: 100%;
-}
-
-.mat-form-field {
-  font-size: 14px;
-  width: 100%;
-}
-
-table,
-tbody {
-  border-collapse: separate;
-  border-spacing: 0 0.2rem !important;
-}
-th {
-  color: black;
-  padding: 0px;
-}
-tr.mat-header-row {
-  height: 30px;
-}
-tr.active {
-  td {
-    color: inherit;
-    border: solid 2px map-get($theme-colors, "primary");
-    border-left: none;
-    border-right: none;
-  }
-  td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-left: solid 2px map-get($theme-colors, "primary");
-  }
-  td:last-child {
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-    border-right: solid 2px map-get($theme-colors, "primary");
-  }
-}
-
-tr {
-  td {
-    color: gray;
-    border: solid 2px rgba(0, 0, 0, 0.12);
-    border-left: none;
-    border-right: none;
-  }
-  td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-left: solid 2px rgba(0, 0, 0, 0.12);
-  }
-  td:last-child {
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-    border-right: solid 2px rgba(0, 0, 0, 0.12);
-  }
-}
-
 // Columns styles
 // 12.5% == 100%/8
-
-.select {
-  width: 6, 25%;
-}
-.name {
-  width: 12.5%;
-}
-.last_name {
-  width: 12.5%;
-}
 .age {
   width: 6, 25%;
-}
-.email {
-  width: 25%;
-}
-.phone {
-  width: 12.5%;
-}
-.profesion {
-  width: 12.5%;
-}
-.role {
-  width: 12.5%;
-}
-
-.delete-button{
-  
-  border-radius: 100px;
-  outline-style: none;
-}
-
-.border-button{
-  outline-style: none;
-  border-radius: 100px;
 }

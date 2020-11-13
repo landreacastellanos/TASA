@@ -16,8 +16,6 @@ import { UserCreate } from '../../../../shared/models/user-create';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent implements OnInit {
-  public loginForm: FormGroup;
-  public save = false;
   public hidePassword = true;
   public hideRepeadPassword = true;
   public userFg: FormGroup;
@@ -75,12 +73,9 @@ export class CreateComponent implements OnInit {
       // passwordRepeat: ['', []],
       role_id: [user.role_id, [Validators.required]],
     });
-
-    console.log({ id: this.id });
   }
 
   onSubmit() {
-    const randNum = Math.floor(Math.random() * 1000);
     this.submitted = true;
     if (!this.userFg.valid) {
       return this.validationError();

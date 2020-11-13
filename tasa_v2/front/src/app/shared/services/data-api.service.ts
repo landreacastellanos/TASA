@@ -15,7 +15,7 @@ export class DataApiService {
     private http: HttpClient,
     public storageService: StorageService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   get headers(): HttpHeaders {
     if (this.getToken()) {
@@ -101,6 +101,7 @@ export class DataApiService {
   }
 
   public post(element, extension: string): Promise<any> {
+    this.cleanObject(element);
     return this.http
       .post<ResponseBack>(this.urlApi + extension, element, {
         headers: this.headers,
@@ -130,6 +131,7 @@ export class DataApiService {
   }
 
   public patch(element, extension: string): Promise<any> {
+    this.cleanObject(element);
     return this.http
       .patch<ResponseBack>(this.urlApi + extension, element, {
         headers: this.headers,
@@ -159,6 +161,7 @@ export class DataApiService {
   }
 
   public update(element, extension: string): Promise<any> {
+    this.cleanObject(element);
     return this.http
       .put<ResponseBack>(this.urlApi + extension, element, {
         headers: this.headers,
@@ -219,5 +222,9 @@ export class DataApiService {
         });
         return null;
       });
+  }
+
+  cleanObject(element: object) {
+    Object.keys(element).forEach(key => { if (element[key] === null) { delete element[key]; } });
   }
 }

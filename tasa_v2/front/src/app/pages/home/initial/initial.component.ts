@@ -5,17 +5,13 @@ import { ConfigurationService } from 'src/app/shared/services/configuration.serv
 @Component({
   selector: 'app-initial',
   templateUrl: './initial.component.html',
-  styleUrls: ['./initial.component.css']
+  styleUrls: ['./initial.component.css'],
 })
 export class InitialComponent implements OnInit {
-
   constructor(
     public configService: ConfigurationService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {
-    this.configService.initialPage = true;
-  }
-
+  ngOnInit(): void {}
 }

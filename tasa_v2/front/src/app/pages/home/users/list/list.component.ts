@@ -13,13 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  color: string;
-}
-
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -38,6 +31,7 @@ export class ListComponent implements AfterViewInit {
   ) {
     // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(this.listUsers as User[]);
+    this.loadingService.setloading(true);
   }
 
   get roles(): Role[] {
@@ -65,7 +59,6 @@ export class ListComponent implements AfterViewInit {
   selection = new SelectionModel<User>(false, []);
 
   ngAfterViewInit() {
-    this.loadingService.setloading(true);
     this.userService
       .getUsers()
       .then((users) => {
@@ -101,24 +94,10 @@ export class ListComponent implements AfterViewInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: User): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      return `all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.name
