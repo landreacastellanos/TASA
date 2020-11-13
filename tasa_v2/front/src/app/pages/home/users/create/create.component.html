@@ -134,6 +134,22 @@
                 Email inválido
               </div>
             </div>
+            <div class="containerForm col-12">
+              <mat-label class="text-size">Perfil</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <mat-select formControlName="role_id" required>
+                  <mat-option *ngFor="let role of roles" [value]="role.key">
+                    {{ role.role }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div
+                *ngIf="submitted && controls.role_id?.errors?.required"
+                class="warning"
+              >
+                Este campo es requerido
+              </div>
+            </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Contraseña</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
@@ -160,22 +176,6 @@
               </mat-form-field>
               <div
                 *ngIf="submitted && controls.password?.errors?.required"
-                class="warning"
-              >
-                Este campo es requerido
-              </div>
-            </div>
-            <div class="containerForm col-12 col-md-6">
-              <mat-label class="text-size">Perfil</mat-label>
-              <mat-form-field class="col-12 formOutline" appearance="outline">
-                <mat-select formControlName="role_id" required>
-                  <mat-option *ngFor="let role of roles" [value]="role.key">
-                    {{ role.role }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div
-                *ngIf="submitted && controls.role_id?.errors?.required"
                 class="warning"
               >
                 Este campo es requerido
