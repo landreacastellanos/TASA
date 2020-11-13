@@ -5,6 +5,7 @@ import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
     { path: 'create', component: CreateComponent },
+    { path: 'view/:id', component: CreateComponent, data: { mode: 'view' } },
     { path: 'list', component: ListComponent }
 ];
 

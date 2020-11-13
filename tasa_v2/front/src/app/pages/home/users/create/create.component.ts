@@ -73,12 +73,9 @@ export class CreateComponent implements OnInit {
       // passwordRepeat: ['', []],
       role_id: [user.role_id, [Validators.required]],
     });
-
-    console.log({ id: this.id });
   }
 
   onSubmit() {
-    const randNum = Math.floor(Math.random() * 1000);
     this.submitted = true;
     if (!this.userFg.valid) {
       return this.validationError();

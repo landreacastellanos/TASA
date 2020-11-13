@@ -91,29 +91,19 @@
       <mat-paginator pageSize="6"></mat-paginator>
     </div>
     <div class="row justify-content-end mr-3">
-      <div class="col-4 col-md-1">
+      <div class="col-6 col-md-2 button-search">
         <button
+          (click)="onClickView()"
           mat-raised-button
           color="primary"
           class="rounded-button"
         >
-          <mat-icon>add</mat-icon>
-          Crear
-        </button>
-      </div>
-      <div class="col-4 col-md-1">
-        <button
-          (click)="onClickEdit()"
-          mat-raised-button
-          color="primary"
-          class="rounded-button"
-        >
-          <mat-icon>edit_outline</mat-icon>
-          Editar
+          <mat-icon>search</mat-icon>
+          Consultar
         </button>
       </div>
 
-      <div class="col-4 col-md-1">
+      <div class="col-6 col-md-1">
         <button
           mat-raised-button
           color="warn"

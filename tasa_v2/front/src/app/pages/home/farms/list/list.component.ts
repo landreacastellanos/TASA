@@ -63,8 +63,8 @@ export class ListComponent implements AfterViewInit {
     this.router.navigate(['/']);
   }
 
-  onClickEdit() {
-    this.router.navigate(['/users/edit', this.selection.selected[0].id]);
+  onClickView() {
+    this.router.navigate(['/farms/view', this.selection.selected[0].id]);
   }
 
   // Filter
