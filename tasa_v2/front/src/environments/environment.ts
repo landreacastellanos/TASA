@@ -6,7 +6,7 @@ export const environment = {
   production: false,
 
   urlApi: 'http://162.243.174.116:5024/tasa_service/',
-  publicFrontUrl: 'http://localhost:4200/',
+  publicFrontUrl: 'http://localhost:4200/#/',
 };
 
 /*
