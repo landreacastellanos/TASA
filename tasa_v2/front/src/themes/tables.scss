@@ -7,9 +7,12 @@ tbody {
   border-collapse: separate;
   border-spacing: 0 0.2rem !important;
 }
+td,th {
+  width: 800px;
+  padding: 0 12px!important;
+}
 th {
   color: black;
-  padding: 0px;
 }
 tr.mat-header-row {
   height: 30px!important;
@@ -53,7 +56,8 @@ tr {
 }
 
 .select{
-  min-width: 48px;
+  width: 1%;
+  max-width: 48px;
 }
 
 .mat-paginator-container{
