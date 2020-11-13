@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { RoleByIdGuard } from '../../shared/guards/role-by-id.guard';
-// import { RolAdministrador } from '../../shared/models/role';
+import { RoleByIdGuard } from '../../shared/guards/role-by-id.guard';
+import { RolAdministrador } from '../../shared/models/role';
 import { HomeComponent } from './home.component';
 
 const routes: Routes = [
@@ -18,8 +18,8 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () =>
           import('./users/users.module').then((m) => m.UsersModule),
-        // canActivate: [RoleByIdGuard],
-        // data: { roles: [new RolAdministrador().key] },
+        canActivate: [RoleByIdGuard],
+        data: { roles: [new RolAdministrador().key] },
       },
       {
         path: 'farms',
