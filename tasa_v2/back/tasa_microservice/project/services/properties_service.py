@@ -191,6 +191,10 @@ class PropertiesServices:
                             } ,lands))
         property['batchs'] = batchs
 
+        property["direction"] = property.pop("address")
+        property["web_page"] = property.pop("web_site")
+        property["hectares_total"] = property.pop("total")
+        
         results["data"].append(property)
         return results
      
@@ -262,8 +266,8 @@ class PropertiesServices:
             "name":str(data['name']),
             "business_name":str(data['business_name']),
             "sowing_system":int(data['sowing_system']),
-            "total":data['property_owner'],
-            "property_owner":data['hectares_total'],
+            "total":data['hectares_total'],
+            "property_owner":data['property_owner'],
             "seller":int(data['seller']),
             "created_date": datetime.now()
         }
