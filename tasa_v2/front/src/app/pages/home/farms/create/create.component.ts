@@ -80,20 +80,20 @@ export class CreateComponent implements OnInit {
     return this.farmsService.saveFarm({
       batchs: lots,
       business_name: this.farmForm.value.businessName,
-      decision_influence: this.farmForm.value.influencer,
       direction: this.farmForm.value.address,
       hectares_total: this.farmForm.value.totalHectares,
-      manager: this.farmForm.value.foreman,
       name: this.farmForm.value.name,
-      parthner_add: this.farmForm.value.partner,
-      pay_manager: this.farmForm.value.paymentAgent,
       phone: this.farmForm.value.phone,
-      property_owner: this.farmForm.value.owner,
-      purchasing_manager: this.farmForm.value.purchasingAgent,
-      responsible_purchasing: this.farmForm.value.liable,
       seller: this.farmForm.value.vendor,
       sowing_system: this.farmForm.value.system,
       web_page: this.farmForm.value.web,
+      property_owner: this.farmForm.value.owner,
+      decision_influencer: this.farmForm.value.influencer,
+      manager: this.farmForm.value.foreman ? this.farmForm.value.foreman : undefined,
+      parthner_add: this.farmForm.value.partner,
+      pay_manager: this.farmForm.value.paymentAgent,
+      purchasing_manager: this.farmForm.value.purchasingAgent,
+      responsible_purchasing: this.farmForm.value.liable,
     }).then((data) => {
       if (data !== null) {
         return this.snackBar.open('Finca creada correctamente', 'x', {
