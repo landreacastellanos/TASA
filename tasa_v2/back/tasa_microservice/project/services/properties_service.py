@@ -82,16 +82,28 @@ class PropertiesServices:
             "address":str(data['direction']),
             "web_site":str(data['web_page']),
             "sowing_system":int(data['sowing_system']),
-            "manager":int(data['manager']),
-            "property_owner":int(data['property_owner']),
-            "purchasing_manager":int(data['purchasing_manager']),
-            "pay_manager":int(data['pay_manager']),
-            "responsible_purchasing":int(data['responsible_purchasing']),
-            "decision_influencer":int(data['decision_influencer']),
-            "parthner_add":int(data['parthner_add']),
+            "property_owner":data['property_owner'],
             "seller":int(data['seller']),
             "created_date": datetime.now()
         }
+
+        if("purchasing_manager" in data):
+            property_data['purchasing_manager']=data['purchasing_manager']
+        
+        if("pay_manager" in data):
+            property_data['pay_manager']=data['pay_manager']
+
+        if("responsible_purchasing" in data):
+            property_data['responsible_purchasing']=data['responsible_purchasing']
+
+        if("decision_influencer" in data):
+            property_data['decision_influencer']=data['decision_influencer']
+        
+        if("parthner_add" in data):
+            property_data['parthner_add']=data['parthner_add']
+        
+        if("manager" in data):
+            property_data['manager']=data['manager']
 
         try:
             propery = self.__repository_properties.insert(property_data)
@@ -243,18 +255,31 @@ class PropertiesServices:
             "name":str(data['name']),
             "business_name":str(data['business_name']),
             "phone":float(data['phone']),
-            "address":str(data['address']),
-            "web_site":str(data['web_site']),
+            "address":str(data['direction']),
+            "web_site":str(data['web_page']),
             "sowing_system":int(data['sowing_system']),
-            "manager":int(data['manager']),
-            "property_owner":int(data['property_owner']),
-            "purchasing_manager":int(data['purchasing_manager']),
-            "pay_manager":int(data['pay_manager']),
-            "responsible_purchasing":int(data['responsible_purchasing']),
-            "decision_influencer":int(data['decision_influencer']),
-            "parthner_add":int(data['parthner_add']),
-            "seller":int(data['seller'])
+            "property_owner":data['property_owner'],
+            "seller":int(data['seller']),
+            "created_date": datetime.now()
         }
+
+        if("purchasing_manager" in data):
+            property_data['purchasing_manager']=data['purchasing_manager']
+        
+        if("pay_manager" in data):
+            property_data['pay_manager']=data['pay_manager']
+
+        if("responsible_purchasing" in data):
+            property_data['responsible_purchasing']=data['responsible_purchasing']
+
+        if("decision_influencer" in data):
+            property_data['decision_influencer']=data['decision_influencer']
+        
+        if("parthner_add" in data):
+            property_data['parthner_add']=data['parthner_add']
+        
+        if("manager" in data):
+            property_data['manager']=data['manager']        
 
         self.__repository_properties.update(data['id'],property_data)
 
