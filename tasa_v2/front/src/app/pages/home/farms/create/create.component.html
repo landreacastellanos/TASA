@@ -1,1 +1,246 @@
-<p>create works!</p>
+<div class="card-container-form p-1">
+    <form #myForm="ngForm" [formGroup]="farmForm">
+        <div class="row no-gutters">
+            <div class="form-body col-12 col-md-8 py-3">
+                <div class="center-children mt-2">
+                    <h4><i class="fa fa-pagelines"></i>Registar Finca</h4>
+                </div>
+                <div class="form-inputs row py-3">
+                    <div class="form-personal-data col-12 col-md-6 row">
+                        <div class="form-subtitle col-12">
+                            <strong>Datos de la finca</strong>
+                            <hr class="mt-0" />
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size"> Nombre </mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input appAutofocus matInput formControlName="name" type="text" class="inputOutline"
+                                    required />
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.name?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="submitted && controls.name?.errors?.minlength" class="warning">
+                                Debe contener al menos 3 caracteres
+                            </div>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Razón social</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input matInput formControlName="businessName" type="text" class="inputOutline"
+                                    required />
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.businessName?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                            <div *ngIf="submitted && controls.businessName?.errors?.minlength" class="warning">
+                                Debe contener al menos 3 caracteres
+                            </div>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Dirección</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input matInput formControlName="address" type="text" class="inputOutline" />
+                            </mat-form-field>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Dirección web</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input matInput formControlName="web" type="text" class="inputOutline" />
+                            </mat-form-field>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Telefono</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input matInput formControlName="phone" type="number" class="inputOutline" />
+                            </mat-form-field>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Total hectáres finca</mat-label>
+                            <mat-form-field class="col-12 formOutline profesion-size" appearance="outline">
+                                <input matInput formControlName="totalHectares" type="number" class="inputOutline" />
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.totalHectares?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Sistema de siembra</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <mat-select formControlName="system" required>
+                                    <mat-option *ngFor="let system of systems" [value]="system.id">
+                                        {{ system.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.system?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Seleccione el vendedor</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <mat-select formControlName="vendor" required>
+                                    <mat-option *ngFor="let vendor of vendors" [value]="vendor.id">
+                                        {{ vendor.name }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.vendor?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vl d-none d-md-block"></div>
+                    <div class="form-account col-12 row col-md-6">
+                        <div class="form-subtitle col-12">
+                            <hr class="d-block d-md-none" />
+                            <strong class="transparent">Lotes</strong>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Nombre del lote</mat-label>
+                            <mat-form-field class="formOutline" appearance="outline">
+                                <input matInput formControlName="lotName" type="text" class="inputOutline" required />
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.lotName?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="containerForm col-12 col-md-6">
+                            <mat-label class="text-size">Hectáreas del lote</mat-label>
+                            <mat-form-field class="col-12 formOutline" appearance="outline">
+                                <input matInput formControlName="lotHectare" class="inputOutline" required
+                                    type="number" />
+                            </mat-form-field>
+                            <div *ngIf="submitted && controls.lotHectare?.errors?.required" class="warning">
+                                Este campo es requerido
+                            </div>
+                        </div>
+                        <div class="container-lots col-12">
+                            <div *ngFor="let lot of listLot; index as i" class="container-lots row">
+                                <div class="containerForm col-12 col-md-6">
+                                    <mat-label class="text-size">Nombre del lote</mat-label>
+                                    <mat-form-field class="formOutline" appearance="outline">
+                                        <input matInput type="text" class="inputOutline" [(ngModel)]="listLot[i].name"
+                                            [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                                    <div *ngIf="lot.error" class="warning">
+                                        Recuerda llenar ambos campos
+                                    </div>
+                                </div>
+                                <div class="containerForm col-12 col-md-6">
+                                    <mat-label class="text-size">Hectáreas del lote</mat-label>
+                                    <mat-form-field class="col-12 formOutline" appearance="outline">
+                                        <input matInput class="inputOutline" type="number" [(ngModel)]="lot.value"
+                                            [ngModelOptions]="{standalone: true}" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 container-button-add">
+                            <button mat-raised-button color="primary" (click)=add() type="button"
+                                class="rounded-button">
+                                <span>Agregar</span>
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 pl-md-1 pr-md-0 mh-100 col-md-4">
+                <div class="sponsors h-100 row">
+                    <div class="title-second col-12 mt-2">
+                        <h4><i class="material-icons">person_outline</i>Datos de los Usuarios</h4>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el dueño de la finca</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="owner" required>
+                                <mat-option *ngFor="let owner of owners" [value]="owner.id">
+                                    {{ owner.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="submitted && controls.owner?.errors?.required" class="warning">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el socio</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="partner">
+                                <mat-option *ngFor="let partner of partners" [value]="partner.id">
+                                    {{ partner.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el influenciador de decisiones de compra</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="influencer">
+                                <mat-option *ngFor="let influencer of influencers" [value]="influencer.id">
+                                    {{ influencer.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el responsable de decisiones de compra</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="liable">
+                                <mat-option *ngFor="let liable of liables" [value]="liable.id">
+                                    {{ liable.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el capataz</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="foreman">
+                                <mat-option *ngFor="let foreman of foremen" [value]="foreman.id">
+                                    {{ foreman.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el encargado de compras</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="purchasingAgent">
+                                <mat-option *ngFor="let purchasingAgent of purchasingAgents" [value]="purchasingAgent.id">
+                                    {{ purchasingAgent.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="containerForm col-12">
+                        <mat-label class="text-size">Seleccione el encargado de pagos</mat-label>
+                        <mat-form-field class="col-12 formOutline" appearance="outline">
+                            <mat-select formControlName="paymentAgent">
+                                <mat-option *ngFor="let paymentAgent of paymentAgents" [value]="paymentAgent.id">
+                                    {{ paymentAgent.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <button class="transparent-blackground white-border rounded-button" mat-raised-button (click)="goBack()"
+                color="primary" type="button">
+                <mat-icon class="size-icon-folder">folder_open </mat-icon>Ver lista de
+                usuarios
+            </button>
+            <button class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="submit"
+                (click)="onSubmit()">
+                <span class="px-5">Guardar cambios</span>
+                <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+            </button>
+        </div>
+    </form>
+</div>

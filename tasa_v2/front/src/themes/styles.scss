@@ -1,6 +1,8 @@
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import './theme.scss';
 @import '~bootstrap/scss/bootstrap';
+@import './foms.scss';
+@import "~font-awesome/css/font-awesome.css";
 
 html, body {
   margin: 0px;
@@ -165,6 +167,95 @@ mat-label{
   }
 }
 
+.card-container-form {
+  background-image: linear-gradient(
+    to top,
+    rgba(87, 116, 0, 0.5),
+    rgba(87, 116, 0, 1)
+  );
+  margin: 2.5%;
+
+  .row {
+    align-content: flex-start;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .form-body {
+    background-color: white;
+
+    .center-children {
+      text-align: center;
+      color: #87b017;
+
+      .material-icons {
+        vertical-align: text-bottom;
+        font-size: larger;
+      }
+    }
+
+    .form-subtitle {
+      display: block;
+    }
+
+    .containerForm {
+      margin: 6px 0;
+
+      .formOutline {
+        width: 100%;
+        font-size: 12px;
+      }
+    }
+
+    .vl {
+      height: 50%;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      position: absolute;
+      left: 50%;
+      top: 0;
+      top: 35%;
+    }
+  }
+
+  .sponsors {
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: normal;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  .rounded-button {
+    border-radius: 18px;
+
+  }
+
+  button.transparent-blackground {
+    background-color: rgba(134, 174, 23, 0.3);
+  }
+  
+  button.white-border {
+    border: 1px solid #f8f9fa;
+  }
+  
+  button {
+    outline: none;
+
+    .size-icon-check {
+      border-radius: 100px;
+      font-size: 30px;
+      vertical-align: text-top;
+      position: fixed;
+      bottom: 10px;
+      right: 0;
+      width: 37px;
+      outline: none;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .initial-header{
     height: 80px;
@@ -221,12 +312,20 @@ mat-label{
   .card-body{
     background-color: white;
   }
+  .size-icon-title{
+    vertical-align: sub;
+    font-size: 27px;
+  }
   background-image: linear-gradient(
     to top,
     rgba(87, 116, 0, 0.5),
     rgba(87, 116, 0, 1)
   );
   margin: 2.5%;
+}
+
+button.mat-button-base{
+  outline-style: none;
 }
 
 button.rounded-button {
@@ -242,9 +341,3 @@ button.white-border {
 }
 
 
-// base forms
-
-.formOutline {
-  width: 100%;
-  font-size: 12px!important;
-}
