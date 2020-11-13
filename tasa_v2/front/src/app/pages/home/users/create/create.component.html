@@ -3,7 +3,7 @@
     <div class="row no-gutters">
       <div class="form-body col-12 col-md-8 py-3">
         <div class="center-children mt-2">
-          <h4><i class="material-icons">person_outline</i> Crear usuario</h4>
+          <h4><i class="material-icons">person_outline</i> {{this.title}}</h4>
         </div>
         <div class="form-inputs row py-3">
           <div class="form-personal-data col-12 col-md-6 row">
@@ -141,7 +141,7 @@
                   matInput
                   formControlName="password"
                   class="inputOutline"
-                  required
+                  [required]="mode !== 'edit'"
                   [type]="hidePassword ? 'password' : 'text'"
                 />
                 <button
@@ -181,7 +181,7 @@
                 Este campo es requerido
               </div>
             </div>
-            <div class="containerForm col-12 col-md-6">
+            <div *ngIf="mode !== 'edit'" class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Confirma tu contraseña</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
                 <input

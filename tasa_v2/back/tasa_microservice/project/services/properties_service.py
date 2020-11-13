@@ -133,7 +133,8 @@ class PropertiesServices:
         data = list(map(lambda  x:{ 
                                 "id": x['id'],
                                 "name": x['name'],
-                                "business_name": x['business_name'], 
+                                "business_name": x['business_name'],
+                                "phone": x['phone'],
                                 "type_planting": self.get_type_planting_name(planting_type,x['sowing_system'])['name']
                             } ,plant))        
 
@@ -144,5 +145,132 @@ class PropertiesServices:
             if(item['id'] == id):
                 return item
 
+    def get_property(self, id):
 
-    
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+
+        lands = self.__repository_land.select(entity_name="land", options={"filters":
+                             [['property_id', "equals", id]]
+                             })
+        property = self.__repository_properties.select_one(int(id), entity_name="properties")
+        property = property[0]
+
+        batchs = list(map(lambda  x:{ 
+                                "id": x['id'],
+                                "name": x['land_name'],
+                                "hectares_number": x['land_ha']
+                            } ,lands))
+        property['batchs'] = batchs
+
+        results["data"].append(property)
+        return results
+     
+    def delete_property(self, id):
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+        
+        role = self.verify_data(validation_token[2])
+
+        if role[0] and role[1]['role_id'] != Keys.admi.value:
+            results['details'].append(
+                {
+                    "key": 401,
+                    "value": "El usuario no tiene permisos"
+                }
+            )
+            return results
+        
+        lands = self.__repository_land.select(entity_name="land", options={"filters":
+                             [['property_id', "equals", id]]
+                             })
+        
+        for item in lands:
+            self.__repository_land.delete(item['id'])
+
+        self.__repository_properties.delete(id)
+
+        results['data'].append({
+                                "key": 100,
+                                "value": "Finca eliminado"
+                                })
+        return results
+
+    def update_property(self, data):
+
+        results = {
+            "data": [],
+            "details": []
+        }
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+        
+        role = self.verify_data(validation_token[2])
+
+        if role[0] and role[1]['role_id'] != Keys.admi.value:
+            results['details'].append(
+                {
+                    "key": 401,
+                    "value": "El usuario no tiene permisos"
+                }
+            )
+            return results
+
+        property_data={
+            "name":str(data['name']),
+            "business_name":str(data['business_name']),
+            "phone":float(data['phone']),
+            "address":str(data['address']),
+            "web_site":str(data['web_site']),
+            "sowing_system":int(data['sowing_system']),
+            "manager":int(data['manager']),
+            "property_owner":int(data['property_owner']),
+            "purchasing_manager":int(data['purchasing_manager']),
+            "pay_manager":int(data['pay_manager']),
+            "responsible_purchasing":int(data['responsible_purchasing']),
+            "decision_influencer":int(data['decision_influencer']),
+            "parthner_add":int(data['parthner_add']),
+            "seller":int(data['seller'])
+        }
+
+        self.__repository_properties.update(data['id'],property_data)
+
+        for item in data['batchs']:
+            batch = {
+                'land_name':item['name'],
+                'land_ha': float(item['hectares_number'])
+            }
+            if("id" in item):
+                self.__repository_land.update(item['id'],batch)
+            else:
+                batch['property_id']=data['id']
+                self.__repository_land.insert(batch)
+        
+        results['data'].append({
+                                "key": 200,
+                                "value": "Finca actualizada"
+                                })
+        return results
