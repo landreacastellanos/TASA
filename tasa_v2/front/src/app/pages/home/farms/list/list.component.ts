@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
+import { RolAdministrador } from '../../../../shared/models/role';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import { StorageService } from '../../../../shared/services/storage.service';
@@ -65,6 +66,10 @@ export class ListComponent implements AfterViewInit {
   }
   goBack() {
     this.router.navigate(['/']);
+  }
+
+  showItem(){    
+    return this.storageService.settings?.user?.roleId == new RolAdministrador().key;
   }
 
   openDialogDelete(): void {
