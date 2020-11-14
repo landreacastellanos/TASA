@@ -1,0 +1,57 @@
+@import '../../../../../themes/theme.scss';
+
+.container-lots{
+    margin: 0;
+    padding: 0;
+}
+
+.transparent {
+    color: transparent;
+}
+
+.container-button-add{
+    text-align: right;
+}
+
+.container-icon{
+    padding: 0;
+    padding-top: 38px;
+
+    .mat-mini-fab{
+        width: 38px;
+        height: 38px;
+    }
+}
+
+.sponsors{
+    background-color: white;
+    justify-content: flex-start;
+    flex-direction: row;
+    padding: 16px;
+    color: black;
+
+    .title-second{
+        color: #87b017;
+        margin-top: 8px;
+
+        .material-icons {
+        vertical-align: text-bottom;
+        font-size: larger;
+        }
+    }
+
+    .containerForm {
+        margin: 0;
+  
+        .formOutline {
+          width: 100%;
+          font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .transparent {
+        color: black;
+    }
+}

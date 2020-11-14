@@ -1,40 +1,3 @@
-.form-subtitle {
-  display: block;
-}
-
-.card-container {
-  background-image: linear-gradient(
-    to top,
-    rgba(87, 116, 0, 0.5),
-    rgba(87, 116, 0, 1)
-  );
-  margin: 2.5%;
-}
-
-.containerForm {
-  margin: 6px 0;
-}
-
-.row {
-  align-content: flex-start;
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-.formOutline {
-  width: 100%;
-  font-size: 12px;
-}
-
-.form-body {
-  background-color: white;
-}
-
-.center-children {
-  text-align: center;
-  color: #87b017;
-}
-
 .sponsors {
   background-size: auto;
   background: url(../../../../../assets/img/Atech_Background.1.jpg);
@@ -48,63 +11,8 @@
   flex-direction: column;
 }
 
-.material-icons {
-  vertical-align: text-bottom;
-  font-size: larger;
-}
-
-.vl {
-  height: 50%;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  position: absolute;
-  left: 50%;
-  top: 0;
-  top: 35%;
-}
-
-.rounded-button {
-  border-radius: 18px;
-}
-
-.save-changes {
-  vertical-align: middle;
-  font-size: 24px;
-}
-
-span.text-box {
-  padding-left: 30px;
-  font-size: large;
-}
-
-div.padding-row {
-  padding-left: 20px;
-}
-
-.size-icon-check {
-  border-radius: 100px;
-  font-size: 30px;
-  vertical-align: text-top;
-  position: fixed;
-  bottom: 10px;
-  right: 0;
-  width: 37px;
-  outline: none;
-}
-
 .size-icon-folder {
   outline: none;
   vertical-align: text-top;
   font-size: 20px;
-}
-
-button.transparent-blackground {
-  background-color: rgba(134, 174, 23, 0.3);
-}
-
-button.white-border {
-  border: 1px solid #f8f9fa;
-}
-
-button {
-  outline: none;
 }

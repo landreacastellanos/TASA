@@ -3,7 +3,7 @@
     <div class="text-primary">
       <h4>
         <mat-icon class="size-icon-title mr-2">folder_open </mat-icon> Lista
-        Fincas
+        usuario
       </h4>
     </div>
     <div class="containerForm">
@@ -13,7 +13,7 @@
           appAutofocus
           matInput
           (keyup)="applyFilter($event)"
-          placeholder="Ex. Las flores"
+          placeholder="Ex. Mia"
           #input
           type="text"
           class="inputOutline"
@@ -45,33 +45,48 @@
           <td mat-cell class="name" *matCellDef="let row">{{ row.name }}</td>
         </ng-container>
 
-        <!-- business_name column -->
-        <ng-container matColumnDef="business_name">
-          <th mat-header-cell class="business_name" *matHeaderCellDef>
-            Razón social
-          </th>
-          <td mat-cell class="business_name" *matCellDef="let row">
-            {{ row.business_name }}
+        <!-- last_name column -->
+        <ng-container matColumnDef="last_name">
+          <th mat-header-cell class="last_name" *matHeaderCellDef>Apellido</th>
+          <td mat-cell class="last_name" *matCellDef="let row">
+            {{ row.last_name }}
           </td>
         </ng-container>
 
-        <!-- phone column FIXME: BACK NOT SUPPORTED-->
+        <!-- age column -->
+        <ng-container matColumnDef="age">
+          <th mat-header-cell class="age" *matHeaderCellDef>Edad</th>
+          <td mat-cell class="age" *matCellDef="let row">{{ row.age }}</td>
+        </ng-container>
+
+        <!-- email column -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell class="email" *matHeaderCellDef>Email</th>
+          <td mat-cell class="email" *matCellDef="let row">{{ row.email }}</td>
+        </ng-container>
+
+        <!-- phone column -->
         <ng-container matColumnDef="phone">
           <th mat-header-cell class="phone" *matHeaderCellDef>Teléfono</th>
           <td mat-cell class="phone" *matCellDef="let row">{{ row.phone }}</td>
         </ng-container>
 
-        <!-- type_planting column -->
-        <ng-container matColumnDef="type_planting">
-          <th mat-header-cell class="type_planting" *matHeaderCellDef>
-            Tipo de siembra
-          </th>
-          <td mat-cell class="type_planting" *matCellDef="let row">
-            {{ row.type_planting }}
+        <!-- profesion column -->
+        <ng-container matColumnDef="profesion">
+          <th mat-header-cell class="profesion" *matHeaderCellDef>Profesión</th>
+          <td mat-cell class="profesion" *matCellDef="let row">
+            {{ row.profesion }}
           </td>
         </ng-container>
 
-        <!-- Commons -->
+        <!-- role column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell class="role" *matHeaderCellDef>Perfil</th>
+          <td mat-cell class="role" *matCellDef="let row">
+            {{ getRoleName(row.role_id) }}
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr
           mat-row
@@ -91,22 +106,32 @@
       <mat-paginator pageSize="6"></mat-paginator>
     </div>
     <div class="row justify-content-end mr-3">
-      <div class="col-6 col-md-2 button-search">
+      <div class="col-4 col-md-1">
         <button
-          (click)="onClickView()"
+          (click)="onClickCreate()"
           mat-raised-button
           color="primary"
           class="rounded-button"
         >
-          <mat-icon>search</mat-icon>
-          Consultar
+          <mat-icon>add</mat-icon>
+          Crear
+        </button>
+      </div>
+      <div class="col-4 col-md-1">
+        <button
+          (click)="onClickEdit()"
+          mat-raised-button
+          color="primary"
+          class="rounded-button"
+        >
+          <mat-icon>edit_outline</mat-icon>
+          Editar
         </button>
       </div>
 
-      <div class="col-6 col-md-1">
+      <div class="col-4 col-md-1">
         <button
-        *ngIf="showItem()"
-        (click)="openDialogDelete()"
+          (click)="openDialogDelete()"
           mat-raised-button
           color="warn"
           class="rounded-button"

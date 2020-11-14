@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { RolAdministrador } from '../../../shared/models/role';
 import { AuthService } from '../../../shared/services/auth.service';
 import { StorageService } from '../../../shared/services/storage.service';
+
+const PERMISSION_BY_PATH = {
+  '/users': [new RolAdministrador().key],
+};
 
 @Component({
   selector: 'app-menu',
@@ -17,13 +22,26 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  get role() {
+    return this.storageService.settings?.user?.roleId;
+  }
+
+  showItem(route = '') {
+    switch (route) {
+      case '/users':
+        return PERMISSION_BY_PATH[route].includes(this.role);
+
+      default:
+        return true;
+    }
+  }
+
   closeSession() {
     this.authService.closeSession().then((data) => {
-      // TODO: uncomment whrn close_session is ready
-      // if (data != null) {
+      if (data != null) {
         this.storageService.cleanUser();
         this.router.navigate(['/login']);
-      // }
+      }
     });
   }
 }

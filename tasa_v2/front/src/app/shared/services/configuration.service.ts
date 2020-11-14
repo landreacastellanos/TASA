@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class ConfigurationService {
   public loading = false;
-  public initialPage = false;
+  public initialPage = true;
 
   constructor() { }
 
