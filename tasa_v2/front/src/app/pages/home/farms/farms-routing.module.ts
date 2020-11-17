@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { RoleByIdGuard } from 'src/app/shared/guards/role-by-id.guard';
+import { RolAdministrador } from 'src/app/shared/models/role';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
 
 const routes: Routes = [
-    { path: 'create', component: CreateComponent },
-    { path: 'view/:id', component: CreateComponent, data: { mode: 'view' } },
+    {
+        path: 'create', component: CreateComponent,
+        canActivate: [RoleByIdGuard],
+        data: { roles: [new RolAdministrador().key] }
+    },
+    {
+        path: 'view/:id', component: CreateComponent,
+        data: { mode: 'view'}
+    },
     { path: 'list', component: ListComponent }
 ];
 
@@ -13,4 +22,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class FarmsRoutingModule {}
+export class FarmsRoutingModule { }

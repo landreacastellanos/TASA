@@ -6,6 +6,7 @@ import { StorageService } from '../../../shared/services/storage.service';
 
 const PERMISSION_BY_PATH = {
   '/users': [new RolAdministrador().key],
+  '/farms/create': [new RolAdministrador().key],
 };
 
 @Component({
@@ -18,9 +19,9 @@ export class MenuComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   get role() {
     return this.storageService.settings?.user?.roleId;
@@ -30,7 +31,8 @@ export class MenuComponent implements OnInit {
     switch (route) {
       case '/users':
         return PERMISSION_BY_PATH[route].includes(this.role);
-
+      case '/farms/create':
+        return PERMISSION_BY_PATH[route].includes(this.role);
       default:
         return true;
     }

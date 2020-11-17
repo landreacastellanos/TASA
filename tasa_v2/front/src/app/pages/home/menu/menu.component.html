@@ -11,7 +11,7 @@
           FINCAS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkFincas">
-          <a class="dropdown-item" routerLink="/farms/create"  >Registrar finca</a>
+          <a class="dropdown-item" routerLink="/farms/create"  *ngIf="showItem('/farms/create')">Registrar finca</a>
           <a class="dropdown-item" routerLink="/farms/list" >Lista de fincas</a>
         </div>
       </li>
