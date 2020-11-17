@@ -69,6 +69,10 @@ class UserService():
             "data": [],
             "details": []
         }
+        select_options = {}
+        select_options["order_by"] =\
+                {"column_name": 'name',
+                 "desc": False}
 
         validation_token = SecurityToken().validate_token() 
         if not validation_token[0] or not SecurityToken().verify_exist_token():
@@ -80,7 +84,7 @@ class UserService():
             )
             return result
         
-        data = self.__repository_user.select(entity_name="Users")
+        data = self.__repository_user.select(entity_name="Users", options=select_options)
 
         result['data'] = data
         return result

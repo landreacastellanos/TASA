@@ -35,4 +35,9 @@ export class FarmsService {
   public editFarm(farm: FarmsCreate): Promise<any> {
     return this.dataApiService.patch(farm, 'update_property');
   }
+
+  public deleteFarm(id: number)
+  {
+    return this.dataApiService.delete("delete_property",id.toString())
+  }
 }
