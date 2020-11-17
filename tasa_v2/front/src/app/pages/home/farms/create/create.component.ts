@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RolAdministrador } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { FarmsService } from '../farms.service';
@@ -20,9 +21,11 @@ export class CreateComponent implements OnInit {
   public users = [];
   public systems = [];
   public mode: 'edit' | 'view' | 'create';
-  public title = 'Registrar Finca';
+  public title = 'Registrar finca';
   public id: string;
   public idLot: number;
+  public roleIdAdmin = new RolAdministrador().key;
+  public roleId: any;
 
   constructor(
     public configService: ConfigurationService,
@@ -38,6 +41,7 @@ export class CreateComponent implements OnInit {
     setTimeout(() => {
       this.configService.loading = true;
     }, 1);
+    this.roleId = this.storageService.settings.user.roleId;
     this.mode = this.route.snapshot.data.mode;
     return this.farmsService.getUsers().then(infoUsers => {
       this.users = infoUsers[0];
@@ -84,7 +88,7 @@ export class CreateComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     const farm = await this.farmsService.getFarm(this.id);
     this.idLot = farm.batchs.length > 0 ? farm.batchs[0].id : undefined;
-    this.title = 'Consultar Finca';
+    this.title = 'Consultar finca';
     this.listLot = [];
     this.farmForm = this.fb.group(
       {
@@ -120,12 +124,14 @@ export class CreateComponent implements OnInit {
 
   public edit() {
     this.mode = 'edit';
-    this.title = 'Editar Finca';
+    this.title = 'Editar finca';
     this.disabledForm();
   }
 
   public disabledForm() {
     const keys = Object.keys(this.farmForm.value);
+    console.log(keys);
+
     keys.forEach(element => {
       this.mode === 'view' ? this.farmForm.get(element).disable() : this.farmForm.get(element).enable();
     });
