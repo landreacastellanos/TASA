@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateComponent } from './create/create.component';
-import { FarmsRoutingModule } from './farms-routing.module';
-import { ListComponent } from './list/list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -12,13 +9,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { CalendarComponent } from './calendar.component';
+import { CalendarRoutingModule } from './calendar-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    CreateComponent,
-    ListComponent,
+    CalendarComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatTableModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    FarmsRoutingModule
+    CalendarRoutingModule
   ]
 })
-export class FarmsModule { }
+export class CalendarModule { }
