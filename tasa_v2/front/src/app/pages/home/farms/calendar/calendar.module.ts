@@ -19,8 +19,8 @@ import { SeedtimeComponent } from './seedtime/seedtime.component';
 @NgModule({
   declarations: [
     CalendarComponent,
-    ListStagesComponent
-    SeedtimeComponent
+    ListStagesComponent,
+    SeedtimeComponent,
   ],
   imports: [
     CommonModule,
