@@ -3,7 +3,7 @@
         <div class="row no-gutters">
             <div class="form-body col-12 col-md-8 py-3">
                 <div class="center-children mt-2">
-                    <h4><i class="fa fa-pagelines"></i>{{title}}</h4>
+                    <h4><img src="../../../../../assets/img/Atech_ObjetoVectorial.PNG-12.png" alt="">{{title}}</h4>
                 </div>
                 <div class="form-inputs row py-3">
                     <div class="form-personal-data col-12 col-md-6 row">
@@ -67,7 +67,7 @@
                         <div class="containerForm col-12 col-md-6">
                             <mat-label class="text-size">Sistema de siembra</mat-label>
                             <mat-form-field class="col-12 formOutline" appearance="outline">
-                                <mat-select formControlName="system" required>
+                                <mat-select matNativeControl formControlName="system" required [disabled]="mode === 'view'">
                                     <mat-option *ngFor="let system of systems" [value]="system.id">
                                         {{ system.name }}
                                     </mat-option>
@@ -80,7 +80,7 @@
                         <div class="containerForm col-12 col-md-6">
                             <mat-label class="text-size">Seleccione el vendedor</mat-label>
                             <mat-form-field class="col-12 formOutline" appearance="outline">
-                                <mat-select formControlName="vendor" required>
+                                <mat-select formControlName="vendor" required [disabled]="mode === 'view'">
                                     <mat-option *ngFor="let vendor of vendors" [value]="vendor.id">
                                         {{ vendor.name }}
                                     </mat-option>
@@ -170,7 +170,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el dueño de la finca</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="owner" required>
+                            <mat-select formControlName="owner" required [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let owner of owners" [value]="owner.id">
                                     {{ owner.name }}
                                 </mat-option>
@@ -183,7 +183,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el socio</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="partner">
+                            <mat-select formControlName="partner" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let partner of partners" [value]="partner.id">
                                     {{ partner.name }}
                                 </mat-option>
@@ -193,7 +193,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el influenciador de decisiones de compra</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="influencer">
+                            <mat-select formControlName="influencer" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let influencer of influencers" [value]="influencer.id">
                                     {{ influencer.name }}
                                 </mat-option>
@@ -203,7 +203,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el responsable de decisiones de compra</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="liable">
+                            <mat-select formControlName="liable" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let liable of liables" [value]="liable.id">
                                     {{ liable.name }}
                                 </mat-option>
@@ -213,7 +213,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el capataz</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="foreman">
+                            <mat-select formControlName="foreman" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let foreman of foremen" [value]="foreman.id">
                                     {{ foreman.name }}
                                 </mat-option>
@@ -223,7 +223,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el encargado de compras</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="purchasingAgent">
+                            <mat-select formControlName="purchasingAgent" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let purchasingAgent of purchasingAgents"
                                     [value]="purchasingAgent.id">
                                     {{ purchasingAgent.name }}
@@ -234,7 +234,7 @@
                     <div class="containerForm col-12">
                         <mat-label class="text-size">Seleccione el encargado de pagos</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
-                            <mat-select formControlName="paymentAgent">
+                            <mat-select formControlName="paymentAgent" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let paymentAgent of paymentAgents" [value]="paymentAgent.id">
                                     {{ paymentAgent.name }}
                                 </mat-option>
@@ -248,10 +248,10 @@
             <button class="transparent-blackground white-border rounded-button" mat-raised-button (click)="goBack()"
                 color="primary" type="button">
                 <mat-icon class="size-icon-folder">folder_open </mat-icon>Ver lista de
-                usuarios
+                fincas
             </button>
             <button class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="button"
-                (click)="edit()" *ngIf="mode === 'view'">
+                (click)="edit()" *ngIf="mode === 'view' && roleId === roleIdAdmin">
                 <span class="px-5">Editar</span>
                 <mat-icon class="size-icon-check">edit_outline</mat-icon>
             </button>
