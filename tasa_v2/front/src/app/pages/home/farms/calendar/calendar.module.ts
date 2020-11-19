@@ -11,12 +11,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { CalendarComponent } from './calendar.component';
 import { CalendarRoutingModule } from './calendar-routing.module';
+import { ListStagesComponent } from './list-stages/list-stages.component';
 
 
 
 @NgModule({
   declarations: [
-    CalendarComponent
+    CalendarComponent,
+    ListStagesComponent
   ],
   imports: [
     CommonModule,
