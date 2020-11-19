@@ -4,6 +4,7 @@ import { CalendarComponent } from './calendar.component';
 import { ListStagesComponent } from './list-stages/list-stages.component';
 
 const routes: Routes = [
+        path: 'seedtime', component: SeedtimeComponent,
   {
     path: '',
     component: CalendarComponent,

@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CalendarComponent } from './calendar.component';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { ListStagesComponent } from './list-stages/list-stages.component';
+import { SeedtimeComponent } from './seedtime/seedtime.component';
 
 
 
@@ -19,6 +20,7 @@ import { ListStagesComponent } from './list-stages/list-stages.component';
   declarations: [
     CalendarComponent,
     ListStagesComponent
+    SeedtimeComponent
   ],
   imports: [
     CommonModule,
