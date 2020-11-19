@@ -16,13 +16,13 @@ class StageServices:
             "data": [],
             "details": []
         }
-        # validation_token = SecurityToken().validate_token() 
-        # if not validation_token[0] or not SecurityToken().verify_exist_token():
-        #     results['details'].append({
-        #             "key": 400,
-        #             "value": "Token Invalido"
-        #         })
-        #     return results
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
 
         lands = self.__repository_land.select(entity_name="land", options={"filters":
                              [['property_id', "equals", id],
