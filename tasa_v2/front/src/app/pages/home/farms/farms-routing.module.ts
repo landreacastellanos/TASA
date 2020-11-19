@@ -15,7 +15,11 @@ const routes: Routes = [
         path: 'view/:id', component: CreateComponent,
         data: { mode: 'view'}
     },
-    { path: 'list', component: ListComponent }
+    {
+        path: 'calendar', loadChildren: () =>
+        import('./calendar/calendar.module').then((m) => m.CalendarModule),
+    },
+    { path: 'list', component: ListComponent },
 ];
 
 @NgModule({
