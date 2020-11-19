@@ -1,5 +1,6 @@
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
+from project.resources.utils.security_token import SecurityToken   
 
 
 class StageServices:
