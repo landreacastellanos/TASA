@@ -13,6 +13,9 @@ import { CalendarComponent } from './calendar.component';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { ListStagesComponent } from './list-stages/list-stages.component';
 import { SeedtimeComponent } from './seedtime/seedtime.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 
 
@@ -23,6 +26,8 @@ import { SeedtimeComponent } from './seedtime/seedtime.component';
     SeedtimeComponent,
   ],
   imports: [
+    MatDatepickerModule,
+    MatRadioModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

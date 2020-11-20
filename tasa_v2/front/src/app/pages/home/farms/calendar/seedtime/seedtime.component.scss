@@ -11,3 +11,23 @@
     text-align: -webkit-center;
     width: 24px;
 }
+
+.standar-margin-t{
+    margin-top: 50px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+  }
+  
+  .radio-button {
+    margin: 5px;
+  }
+
+  .m-events {
+    height: 200px;
+    border: 1px solid #555;
+    overflow: auto;
+  }
