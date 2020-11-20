@@ -5,6 +5,19 @@
   overflow-y: auto;
 }
 
+footer {
+  background-image: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0),
+      hsla(0, 0%, 100%, 0.2),
+      rgba(255, 255, 255, 1)
+    ),
+    url("../../../assets/img/footer_image.jpg");
+  margin-top: -80px;
+  height: 180px;
+  background-size: 100% auto;
+}
+
 @media (max-width: 768px) {
   .home-container {
     background-image: none;
