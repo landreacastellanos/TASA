@@ -1,57 +1,57 @@
-table {
+table.mat-table {
   width: 100%;
-}
-
-table,
-tbody {
   border-collapse: separate;
   border-spacing: 0 0.2rem !important;
-}
-td,th {
-  width: 800px;
-  padding: 0 12px!important;
-}
-th {
-  color: black;
-}
-tr.mat-header-row {
-  height: 30px!important;
-}
-tr.active {
-  td {
-    color: inherit;
-    border: solid 2px map-get($theme-colors, "primary");
-    border-left: none;
-    border-right: none;
+  td,th {
+    width: 800px;
+    padding: 0 12px!important;
   }
-  td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-left: solid 2px map-get($theme-colors, "primary");
+  th {
+    color: black;
   }
-  td:last-child {
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-    border-right: solid 2px map-get($theme-colors, "primary");
+  tr.mat-header-row {
+    height: 30px!important;
   }
-}
-
-tr {
-  td {
-    color: gray;
-    border: solid 2px rgba(0, 0, 0, 0.12);
-    border-left: none;
-    border-right: none;
+  tr.active {
+    td {
+      color: inherit;
+      border: solid 2px map-get($theme-colors, "primary");
+      border-left: none;
+      border-right: none;
+    }
+    td:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-left: solid 2px map-get($theme-colors, "primary");
+    }
+    td:last-child {
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+      border-right: solid 2px map-get($theme-colors, "primary");
+    }
   }
-  td:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-left: solid 2px rgba(0, 0, 0, 0.12);
+  
+  tr {
+    td {
+      color: gray;
+      border: solid 2px rgba(0, 0, 0, 0.12);
+      border-left: none;
+      border-right: none;
+    }
+    td:first-child {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-left: solid 2px rgba(0, 0, 0, 0.12);
+    }
+    td:last-child {
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+      border-right: solid 2px rgba(0, 0, 0, 0.12);
+    }
   }
-  td:last-child {
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
-    border-right: solid 2px rgba(0, 0, 0, 0.12);
+  tbody {
+    border-collapse: separate;
+    border-spacing: 0 0.2rem !important;
   }
 }
 

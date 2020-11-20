@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-seedtime',
@@ -32,7 +27,8 @@ export class SeedtimeComponent implements OnInit {
     this.seedTimeForm = this.fb.group({
       plantingType: ['', [Validators.required]],
       variety: ['', [Validators.required]],
-      datePlanting: ['', [Validators.required]],
+      dateSugested: ['', [Validators.required]],
+      realDate: ['', [Validators.required]]
     });
   }
 }

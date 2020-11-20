@@ -1,13 +1,14 @@
 <form [formGroup]="seedTimeForm">
   <div class="row">
-    <div class="specs col-6 ">
+    <div class="specs col-6">
       <div class="d-inline-flex">
         <div class="number-button mr-2">1</div>
         <div class="">
           <strong>¿Que tipo de siembra quieres hacer?</strong>
         </div>
       </div>
-      <mat-radio-group  formControlName="plantingType"
+      <mat-radio-group
+        formControlName="plantingType"
         aria-labelledby="radio-group-label"
         class="radio-group"
       >
@@ -26,7 +27,7 @@
           <strong>Ingresa la variedad</strong>
         </div>
       </div>
-      <mat-form-field class="col-8 formOutline ml-2 mt-3" appearance="outline">
+      <mat-form-field class="formOutline mx-2 mt-3" appearance="outline">
         <input
           matInput
           placeholder="Ej. Grano largo"
@@ -37,6 +38,29 @@
         />
       </mat-form-field>
     </div>
-    <div class="date col-6"></div>
+    <div class="date col-6">
+      <div class="d-inline-flex">
+        <div class="number-button mr-2">3</div>
+        <div>
+          <strong>Selecciona una fecha</strong>
+        </div>
+      </div>
+      <div  class="mx-2 mt-3">
+      <div><mat-label>Fecha propuesta</mat-label></div>
+      <mat-form-field class="formOutline" color="primary" appearance="outline">
+        <input 
+        formControlName="dateSugested" matInput [matDatepicker]="pickerDateSugested">
+        <mat-datepicker-toggle matSuffix [for]="pickerDateSugested"></mat-datepicker-toggle>
+        <mat-datepicker #pickerDateSugested></mat-datepicker>
+      </mat-form-field>
+      <div><mat-label>Fecha real</mat-label></div>
+      <mat-form-field class="formOutline" color="primary" appearance="outline">
+        <input 
+        formControlName="realDate" matInput [matDatepicker]="pickerRealDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerRealDate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerRealDate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    </div>
   </div>
 </form>

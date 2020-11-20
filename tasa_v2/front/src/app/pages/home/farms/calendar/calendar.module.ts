@@ -15,6 +15,7 @@ import { ListStagesComponent } from './list-stages/list-stages.component';
 import { SeedtimeComponent } from './seedtime/seedtime.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -26,6 +27,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     SeedtimeComponent,
   ],
   imports: [
+    MatNativeDateModule,
     MatDatepickerModule,
     MatRadioModule,
     CommonModule,
