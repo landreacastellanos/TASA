@@ -291,5 +291,79 @@
          }
 
       }
+   },
+   "property_stage":{
+      "tableName": "property_procedure",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_crop": {
+            "dbName": "id_crop",
+            "type": "integer"
+         },
+         "stage_id": {
+            "dbName": "stage_id",
+            "type": "integer"
+         },
+         "land_id": {
+            "dbName": "land_id",
+            "type": "integer"
+         },
+         "start_date": {
+            "dbName": "start_date",
+            "type": "dateTime"
+         },
+         "end_date": {
+            "dbName": "end_date",
+            "type": "dateTime"
+         },
+         "data": {
+            "dbName": "data",
+            "type": "string"
+         },
+         "procedure_image": {
+            "dbName": "procedure_image",
+            "type": "string"
+         },
+         "stage_complete": {
+            "dbName": "stage_complete",
+            "type": "boolean"
+         },
+         "crop_complete": {
+            "dbName": "crop_complete",
+            "type": "boolean"
+         }
+      }
+   },
+   "stage":{
+      "tableName": "stage",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "stage_name": {
+            "dbName": "stage_name",
+            "type": "string"
+         },
+         "type_planting": {
+            "dbName": "type_planting",
+            "type": "integer"
+         },
+         "stage_number": {
+            "dbName": "stage_number",
+            "type": "integer"
+         }
+      }
    }
 }

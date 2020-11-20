@@ -320,7 +320,32 @@
                 items:
                   $ref: '#/definitions/property_land'
         x-swagger-router-controller: "project.views.stage"
-
+    /get_stage_one:
+      get:
+        tags:
+          - "Land"
+        summary: "Land"
+        operationId: "get_stage_one"
+        description: "get stage one"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "land_id"
+            required: true  
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/stage_one'
+        x-swagger-router-controller: "project.views.stage"
     /update_property:
       patch:
         tags:
@@ -564,6 +589,17 @@
           items:
             type: string
         type:
+          type: string
+    stage_one:
+      type: object
+      properties:
+        variety:
+          type: string
+        type_sowing:
+          type: string
+        sowing_date:
+          type: string
+        real_date:
           type: string
     result_roles:
       type: "object"
