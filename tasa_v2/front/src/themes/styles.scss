@@ -1,46 +1,47 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import './theme.scss';
-@import '~bootstrap/scss/bootstrap';
-@import './forms.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./theme.scss";
+@import "~bootstrap/scss/bootstrap";
+@import "./forms.scss";
 @import "~font-awesome/css/font-awesome.css";
-@import './tables.scss';
+@import "./tables.scss";
 
-html, body {
+html,
+body {
   margin: 0px;
   padding: 0px;
 }
-body{
-  font-family: Roboto, 'Helvetice New', 'Arial', sans-serif
+body {
+  font-family: Roboto, "Helvetice New", "Arial", sans-serif;
 }
 
-.initial-header{
+.initial-header {
   height: 100px;
 
-  img{
+  img {
     height: 90px;
   }
 }
 
-.mat-form-field{
+.mat-form-field {
   padding: 0 !important;
 }
 
-mat-label{
+mat-label {
   font-size: 14px !important;
-  color: map-get($theme-colors, 'secondary');
+  color: map-get($theme-colors, "secondary");
 }
 
-.mat-form-field-appearance-outline .mat-form-field-wrapper{
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
   padding-bottom: 0;
 }
 
-.warning{
+.warning {
   font-size: 10px;
-  color: map-get($theme-colors, 'danger');
+  color: map-get($theme-colors, "danger");
 }
 
-.snackbar-warn{
-  background-color: map-get($theme-colors, 'danger') !important;
+.snackbar-warn {
+  background-color: map-get($theme-colors, "danger") !important;
   color: black;
 
   button {
@@ -48,8 +49,8 @@ mat-label{
   }
 }
 
-.snackbar-success{
-  background-color: map-get($theme-colors, 'primary') !important;
+.snackbar-success {
+  background-color: map-get($theme-colors, "primary") !important;
   color: black;
 
   button {
@@ -57,7 +58,7 @@ mat-label{
   }
 }
 
-.snackbar-alert{
+.snackbar-alert {
   background-color: rgb(248, 248, 117) !important;
   color: black;
 
@@ -66,7 +67,7 @@ mat-label{
   }
 }
 
-.container-login{
+.container-login {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -77,108 +78,112 @@ mat-label{
   margin: 0;
   padding: 0;
 
-  .row{
-      margin: 0;
+  .row {
+    margin: 0;
   }
-  
-  .card-login{
-      width: 100%;
-      margin: 0;
+
+  .card-login {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: -webkit-calc(100% - 100px);
+    height: -moz-calc(100% - 100px);
+    height: -o-calc(100% - 100px);
+
+    .image-login {
+      position: relative;
+      max-width: 100%;
       padding: 0;
-      height: -webkit-calc(100% - 100px);
-      height: -moz-calc(100% - 100px);
-      height: -o-calc(100% - 100px);
+      text-align: center;
+      height: 430px;
+      overflow: hidden;
 
-      .image-login{
-          position: relative;
-          max-width: 100%;
-          padding: 0;
-          text-align: center;
-          height: 430px;
-          overflow: hidden;
-
-          img{
-              width: 100%;
-              min-width: 300px;
-              position: relative;
-              top: -50%;
-          }
-
-          .logo-login{
-              position: absolute;
-              margin-left: auto;
-              margin-right: auto;
-              left: 0;
-              right: 0;
-              top: 150px;
-              text-align: center;
-              height: 130px;
-              width: 130px;
-              overflow: hidden;
-              padding: 0;
-
-              img{
-                  width: 275px;
-                  min-width: 200px;
-                  position: relative;
-                  top: -54%;
-                  left: -62%;
-              }
-          }
+      img {
+        width: 100%;
+        min-width: 300px;
+        position: relative;
+        top: -50%;
       }
 
-      .form-login{
-          align-items: center;
-          margin: 0;
-          width: 95%;
-          height: 430px;
-          overflow-y: auto;
-          background-color: white;
+      .logo-login {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        top: 150px;
+        text-align: center;
+        height: 130px;
+        width: 130px;
+        overflow: hidden;
+        padding: 0;
 
-          .text-login{
-              margin-left: 10px;
-          }
-
-          .title{
-              margin-top: 20px;
-              width: 100%;
-          }
-
-          .text{
-              font-size: 12px;
-          }
-
-          .forgotPass{
-              margin: 0;
-              margin-bottom: 5px;
-
-              button{
-                  text-align: right;
-                  font-weight: bold;
-              }
-          }
-
-          .buttonContinue{
-              margin: 0;
-              button{
-                  border-radius: 15px;
-              }
-          }
+        img {
+          height: 130px;
+          width: 130px;
+          min-width: 130px;
+          top: 0px;
+        }
       }
+    }
+
+    .form-login {
+      align-items: center;
+      margin: 0;
+      width: 95%;
+      height: 430px;
+      overflow-y: auto;
+      background-color: white;
+
+      .text-login {
+        margin-left: 10px;
+      }
+
+      .title {
+        margin-top: 20px;
+        width: 100%;
+      }
+
+      .text {
+        font-size: 12px;
+      }
+
+      .forgotPass {
+        margin: 0;
+        margin-bottom: 5px;
+
+        button {
+          text-align: right;
+          font-weight: bold;
+        }
+      }
+
+      .buttonContinue {
+        margin: 0;
+        button {
+          border-radius: 15px;
+        }
+      }
+    }
+  }
+  .logo-login-movil {
+    text-align: center;
+    img {
+      height: 90px;
+    }
   }
 }
 
-
-.no-margin .mat-checkbox-layout{
-  margin: 0!important;
+.no-margin .mat-checkbox-layout {
+  margin: 0 !important;
 }
 
 // base pages
 .card-container {
-  .card-body{
+  .card-body {
     background-color: white;
   }
-  .size-icon-title{
+  .size-icon-title {
     vertical-align: sub;
     font-size: 27px;
   }
@@ -190,7 +195,7 @@ mat-label{
   margin: 2.5%;
 }
 
-button.mat-button-base{
+button.mat-button-base {
   outline-style: none;
 }
 
@@ -199,7 +204,7 @@ button.rounded-button {
 }
 
 button.transparent-blackground {
-  background-color: rgba(134, 174, 23, 0.3)!important;
+  background-color: rgba(134, 174, 23, 0.3) !important;
 }
 
 button.white-border {
@@ -207,47 +212,49 @@ button.white-border {
 }
 
 @media (max-width: 768px) {
-  .initial-header{
+  .initial-header {
     height: 80px;
-  
-    img{
+
+    img {
       height: 60px;
       margin-top: 20px;
     }
   }
-  .container-login{
+  .form-login {
+    height: initial!important;
+    overflow: initial!important;
+  }
+  .container-login {
     background-color: white;
     background-image: none;
 
-    .card-login{
-        padding: 10px;
-        height: -webkit-calc(100% - 80px);
-        height: -moz-calc(100% - 80px);
-        height: -o-calc(100% - 80px);
+    .card-login {
+      padding: 10px;
+      // height: -webkit-calc(100% - 80px);
+      // height: -moz-calc(100% - 80px);
+      // height: -o-calc(100% - 80px);
 
-        .image-login{
-            display: none;
+      .image-login {
+        display: none;
+      }
+
+      .form-login {
+        .title {
+          margin-top: 30px;
+          width: 100%;
+          color: map-get($theme-colors, "primary");
         }
 
-        .form-login{
+        .forgotPass {
+          margin: 10px 0;
 
-            .title{
-                margin-top: 30px;
-                width: 100%;
-                color: map-get($theme-colors, 'primary');
-            }
-
-            .forgotPass{
-                margin: 10px 0;
-
-                button{
-                    text-align: right;
-                    font-weight: bold;
-                    color: map-get($theme-colors, 'primary');
-                }
-            }
+          button {
+            text-align: right;
+            font-weight: bold;
+            color: map-get($theme-colors, "primary");
+          }
         }
+      }
     }
   }
 }
-

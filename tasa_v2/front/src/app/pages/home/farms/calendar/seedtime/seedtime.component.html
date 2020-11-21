@@ -1,66 +1,101 @@
 <form [formGroup]="seedTimeForm">
   <div class="row">
-    <div class="specs col-6">
-      <div class="d-inline-flex">
+    <div class="specs col-12 col-md-6">
+      <div class="d-inline-flex mt-2">
         <div class="number-button mr-2">1</div>
-        <div class="">
+        <div>
           <strong>¿Que tipo de siembra quieres hacer?</strong>
         </div>
       </div>
-      <mat-radio-group
-        formControlName="plantingType"
-        aria-labelledby="radio-group-label"
-        class="radio-group"
-      >
-        <mat-radio-button
-          color="primary"
-          class="radio-button"
-          *ngFor="let type of typeOfPlanting"
-          [value]="type"
+      <div class="mx-2 mt-3">
+        <mat-radio-group
+          formControlName="type_sowing"
+          aria-labelledby="radio-group-label"
+          class="radio-group"
         >
-          {{ type }}
-        </mat-radio-button>
-      </mat-radio-group>
+          <mat-radio-button
+            color="primary"
+            class="radio-button"
+            *ngFor="let type of typeOfPlanting"
+            [value]="type"
+          >
+            {{ type }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
       <div class="d-inline-flex mt-2">
         <div class="number-button mr-2">2</div>
         <div>
           <strong>Ingresa la variedad</strong>
         </div>
       </div>
-      <mat-form-field class="formOutline mx-2 mt-3" appearance="outline">
-        <input
-          matInput
-          placeholder="Ej. Grano largo"
-          formControlName="variety"
-          type="text"
-          class="inputOutline"
-          required
-        />
-      </mat-form-field>
+      <div class="mx-2 mt-3">
+        <mat-form-field class="formOutline" appearance="outline">
+          <input
+            matInput
+            placeholder="Ej. Grano largo"
+            formControlName="variety"
+            type="text"
+            class="inputOutline"
+            required
+          />
+        </mat-form-field>
+      </div>
     </div>
-    <div class="date col-6">
+    <div class="date col-12 col-md-6 mt-4 mt-md-0">
       <div class="d-inline-flex">
         <div class="number-button mr-2">3</div>
         <div>
           <strong>Selecciona una fecha</strong>
         </div>
       </div>
-      <div  class="mx-2 mt-3">
-      <div><mat-label>Fecha propuesta</mat-label></div>
-      <mat-form-field class="formOutline" color="primary" appearance="outline">
-        <input 
-        formControlName="dateSugested" matInput [matDatepicker]="pickerDateSugested">
-        <mat-datepicker-toggle matSuffix [for]="pickerDateSugested"></mat-datepicker-toggle>
-        <mat-datepicker #pickerDateSugested></mat-datepicker>
-      </mat-form-field>
-      <div><mat-label>Fecha real</mat-label></div>
-      <mat-form-field class="formOutline" color="primary" appearance="outline">
-        <input 
-        formControlName="realDate" matInput [matDatepicker]="pickerRealDate">
-        <mat-datepicker-toggle matSuffix [for]="pickerRealDate"></mat-datepicker-toggle>
-        <mat-datepicker #pickerRealDate></mat-datepicker>
-      </mat-form-field>
-    </div>
+      <div class="mx-2 mt-3">
+        <div><mat-label>Fecha propuesta</mat-label></div>
+        <mat-form-field
+          class="formOutline"
+          color="primary"
+          appearance="outline"
+        >
+          <input
+            formControlName="sowing_date"
+            matInput
+            [matDatepicker]="pickerSowing_date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerSowing_date"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerSowing_date></mat-datepicker>
+        </mat-form-field>
+        <div><mat-label>Fecha real</mat-label></div>
+        <mat-form-field
+          class="formOutline"
+          color="primary"
+          appearance="outline"
+        >
+          <input
+            formControlName="real_date"
+            matInput
+            [matDatepicker]="pickerReal_date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="pickerReal_date"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #pickerReal_date></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+
+      <div class="mx-2 mt-3">
+        <div><mat-label>Fotografia de referencia</mat-label></div>
+        <img
+          src="assets\img\Siembra_Arroz_Secano.jpg"
+          alt="Arros secano"
+          width="100%"
+          height="100%"
+        />
+      </div>
     </div>
   </div>
 </form>
