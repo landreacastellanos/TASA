@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-4">
         <h1>DATOS FINCA</h1>
+        {{ landsService.landSelected | json }}
       </div>
       <div class="col-md-8">
         <router-outlet #routerOutlet="outlet"></router-outlet>
