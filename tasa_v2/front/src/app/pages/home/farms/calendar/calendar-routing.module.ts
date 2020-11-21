@@ -7,7 +7,7 @@ import { SeedtimeComponent } from './seedtime/seedtime.component';
 const routes: Routes = [
 
   {
-    path: '',
+    path: ':idProperty/:idLand',
     component: CalendarComponent,
     children: [
       { path: '', component: ListStagesComponent },

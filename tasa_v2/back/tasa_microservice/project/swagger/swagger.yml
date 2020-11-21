@@ -290,6 +290,62 @@
                 items:
                   $ref: '#/definitions/property'
         x-swagger-router-controller: "project.views.properties"
+    /get_property_land:
+      get:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "get_property_land"
+        description: "get property with land"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "property_id"
+            required: true
+          - in: "query"
+            type: "integer"
+            name: "land_id"
+            required: true   
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/property_land'
+        x-swagger-router-controller: "project.views.stage"
+    /get_stage_one:
+      get:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "get_stage_one"
+        description: "get stage one"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "land_id"
+            required: true  
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/stage_one'
+        x-swagger-router-controller: "project.views.stage"
     /update_property:
       patch:
         tags:
@@ -473,6 +529,47 @@
           type: "array"
           items:
             $ref: '#/definitions/batch'
+    property_land:
+      type: object
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+        business_name:
+          type: "string"
+        direction:
+          type: "string"
+        phone:
+          type: "number"
+        web_page:
+          type: "string"
+        email:
+          type: "string"
+        hectares_total:
+          type: "number"
+        manager:
+          type: "integer"
+        property_owner:
+          type: "integer"
+        sowing_system:
+          type: "integer"
+        purchasing_manager:
+          type: "integer"
+        pay_manager:
+          type: "integer"
+        parthner_add:
+          type: "integer"
+        decision_influencer:
+          type: "integer"
+        seller:
+          type: "integer"
+        responsible_purchasing :
+          type: "integer"
+        batchs:
+          type: "object"
+          items:
+            $ref: '#/definitions/batch'
     batch:
       type: object
       properties:
@@ -492,6 +589,17 @@
           items:
             type: string
         type:
+          type: string
+    stage_one:
+      type: object
+      properties:
+        variety:
+          type: string
+        type_sowing:
+          type: string
+        sowing_date:
+          type: string
+        real_date:
           type: string
     result_roles:
       type: "object"
