@@ -26,3 +26,16 @@ def get_stage_one(land_id):
         result = exception.args[0]
         results['details'].append(result)
     return results
+
+def calendar_stage(id_lote):
+    results = {
+            "data": [],
+            "details": []
+        }
+    try:        
+        result = StageServices().calendar_stage(id_lote)
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results

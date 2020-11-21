@@ -6,7 +6,7 @@ from project.resources.utils.security_token import SecurityToken
 
 
 class StageServices:
-
+    TOKEN_INVALID = "Token invalido"
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -16,6 +16,8 @@ class StageServices:
          entity_name="property_stage")
         self.__repository_stage = CommonRepository(
          entity_name="stage")
+        self.__repository_procedure = CommonRepository(
+         entity_name="propertyProcedure") 
 
     def get_property_land(self, id, land):
 
@@ -27,7 +29,7 @@ class StageServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": TOKEN_INVALID
                 })
             return results
 
@@ -65,7 +67,7 @@ class StageServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": TOKEN_INVALID
                 })
             return results
 
@@ -105,3 +107,67 @@ class StageServices:
             results['data'].append(json.loads(property_stage['data']))
 
         return results
+    
+    def calendar_stage(self, id_lote):
+        results = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": TOKEN_INVALID
+                })
+            return results
+
+        data_land = self.__repository_land.select(entity_name="land",options={"filters":
+                             [['id', "equals", id_lote]]
+                             })
+        if len(data_land) > 0:                     
+            data_property = self.__repository_properties.select(options={"filters":
+                                [['id', "equals", data_land[0]['property_id']]]
+                                })
+            if len(data_property) > 0:
+                data_stage = self.__repository_stage.select(entity_name="stage", options={"filters":
+                                [['typePlanning', "equals", data_property[0]['sowing_system']]]
+                                })
+                results['data'] = self.complete_stage(data_stage, id_lote)                
+
+        return results
+
+    def complete_stage(self, data, id_land):
+        data_stages = self.__repository_procedure.select(entity_name="propertyProcedure",options={"filters":
+                                [['landId', "equals", id_land]]
+                                })
+        data = list(map(lambda x: 
+        {
+            "id_stage": x['id'],
+			"stage_number": x['stageNumber'],
+			"stage_name": x['stage'],
+			"complete": False
+        }
+        if len(data_stages)==0 else self.validation_stage(x, data_stages) , data))
+
+        return data
+
+    def validation_stage(self, data, stages):
+        result = list(map(lambda x: 
+        {
+            "id_stage": data['id'],
+			"stage_number": data['stageNumber'],
+			"stage_name": data['stage'],
+			"complete": True
+        }
+        if x['stageId'] == data['id'] and
+        (not x['stageComplete'])
+        else
+        {
+            "id_stage": data['id'],
+			"stage_number": data['stageNumber'],
+			"stage_name": data['stage'],
+			"complete": False
+        }, stages))
+
+        return result[0]        
