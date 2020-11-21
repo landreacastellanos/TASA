@@ -4,7 +4,14 @@
     'home-initial-container': isHome
   }"
 >
+<div>
   <app-menu></app-menu>
   <router-outlet></router-outlet>
 </div>
-<footer class="d-md-none"></footer>
+  <footer
+    [ngClass]="{
+      'd-md-none': !isHome,
+      'd-none': isHome
+    }"
+  ></footer>
+</div>
