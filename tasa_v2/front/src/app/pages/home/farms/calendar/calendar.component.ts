@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { LandsService } from './lands.service';
 
 @Component({
   selector: 'app-calendar',
@@ -7,7 +8,16 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public landsService: LandsService
+  ) {
+    this.landsService.getLandById(
+      this.route.snapshot.paramMap.get('idProperty'),
+      this.route.snapshot.paramMap.get('idLand')
+    );
+  }
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
