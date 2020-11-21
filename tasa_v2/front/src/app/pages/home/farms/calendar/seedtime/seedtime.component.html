@@ -90,8 +90,9 @@
       <div class="mx-2 mt-3">
         <div><mat-label>Fotografia de referencia</mat-label></div>
         <img
-          src="assets\img\Siembra_Arroz_Secano.jpg"
-          alt="Arros secano"
+          *ngIf="imageReference"
+          [src]="imageReference"
+          alt="Arroz en siembra"
           width="100%"
           height="100%"
         />

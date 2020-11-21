@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { LandsService } from '../lands.service';
+import { ArrozSecano } from 'src/app/shared/models/farm';
 
 @Component({
   selector: 'app-seedtime',
@@ -8,7 +15,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./seedtime.component.scss'],
 })
 export class SeedtimeComponent implements OnInit {
-  constructor(public fb: FormBuilder) {}
+  constructor(public fb: FormBuilder, private landService: LandsService) {}
   /* form-control */
   name = new FormControl('');
 
@@ -28,7 +35,18 @@ export class SeedtimeComponent implements OnInit {
       type_sowing: ['', [Validators.required]],
       variety: ['', [Validators.required]],
       sowing_date: ['', [Validators.required]],
-      real_date: ['', [Validators.required]]
+      real_date: ['', [Validators.required]],
     });
+  }
+
+  get imageReference() {
+    if (this.landService.landSelected === undefined) {
+      return '';
+    }
+    if (this.landService.landSelected.sowing_system === new ArrozSecano().id) {
+      return 'assets/img/Siembra_Arroz_Secano.jpg';
+    } else {
+      return 'assets/img/Siembra_Arroz_Voleado.jpg';
+    }
   }
 }
