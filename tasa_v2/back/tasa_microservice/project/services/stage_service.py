@@ -1,4 +1,7 @@
+import os
 import json
+import manage
+import uuid
 from project.models.enum.stage_enum import Stage
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
@@ -105,6 +108,43 @@ class StageServices:
         else:
             property_stage = property_stage[0]
             results['data'].append(json.loads(property_stage['data']))
+
+        return results
+    
+    def upload_file(self, files):
+        l_files = []
+        results = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
+        
+        if 'image_1' in files:
+            file = files['image_1']
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            l_files.append(new_file)
+            file.save(os.path.join(manage.uploads_dir, new_file))
+
+        if 'image_2' in files:
+            file = files['image_2']
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            l_files.append(new_file)
+            file.save(os.path.join(manage.uploads_dir, new_file))
+
+        if 'image_3' in files:
+            file = files['image_1']
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            l_files.append(new_file)
+            file.save(os.path.join(manage.uploads_dir, new_file))
+        
+        results['data'].append(l_files)
 
         return results
     

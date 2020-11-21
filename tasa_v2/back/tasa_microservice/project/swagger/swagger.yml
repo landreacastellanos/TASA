@@ -346,6 +346,64 @@
                 items:
                   $ref: '#/definitions/stage_one'
         x-swagger-router-controller: "project.views.stage"
+    /set_stage_one:
+      post:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "set_stage_one"
+        description: "set stage one"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "formData"
+            type: "file"
+            name: "image_1"
+          - in: "formData"
+            type: "file"
+            name: "image_2"
+          - in: "formData"
+            type: "file"
+            name: "image_3"  
+          - in: "body"            
+            name: "data" 
+            schema:
+              $ref: '#/definitions/stage_one' 
+        responses:
+          '200':
+            description: response result successful            
+        x-swagger-router-controller: "project.views.stage"
+    /upload_file:
+      post:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "upload_file"
+        description: "set stage one"
+        produces:
+          - "multipart/form-data"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "formData"
+            type: "file"
+            name: "image_1"
+          - in: "formData"
+            type: "file"
+            name: "image_2"
+          - in: "formData"
+            type: "file"
+            name: "image_3"  
+        responses:
+          '200':
+            description: response result successful            
+        x-swagger-router-controller: "project.views.stage"
     /update_property:
       patch:
         tags:
