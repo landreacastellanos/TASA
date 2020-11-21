@@ -8,7 +8,7 @@
         </div>
       </div>
       <mat-radio-group
-        formControlName="plantingType"
+        formControlName="type_sowing"
         aria-labelledby="radio-group-label"
         class="radio-group"
       >
@@ -47,18 +47,18 @@
       </div>
       <div  class="mx-2 mt-3">
       <div><mat-label>Fecha propuesta</mat-label></div>
-      <mat-form-field class="formOutline" color="primary" appearance="outline">
+      <mat-form-field class="sowing_date" color="primary" appearance="outline">
         <input 
-        formControlName="dateSugested" matInput [matDatepicker]="pickerDateSugested">
-        <mat-datepicker-toggle matSuffix [for]="pickerDateSugested"></mat-datepicker-toggle>
-        <mat-datepicker #pickerDateSugested></mat-datepicker>
+        formControlName="sowing_date" matInput [matDatepicker]="pickerSowing_date">
+        <mat-datepicker-toggle matSuffix [for]="pickerSowing_date"></mat-datepicker-toggle>
+        <mat-datepicker #pickerSowing_date></mat-datepicker>
       </mat-form-field>
       <div><mat-label>Fecha real</mat-label></div>
       <mat-form-field class="formOutline" color="primary" appearance="outline">
         <input 
-        formControlName="realDate" matInput [matDatepicker]="pickerRealDate">
-        <mat-datepicker-toggle matSuffix [for]="pickerRealDate"></mat-datepicker-toggle>
-        <mat-datepicker #pickerRealDate></mat-datepicker>
+        formControlName="real_date" matInput [matDatepicker]="pickerReal_date">
+        <mat-datepicker-toggle matSuffix [for]="pickerReal_date"></mat-datepicker-toggle>
+        <mat-datepicker #pickerReal_date></mat-datepicker>
       </mat-form-field>
     </div>
     </div>

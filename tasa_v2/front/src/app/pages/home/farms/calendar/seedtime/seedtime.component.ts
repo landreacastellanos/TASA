@@ -25,10 +25,10 @@ export class SeedtimeComponent implements OnInit {
 
   ngOnInit(): void {
     this.seedTimeForm = this.fb.group({
-      plantingType: ['', [Validators.required]],
+      type_sowing: ['', [Validators.required]],
       variety: ['', [Validators.required]],
-      dateSugested: ['', [Validators.required]],
-      realDate: ['', [Validators.required]]
+      sowing_date: ['', [Validators.required]],
+      real_date: ['', [Validators.required]]
     });
   }
 }
