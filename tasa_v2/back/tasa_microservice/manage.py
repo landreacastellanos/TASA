@@ -50,7 +50,7 @@ def after_request_function(response):
         return response
 
     try:
-        if response.is_json:
+        if response.is_json or response.is_sequence:
             response_data_origin = json.loads(response.get_data())
 
     except Exception as error:
@@ -116,6 +116,11 @@ app.config['MAIL_DEBUG '] = True
 app.config['TESTING'] = False
 
 app.response_class = ResponseWrapper
+
+uploads_dir = os.path.join(app.root_path, 'images')
+if not (os.path.exists(uploads_dir)):
+    os.makedirs(uploads_dir)
+
 manager = Manager(app)
 
 mail = Mail(app)
