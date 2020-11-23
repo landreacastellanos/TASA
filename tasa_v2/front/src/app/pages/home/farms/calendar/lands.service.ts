@@ -8,7 +8,10 @@ import { DataApiService } from '../../../../shared/services/data-api.service';
 export class LandsService {
   lands: { [x: string]: LandResponse } = {};
   landsSelectedIds: string;
-  constructor(private dataApiService: DataApiService) {}
+  idProperty: string;
+  idLand: string;
+
+  constructor(private dataApiService: DataApiService) { }
 
   get landSelected() {
     return this.lands[this.landsSelectedIds];
