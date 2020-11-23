@@ -130,8 +130,6 @@ export class CreateComponent implements OnInit {
 
   public disabledForm() {
     const keys = Object.keys(this.farmForm.value);
-    console.log(keys);
-
     keys.forEach(element => {
       this.mode === 'view' ? this.farmForm.get(element).disable() : this.farmForm.get(element).enable();
     });
@@ -229,6 +227,14 @@ export class CreateComponent implements OnInit {
       return;
     }
     this.listLot.push({ name: undefined, value: undefined, error: false });
+  }
+
+  public viewLot(lot?) {
+    if (lot) {
+      this.router.navigate(['/farms/calendar/', this.id, lot.id]);
+    } else{
+      this.router.navigate(['/farms/calendar/', this.id, this.idLot]);
+    }
   }
 
   public getIdRole(value: number) {

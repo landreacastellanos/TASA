@@ -120,7 +120,8 @@
                             </div>
                         </div>
                         <div class="col-1 container-icon" *ngIf="mode == 'view'">
-                            <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon">
+                            <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
+                            (click)="viewLot()">
                                 <mat-icon>visibility</mat-icon>
                             </button>
                         </div>
@@ -145,7 +146,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="col-1 container-icon" *ngIf="mode == 'view'">
-                                    <button mat-mini-fab color="primary"
+                                    <button mat-mini-fab color="primary" (click)="viewLot(lot)"
                                         aria-label="Example icon button with a delete icon">
                                         <mat-icon>visibility</mat-icon>
                                     </button>
