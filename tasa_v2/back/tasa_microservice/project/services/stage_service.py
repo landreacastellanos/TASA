@@ -3,6 +3,7 @@ import json
 import manage
 import uuid
 from project.models.enum.stage_enum import Stage
+from project.models.enum.keys_enum import Keys
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken   
@@ -21,6 +22,8 @@ class StageServices:
          entity_name="stage")
         self.__repository_procedure = CommonRepository(
          entity_name="propertyProcedure") 
+        self.__repository_user = CommonRepository(
+         entity_name="user") 
 
     def get_property_land(self, id, land):
 
@@ -32,7 +35,7 @@ class StageServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": TOKEN_INVALID
+                    "value": self.TOKEN_INVALID
                 })
             return results
 
@@ -61,6 +64,8 @@ class StageServices:
 
     def get_stage_one(self, land_id):
         stage_number = Stage.stage_one.value
+        edit = False
+
         results = {
             "data": [],
             "details": []
@@ -70,13 +75,27 @@ class StageServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": TOKEN_INVALID
+                    "value": self.TOKEN_INVALID
                 })
             return results
+        email = validation_token[2]
+        user = self.__repository_user.select(entity_name="user", options={ "filters":
+            [["email",
+            "equals",
+            email]
+            ]
+        })        
+
+        edit |= user[0]['role_id'] == Keys.admi.value
+
 
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
+
+        edit |= user[0]['id'] == property_field[0]['manager']
+        edit |= user[0]['id'] == property_field[0]['property_owner']
+        edit |= user[0]['id'] == property_field[0]['seller']
 
         stage = self.__repository_stage.select(entity_name="stage", options={"filters":
                              [['type_planting', "equals", sowing_system],
@@ -102,11 +121,13 @@ class StageServices:
                     "real_date": "",
                     "sowing_date": "",
                     "type_sowing": "",
-                    "variety": ""
+                    "variety": "",
+                    "enabled": edit
                 }
             )
         else:
             property_stage = property_stage[0]
+            property_stage['enabled'] = edit
             results['data'].append(json.loads(property_stage['data']))
 
         return results
