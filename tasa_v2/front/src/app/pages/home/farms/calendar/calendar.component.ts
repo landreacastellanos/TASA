@@ -13,20 +13,21 @@ export class CalendarComponent implements OnInit {
     private route: ActivatedRoute,
     public landsService: LandsService
   ) {
+    this.landsService.idProperty = this.route.snapshot.paramMap.get('idProperty');
+    this.landsService.idLand = this.route.snapshot.paramMap.get('idLand');
     this.landsService.getLandById(
-      this.route.snapshot.paramMap.get('idProperty'),
-      this.route.snapshot.paramMap.get('idLand')
+      this.landsService.idProperty,
+      this.landsService.idLand
     );
   }
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
   ngOnInit(): void {
-    console.log(this.router.url);
   }
 
   onBack() {
-    this.outlet?.component?.onBack();
+    this.router.navigate(['/']);
   }
 
   onSave() {

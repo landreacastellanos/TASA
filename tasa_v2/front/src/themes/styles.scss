@@ -16,9 +16,15 @@ body {
 
 .initial-header {
   height: 100px;
+  display: flex;
+  justify-content: flex-start;
 
   img {
     height: 90px;
+  }
+
+  .logo-login-movil{
+    display: none;
   }
 }
 
@@ -166,12 +172,6 @@ mat-label {
       }
     }
   }
-  .logo-login-movil {
-    text-align: center;
-    img {
-      height: 90px;
-    }
-  }
 }
 
 .no-margin .mat-checkbox-layout {
@@ -214,10 +214,16 @@ button.white-border {
 @media (max-width: 768px) {
   .initial-header {
     height: 80px;
+    display: flex;
+    justify-content: space-between;
 
     img {
       height: 60px;
       margin-top: 20px;
+    }
+
+    .logo-login-movil{
+      display: block;
     }
   }
   .form-login {
