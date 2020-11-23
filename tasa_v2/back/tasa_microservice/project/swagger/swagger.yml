@@ -346,6 +346,64 @@
                 items:
                   $ref: '#/definitions/stage_one'
         x-swagger-router-controller: "project.views.stage"
+    /set_stage_one:
+      post:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "set_stage_one"
+        description: "set stage one"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "formData"
+            type: "file"
+            name: "image_1"
+          - in: "formData"
+            type: "file"
+            name: "image_2"
+          - in: "formData"
+            type: "file"
+            name: "image_3"  
+          - in: "body"            
+            name: "data" 
+            schema:
+              $ref: '#/definitions/stage_one' 
+        responses:
+          '200':
+            description: response result successful            
+        x-swagger-router-controller: "project.views.stage"
+    /upload_file:
+      post:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "upload_file"
+        description: "set stage one"
+        produces:
+          - "multipart/form-data"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "formData"
+            type: "file"
+            name: "image_1"
+          - in: "formData"
+            type: "file"
+            name: "image_2"
+          - in: "formData"
+            type: "file"
+            name: "image_3"  
+        responses:
+          '200':
+            description: response result successful            
+        x-swagger-router-controller: "project.views.stage"
     /update_property:
       patch:
         tags:
@@ -486,7 +544,33 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_delete'
-          x-swagger-router-controller: "project.views.user"                                              
+          x-swagger-router-controller: "project.views.user"
+    /calendar_stage:
+      get:
+          tags:
+            - "Calendar"
+          summary: "Calendar"
+          operationId: "calendar_stage"
+          description: "calendar_stage"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: false
+            - in: "query"
+              type: "integer"
+              name: "id_lote"
+              required: false  
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_calendar'
+          x-swagger-router-controller: "project.views.stage"                                                   
   definitions:
     property:
       type: object
@@ -972,4 +1056,36 @@
           example: 100
         value:
           type: "string"
-          example: "Usuario eliminado"         
+          example: "Usuario eliminado"
+    result_calendar:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/calendar'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    calendar:
+      type: "object"
+      properties:
+        id_stage:
+          type: "integer"
+          example: 2
+        stage_number:
+          type: "integer"
+          example: 2
+        stage_number:  
+          type: "string"
+          example: "Riego 1"
+        complete:
+          type: "boolean"
+          example: True             

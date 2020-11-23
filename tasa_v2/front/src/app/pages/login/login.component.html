@@ -1,4 +1,4 @@
-<div class="container-login row justify-content-center">
+<div class="container-login row justify-content-center d-md-flex d-block">
   <div class="initial-header col-12">
     <img src="../../../assets/img/logo.png" alt="" />
   </div>
@@ -11,11 +11,13 @@
         </div>
       </div>
       <div class="form-login col-12 col-sm-10 col-md-6">
+        <div class="logo-login-movil d-md-none mt-md-0 mt-5">
+          <img src="../../assets/img/TASA.PNG" />
+        </div>
+
         <div class="text-login">
           <h2 class="title">Iniciar sesión</h2>
-          <p class="text">
-            Ingresa tu correo y tu contraseña
-          </p>
+          <p class="text">Ingresa tu correo y tu contraseña</p>
         </div>
         <form #myForm="ngForm" [formGroup]="loginForm">
           <div class="row justify-content-center">

@@ -6,3 +6,5 @@ images_stages/
 tasa_v2/back/tasa_microservice/env_development/
 
 tasa_v2/back/tasa_microservice/__pycache__/
+
+tasa_v2/back/tasa_microservice/project/images/

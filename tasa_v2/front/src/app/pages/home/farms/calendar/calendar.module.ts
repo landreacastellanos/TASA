@@ -12,15 +12,24 @@ import { MatButtonModule } from '@angular/material/button';
 import { CalendarComponent } from './calendar.component';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { ListStagesComponent } from './list-stages/list-stages.component';
+import { SeedtimeComponent } from './seedtime/seedtime.component';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 
 @NgModule({
   declarations: [
     CalendarComponent,
-    ListStagesComponent
+    ListStagesComponent,
+    SeedtimeComponent,
   ],
   imports: [
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatRadioModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

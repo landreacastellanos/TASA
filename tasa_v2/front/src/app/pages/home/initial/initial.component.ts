@@ -5,7 +5,7 @@ import { ConfigurationService } from 'src/app/shared/services/configuration.serv
 @Component({
   selector: 'app-initial',
   templateUrl: './initial.component.html',
-  styleUrls: ['./initial.component.css'],
+  styleUrls: ['./initial.component.scss'],
 })
 export class InitialComponent implements OnInit {
   constructor(
