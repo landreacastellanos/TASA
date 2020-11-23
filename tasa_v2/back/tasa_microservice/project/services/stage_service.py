@@ -42,7 +42,7 @@ class StageServices:
         lands = self.__repository_land.select(entity_name="land", options={"filters":
                              [['property_id', "equals", id],
                              "and",
-                             [['id', "equals", land]]]
+                             ['id', "equals", land]]
                              })
         property = self.__repository_properties.select_one(int(id), entity_name="properties")
         property = property[0]
