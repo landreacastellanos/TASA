@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { LandsService } from '../lands.service';
 import { ArrozSecano } from 'src/app/shared/models/farm';
+import { CalendarService } from '../calendar.service';
 
 @Component({
   selector: 'app-seedtime',
@@ -15,7 +16,17 @@ import { ArrozSecano } from 'src/app/shared/models/farm';
   styleUrls: ['./seedtime.component.scss'],
 })
 export class SeedtimeComponent implements OnInit {
-  constructor(public fb: FormBuilder, private landService: LandsService) {}
+  constructor(
+    public fb: FormBuilder,
+    private landService: LandsService,
+    private calendarService: CalendarService
+  ) {
+
+    this.calendarService.getStageOne(13).then((stageOneData) =>{
+ const realStage = stageOneData.real_date
+ const alertita = stageOneData.enabled
+    });
+  }
   /* form-control */
   name = new FormControl('');
 
