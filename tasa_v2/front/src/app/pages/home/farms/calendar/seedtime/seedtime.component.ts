@@ -21,12 +21,13 @@ export class SeedtimeComponent implements OnInit {
     private landService: LandsService,
     private calendarService: CalendarService
   ) {
-
-    this.calendarService.getStageOne(13).then((stageOneData) =>{
- const realStage = stageOneData.real_date
- const alertita = stageOneData.enabled
+    this.calendarService.getStageOne(13).then((stageOneData) => {
+      const realStage = stageOneData.real_date;
+      const alertita = stageOneData.enabled;
+      console.log(realStage);
     });
   }
+  
   /* form-control */
   name = new FormControl('');
 
