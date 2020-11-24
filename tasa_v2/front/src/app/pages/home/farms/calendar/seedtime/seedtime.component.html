@@ -45,14 +45,11 @@
             formControlName="variety"
             type="text"
             class="inputOutline"
-            [disabled]="mode == 'view'"
             required
           />
         </mat-form-field>
       </div>
-    </div>
-    <div class="date col-12 col-md-6 mt-4 mt-md-0">
-      <div class="d-inline-flex">
+       <div class="d-inline-flex mt-3">
         <div class="number-button mr-2">3</div>
         <div>
           <strong>Selecciona una fecha</strong>
@@ -96,7 +93,8 @@
           <mat-datepicker #pickerReal_date></mat-datepicker>
         </mat-form-field>
       </div>
-
+    </div>
+    <div class="date col-12 col-md-6 mt-4 mt-md-0">
       <div class="mx-2 mt-3">
         <div><mat-label>Fotografia de referencia</mat-label></div>
         <img

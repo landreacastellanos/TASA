@@ -10,11 +10,9 @@ import { LandsService } from '../lands.service';
 })
 export class ListStagesComponent implements OnInit, CalendarChildren {
   public list;
+  textBack = 'Volver al inicio';
 
-  constructor(
-    private router: Router,
-    public landsService: LandsService
-  ) {}
+  constructor(private router: Router, public landsService: LandsService) {}
 
   onBack() {
     this.router.navigate(['/']);
