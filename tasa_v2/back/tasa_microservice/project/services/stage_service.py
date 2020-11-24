@@ -111,10 +111,8 @@ class StageServices:
                              ['land_id', "equals", land_id],
                              "and",
                              ["crop_complete","equals",False]]
-                             })
-                        
+                             })                      
         
-
         if(len(property_stage) == 0):
             results['data'].append(
                   {
@@ -128,7 +126,9 @@ class StageServices:
         else:
             property_stage = property_stage[0]
             property_stage['enabled'] = edit
-            results['data'].append(json.loads(property_stage['data']))
+            json_data = json.loads(property_stage['data'])
+            edit |= not json_data['real_date']
+            results['data'].append(json_data)
 
         return results
     
