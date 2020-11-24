@@ -16,18 +16,17 @@ import { CalendarService } from '../calendar.service';
   styleUrls: ['./seedtime.component.scss'],
 })
 export class SeedtimeComponent implements OnInit {
+  public mode: 'edit' | 'view' | 'create' = 'view';
   constructor(
     public fb: FormBuilder,
     private landService: LandsService,
     private calendarService: CalendarService
   ) {
     this.calendarService.getStageOne(13).then((stageOneData) => {
-      const realStage = stageOneData.real_date;
-      const alertita = stageOneData.enabled;
-      console.log(realStage);
+      this.init(stageOneData);
     });
   }
-  
+
   /* form-control */
   name = new FormControl('');
 
@@ -43,11 +42,22 @@ export class SeedtimeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  init({
+    type_sowing = '',
+    variety = '',
+    sowing_date = '',
+    real_date = '',
+    enabled = false,
+  } = {}) {
+    this.mode = enabled ? 'edit' : 'view';
     this.seedTimeForm = this.fb.group({
-      type_sowing: ['', [Validators.required]],
-      variety: ['', [Validators.required]],
-      sowing_date: ['', [Validators.required]],
-      real_date: ['', [Validators.required]],
+      type_sowing: [{value: type_sowing, disabled: this.mode === 'view'}, [Validators.required]],
+      variety: [{value: variety, disabled: this.mode === 'view'}, [Validators.required]],
+      sowing_date: [{value: new Date(sowing_date), disabled: this.mode === 'view'}, [Validators.required]],
+      real_date: [{value: new Date(real_date), disabled: this.mode === 'view'}, [Validators.required]],
     });
   }
 
