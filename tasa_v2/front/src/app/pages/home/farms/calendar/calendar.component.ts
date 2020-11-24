@@ -27,7 +27,7 @@ export class CalendarComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/']);
+    console.log('onBack');
   }
 
   onSave() {

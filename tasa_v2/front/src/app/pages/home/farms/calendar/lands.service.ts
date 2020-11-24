@@ -25,8 +25,15 @@ export class LandsService {
     return this.dataApiService
       .getAll(`get_property_land?property_id=${idProperty}&land_id=${idLand}`)
       .then((data) => {
-        this.lands[this.landsSelectedIds] = data;
-        return data;
+        this.lands[this.landsSelectedIds] = data[0];
+        return data[0];
       });
+  }
+
+  public getListCalendar(){
+    return this.dataApiService.getAll(`calendar_stage?id_lote=${this.idLand}`)
+    .then((data) => {
+      return data;
+    });
   }
 }

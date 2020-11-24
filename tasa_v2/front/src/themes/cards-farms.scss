@@ -1,0 +1,25 @@
+.cards-farms{
+  padding-left: 20px;
+
+  .cards-farms-title{
+    height: 28px;
+    color: map-get($theme-colors, "primary");
+    display: flex;
+    padding-top: 20px;
+
+    img{
+      height: 25px;
+      padding-right: 20px;
+    }
+  }
+
+  .cards-farms-container{
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cards-farms{
+    padding-left: 0;
+  }
+}
