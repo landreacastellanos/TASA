@@ -1,0 +1,140 @@
+.container-login {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url("../assets/img/Atech_Background.1.jpg");
+  background-size: 100% 100%;
+  margin: 0;
+  padding: 0;
+
+  .row {
+    margin: 0;
+  }
+
+  .card-login {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: -webkit-calc(100% - 100px);
+    height: -moz-calc(100% - 100px);
+    height: -o-calc(100% - 100px);
+
+    .image-login {
+      position: relative;
+      max-width: 100%;
+      padding: 0;
+      text-align: center;
+      height: 430px;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        min-width: 300px;
+        position: relative;
+        top: -50%;
+      }
+
+      .logo-login {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        top: 150px;
+        text-align: center;
+        height: 130px;
+        width: 130px;
+        overflow: hidden;
+        padding: 0;
+
+        img {
+          height: 130px;
+          width: 130px;
+          min-width: 130px;
+          top: 0px;
+        }
+      }
+    }
+
+    .form-login {
+      align-items: center;
+      margin: 0;
+      width: 95%;
+      height: 430px;
+      overflow-y: auto;
+      background-color: white;
+
+      .text-login {
+        margin-left: 10px;
+      }
+
+      .title {
+        margin-top: 20px;
+        width: 100%;
+      }
+
+      .text {
+        font-size: 12px;
+      }
+
+      .forgotPass {
+        margin: 0;
+        margin-bottom: 5px;
+
+        button {
+          text-align: right;
+          font-weight: bold;
+        }
+      }
+
+      .buttonContinue {
+        margin: 0;
+        button {
+          border-radius: 15px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .form-login {
+    height: initial!important;
+    overflow: initial!important;
+  }
+  .container-login {
+    background-color: white;
+    background-image: none;
+
+    .card-login {
+      padding: 10px;
+      // height: -webkit-calc(100% - 80px);
+      // height: -moz-calc(100% - 80px);
+      // height: -o-calc(100% - 80px);
+
+      .image-login {
+        display: none;
+      }
+
+      .form-login {
+        .title {
+          margin-top: 30px;
+          width: 100%;
+          color: map-get($theme-colors, "primary");
+        }
+
+        .forgotPass {
+          margin: 10px 0;
+
+          button {
+            text-align: right;
+            font-weight: bold;
+            color: map-get($theme-colors, "primary");
+          }
+        }
+      }
+    }
+  }
+}
