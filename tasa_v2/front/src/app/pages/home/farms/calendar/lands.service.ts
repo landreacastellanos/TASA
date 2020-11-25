@@ -13,7 +13,7 @@ export class LandsService {
 
   constructor(private dataApiService: DataApiService) { }
 
-  get landSelected() {
+  get landSelected(): LandResponse | undefined {
     return this.lands[this.landsSelectedIds];
   }
 
