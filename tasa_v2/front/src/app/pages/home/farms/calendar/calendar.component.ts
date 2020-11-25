@@ -29,13 +29,16 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {}
 
   onBack() {
-    console.log('onBack');
+    // tslint:disable-next-line: no-unused-expression
+    (this.outlet?.component as CalendarChildren)?.onBack &&
+      (this.outlet?.component as CalendarChildren).onBack();
   }
 
   onSave() {
     console.debug('CalendarComponent:onSave');
     // tslint:disable-next-line: no-unused-expression
-    this.outlet?.component?.onSave && this.outlet?.component?.onSave();
+    (this.outlet?.component as CalendarChildren)?.onSave &&
+      (this.outlet?.component as CalendarChildren).onSave();
   }
 
   get hasSave() {

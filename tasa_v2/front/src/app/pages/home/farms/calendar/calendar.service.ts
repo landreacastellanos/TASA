@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { StageOneResponse } from 'src/app/shared/models/calendar';
+import {
+  StageOneRequest,
+  StageOneResponse,
+} from 'src/app/shared/models/calendar';
 import { LandResponse } from '../../../../shared/models/lands';
 import { DataApiService } from '../../../../shared/services/data-api.service';
 
@@ -19,7 +22,7 @@ export class CalendarService {
         // FIXME: remove me please, only for test
         .then((dataResponse2) => {
           return {
-            enabled: true,
+            enabled: false,
             real_date:
               'Tue Nov 22 2020 00:23:08 GMT-0500 (hora estándar de Colombia)',
             sowing_date:
@@ -29,5 +32,13 @@ export class CalendarService {
           };
         })
     );
+  }
+
+  setStageOne(landId: string | number, data: StageOneRequest) {
+    return this.dataApiService
+      .post(data, 'set_stage_one?land_id=' + landId)
+      .then((dataResponse) => {
+        return dataResponse[0];
+      });
   }
 }

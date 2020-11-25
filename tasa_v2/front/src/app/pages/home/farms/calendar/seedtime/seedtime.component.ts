@@ -10,7 +10,7 @@ import { LandsService } from '../lands.service';
 import { ArrozSecano } from 'src/app/shared/models/farm';
 import { CalendarService } from '../calendar.service';
 import { CalendarChildren } from '../calendar-children.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-seedtime',
@@ -25,7 +25,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     private landService: LandsService,
     private calendarService: CalendarService
   ) {
-    this.calendarService.getStageOne(13).then((stageOneData) => {
+    this.calendarService.getStageOne(this.landService.idLand).then((stageOneData) => {
       this.init(stageOneData);
     });
   }
