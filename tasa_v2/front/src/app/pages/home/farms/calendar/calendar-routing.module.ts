@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       { path: '', component: ListStagesComponent },
       { path: 'list', component: ListStagesComponent },
-      { path: 'seedtime', component: SeedtimeComponent,}
+      { path: '1', component: SeedtimeComponent,}
     ],
   },
 ];

@@ -359,16 +359,7 @@
           - in: "header"
             required: true
             type: "string"
-            name: "Token"
-          - in: "formData"
-            type: "file"
-            name: "image_1"
-          - in: "formData"
-            type: "file"
-            name: "image_2"
-          - in: "formData"
-            type: "file"
-            name: "image_3"  
+            name: "Token" 
           - in: "body"            
             name: "data" 
             schema:
@@ -677,6 +668,8 @@
     stage_one:
       type: object
       properties:
+        land_id:
+          type: "integer"
         variety:
           type: string
         type_sowing:
@@ -685,6 +678,11 @@
           type: string
         real_date:
           type: string
+        images:
+          type: "array"
+          items:
+            type: string
+          example: ["file.ext","file2.ext","file3.ext"]
     result_roles:
       type: "object"
       properties:
@@ -1083,7 +1081,7 @@
         stage_number:
           type: "integer"
           example: 2
-        stage_number:  
+        stage_name:  
           type: "string"
           example: "Riego 1"
         complete:
