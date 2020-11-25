@@ -1,11 +1,11 @@
-<div class="card-container p-1" *ngIf="landsService.landSelected">
+<div class="card-container p-1" [ngClass]="{'d-none':!landsService.landSelected}">
   <div class="card-body p-4">
     <div class="row">
       <div class="col-md-4">
         <div class="row">
           <div class="col-12 container-card-green">
             <div class="header-container-card-green">
-              <h3>{{landsService.landSelected.name}}</h3>
+              <h3>{{landsService.landSelected?.name}}</h3>
               <mat-icon>arrow_drop_down</mat-icon>
             </div>
             <div class="content-container-card-green">
@@ -13,44 +13,44 @@
                 <div class="subtitle-container-card-green">
                   Razón social:
                 </div>
-                <p>{{ landsService.landSelected.business_name}}</p>
+                <p>{{ landsService.landSelected?.business_name}}</p>
               </div>
               <div class="line-container-card-green">
                 <div class="subtitle-container-card-green">
                   Dirección:
                 </div>
-                <p>{{ landsService.landSelected.direction}}</p>
+                <p>{{ landsService.landSelected?.direction}}</p>
               </div>
               <div class="line-container-card-green">
                 <div class="subtitle-container-card-green">
                   URL:
                 </div>
-                <p>{{ landsService.landSelected.web_page}}</p>
+                <p>{{ landsService.landSelected?.web_page}}</p>
               </div>
               <div class="line-container-card-green">
                 <div class="subtitle-container-card-green">
                   Teléfono:
                 </div>
-                <p>{{ landsService.landSelected.phone}}</p>
+                <p>{{ landsService.landSelected?.phone}}</p>
               </div>
               <div class="line-container-card-green">
                 <div class="subtitle-container-card-green">
                   Total Hectareas:
                 </div>
-                <p>{{ landsService.landSelected.hectares_total}}</p>
+                <p>{{ landsService.landSelected?.hectares_total}}</p>
               </div>
               <div class="line-container-card-green">
                 <div class="subtitle-container-card-green">
                   Sistema de siembra:
                 </div>
-                <p>{{ landsService.landSelected.sowing_system}}</p>
+                <p>{{ landsService.landSelected?.sowing_system}}</p>
               </div>
             </div>
           </div>
           <div class="col-12 container-card-green">
             <div class="header-container-card-green">
-              <h3>{{landsService.landSelected.batchs.name}}</h3>
-              <h3>{{landsService.landSelected.batchs.hectares_number}}H</h3>
+              <h3>{{landsService.landSelected?.batchs?.name}}</h3>
+              <h3>{{landsService.landSelected?.batchs?.hectares_number}}H</h3>
             </div>
           </div>
         </div>
@@ -63,9 +63,9 @@
   <div class="m-3">
     <button class="transparent-blackground white-border rounded-button" mat-raised-button (click)="onBack()"
       color="primary" type="button">
-      <mat-icon class="size-icon-folder">folder_open </mat-icon>Volver al inicio
+      <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>{{textBack}}
     </button>
-    <button class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="submit"
+    <button *ngIf="hasSave" class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="submit"
       (click)="onSave()">
       <span class="px-5">Guardar cambios</span>
       <mat-icon class="size-icon-check">check_circle_outline</mat-icon>

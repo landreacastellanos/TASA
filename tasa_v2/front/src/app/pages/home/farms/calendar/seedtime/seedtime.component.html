@@ -1,5 +1,12 @@
-<form [formGroup]="seedTimeForm">
-  <div class="row">
+<form [formGroup]="seedTimeForm" class="cards-farms">
+  <div class="cards-farms-title">
+    <img
+      src="../../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png"
+      alt=""
+    />
+    <h4>Fecha de siembra</h4>
+  </div>
+  <div class="row cards-farms-container">
     <div class="specs col-12 col-md-6">
       <div class="d-inline-flex mt-2">
         <div class="number-button mr-2">1</div>
@@ -12,6 +19,7 @@
           formControlName="type_sowing"
           aria-labelledby="radio-group-label"
           class="radio-group"
+          [disabled]="mode == 'view'"
         >
           <mat-radio-button
             color="primary"
@@ -41,9 +49,7 @@
           />
         </mat-form-field>
       </div>
-    </div>
-    <div class="date col-12 col-md-6 mt-4 mt-md-0">
-      <div class="d-inline-flex">
+       <div class="d-inline-flex mt-3">
         <div class="number-button mr-2">3</div>
         <div>
           <strong>Selecciona una fecha</strong>
@@ -60,6 +66,7 @@
             formControlName="sowing_date"
             matInput
             [matDatepicker]="pickerSowing_date"
+            [disabled]="mode == 'view'"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -77,6 +84,7 @@
             formControlName="real_date"
             matInput
             [matDatepicker]="pickerReal_date"
+            [disabled]="mode == 'view'"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -85,13 +93,14 @@
           <mat-datepicker #pickerReal_date></mat-datepicker>
         </mat-form-field>
       </div>
-      
-
+    </div>
+    <div class="date col-12 col-md-6 mt-4 mt-md-0">
       <div class="mx-2 mt-3">
         <div><mat-label>Fotografia de referencia</mat-label></div>
         <img
-          src="assets\img\Siembra_Arroz_Secano.jpg"
-          alt="Arros secano"
+          *ngIf="imageReference"
+          [src]="imageReference"
+          alt="Arroz en siembra"
           width="100%"
           height="100%"
         />
