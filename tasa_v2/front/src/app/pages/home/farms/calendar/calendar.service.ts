@@ -20,23 +20,23 @@ export class CalendarService {
           return dataResponse[0];
         })
         // FIXME: remove me please, only for test
-        .then((dataResponse2) => {
-          return {
-            enabled: true,
-            real_date:
-              'Tue Nov 22 2020 00:23:08 GMT-0500 (hora estándar de Colombia)',
-            sowing_date:
-              'Tue Nov 21 2020 00:23:08 GMT-0500 (hora estándar de Colombia)',
-            type_sowing: 'Siembra con arroz tapado',
-            variety: 'Arroz de diosito',
-          };
-        })
+        // .then((dataResponse2) => {
+        //   return {
+        //     enabled: true,
+        //     real_date:
+        //       'Tue Nov 22 2020 00:23:08 GMT-0500 (hora estándar de Colombia)',
+        //     sowing_date:
+        //       'Tue Nov 21 2020 00:23:08 GMT-0500 (hora estándar de Colombia)',
+        //     type_sowing: 'Siembra con arroz tapado',
+        //     variety: 'Arroz de diosito',
+        //   };
+        // })
     );
   }
 
-  setStageOne(landId: string | number, data: StageOneRequest) {
+  setStageOne(data: StageOneRequest): Promise<string> {
     return this.dataApiService
-      .post(data, 'set_stage_one?land_id=' + landId)
+      .post(data, 'set_stage_one')
       .then((dataResponse) => {
         return dataResponse[0];
       });

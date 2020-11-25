@@ -12,6 +12,7 @@ import { CalendarService } from '../calendar.service';
 import { CalendarChildren } from '../calendar-children.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-seedtime',
@@ -24,6 +25,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   constructor(
     public fb: FormBuilder,
     private router: Router,
+    private snackBar: MatSnackBar,
     private landService: LandsService,
     private configurationService: ConfigurationService,
     private calendarService: CalendarService
@@ -83,8 +85,8 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     this.seedTimeForm.patchValue({
       type_sowing,
       variety,
-      sowing_date: new Date(sowing_date),
-      real_date: new Date(real_date),
+      sowing_date: sowing_date && new Date(sowing_date),
+      real_date: real_date && new Date(real_date),
     });
   }
 
@@ -112,6 +114,24 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
       form: this.seedTimeForm,
       valid: this.seedTimeForm.valid,
     });
+
+    const values = this.seedTimeForm.value;
+    if (this.seedTimeForm.valid) {
+      this.calendarService
+        .setStageOne({
+          land_id: parseInt(this.landService.idLand),
+          //FIXME: add photos
+          ...values,
+        })
+        .then(
+          (message) =>
+            message &&
+            this.snackBar.open(message, 'x', {
+              duration: 2000,
+              panelClass: ['snackbar-success'],
+            })
+        );
+    }
   }
 
   public disabledForm() {
