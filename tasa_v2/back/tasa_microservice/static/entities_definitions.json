@@ -354,7 +354,7 @@
          },
          "id_crop": {
             "dbName": "id_crop",
-            "type": "integer"
+            "type": "string"
          },
          "stage_id": {
             "dbName": "stage_id",

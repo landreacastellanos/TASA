@@ -2,6 +2,7 @@ import os
 import json
 import manage
 import uuid
+from datetime import datetime
 from project.models.enum.stage_enum import Stage
 from project.models.enum.keys_enum import Keys
 from project.infrastructure.repositories.common_repository\
@@ -98,9 +99,9 @@ class StageServices:
         edit |= user[0]['id'] == property_field[0]['seller']
 
         stage = self.__repository_stage.select(entity_name="stage", options={"filters":
-                             [['type_planting', "equals", sowing_system],
+                             [['typePlanning', "equals", sowing_system],
                              "and",
-                             ['stage_number', "equals", stage_number]]
+                             ['stageNumber', "equals", stage_number]]
                              })
 
         stage_id = stage[0]['id']
@@ -124,10 +125,10 @@ class StageServices:
                 }
             )
         else:
-            property_stage = property_stage[0]
-            property_stage['enabled'] = edit
-            json_data = json.loads(property_stage['data'])
-            edit |= not json_data['real_date']
+            property_stage = property_stage[0]            
+            json_data = json.loads(property_stage['data'])            
+            edit = 'real_date' in json_data and not json_data['real_date']
+            json_data['enabled'] = edit
             results['data'].append(json_data)
 
         return results
@@ -231,4 +232,75 @@ class StageServices:
 			"complete": False
         }, stages))
 
-        return result[0]        
+        return result[0]
+
+    def set_stage_one(self,data):
+        results = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": self.TOKEN_INVALID
+                })
+            return results
+        
+        land_id = data['land_id']         
+        
+        stage_number = Stage.stage_one.value
+        land = self.__repository_land.select_one(land_id)
+        property_field = self.__repository_properties.select_one(land[0]['property_id'])
+        sowing_system = property_field[0]['sowing_system']
+
+        stage = self.__repository_stage.select(entity_name="stage", options={"filters":
+                             [['typePlanning', "equals", sowing_system],
+                             "and",
+                             ['stageNumber', "equals", stage_number]]
+                             })
+
+        stage_id = stage[0]['id']
+        
+        property_stage = self.__repository_property_stage.select(entity_name="property_stage", options={"filters":
+                             [['stage_id', "equals", stage_id],
+                             "and",
+                             ['land_id', "equals", land_id],
+                             "and",
+                             ["crop_complete","equals",False]]
+                             })
+        
+        images = []
+        stage_db = {}
+        complete_stage = False
+        
+        if("images" in data):
+            images = data['images']
+            stage_db["procedure_image"] = json.dumps(images)
+            data.pop("images")
+        
+        if("real_date" in data and data['real_date']):
+            stage_db["real_date"] = data['real_date']
+            complete_stage = True
+            stage_db["end_date"] = datetime.now()
+
+        data.pop("land_id")
+        
+        stage_db['data'] = json.dumps(data)
+        stage_db['stage_complete'] = complete_stage
+
+        if(len(property_stage) == 0):
+            stage_db['land_id'] = land_id            
+            stage_db['crop_complete'] = False
+            stage_db['start_date'] = datetime.now()
+            stage_db['id_crop'] = str(uuid.uuid1())
+            stage_db['stage_id'] = stage_id
+            self.__repository_property_stage.insert(stage_db)
+            
+        else:
+            property_stage = property_stage[0]['id']
+            self.__repository_property_stage.update(property_stage,stage_db)           
+            
+        results['data'].append("Datos guardados exitosamente")
+        return results        

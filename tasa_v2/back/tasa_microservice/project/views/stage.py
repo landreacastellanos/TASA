@@ -1,6 +1,7 @@
 import connexion
 
 from project.services.stage_service import StageServices
+from project.resources.utils.generals_utils import GeneralsUtils
 
 
 def get_property_land(land_id, property_id):
@@ -31,11 +32,13 @@ def get_stage_one(land_id):
 
 
 def set_stage_one():
-    con = connexion.request
-    results = {
-            "data": [],
-            "details": []
-        }
+    request_data = GeneralsUtils.get_request_body(connexion.request)    
+    try:        
+        result = StageServices().set_stage_one(request_data)
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
     return results
 
 def upload_file():
