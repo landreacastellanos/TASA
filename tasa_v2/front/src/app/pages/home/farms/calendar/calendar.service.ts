@@ -22,7 +22,7 @@ export class CalendarService {
         // FIXME: remove me please, only for test
         .then((dataResponse2) => {
           return {
-            enabled: false,
+            enabled: true,
             real_date:
               'Tue Nov 22 2020 00:23:08 GMT-0500 (hora estándar de Colombia)',
             sowing_date:

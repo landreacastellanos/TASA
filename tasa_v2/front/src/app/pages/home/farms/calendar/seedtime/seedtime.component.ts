@@ -11,6 +11,7 @@ import { ArrozSecano } from 'src/app/shared/models/farm';
 import { CalendarService } from '../calendar.service';
 import { CalendarChildren } from '../calendar-children.interface';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 
 @Component({
   selector: 'app-seedtime',
@@ -19,15 +20,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SeedtimeComponent implements OnInit, CalendarChildren {
   public mode: 'edit' | 'view' | 'create' = 'view';
+  submitted: boolean;
   constructor(
     public fb: FormBuilder,
     private router: Router,
     private landService: LandsService,
+    private configurationService: ConfigurationService,
     private calendarService: CalendarService
   ) {
-    this.calendarService.getStageOne(this.landService.idLand).then((stageOneData) => {
-      this.init(stageOneData);
-    });
+    this.calendarService
+      .getStageOne(this.landService.idLand)
+      .then((stageOneData) => {
+        this.init(stageOneData);
+      });
   }
   textBack = 'Ir a segmentos';
   get hasSave() {
@@ -38,7 +43,18 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   name = new FormControl('');
 
   events: string[] = [];
-  seedTimeForm: FormGroup;
+  seedTimeForm: FormGroup = this.fb.group({
+    type_sowing: [
+      { value: '', disabled: this.mode === 'view' },
+      [Validators.required],
+    ],
+    variety: [
+      { value: '', disabled: this.mode === 'view' },
+      [Validators.required],
+    ],
+    sowing_date: [{ value: '', disabled: this.mode === 'view' }, []],
+    real_date: [{ value: '', disabled: this.mode === 'view' }, []],
+  });
   typeOfPlanting: string[] = [
     'Siembra con arroz tapado',
     'Siembra con arroz voleado',
@@ -60,23 +76,15 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     enabled = false,
   } = {}) {
     this.mode = enabled ? 'edit' : 'view';
-    this.seedTimeForm = this.fb.group({
-      type_sowing: [
-        { value: type_sowing, disabled: this.mode === 'view' },
-        [Validators.required],
-      ],
-      variety: [
-        { value: variety, disabled: this.mode === 'view' },
-        [Validators.required],
-      ],
-      sowing_date: [
-        { value: new Date(sowing_date), disabled: this.mode === 'view' },
-        [Validators.required],
-      ],
-      real_date: [
-        { value: new Date(real_date), disabled: this.mode === 'view' },
-        [Validators.required],
-      ],
+    this.configurationService.disableForm(
+      this.seedTimeForm,
+      this.mode === 'view'
+    );
+    this.seedTimeForm.patchValue({
+      type_sowing,
+      variety,
+      sowing_date: new Date(sowing_date),
+      real_date: new Date(real_date),
     });
   }
 
@@ -91,8 +99,28 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     }
   }
 
+  get controls() {
+    return this.seedTimeForm.controls;
+  }
+
   onSave() {
-    console.error('FIXME: NOT IMPLEMENTED YET');
+    this.submitted = true;
+    // is needed because is no trigger by submit
+    this.seedTimeForm.markAllAsTouched();
+
+    console.debug('SeedtimeComponent:onSave', {
+      form: this.seedTimeForm,
+      valid: this.seedTimeForm.valid,
+    });
+  }
+
+  public disabledForm() {
+    const keys = Object.keys(this.seedTimeForm.value);
+    keys.forEach((element) => {
+      this.mode === 'view'
+        ? this.seedTimeForm.get(element).disable()
+        : this.seedTimeForm.get(element).enable();
+    });
   }
   onBack() {
     this.router.navigate(['/']);
