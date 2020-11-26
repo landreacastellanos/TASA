@@ -10,3 +10,9 @@
   // background-color: hsl(76, 77%, 39%,0.7) ;
   border-left: 4px solid white;
 }
+
+@media (min-width: 768px) {
+  .text-initial h4{
+    font-size: 2rem;
+  }
+}
