@@ -13,6 +13,7 @@ import { CalendarChildren } from '../calendar-children.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StageOneRequest } from '../../../../../shared/models/calendar';
 
 @Component({
   selector: 'app-seedtime',
@@ -22,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SeedtimeComponent implements OnInit, CalendarChildren {
   public mode: 'edit' | 'view' | 'create' = 'view';
   submitted: boolean;
+  files: FileList;
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -40,6 +42,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   get hasSave() {
     return this.mode !== 'view';
   }
+  hasFilesButton = true;
 
   /* form-control */
   name = new FormControl('');
@@ -105,6 +108,10 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     return this.seedTimeForm.controls;
   }
 
+  onChangeFiles(files: FileList) {
+    this.files = files;
+  }
+
   onSave() {
     this.submitted = true;
     // is needed because is no trigger by submit
@@ -113,25 +120,37 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     console.debug('SeedtimeComponent:onSave', {
       form: this.seedTimeForm,
       valid: this.seedTimeForm.valid,
+      files: this.files,
     });
 
     const values = this.seedTimeForm.value;
-    if (this.seedTimeForm.valid) {
-      this.calendarService
-        .setStageOne({
-          land_id: parseInt(this.landService.idLand),
-          //FIXME: add photos
-          ...values,
-        })
-        .then(
-          (message) =>
-            message &&
-            this.snackBar.open(message, 'x', {
-              duration: 2000,
-              panelClass: ['snackbar-success'],
-            })
-        );
+    if (!this.seedTimeForm.valid) {
+      return this.snackBar.open('Rectifica los campos', 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-success'],
+      });
     }
+    Promise.resolve(this.files)
+      .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
+      .then((filesSaved) => {
+        const dataRequest: StageOneRequest = {
+          // tslint:disable-next-line: radix
+          land_id: parseInt(this.landService.idLand),
+          ...values,
+        };
+        if (filesSaved) {
+          dataRequest.images = filesSaved;
+        }
+        return this.calendarService.setStageOne(dataRequest);
+      })
+      .then(
+        (message) =>
+          message &&
+          this.snackBar.open(message, 'x', {
+            duration: 2000,
+            panelClass: ['snackbar-success'],
+          })
+      );
   }
 
   public disabledForm() {
