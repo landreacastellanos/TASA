@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowing.component';
 import { CalendarComponent } from './calendar.component';
 import { ListStagesComponent } from './list-stages/list-stages.component';
 import { SeedtimeComponent } from './seedtime/seedtime.component';
 
 const routes: Routes = [
-
   {
     path: ':idProperty/:idLand',
     component: CalendarComponent,
@@ -13,8 +13,8 @@ const routes: Routes = [
       { path: '', component: ListStagesComponent },
       { path: 'list', component: ListStagesComponent },
       { path: '1', component: SeedtimeComponent },
+      { path: '3', component: BurningForSowingComponent },
       { path: '2', component: SeedtimeComponent },
-      { path: '3', component: SeedtimeComponent },
       { path: '4', component: SeedtimeComponent },
       { path: '5', component: SeedtimeComponent },
       { path: '6', component: SeedtimeComponent },

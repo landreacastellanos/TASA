@@ -1,4 +1,7 @@
-<div class="card-container p-1" [ngClass]="{'d-none':!landsService.landSelected}">
+<div
+  class="card-container p-1"
+  [ngClass]="{ 'd-none': !landsService.landSelected }"
+>
   <div class="card-body p-4">
     <div class="row">
       <div class="col-md-4">
@@ -59,8 +62,8 @@
           </div>
           <div class="col-12 container-card-green">
             <div class="header-container-card-green">
-              <h3>{{landsService.landSelected?.batchs?.name}}</h3>
-              <h3>{{landsService.landSelected?.batchs?.hectares_number}}H</h3>
+              <h3>{{ landsService.landSelected?.batchs?.name }}</h3>
+              <h3>{{ landsService.landSelected?.batchs?.hectares_number }}H</h3>
             </div>
           </div>
         </div>
@@ -71,9 +74,15 @@
     </div>
   </div>
   <div class="m-3">
-    <button class="transparent-blackground white-border rounded-button" mat-raised-button (click)="onBack()"
-      color="primary" type="button">
-      <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>{{textBack}}
+    <button
+      class="transparent-blackground white-border rounded-button"
+      mat-raised-button
+      (click)="onBack()"
+      color="primary"
+      type="button"
+    >
+      <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon
+      >{{ textBack }}
     </button>
     <button *ngIf="hasSave" class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary"
       type="submit" (click)="onSave()">

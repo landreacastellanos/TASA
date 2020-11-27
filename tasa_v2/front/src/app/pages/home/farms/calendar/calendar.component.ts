@@ -43,6 +43,13 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onSave();
   }
 
+  onChangeFiles(files: FileList) {
+    console.debug('CalendarComponent:onChangeFiles', { files });
+    // tslint:disable-next-line: no-unused-expression
+    (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
+      (this.outlet?.component as CalendarChildren).onChangeFiles(files);
+  }
+
   get hasSave() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasSave;
@@ -51,5 +58,10 @@ export class CalendarComponent implements OnInit {
   get textBack() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.textBack;
+  }
+
+  get hasFilesButton() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasFilesButton;
   }
 }

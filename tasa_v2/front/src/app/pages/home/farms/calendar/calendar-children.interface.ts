@@ -5,4 +5,7 @@ export interface CalendarChildren {
   /** text used in back button */
   textBack: string;
   onBack: () => any;
+  /**  */
+  hasFilesButton?: boolean;
+  onChangeFiles?: (files: FileList) => any;
 }
