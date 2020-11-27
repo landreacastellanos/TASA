@@ -2,20 +2,20 @@
     <div class="cards-farms-title">
         <img src="../../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png" alt="">
         <h4>
-            Calendario de los segmentos {{landsService.landSelected.sowing_system}}
+            Calendario de los segmentos {{landsService.typeRice.name}}
         </h4>
     </div>
-   <div class="row cards-farms-container">
+   <div class="row cards-farms-container" *ngIf="list">
     <div class="col-12 col-md-6">
         <div class="cards-farms-col" *ngFor="let item of list.slice(0,8)">
             <div class="cards-farms-item">
-                <div class="cards-farms-number-item">
+                <div class="cards-farms-number-item" [class]="color(item.complete)">
                     {{item.stage_number}}
                 </div>
                 <div class="cards-farms-text-item">
                     {{item.stage_name}}
                 </div>
-                <button mat-raised-button class="rounded-button" color="primary">
+                <button mat-raised-button class="rounded-button" [class]="color(item.complete)" (click)="goItem(item)">
                     ver más <mat-icon>visibility</mat-icon>
                 </button>
             </div>
@@ -24,13 +24,13 @@
     <div class="col-12 col-md-6">
         <div class="cards-farms-col" *ngFor="let item of list.slice(8,16)">
             <div class="cards-farms-item">
-                <div class="cards-farms-number-item">
+                <div class="cards-farms-number-item" [class]="color(item.complete)">
                     {{item.stage_number}}
                 </div>
                 <div class="cards-farms-text-item">
                     {{item.stage_name}}
                 </div>
-                <button mat-raised-button class="rounded-button" color="primary">
+                <button mat-raised-button class="rounded-button" [class]="color(item.complete)" (click)="goItem(item)">
                     ver más <mat-icon>visibility</mat-icon>
                 </button>
             </div>

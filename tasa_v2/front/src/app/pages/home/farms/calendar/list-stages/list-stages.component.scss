@@ -5,18 +5,28 @@
         font-size: 15px;
         margin: 10px 0;
         justify-content: space-between;
+        align-items: center;
 
         .cards-farms-number-item{
             width: 30px;
             height: 30px;
             min-width: 30px;
             border-radius: 50%;
-            background-color: #87b017;
             color: white;
             justify-content: center;
             display: flex;
             align-items: center;
             margin-right: 15px;
+        }
+
+        .color-green{
+            background-color: #87b017;
+            color: white;
+        }
+
+        .color-red{
+            background-color: #fa1606;
+            color: white;
         }
 
         .cards-farms-text-item{

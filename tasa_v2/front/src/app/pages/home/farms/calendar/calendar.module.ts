@@ -16,6 +16,7 @@ import { SeedtimeComponent } from './seedtime/seedtime.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowing.component';
 
 
@@ -44,7 +45,8 @@ import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowi
     MatTableModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    CalendarRoutingModule
+    CalendarRoutingModule,
+    MatExpansionModule
   ]
 })
 export class CalendarModule { }
