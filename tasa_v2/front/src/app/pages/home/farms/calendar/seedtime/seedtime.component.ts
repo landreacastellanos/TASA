@@ -44,9 +44,6 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   }
   hasFilesButton = true;
 
-  /* form-control */
-  name = new FormControl('');
-
   events: string[] = [];
   seedTimeForm: FormGroup = this.fb.group({
     type_sowing: [
@@ -162,6 +159,11 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     });
   }
   onBack() {
-    this.router.navigate(['/']);
+    this.router.navigate([
+      '/farms/calendar/',
+      this.landService.idProperty,
+      this.landService.idLand,
+      'list',
+    ]);
   }
 }
