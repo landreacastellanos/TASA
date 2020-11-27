@@ -1,18 +1,20 @@
-
-.logo{
-  >img{
+.logo {
+  > img {
     height: 80px;
   }
 }
 
-.text-initial{
+.text-initial {
   background-color: rgba(0, 0, 0, 0.33);
   // background-color: hsl(76, 77%, 39%,0.7) ;
   border-left: 4px solid white;
 }
 
 @media (min-width: 768px) {
-  .text-initial h4{
-    font-size: 2rem;
+  .text-initial {
+    border: none;
+    h4 {
+      font-size: 4rem;
+    }
   }
 }
