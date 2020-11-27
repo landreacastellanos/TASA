@@ -38,7 +38,7 @@ export interface IArrozType {
 }
 export class ArrozSecano implements IArrozType {
   readonly id = 3;
-  readonly name = 'Arroz Secano';
+  readonly name = 'Secano Favorecido';
 }
 export class ArrozDeRiego implements IArrozType {
   readonly id = 4;

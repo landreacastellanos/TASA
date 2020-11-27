@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ArrozDeRiego, ArrozSecano } from 'src/app/shared/models/farm';
 import { LandResponse } from '../../../../shared/models/lands';
 import { DataApiService } from '../../../../shared/services/data-api.service';
 
@@ -10,6 +11,10 @@ export class LandsService {
   landsSelectedIds: string;
   idProperty: string;
   idLand: string;
+  arrozSecano = new ArrozSecano();
+  arrozRiego = new ArrozDeRiego();
+  typeRice;
+
 
   constructor(private dataApiService: DataApiService) { }
 
@@ -26,14 +31,16 @@ export class LandsService {
       .getAll(`get_property_land?property_id=${idProperty}&land_id=${idLand}`)
       .then((data) => {
         this.lands[this.landsSelectedIds] = data[0];
+        this.typeRice =
+          this.arrozSecano.id === data[0].sowing_system ? this.arrozSecano : this.arrozRiego;
         return data[0];
       });
   }
 
-  public getListCalendar(){
+  public getListCalendar() {
     return this.dataApiService.getAll(`calendar_stage?id_lote=${this.idLand}`)
-    .then((data) => {
-      return data;
-    });
+      .then((data) => {
+        return data;
+      });
   }
 }

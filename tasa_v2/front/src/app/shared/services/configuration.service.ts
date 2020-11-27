@@ -40,7 +40,7 @@ export class ConfigurationService {
     })(navigator.userAgent || navigator.vendor);
   }
 
-  public screen(): any {
+  get screen(): any {
     return window.innerWidth || document.body.clientWidth;
   }
 }
