@@ -223,7 +223,7 @@ class StageServices:
 			"complete": True
         }
         if x['stageId'] == data['id'] and
-        (not x['stageComplete'])
+        (x['stageComplete'])
         else
         {
             "id_stage": data['id'],
