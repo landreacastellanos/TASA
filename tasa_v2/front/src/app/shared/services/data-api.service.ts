@@ -15,17 +15,19 @@ export class DataApiService {
     private http: HttpClient,
     public storageService: StorageService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
-  get headers(): HttpHeaders {
+  getHeaders(
+    extraValues: any = { 'Content-Type': 'application/json' }
+  ): HttpHeaders {
     if (this.getToken()) {
       return new HttpHeaders({
-        'Content-Type': 'application/json',
         Token: `${this.getToken()}`,
+        ...extraValues,
       });
     } else {
       return new HttpHeaders({
-        'Content-Type': 'application/json',
+        ...extraValues,
       });
     }
   }
@@ -41,7 +43,9 @@ export class DataApiService {
 
   public getAll(extension: string): Promise<any> {
     return this.http
-      .get<ResponseBack>(this.urlApi + extension, { headers: this.headers })
+      .get<ResponseBack>(this.urlApi + extension, {
+        headers: this.getHeaders(),
+      })
       .toPromise()
       .then((result) => {
         if (result && result.details && result.details.length > 0) {
@@ -73,7 +77,7 @@ export class DataApiService {
   ): Promise<any> {
     return this.http
       .get<ResponseBack>(this.urlApi + extension, {
-        headers: this.headers,
+        headers: this.getHeaders(),
         params: { id, ...extraParams },
       })
       .toPromise()
@@ -104,7 +108,39 @@ export class DataApiService {
     this.cleanObject(element);
     return this.http
       .post<ResponseBack>(this.urlApi + extension, element, {
-        headers: this.headers,
+        headers: this.getHeaders(),
+      })
+      .toPromise()
+      .then((result) => {
+        if (result && result.details && result.details.length > 0) {
+          this.snackBar.open(result.details[0].value, 'x', {
+            duration: 2000,
+            panelClass: ['snackbar-warn'],
+          });
+          return null;
+        }
+        if (result && result.data) {
+          return result.data;
+        } else {
+          return null;
+        }
+      })
+      .catch((err) => {
+        this.snackBar.open('Ocurrio un error', 'x', {
+          duration: 2000,
+          panelClass: ['snackbar-warn'],
+        });
+        return null;
+      });
+  }
+
+  public postMultipart(element, extension: string): Promise<any> {
+    this.cleanObject(element);
+    return this.http
+      .post<ResponseBack>(this.urlApi + extension, element, {
+        headers: this.getHeaders({
+          Accept: 'multipart/form-data',
+        }),
       })
       .toPromise()
       .then((result) => {
@@ -134,7 +170,7 @@ export class DataApiService {
     this.cleanObject(element);
     return this.http
       .patch<ResponseBack>(this.urlApi + extension, element, {
-        headers: this.headers,
+        headers: this.getHeaders(),
       })
       .toPromise()
       .then((result) => {
@@ -164,7 +200,7 @@ export class DataApiService {
     this.cleanObject(element);
     return this.http
       .put<ResponseBack>(this.urlApi + extension, element, {
-        headers: this.headers,
+        headers: this.getHeaders(),
       })
       .toPromise()
       .then((result) => {
@@ -197,7 +233,7 @@ export class DataApiService {
   ): Promise<any> {
     return this.http
       .delete<ResponseBack>(this.urlApi + extension, {
-        headers: this.headers,
+        headers: this.getHeaders(),
         params: { id, ...extraParams },
       })
       .toPromise()
@@ -225,6 +261,10 @@ export class DataApiService {
   }
 
   cleanObject(element: object) {
-    Object.keys(element).forEach(key => { if (element[key] === null) { delete element[key]; } });
+    Object.keys(element).forEach((key) => {
+      if (element[key] === null) {
+        delete element[key];
+      }
+    });
   }
 }

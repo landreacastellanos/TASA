@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { CalendarChildren } from './calendar-children.interface';
 import { LandsService } from './lands.service';
 
@@ -12,7 +13,8 @@ export class CalendarComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public landsService: LandsService
+    public landsService: LandsService,
+    public configService: ConfigurationService
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -26,7 +28,7 @@ export class CalendarComponent implements OnInit {
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onBack() {
     // tslint:disable-next-line: no-unused-expression
@@ -41,6 +43,13 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onSave();
   }
 
+  onChangeFiles(files: FileList) {
+    console.debug('CalendarComponent:onChangeFiles', { files });
+    // tslint:disable-next-line: no-unused-expression
+    (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
+      (this.outlet?.component as CalendarChildren).onChangeFiles(files);
+  }
+
   get hasSave() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasSave;
@@ -49,5 +58,10 @@ export class CalendarComponent implements OnInit {
   get textBack() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.textBack;
+  }
+
+  get hasFilesButton() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasFilesButton;
   }
 }

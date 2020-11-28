@@ -19,7 +19,6 @@
           formControlName="type_sowing"
           aria-labelledby="radio-group-label"
           class="radio-group"
-          [disabled]="mode == 'view'"
         >
           <mat-radio-button
             color="primary"
@@ -30,6 +29,12 @@
             {{ type }}
           </mat-radio-button>
         </mat-radio-group>
+        <div
+          *ngIf="submitted && controls.type_sowing?.errors?.required"
+          class="warning"
+        >
+          Este campo es requerido
+        </div>
       </div>
       <div class="d-inline-flex mt-2">
         <div class="number-button mr-2">2</div>
@@ -48,8 +53,14 @@
             required
           />
         </mat-form-field>
+        <div
+          *ngIf="submitted && controls.variety?.errors?.required"
+          class="warning"
+        >
+          Este campo es requerido
+        </div>
       </div>
-       <div class="d-inline-flex mt-3">
+      <div class="d-inline-flex mt-3">
         <div class="number-button mr-2">3</div>
         <div>
           <strong>Selecciona una fecha</strong>
@@ -66,7 +77,6 @@
             formControlName="sowing_date"
             matInput
             [matDatepicker]="pickerSowing_date"
-            [disabled]="mode == 'view'"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -84,7 +94,6 @@
             formControlName="real_date"
             matInput
             [matDatepicker]="pickerReal_date"
-            [disabled]="mode == 'view'"
           />
           <mat-datepicker-toggle
             matSuffix

@@ -25,7 +25,7 @@ body {
     height: 90px;
   }
 
-  .logo-login-movil{
+  .logo-login-movil {
     display: none;
   }
 }
@@ -112,40 +112,95 @@ button.white-border {
   border: 1px solid #f8f9fa;
 }
 
+.img-as-icon {
+  height: 20px;
+}
+
+.no-margin-padding{
+  margin: 0;
+  padding: 0;
+}
+
+.card-container{
+
+  .container-card-title{
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: map-get($theme-colors, "secondary")
+  }
+  .mat-expansion-panel{
+    background-color: map-get($theme-colors, "primary");
+    border-radius: 20px;
+    padding: 6px 15px !important;
+    margin-bottom: 30px;
+    color: white;
+
+    .mat-expansion-panel-header{
+      padding: 0;
+
+      .mat-expansion-indicator::after{
+        color: white;
+      }
+    }
+  
+    .header-container-card-green{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      color: white;
+  
+      h3{
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+  
+    .content-container-card-green{
+      margin-top: 10px;
+  
+      .line-container-card-green{
+        display: flex;
+        height: 20px;
+    
+        .subtitle-container-card-green{
+          font-weight: bold;
+          font-size: 16px;
+        }
+    
+        p{
+          font-size: 15px;
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+
+  .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-title, .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-description{
+    color: white;
+  }
+  
+}
+
 .container-card-green{
   background-color: map-get($theme-colors, "primary");
-  color: white;
   border-radius: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 30px;
 
-
   .header-container-card-green{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+
     h3{
       font-size: 18px;
       font-weight: bold;
-    }
-  }
-
-  .content-container-card-green{
-    margin-top: 10px;
-
-    .line-container-card-green{
-      display: flex;
-      height: 20px;
-  
-      .subtitle-container-card-green{
-        font-weight: bold;
-        font-size: 15px;
-      }
-  
-      p{
-        font-size: 15px;
-        padding-left: 15px;
-      }
+      margin: 0;
+      color: white;
     }
   }
 }
@@ -161,12 +216,12 @@ button.white-border {
       margin-top: 20px;
     }
 
-    .logo-login-movil{
+    .logo-login-movil {
       display: block;
     }
   }
   .form-login {
-    height: initial!important;
-    overflow: initial!important;
+    height: initial !important;
+    overflow: initial !important;
   }
 }
