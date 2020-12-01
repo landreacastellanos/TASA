@@ -5,7 +5,7 @@ from project.models.enum.keys_enum import Keys
 from datetime import datetime
 
 class PropertiesServices:
-
+    TOKEN_INVALID = "Token Invalido"
     def __init__(self):
         self.__repository_planting = CommonRepository(
          entity_name="type_planting")
@@ -22,7 +22,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             return {
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 }        
         data = self.__repository_planting.select_all()          
 
@@ -40,7 +40,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             return {
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 }   
 
         data = self.__repository_user.select_all()
@@ -60,7 +60,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 })
             return results
         
@@ -142,7 +142,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 })
             return results
 
@@ -174,7 +174,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 })
             return results
 
@@ -207,7 +207,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 })
             return results
         
@@ -247,7 +247,7 @@ class PropertiesServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": "Token Invalido"
+                    "value": self.TOKEN_INVALID
                 })
             return results
         
