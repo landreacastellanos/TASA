@@ -42,7 +42,9 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   get hasSave() {
     return this.mode !== 'view';
   }
-  hasFilesButton = true;
+  get hasFilesButton() {
+    return this.mode !== 'view';
+  }
 
   events: string[] = [];
   seedTimeForm: FormGroup = this.fb.group({
@@ -127,6 +129,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
         panelClass: ['snackbar-success'],
       });
     }
+    this.configurationService.setLoadingPage(true);
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
@@ -147,7 +150,10 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
             duration: 2000,
             panelClass: ['snackbar-success'],
           })
-      );
+      )
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 
   public disabledForm() {
