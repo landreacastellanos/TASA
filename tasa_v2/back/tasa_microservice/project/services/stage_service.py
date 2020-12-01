@@ -80,6 +80,75 @@ class StageServices:
                 })
             return results
         email = validation_token[2]
+        
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+        property_stage = tuple_stage[1]
+        edit = tuple_stage[0]                   
+        
+        if(len(property_stage) == 0):
+            results['data'].append(
+                  {
+                    "real_date": "",
+                    "sowing_date": "",
+                    "type_sowing": "",
+                    "variety": "",
+                    "enabled": edit
+                }
+            )
+        else:
+            property_stage = property_stage[0]            
+            json_data = json.loads(property_stage['data'])            
+            edit = 'real_date' in json_data and not json_data['real_date']
+            json_data['enabled'] = edit
+            results['data'].append(json_data)
+
+        return results
+    
+    def get_stage_two(self, land_id):
+        stage_number = Stage.stage_two.value        
+
+        results = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or not SecurityToken().verify_exist_token():
+            results['details'].append({
+                    "key": 400,
+                    "value": self.TOKEN_INVALID
+                })
+            return results
+        email = validation_token[2]
+
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+
+        property_stage = tuple_stage[1]
+        edit = tuple_stage[0]                
+        
+        if(len(property_stage) == 0):
+            results['data'].append(
+                  {
+                    "application_date": "",
+                    "end_traking_date": "",
+                    "observations": "",
+                    "start_traking_date": "",
+                    "enabled": edit,
+                    "products": []
+                }
+            )
+        else:
+            property_stage = property_stage[0]            
+            json_data = json.loads(property_stage['data'])            
+            edit = 'application_date' in json_data and not json_data['real_date']
+            json_data['enable'] = edit
+            results['data'].append(json_data)
+
+        return results
+
+    def get_property_stage(self, email, land_id, stage_number):
+        
+        edit = False
         user = self.__repository_user.select(entity_name="user", options={ "filters":
             [["email",
             "equals",
@@ -88,7 +157,6 @@ class StageServices:
         })        
 
         edit |= user[0]['role_id'] == Keys.admi.value
-
 
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
@@ -112,26 +180,9 @@ class StageServices:
                              ['land_id', "equals", land_id],
                              "and",
                              ["crop_complete","equals",False]]
-                             })                      
-        
-        if(len(property_stage) == 0):
-            results['data'].append(
-                  {
-                    "real_date": "",
-                    "sowing_date": "",
-                    "type_sowing": "",
-                    "variety": "",
-                    "enabled": edit
-                }
-            )
-        else:
-            property_stage = property_stage[0]            
-            json_data = json.loads(property_stage['data'])            
-            edit = 'real_date' in json_data and not json_data['real_date']
-            json_data['enabled'] = edit
-            results['data'].append(json_data)
+                             })
 
-        return results
+        return (edit, property_stage)
     
     def upload_file(self, files):
         l_files = []

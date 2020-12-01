@@ -346,6 +346,32 @@
                 items:
                   $ref: '#/definitions/stage_one'
         x-swagger-router-controller: "project.views.stage"
+    /get_stage_two:
+      get:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "get_stage_two"
+        description: "get stage one"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "land_id"
+            required: true  
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_stage_two'
+        x-swagger-router-controller: "project.views.stage"
     /set_stage_one:
       post:
         tags:
@@ -683,6 +709,60 @@
           items:
             type: string
           example: ["file.ext","file2.ext","file3.ext"]
+    result_stage_two:
+      type: object
+      properties:
+        land_id:
+          type: "integer"
+        application_date:
+          type: string
+        start_traking_date:
+          type: string
+        end_traking_date:
+          type: string
+        observations:
+          type: "string"
+        enable:
+          type: "boolean"
+        products:
+          type: array
+          items:
+            $ref: '#/definitions/product'
+    create_stage_two:
+      type: object
+      properties:
+        application_date:
+          type: string
+        start_traking_date:
+          type: string
+        end_traking_date:
+          type: string
+        observations:
+          type: "string"
+        products:
+          type: array
+          items:
+            $ref: '#/definitions/product'
+        images:
+          type: "array"
+          items:
+            type: string
+          example: ["file.ext","file2.ext","file3.ext"]
+    product:
+      type: object
+      properties:
+        product_id:
+          type: "integer"
+        name:
+          type: string
+        active_ingredient:
+          type: string
+        provider:
+          type: string
+        dosage_by_hectare:
+          type: "string"
+        total:
+          type: "boolean"
     result_roles:
       type: "object"
       properties:
