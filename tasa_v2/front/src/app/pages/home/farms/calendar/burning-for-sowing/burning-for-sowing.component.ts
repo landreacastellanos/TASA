@@ -13,6 +13,7 @@ import { LandsService } from '../lands.service';
   styleUrls: ['./burning-for-sowing.component.css'],
 })
 export class BurningForSowingComponent implements OnInit, CalendarChildren {
+  submitted: boolean;
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -21,7 +22,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     private configurationService: ConfigurationService,
     private calendarService: CalendarService
   ) {}
-  mode: 'edit' | 'view' | 'create' = 'view';
+  mode: 'edit' | 'view' | 'create' = 'edit';
   files: FileList;
   get hasSave() {
     return this.mode !== 'view';
@@ -29,14 +30,57 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   textBack = 'Ir a segmentos';
   hasFilesButton = true;
   burningForSowingForm: FormGroup = this.fb.group({
-    type_sowing: [
-      { observation: '', disabled: this.mode === 'view' },
+    observation: [
+      { value: '', disabled: this.mode === 'view' },
       [Validators.required],
     ],
+    start_segment_date: [{ value: new Date(), disabled: this.mode === 'view' }, []],
+    end_segment_date: [{ value: new Date(), disabled: this.mode === 'view' }, []],
+
   });
 
   // FIXME: implement & integrate with API
-  onSave?: () => any;
+  onSave() {
+    this.submitted = true;
+    // is needed because is no trigger by submit
+    this.burningForSowingForm.markAllAsTouched();
+
+    console.debug('BurningForSowingComponent:onSave', {
+      form: this.burningForSowingForm,
+      valid: this.burningForSowingForm.valid,
+      files: this.files,
+    });
+
+    if (!this.burningForSowingForm.valid) {
+      return this.snackBar.open('Rectifica los campos', 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-success'],
+      });
+    }
+    const values = this.burningForSowingForm.value;
+
+    Promise.resolve(this.files)
+      .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
+      .then((filesSaved) => {
+        const dataRequest: any /* FIXME: StageOneRequest*/ = {
+          // tslint:disable-next-line: radix
+          land_id: parseInt(this.landsService.idLand),
+          ...values,
+        };
+        if (filesSaved) {
+          dataRequest.images = filesSaved;
+        }
+        return this.calendarService.setBurnStage(dataRequest);
+      })
+      .then(
+        (message) =>
+          message &&
+          this.snackBar.open(message, 'x', {
+            duration: 2000,
+            panelClass: ['snackbar-success'],
+          })
+      );
+  }
 
   onBack() {
     this.router.navigate([

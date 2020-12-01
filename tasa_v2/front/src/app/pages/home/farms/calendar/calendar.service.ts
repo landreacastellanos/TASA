@@ -29,6 +29,16 @@ export class CalendarService {
       });
   }
 
+  setBurnStage(data: any /**FIXME: unknown type */): Promise<string> {
+    return Promise.resolve('FIXME: API NOT INTEGRATED');
+    // FIXME: add correct implementation
+    // this.dataApiService
+    //   .post(data, '????')
+    //   .then((dataResponse) => {
+    //     return dataResponse[0];
+    //   });
+  }
+
   uploadFiles(files: FileList): Promise<UploadFileResponse> {
     const formData = new FormData();
     for (let index = 0; index < files.length; index++) {

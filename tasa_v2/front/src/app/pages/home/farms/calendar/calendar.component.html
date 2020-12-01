@@ -84,8 +84,38 @@
       <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon
       >{{ textBack }}
     </button>
-    <button *ngIf="hasSave" class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary"
-      type="submit" (click)="onSave()">
+    <input
+      #files
+      class="d-none"
+      type="file"
+      multiple
+      accept="image/*"
+      (change)="onChangeFiles(files.files)"
+    />
+    <button
+      #buttonFiles
+      (click)="files.click()"
+      *ngIf="hasSave"
+      class="no-outline rounded-button mt-3 ml-md-5"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >
+      <span
+        >+ 3 Fotografías
+        <img
+          class="pl-1 img-as-icon"
+          src="../../../../../assets/svg/Atech_ObjetoVectorial-18.svg"
+      /></span>
+    </button>
+    <button
+      *ngIf="hasSave"
+      class="no-outline mt-3 ml-md-5 rounded-button"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      (click)="onSave()"
+    >
       <span class="px-5">Guardar cambios</span>
       <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
     </button>

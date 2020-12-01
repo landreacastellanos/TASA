@@ -346,6 +346,32 @@
                 items:
                   $ref: '#/definitions/stage_one'
         x-swagger-router-controller: "project.views.stage"
+    /get_stage_two:
+      get:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "get_stage_two"
+        description: "get stage one"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "land_id"
+            required: true  
+        responses:
+          '200':
+            description: response result successful
+            schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_stage_two'
+        x-swagger-router-controller: "project.views.stage"
     /set_stage_one:
       post:
         tags:
@@ -561,7 +587,37 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_calendar'
-          x-swagger-router-controller: "project.views.stage"                                                   
+          x-swagger-router-controller: "project.views.stage"
+    /get_product:
+      get:
+        tags:
+          - "Product"
+        summary: "Product"
+        operationId: "get_product"
+        description: "get product"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "id_land"
+            required: true
+          - in: "query"
+            type: "integer"
+            name: "id_stage"
+            required: true    
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_product'
+        x-swagger-router-controller: "project.views.product"                                                 
   definitions:
     property:
       type: object
@@ -683,6 +739,60 @@
           items:
             type: string
           example: ["file.ext","file2.ext","file3.ext"]
+    result_stage_two:
+      type: object
+      properties:
+        land_id:
+          type: "integer"
+        application_date:
+          type: string
+        start_traking_date:
+          type: string
+        end_traking_date:
+          type: string
+        observations:
+          type: "string"
+        enable:
+          type: "boolean"
+        products:
+          type: array
+          items:
+            $ref: '#/definitions/product'
+    create_stage_two:
+      type: object
+      properties:
+        application_date:
+          type: string
+        start_traking_date:
+          type: string
+        end_traking_date:
+          type: string
+        observations:
+          type: "string"
+        products:
+          type: array
+          items:
+            $ref: '#/definitions/product'
+        images:
+          type: "array"
+          items:
+            type: string
+          example: ["file.ext","file2.ext","file3.ext"]
+    product:
+      type: object
+      properties:
+        product_id:
+          type: "integer"
+        name:
+          type: string
+        active_ingredient:
+          type: string
+        provider:
+          type: string
+        dosage_by_hectare:
+          type: "string"
+        total:
+          type: "boolean"
     result_roles:
       type: "object"
       properties:
@@ -1086,4 +1196,54 @@
           example: "Riego 1"
         complete:
           type: "boolean"
-          example: True             
+          example: True
+    result_product:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/product'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    product:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        commercial_name:
+          type: "string"
+          example: "Cosmo agua"
+        ing_active:
+          type: "string"
+          example: "Bacterias"
+        segment:  
+          type: "string"
+          example: "Bactericida"
+        presentation:  
+          type: "string"
+          example: "1 y Lts"
+        concentration:  
+          type: "string"
+          example: "0,05"
+        color:  
+          type: "string"
+          example: "Verde"
+        formulator:  
+          type: "string"
+          example: "Solitec"
+        provider:  
+          type: "string"
+          example: "Solitec"
+        dose_by_ha:  
+          type: "number"
+          example: 1.9    
