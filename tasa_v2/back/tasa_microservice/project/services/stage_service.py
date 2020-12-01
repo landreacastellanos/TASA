@@ -180,7 +180,7 @@ class StageServices:
         if not validation_token[0] or not SecurityToken().verify_exist_token():
             results['details'].append({
                     "key": 400,
-                    "value": TOKEN_INVALID
+                    "value": self.TOKEN_INVALID
                 })
             return results
 

@@ -389,5 +389,62 @@
             "type": "boolean"
          }
       }
+   },
+   "product":{
+      "tableName": "product",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "stage_id": {
+            "dbName": "stage_id",
+            "type": "integer"
+         },
+         "type_planting_id": {
+            "dbName": "type_planting_id",
+            "type": "integer"
+         },
+         "commercial_name": {
+            "dbName": "commercial_name",
+            "type": "string"
+         },
+         "ing_active": {
+            "dbName": "ing_active",
+            "type": "string"
+         },
+         "segment": {
+            "dbName": "segment",
+            "type": "string"
+         },
+         "presentation": {
+            "dbName": "presentation",
+            "type": "string"
+         },
+         "concentration": {
+            "dbName": "concentration",
+            "type": "string"
+         },
+         "color": {
+            "dbName": "color",
+            "type": "string"
+         },
+         "formulator": {
+            "dbName": "formulator",
+            "type": "string"
+         },
+         "provider": {
+            "dbName": "provider",
+            "type": "string"
+         },
+         "dose_by_ha": {
+            "dbName": "dose_by_ha",
+            "type": "number"
+         }
+      }
    }
 }
