@@ -10,52 +10,46 @@
             Datos de la finca
           </div>
           <div class="col-12 no-margin-padding">
-            <mat-expansion-panel [disabled]="configService.screen > 768" [expanded]="true">
+            <mat-expansion-panel
+              [disabled]="configService.screen > 768"
+              [expanded]="true"
+            >
               <mat-expansion-panel-header>
                 <mat-panel-title class="header-container-card-green">
-                  <h3>{{landsService.landSelected?.name}}</h3>
+                  <h3>{{ landsService.landSelected?.name }}</h3>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="content-container-card-green">
                 <div class="line-container-card-green">
-                  <div class="subtitle-container-card-green">
-                    Razón social:
-                  </div>
-                  <p>{{ landsService.landSelected?.business_name}}</p>
+                  <div class="subtitle-container-card-green">Razón social:</div>
+                  <p>{{ landsService.landSelected?.business_name }}</p>
                 </div>
                 <div class="line-container-card-green">
-                  <div class="subtitle-container-card-green">
-                    Dirección:
-                  </div>
-                  <p>{{ landsService.landSelected?.direction}}</p>
+                  <div class="subtitle-container-card-green">Dirección:</div>
+                  <p>{{ landsService.landSelected?.direction }}</p>
                 </div>
                 <div class="line-container-card-green">
-                  <div class="subtitle-container-card-green">
-                    URL:
-                  </div>
-                  <p>{{ landsService.landSelected?.web_page}}</p>
+                  <div class="subtitle-container-card-green">URL:</div>
+                  <p>{{ landsService.landSelected?.web_page }}</p>
                 </div>
                 <div class="line-container-card-green">
-                  <div class="subtitle-container-card-green">
-                    Teléfono:
-                  </div>
-                  <p>{{ landsService.landSelected?.phone}}</p>
+                  <div class="subtitle-container-card-green">Teléfono:</div>
+                  <p>{{ landsService.landSelected?.phone }}</p>
                 </div>
                 <div class="line-container-card-green">
                   <div class="subtitle-container-card-green">
                     Total Hectareas:
                   </div>
-                  <p>{{ landsService.landSelected?.hectares_total}}</p>
+                  <p>{{ landsService.landSelected?.hectares_total }}</p>
                 </div>
                 <div class="line-container-card-green">
                   <div class="subtitle-container-card-green">
                     Sistema de siembra:
                   </div>
-                  <p>{{ landsService.typeRice?.name}}</p>
+                  <p>{{ landsService.typeRice?.name }}</p>
                 </div>
               </div>
             </mat-expansion-panel>
-
           </div>
           <div class="col-12 container-card-title no-margin-padding">
             Datos del lote
@@ -65,6 +59,58 @@
               <h3>{{ landsService.landSelected?.batchs?.name }}</h3>
               <h3>{{ landsService.landSelected?.batchs?.hectares_number }}H</h3>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 container-card-title no-margin-padding">
+            Cronograma segmento
+          </div>
+          <mat-label class="text-primary">Inicio segmento</mat-label
+          ><mat-form-field class="formOutline text-danger" appearance="outline">
+            <input
+              formControlName="end_segment_date"
+              matInput
+              color="warn"
+              [matDatepicker]="picker_end_segment_date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker_end_segment_date"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker_end_segment_date></mat-datepicker>
+          </mat-form-field>
+
+          <mat-label class="text-primary">Fin segmento</mat-label>
+          <mat-form-field class="formOutline text-danger" appearance="outline">
+            <input
+              formControlName="end_segment_date"
+              matInput
+              color="warn"
+              [matDatepicker]="picker_end_segment_date"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker_end_segment_date"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker_end_segment_date></mat-datepicker>
+          </mat-form-field>
+          <div class="col-12 pt-4 container-card-title no-margin-padding">
+            Foto de referencia
+          </div>
+          <div class="image_before">
+            <img
+              src="../../../../../../assets/img/Siembra_Arroz_Voleado.jpg"
+              width="420"
+              height="350"
+              alt="before"
+            />
+          </div>
+          <div class="row">
+
+
+            
+            <div class="col-6">icon 1</div>
+            <div class="col-6">icon 2</div>
           </div>
         </div>
       </div>
