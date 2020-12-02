@@ -110,7 +110,7 @@
           <div class="col-12 pt-3 container-card-title no-margin-padding">
             Foto de referencia
           </div>
-          <div class="image_before">
+          <div class="col-12 image_before">
             <img
               src="../../../../../../assets/img/Siembra_Arroz_Voleado.jpg"
               width="100%"
@@ -118,64 +118,36 @@
               alt="before"
             />
           </div>
-          <div>
-            <div class="d-flex justify-content-center">
-              <button
-                *ngIf="hasSave"
-                class="col-6 rounded-button mt-3"
-                mat-raised-button
-                color="primary"
-                type="submit"
-                (click)="onSave()"
-              >
-                <span class="px-2">despues</span>
-                <mat-icon class="size-icon-check"
-                  >check_circle_outline</mat-icon
-                >
-              </button>
 
-              <button
-                *ngIf="hasSave"
-                class="col-6 rounded-button mt-3"
-                mat-raised-button
-                color="primary"
-                type="submit"
-                (click)="onSave()"
-              >
-                <span class="px-2">despues</span>
-                <mat-icon class="size-icon-check"
-                  >check_circle_outline</mat-icon
-                >
-              </button>
-            </div>
+          <div class="col-12 mt-3 d-flex justify-content-around">
+            <button
+              *ngIf="hasSave"
+              class="rounded-button"
+              mat-raised-button
+              color="primary"
+              type="submit"
+              (click)="onSave()"
+            >
+              <span class="px-2">despues</span>
+              <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+            </button>
+
+            <button
+              *ngIf="hasSave"
+              class="rounded-button"
+              mat-raised-button
+              color="primary"
+              type="submit"
+              (click)="onSave()"
+            >
+              <span class="px-2">despues</span>
+              <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+            </button>
           </div>
         </div>
-        <div class="col-md-8">
-          <router-outlet #routerOutlet="outlet"></router-outlet>
-        </div>
       </div>
-      <div class="m-3">
-        <button
-          class="transparent-blackground white-border rounded-button"
-          mat-raised-button
-          (click)="onBack()"
-          color="primary"
-          type="button"
-        >
-          <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon
-          >{{ textBack }}
-        </button>
-        <button
-          *ngIf="hasSave"
-          class="no-outline ml-md-5 rounded-button mt-3"
-          mat-raised-button
-          color="primary"
-          type="submit"
-          (click)="onSave()"
-        >
-          <span class="px-5">Guardar cambios</span>
-          <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
-        </button>
+      <div class="col-md-8">
+        <router-outlet #routerOutlet="outlet"></router-outlet>
       </div>
     </div>
   </div>
