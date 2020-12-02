@@ -60,62 +60,122 @@
               <h3>{{ landsService.landSelected?.batchs?.hectares_number }}H</h3>
             </div>
           </div>
-        </div>
-        <div class="row">
+
           <div class="col-12 container-card-title no-margin-padding">
             Cronograma segmento
           </div>
-          <mat-label class="text-primary">Inicio segmento</mat-label
-          ><mat-form-field class="formOutline text-danger" appearance="outline">
-            <input
-              formControlName="end_segment_date"
-              matInput
-              color="warn"
-              [matDatepicker]="picker_end_segment_date"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker_end_segment_date"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker_end_segment_date></mat-datepicker>
-          </mat-form-field>
 
-          <mat-label class="text-primary">Fin segmento</mat-label>
-          <mat-form-field class="formOutline text-danger" appearance="outline">
-            <input
-              formControlName="end_segment_date"
-              matInput
-              color="warn"
-              [matDatepicker]="picker_end_segment_date"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker_end_segment_date"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker_end_segment_date></mat-datepicker>
-          </mat-form-field>
-          <div class="col-12 pt-4 container-card-title no-margin-padding">
+          <div class="col-12">
+            <mat-label>Inicio segmento</mat-label>
+
+            <mat-form-field
+              class="formOutline text-danger"
+              appearance="outline"
+            >
+              <input
+                formControlName="end_segment_date"
+                matInput
+                color="warn"
+                [matDatepicker]="picker_end_segment_date"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker_end_segment_date"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker_end_segment_date></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12">
+            <mat-label>Fin segmento</mat-label>
+
+            <mat-form-field
+              class="formOutline text-danger"
+              appearance="outline"
+            >
+              <input
+                formControlName="end_segment_date"
+                matInput
+                color="warn"
+                [matDatepicker]="picker_end_segment_date"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker_end_segment_date"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker_end_segment_date></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 pt-3 container-card-title no-margin-padding">
             Foto de referencia
           </div>
           <div class="image_before">
             <img
               src="../../../../../../assets/img/Siembra_Arroz_Voleado.jpg"
-              width="420"
-              height="350"
+              width="100%"
+              height="100%"
               alt="before"
             />
           </div>
-          <div class="row">
+          <div>
+            <div class="d-flex justify-content-center">
+              <button
+                *ngIf="hasSave"
+                class="col-6 rounded-button mt-3"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onSave()"
+              >
+                <span class="px-2">despues</span>
+                <mat-icon class="size-icon-check"
+                  >check_circle_outline</mat-icon
+                >
+              </button>
 
-
-            
-            <div class="col-6">icon 1</div>
-            <div class="col-6">icon 2</div>
+              <button
+                *ngIf="hasSave"
+                class="col-6 rounded-button mt-3"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onSave()"
+              >
+                <span class="px-2">despues</span>
+                <mat-icon class="size-icon-check"
+                  >check_circle_outline</mat-icon
+                >
+              </button>
+            </div>
           </div>
         </div>
+        <div class="col-md-8">
+          <router-outlet #routerOutlet="outlet"></router-outlet>
+        </div>
       </div>
-      <div class="col-md-8">
-        <router-outlet #routerOutlet="outlet"></router-outlet>
+      <div class="m-3">
+        <button
+          class="transparent-blackground white-border rounded-button"
+          mat-raised-button
+          (click)="onBack()"
+          color="primary"
+          type="button"
+        >
+          <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon
+          >{{ textBack }}
+        </button>
+        <button
+          *ngIf="hasSave"
+          class="no-outline ml-md-5 rounded-button mt-3"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          (click)="onSave()"
+        >
+          <span class="px-5">Guardar cambios</span>
+          <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+        </button>
       </div>
     </div>
   </div>
