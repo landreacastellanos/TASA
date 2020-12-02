@@ -16,6 +16,10 @@ body {
   font-family: Roboto, "Helvetice New", "Arial", sans-serif;
 }
 
+*{
+  font-size: 16px;
+}
+
 .initial-header {
   height: 100px;
   display: flex;
@@ -35,7 +39,6 @@ body {
 }
 
 mat-label {
-  font-size: 14px !important;
   color: map-get($theme-colors, "secondary");
 }
 
@@ -170,7 +173,7 @@ button.white-border {
         }
     
         p{
-          font-size: 15px;
+          font-size: 16px;
           padding-left: 15px;
         }
       }

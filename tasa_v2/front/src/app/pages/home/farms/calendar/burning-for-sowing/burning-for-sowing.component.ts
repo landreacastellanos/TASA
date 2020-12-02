@@ -45,11 +45,11 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     // is needed because is no trigger by submit
     this.burningForSowingForm.markAllAsTouched();
 
-    console.debug('BurningForSowingComponent:onSave', {
+    /* console.debug('BurningForSowingComponent:onSave', {
       form: this.burningForSowingForm,
       valid: this.burningForSowingForm.valid,
       files: this.files,
-    });
+    }); */
 
     if (!this.burningForSowingForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
@@ -94,4 +94,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     this.files = files;
   }
   ngOnInit(): void {}
+
+  viewImage(){
+  }
 }
