@@ -49,7 +49,7 @@
             placeholder="Ej. Grano largo"
             formControlName="variety"
             type="text"
-            class="inputOutline standarSizeText"
+            class="inputOutline"
             required
           />
         </mat-form-field>
@@ -77,7 +77,6 @@
             formControlName="sowing_date"
             matInput
             [matDatepicker]="pickerSowing_date"
-            class="standarSizeText"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -95,7 +94,6 @@
             formControlName="real_date"
             matInput
             [matDatepicker]="pickerReal_date"
-            class="standarSizeText"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -107,7 +105,7 @@
     </div>
     <div class="date col-12 col-md-6 mt-4 mt-md-0">
       <div class="mx-2 mt-3">
-        <div><mat-label class="standarSizeText">Fotografia de referencia</mat-label></div>
+        <div><mat-label>Fotografia de referencia</mat-label></div>
         <img
           *ngIf="imageReference"
           [src]="imageReference"
