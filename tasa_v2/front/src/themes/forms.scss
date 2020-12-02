@@ -3,13 +3,19 @@
   width: 100%;
 }
 
-// base forms
-.formOutline {
-  font-size: 12px!important;
+// change outline with 16px
+.mat-form-field-appearance-outline .mat-form-field-infix{
+  border-top: 0px;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  top: 0px!important;
+}
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: initial!important;
 }
 
 .mat-input-element:disabled {
-  color: rgba(0, 0, 0, 0.38) !important ;
+  color: rgba(0, 0, 0, 0.78) !important ;
 }
 
 .mat-select-disabled .mat-select-value{
@@ -54,11 +60,6 @@
 
     .containerForm {
       margin: 6px 0;
-
-      .formOutline {
-        width: 100%;
-        font-size: 12px;
-      }
     }
 
     .vl {
