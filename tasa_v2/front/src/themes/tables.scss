@@ -2,15 +2,20 @@ table.mat-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 0.2rem !important;
-  td,th {
+
+  .mat-header-cell {
+    font-size: 16px;
+  }
+  td,
+  th {
     width: 800px;
-    padding: 0 12px!important;
+    padding: 0 12px !important;
   }
   th {
     color: black;
   }
   tr.mat-header-row {
-    height: 30px!important;
+    height: 30px !important;
   }
   tr.active {
     td {
@@ -30,7 +35,7 @@ table.mat-table {
       border-right: solid 2px map-get($theme-colors, "primary");
     }
   }
-  
+
   tr {
     td {
       color: gray;
@@ -55,19 +60,17 @@ table.mat-table {
   }
 }
 
-.select{
+.select {
   width: 1%;
   max-width: 48px;
 }
 
-.mat-paginator-container{
-  flex-wrap: initial!important;
+.mat-paginator-container {
+  flex-wrap: initial !important;
 }
 
 @media (max-width: 768px) {
-  .select{
-    padding-left: 14px!important;
+  .select {
+    padding-left: 14px !important;
   }
 }
-
-
