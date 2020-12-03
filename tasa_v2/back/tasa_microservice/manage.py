@@ -68,7 +68,7 @@ def after_request_function(response):
         return response
 
     try:
-        if response.is_json or response.is_sequence:
+        if response.is_json:
             response_data_origin = json.loads(response.get_data())
 
     except Exception as error:
@@ -101,7 +101,10 @@ def after_request_function(response):
         if "details" in response_data_origin and\
            isinstance(response_data_origin["details"], list) and\
            len(response_data_origin["details"]) >= 1:
-            response_data_formated["statusCode"] = response_data_origin["details"][0]["key"]
+            if("key" in response_data_origin["details"][0]):
+                response_data_formated["statusCode"] = response_data_origin["details"][0]["key"]
+            else: 
+                response_data_formated["statusCode"] = 500
             response_data_formated["details"] = response_data_origin["details"]
 
         elif "detail" in response_data_origin and\

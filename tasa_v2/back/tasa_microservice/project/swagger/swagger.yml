@@ -402,7 +402,7 @@
         operationId: "upload_file"
         description: "set stage one"
         produces:
-          - "multipart/form-data"
+          - "application/json"
         parameters:
           - in: "header"
             required: true
