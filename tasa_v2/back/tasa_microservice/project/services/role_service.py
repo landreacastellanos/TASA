@@ -47,14 +47,7 @@ class RoleService():
             "details": []
         }
         
-        if not validation_token[0] or not SecurityToken().verify_exist_token() :
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": "Token Invalido"
-                }
-            )
-        elif not self.verify_data(validation_token[2]):
+        if not self.verify_data(validation_token[2]):
             result['details'].append(
                 {
                     "key": 400,

@@ -8,38 +8,6 @@
   </div>
   <div class="row cards-farms-container">
     <div class="col-12 col-md-9 row">
-      <div class="col-12 col-md-6">
-        <div><mat-label class="text-primary">Inicio segmento</mat-label></div>
-        <mat-form-field class="formOutline text-danger" appearance="outline">
-          <input
-            formControlName="start_segment_date"
-            matInput
-            color="warn"
-            [matDatepicker]="picker_start_segment_date"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker_start_segment_date"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker_start_segment_date></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="col-12 col-md-6">
-        <div><mat-label class="text-primary">Fin segmento</mat-label></div>
-        <mat-form-field class="formOutline text-danger" appearance="outline">
-          <input
-            formControlName="end_segment_date"
-            matInput
-            color="warn"
-            [matDatepicker]="picker_end_segment_date"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker_end_segment_date"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker_end_segment_date></mat-datepicker>
-        </mat-form-field>
-      </div>
       <div class="col-12 mt-3">
         <div class="d-inline-flex">
           <div class="number-button mr-2">1</div>
@@ -54,8 +22,12 @@
           <p>tabla2</p>
         </div>  
       </div>
-      <div class="col-12"><p>burning-for-sowing works!</p></div>
     </div>
-    <div class="col-12 col-md-3"><p>burning-for-sowing 2 works!</p></div>
+    <div class="col-12 col-md-3">     
+      <div class="col-6">despues</div>
+      <div>observaciones</div>
+      <div>linea</div>
+      <div>text-area</div>
+    </div>
   </div>
 </form>

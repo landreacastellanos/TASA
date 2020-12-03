@@ -16,14 +16,32 @@ from project.models.models import ResponseWrapper
 from project.resources.utils.data_utils import DataUtils
 from project.configuration_manager import ConfigurationManger
 from project.resources.utils.registry_utils import RegistryUtils
+from project.resources.utils.security_token import SecurityToken 
 
 app = create_app()
 
 @app.before_request
 def before_request_function():
+    results = {
+            "data": [],
+            "details": []
+        }
     g.dateTimeStart = datetime.utcnow()
 
     g.endpoint = request.endpoint
+    validation_url = True
+    if any(url_exclude in request.base_url
+    for url_exclude in ("swagger", "restore_password", "login")):
+        validation_url = False
+
+    if validation_url:
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or (not SecurityToken().verify_exist_token() and "is_authenticated" not in request.base_url):
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
 
 @app.after_request
 def after_request_function(response):
@@ -50,7 +68,7 @@ def after_request_function(response):
         return response
 
     try:
-        if response.is_json or response.is_sequence:
+        if response.is_json:
             response_data_origin = json.loads(response.get_data())
 
     except Exception as error:
@@ -83,7 +101,10 @@ def after_request_function(response):
         if "details" in response_data_origin and\
            isinstance(response_data_origin["details"], list) and\
            len(response_data_origin["details"]) >= 1:
-            response_data_formated["statusCode"] = response_data_origin["details"][0]["key"]
+            if("key" in response_data_origin["details"][0]):
+                response_data_formated["statusCode"] = response_data_origin["details"][0]["key"]
+            else: 
+                response_data_formated["statusCode"] = 500
             response_data_formated["details"] = response_data_origin["details"]
 
         elif "detail" in response_data_origin and\

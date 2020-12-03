@@ -14,7 +14,7 @@ const routes: Routes = [
       { path: 'list', component: ListStagesComponent },
       { path: '1', component: SeedtimeComponent },
       { path: '3', component: BurningForSowingComponent },
-      { path: '2', component: SeedtimeComponent },
+      { path: '2', component: BurningForSowingComponent },
       { path: '4', component: SeedtimeComponent },
       { path: '5', component: SeedtimeComponent },
       { path: '6', component: SeedtimeComponent },
