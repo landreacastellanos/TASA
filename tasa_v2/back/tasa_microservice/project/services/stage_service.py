@@ -2,12 +2,13 @@ import os
 import json
 import manage
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.keys_enum import Keys
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken   
+from project.resources.utils.generals_utils import GeneralsUtils
 
 
 class StageServices:
@@ -124,15 +125,34 @@ class StageServices:
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
 
         property_stage = tuple_stage[1]
-        edit = tuple_stage[0]                
-        
+        edit = tuple_stage[0]
+
+        stage_one = Stage.stage_one.value        
+    
         if(len(property_stage) == 0):
+
+            property_stage_one = self.get_property_stage(email, land_id, stage_one)[1]         
+
+            edit &= (len(property_stage_one) > 0)
+
+            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            start_traking_date = ""
+            end_traking_date = ""
+            
+            if(edit):
+                property_stage_one = property_stage_one[0]
+                data = json.loads(property_stage_one['data'])
+                date =  GeneralsUtils.try_parse_date_time(data['sowing_date'])
+                start_traking_date = str(date - timedelta(days=8))
+                end_traking_date = str(date - timedelta(days=5))
+
             results['data'].append(
                   {
                     "application_date": "",
-                    "end_traking_date": "",
+                    "end_traking_date": end_traking_date,
                     "observations": "",
-                    "start_traking_date": "",
+                    "start_traking_date": start_traking_date,
                     "enabled": edit,
                     "products": []
                 }
@@ -140,8 +160,8 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'application_date' in json_data and not json_data['real_date']
-            json_data['enable'] = edit
+            edit = 'application_date' in json_data and not json_data['application_date']
+            json_data['enabled'] = edit
             results['data'].append(json_data)
 
         return results
