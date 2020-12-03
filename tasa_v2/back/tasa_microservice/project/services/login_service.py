@@ -81,21 +81,11 @@ class LoginService:
             )
         return results
 
-    def reset_password(self, data):
-        validation_token = SecurityToken().validate_token() 
+    def reset_password(self, data): 
         result = {
             "data": [],
             "details": []
         }   
-
-        if not validation_token[0]:
-            result['details'].append(
-                {
-                    "key": validation_token[1],
-                    "value": "Token invalido"
-                }
-            )
-            return result
         
         password = Encryption().encrypt_value(data['password']).decode("utf-8")
 

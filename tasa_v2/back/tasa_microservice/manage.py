@@ -16,14 +16,27 @@ from project.models.models import ResponseWrapper
 from project.resources.utils.data_utils import DataUtils
 from project.configuration_manager import ConfigurationManger
 from project.resources.utils.registry_utils import RegistryUtils
+from project.resources.utils.security_token import SecurityToken 
 
 app = create_app()
 
 @app.before_request
 def before_request_function():
+    results = {
+            "data": [],
+            "details": []
+        }
     g.dateTimeStart = datetime.utcnow()
 
     g.endpoint = request.endpoint
+    if "swagger" not in request.base_url:
+        validation_token = SecurityToken().validate_token() 
+        if not validation_token[0] or (not SecurityToken().verify_exist_token() and "is_authenticated" not in request.base_url):
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results
 
 @app.after_request
 def after_request_function(response):
