@@ -7,7 +7,6 @@ from project.models.enum.keys_enum import Keys
 
 class UserService():
     USER_ACTIVE = True
-    TOKEN_ERROR = "Token invalido"
     def __init__(self):
         self.__repository_user = CommonRepository(
          entity_name="createUser")
@@ -19,14 +18,6 @@ class UserService():
         }
 
         validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": self.TOKEN_ERROR
-                }
-            )
-            return result
         data_validation = self.validation_data(validation_token[2])
         data_email = self.validation_email(data)
 
@@ -73,16 +64,6 @@ class UserService():
         select_options["order_by"] =\
                 {"column_name": 'name',
                  "desc": False}
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": self.TOKEN_ERROR
-                }
-            )
-            return result
         
         data = self.__repository_user.select(entity_name="Users", options=select_options)
 
@@ -104,15 +85,7 @@ class UserService():
             )
             return result
 
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": self.TOKEN_ERROR
-                }
-            )
-            return result
+        validation_token = SecurityToken().validate_token()
         data_validation = self.validation_data(validation_token[2])
         data_email = self.validation_email_update(data)
 
@@ -155,16 +128,6 @@ class UserService():
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": self.TOKEN_ERROR
-                }
-            )
-            return result
         
         data = self.__repository_user.select(entity_name="Users", options={"filters":
                              [['id', "equals", id]]
@@ -178,15 +141,7 @@ class UserService():
             "details": []
         }
 
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            result['details'].append(
-                {
-                    "key": 400,
-                    "value": self.TOKEN_ERROR
-                }
-            )
-            return result
+        validation_token = SecurityToken().validate_token()
         data_validation = self.validation_data(validation_token[2])
 
         if len(data_validation['details'])>0:

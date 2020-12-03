@@ -11,7 +11,6 @@ from project.resources.utils.security_token import SecurityToken
 
 
 class StageServices:
-    TOKEN_INVALID = "Token invalido"
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -32,13 +31,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
 
         lands = self.__repository_land.select(entity_name="land", options={"filters":
                              [['property_id', "equals", id],
@@ -73,12 +65,6 @@ class StageServices:
         }
 
         validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
         email = validation_token[2]
         
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
@@ -112,13 +98,7 @@ class StageServices:
             "details": []
         }
 
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
+        validation_token = SecurityToken().validate_token()
         email = validation_token[2]
 
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
@@ -190,14 +170,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
         
         if 'image_1' in files:
             file = files['image_1']
@@ -226,14 +198,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
 
         data_land = self.__repository_land.select(entity_name="land",options={"filters":
                              [['id', "equals", id_lote]]
@@ -290,14 +254,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
         
         land_id = data['land_id']         
         

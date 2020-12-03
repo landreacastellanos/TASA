@@ -3,7 +3,6 @@ from project.infrastructure.repositories.common_repository\
 from project.resources.utils.security_token import SecurityToken 
 
 class ProductServices:
-    TOKEN_INVALID = "Token Invalido"
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -20,14 +19,6 @@ class ProductServices:
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
 
         land = self.__repository_land.select(
             options={"filters":
