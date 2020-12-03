@@ -29,7 +29,12 @@ def before_request_function():
     g.dateTimeStart = datetime.utcnow()
 
     g.endpoint = request.endpoint
-    if "swagger" not in request.base_url:
+    validation_url = True
+    if any(url_exclude in request.base_url
+    for url_exclude in ("swagger", "restore_password", "login")):
+        validation_url = False
+
+    if validation_url:
         validation_token = SecurityToken().validate_token() 
         if not validation_token[0] or (not SecurityToken().verify_exist_token() and "is_authenticated" not in request.base_url):
             results['details'].append({
