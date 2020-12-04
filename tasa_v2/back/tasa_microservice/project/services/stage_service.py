@@ -47,8 +47,18 @@ class StageServices:
                     "hectares_number": lands['land_ha']
                } 
 
-        property['batchs'] = batchs
+        stage_number = Stage.stage_one.value
 
+        validation_token = SecurityToken().validate_token() 
+        email = validation_token[2]
+        tuple_stage = self.get_property_stage(email, land, stage_number)        
+
+        if(len(tuple_stage[1])>0):
+            data = json.loads(tuple_stage[1][0]['data'])
+            if(not data['variety']):
+                batchs['variety'] = data['variety']
+
+        property['batchs'] = batchs
         property["direction"] = property.pop("address")
         property["web_page"] = property.pop("web_site")
         property["hectares_total"] = property.pop("total")
@@ -246,7 +256,7 @@ class StageServices:
 			"complete": False
         }
         if len(data_stages)==0 else self.validation_stage(x, data_stages) , data))
-
+        
         return data
 
     def validation_stage(self, data, stages):
