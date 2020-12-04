@@ -54,9 +54,8 @@ class StageServices:
         tuple_stage = self.get_property_stage(email, land, stage_number)        
 
         if(len(tuple_stage[1])>0):
-            data = json.loads(tuple_stage[1][0]['data'])
-            if(not data['variety']):
-                batchs['variety'] = data['variety']
+            data = json.loads(tuple_stage[1][0]['data'])            
+            batchs['variety'] = data['variety']
 
         property['batchs'] = batchs
         property["direction"] = property.pop("address")
