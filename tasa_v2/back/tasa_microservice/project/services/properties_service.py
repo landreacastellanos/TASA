@@ -5,7 +5,6 @@ from project.models.enum.keys_enum import Keys
 from datetime import datetime
 
 class PropertiesServices:
-
     def __init__(self):
         self.__repository_planting = CommonRepository(
          entity_name="type_planting")
@@ -17,13 +16,7 @@ class PropertiesServices:
          entity_name="land")
 
 
-    def get_planting_type(self):
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            return {
-                    "key": 400,
-                    "value": "Token Invalido"
-                }        
+    def get_planting_type(self):       
         data = self.__repository_planting.select_all()          
 
         return data
@@ -35,14 +28,7 @@ class PropertiesServices:
                              }) 
         return (True, data[0]) if len(data) > 0 else (False, data)
 
-    def get_users(self):
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            return {
-                    "key": 400,
-                    "value": "Token Invalido"
-                }   
-
+    def get_users(self): 
         data = self.__repository_user.select_all()
         data = list(map(lambda  x:{ 
                                 "id": x['id'],
@@ -56,14 +42,7 @@ class PropertiesServices:
             "data": [],
             "details": []
         }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
-        
+        validation_token = SecurityToken().validate_token()    
         role = self.verify_data(validation_token[2])
 
         if role[0] and role[1]['role_id'] != Keys.admi.value:
@@ -133,19 +112,6 @@ class PropertiesServices:
         return results
 
     def get_properties(self):
-
-        results = {
-            "data": [],
-            "details": []
-        }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
-
         planting_type = self.__repository_planting.select_all()
         plant = self.__repository_properties.select_all()
 
@@ -170,13 +136,6 @@ class PropertiesServices:
             "data": [],
             "details": []
         }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
 
         lands = self.__repository_land.select(entity_name="land", options={"filters":
                              [['property_id', "equals", id]]
@@ -203,13 +162,7 @@ class PropertiesServices:
             "data": [],
             "details": []
         }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
+        validation_token = SecurityToken().validate_token()
         
         role = self.verify_data(validation_token[2])
 
@@ -243,14 +196,7 @@ class PropertiesServices:
             "data": [],
             "details": []
         }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
-        
+        validation_token = SecurityToken().validate_token()
         role = self.verify_data(validation_token[2])
 
         if role[0] and role[1]['role_id'] != Keys.admi.value:

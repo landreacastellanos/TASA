@@ -2,16 +2,16 @@ import os
 import json
 import manage
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.keys_enum import Keys
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken   
+from project.resources.utils.generals_utils import GeneralsUtils
 
 
 class StageServices:
-    TOKEN_INVALID = "Token invalido"
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -32,13 +32,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
 
         lands = self.__repository_land.select(entity_name="land", options={"filters":
                              [['property_id', "equals", id],
@@ -54,8 +47,17 @@ class StageServices:
                     "hectares_number": lands['land_ha']
                } 
 
-        property['batchs'] = batchs
+        stage_number = Stage.stage_one.value
 
+        validation_token = SecurityToken().validate_token() 
+        email = validation_token[2]
+        tuple_stage = self.get_property_stage(email, land, stage_number)        
+
+        if(len(tuple_stage[1])>0):
+            data = json.loads(tuple_stage[1][0]['data'])            
+            batchs['variety'] = data['variety']
+
+        property['batchs'] = batchs
         property["direction"] = property.pop("address")
         property["web_page"] = property.pop("web_site")
         property["hectares_total"] = property.pop("total")
@@ -73,13 +75,89 @@ class StageServices:
         }
 
         validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
         email = validation_token[2]
+        
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+        property_stage = tuple_stage[1]
+        edit = tuple_stage[0]                   
+        
+        if(len(property_stage) == 0):
+            results['data'].append(
+                  {
+                    "real_date": "",
+                    "sowing_date": "",
+                    "type_sowing": "",
+                    "variety": "",
+                    "enabled": edit
+                }
+            )
+        else:
+            property_stage = property_stage[0]            
+            json_data = json.loads(property_stage['data'])            
+            edit = 'real_date' in json_data and not json_data['real_date']
+            json_data['enabled'] = edit
+            results['data'].append(json_data)
+
+        return results
+    
+    def get_stage_two(self, land_id):
+        stage_number = Stage.stage_two.value        
+
+        results = {
+            "data": [],
+            "details": []
+        }
+
+        validation_token = SecurityToken().validate_token()
+        email = validation_token[2]
+
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+
+        property_stage = tuple_stage[1]
+        edit = tuple_stage[0]
+
+        stage_one = Stage.stage_one.value        
+    
+        if(len(property_stage) == 0):
+
+            property_stage_one = self.get_property_stage(email, land_id, stage_one)[1]         
+
+            edit &= (len(property_stage_one) > 0)
+
+            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            start_traking_date = ""
+            end_traking_date = ""
+            
+            if(edit):
+                property_stage_one = property_stage_one[0]
+                data = json.loads(property_stage_one['data'])
+                date =  GeneralsUtils.try_parse_date_time(data['sowing_date'])
+                start_traking_date = str(date - timedelta(days=8))
+                end_traking_date = str(date - timedelta(days=5))
+
+            results['data'].append(
+                  {
+                    "application_date": "",
+                    "end_traking_date": end_traking_date,
+                    "observations": "",
+                    "start_traking_date": start_traking_date,
+                    "enabled": edit,
+                    "products": []
+                }
+            )
+        else:
+            property_stage = property_stage[0]            
+            json_data = json.loads(property_stage['data'])            
+            edit = 'application_date' in json_data and not json_data['application_date']
+            json_data['enabled'] = edit
+            results['data'].append(json_data)
+
+        return results
+
+    def get_property_stage(self, email, land_id, stage_number):
+        
+        edit = False
         user = self.__repository_user.select(entity_name="user", options={ "filters":
             [["email",
             "equals",
@@ -88,7 +166,6 @@ class StageServices:
         })        
 
         edit |= user[0]['role_id'] == Keys.admi.value
-
 
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
@@ -112,26 +189,9 @@ class StageServices:
                              ['land_id', "equals", land_id],
                              "and",
                              ["crop_complete","equals",False]]
-                             })                      
-        
-        if(len(property_stage) == 0):
-            results['data'].append(
-                  {
-                    "real_date": "",
-                    "sowing_date": "",
-                    "type_sowing": "",
-                    "variety": "",
-                    "enabled": edit
-                }
-            )
-        else:
-            property_stage = property_stage[0]            
-            json_data = json.loads(property_stage['data'])            
-            edit = 'real_date' in json_data and not json_data['real_date']
-            json_data['enabled'] = edit
-            results['data'].append(json_data)
+                             })
 
-        return results
+        return (edit, property_stage)
     
     def upload_file(self, files):
         l_files = []
@@ -139,14 +199,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": "Token Invalido"
-                })
-            return results
         
         if 'image_1' in files:
             file = files['image_1']
@@ -176,14 +228,6 @@ class StageServices:
             "details": []
         }
 
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": TOKEN_INVALID
-                })
-            return results
-
         data_land = self.__repository_land.select(entity_name="land",options={"filters":
                              [['id', "equals", id_lote]]
                              })
@@ -211,7 +255,7 @@ class StageServices:
 			"complete": False
         }
         if len(data_stages)==0 else self.validation_stage(x, data_stages) , data))
-
+        
         return data
 
     def validation_stage(self, data, stages):
@@ -223,7 +267,7 @@ class StageServices:
 			"complete": True
         }
         if x['stageId'] == data['id'] and
-        (not x['stageComplete'])
+        (x['stageComplete'])
         else
         {
             "id_stage": data['id'],
@@ -239,14 +283,6 @@ class StageServices:
             "data": [],
             "details": []
         }
-
-        validation_token = SecurityToken().validate_token() 
-        if not validation_token[0] or not SecurityToken().verify_exist_token():
-            results['details'].append({
-                    "key": 400,
-                    "value": self.TOKEN_INVALID
-                })
-            return results
         
         land_id = data['land_id']         
         

@@ -161,3 +161,25 @@ class GeneralsUtils:
         result = datetime.today().isoformat()
 
         return result
+
+    @staticmethod
+    def try_parse_date_time(value):
+        """Mehtod try parse string to date"""
+        DATE_TIME_FORMATS = (
+            '%Y-%m-%dT%H:%M:%SZ',
+            '%Y-%m-%dT%H:%M:%S.%fZ',
+            '%Y-%m-%d %H:%M:%SZ',
+            '%Y-%m-%d %H:%M:%S.%fZ',
+            '%Y-%m-%dT%H:%M:%S',
+            '%Y-%m-%dT%H:%M:%S.%f',
+            '%Y-%m-%d %H:%M:%S',
+            '%Y-%m-%d %H:%M:%S.%f')
+
+        for date_time_format in DATE_TIME_FORMATS:
+            try:
+                return datetime.strptime(value, date_time_format)
+
+            except ValueError:
+                pass
+
+        raise ValueError('no valid date format found')

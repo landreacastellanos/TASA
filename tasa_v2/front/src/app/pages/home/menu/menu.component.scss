@@ -3,7 +3,9 @@
   // background-color: transparent!important;
   justify-content: space-between;
 
-  font-size: 1.2rem;
+  a {
+    font-size: 1.2rem;
+  }
   .navbar-brand {
     flex: 1;
     img {
@@ -39,7 +41,7 @@
   }
 }
 
-.material-icons{
+.material-icons {
   vertical-align: bottom;
   font-size: 25px;
 }
@@ -76,8 +78,8 @@
   .navbar .navbar-brand img {
     height: 30px;
   }
-  
-  .material-icons{
+
+  .material-icons {
     vertical-align: text-bottom;
     font-size: 25px;
   }
