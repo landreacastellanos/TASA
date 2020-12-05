@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ArrozSecano } from '../../../../../shared/models/farm';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { CalendarChildren } from '../calendar-children.interface';
 import { CalendarService } from '../calendar.service';
@@ -28,10 +29,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   ) {
     this.segmentId = this.route.snapshot.data.segmentId;
     this.calendarService
-    .getStage(this.segmentId, this.landsService.idLand)
-    .then((stageOneData) =>
-        this.init(stageOneData)
-    );
+      .getStage(this.segmentId, this.landsService.idLand)
+      .then((stageOneData) => this.init(stageOneData));
   }
   mode: 'edit' | 'view' | 'create' = 'view';
   files: FileList;
@@ -126,7 +125,12 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   getUrlReferencePhoto() {
-    return '../../../../../../assets/img/Siembra_Arroz_Voleado.jpg'; // change after
+    const sowingSystem =
+      this.landsService.landSelected.sowing_system === new ArrozSecano().id
+        ? 'arroz_secano'
+        : 'arroz_riego';
+
+    return `../../../../../../assets/img/segments/${sowingSystem}/${this.segmentId}/${this.referencePhotoSelected}.jpg`; // change after
   }
 
   ngOnInit(): void {
