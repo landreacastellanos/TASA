@@ -28,7 +28,7 @@ export class CalendarComponent implements OnInit {
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   onBack() {
     // tslint:disable-next-line: no-unused-expression
@@ -63,5 +63,49 @@ export class CalendarComponent implements OnInit {
   get hasFilesButton() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasFilesButton;
+  }
+
+  get hasReferencePhoto() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasReferencePhoto;
+  }
+  get urlReferencePhoto() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.urlReferencePhoto;
+  }
+  onClickBeforeReferencePhoto() {
+    console.debug('CalendarComponent:onClickBeforeReferencePhoto');
+    // tslint:disable-next-line: no-unused-expression
+    (this.outlet?.component as CalendarChildren)?.onClickBeforeReferencePhoto &&
+      (this.outlet
+        ?.component as CalendarChildren).onClickBeforeReferencePhoto();
+  }
+  onClickAfterReferencePhoto() {
+    console.debug('CalendarComponent:onClickBeforeReferencePhoto');
+    // tslint:disable-next-line: no-unused-expression
+    (this.outlet?.component as CalendarChildren)?.onClickAfterReferencePhoto &&
+      (this.outlet?.component as CalendarChildren).onClickAfterReferencePhoto();
+  }
+  
+  get referencePhotoSelected() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.referencePhotoSelected;
+  }
+
+  get hasEndTrackingDate(){
+        // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasEndTrackingDate;
+  }
+  get endTrackingDate(){
+        // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.endTrackingDate;
+  }
+  get hasStartTrackingDate(){
+        // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasStartTrackingDate;
+  }
+  get startTrackingDate(){
+        // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.startTrackingDate;
   }
 }
