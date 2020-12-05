@@ -33,27 +33,27 @@ export class CalendarService {
           return dataResponse[0];
         })
         // FIXME: Only for test
-        .then(() => ({
-          application_date: '2020-10-11T05:00:00.000Z',
-          enabled: true,
-          end_traking_date: '2020-10-20T05:00:00.000Z',
-          start_traking_date: '2020-10-28T05:00:00.000Z',
-          observations: 'Está como feo el arroz',
-          products: [
-            {
-              color: 'Verde',
-              commercial_name: 'Cosmo agua',
-              concentration: '0,05',
-              dose_by_ha: 1.9,
-              formulator: 'Solitec',
-              id: 1,
-              ing_active: 'Bacterias',
-              presentation: '1 y Lts',
-              provider: 'Solitec',
-              segment: 'Bactericida',
-            },
-          ],
-        }))
+        // .then(() => ({
+        //   application_date: '2020-10-11T05:00:00.000Z',
+        //   enabled: true,
+        //   end_traking_date: '2020-10-20T05:00:00.000Z',
+        //   start_traking_date: '2020-10-28T05:00:00.000Z',
+        //   observations: 'Está como feo el arroz',
+        //   products: [
+        //     {
+        //       color: 'Verde',
+        //       commercial_name: 'Cosmo agua',
+        //       concentration: '0,05',
+        //       dose_by_ha: 1.9,
+        //       formulator: 'Solitec',
+        //       id: 1,
+        //       ing_active: 'Bacterias',
+        //       presentation: '1 y Lts',
+        //       provider: 'Solitec',
+        //       segment: 'Bactericida',
+        //     },
+        //   ],
+        // }))
     );
   }
 
