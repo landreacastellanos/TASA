@@ -14,6 +14,7 @@ export class LandsService {
   arrozSecano = new ArrozSecano();
   arrozRiego = new ArrozDeRiego();
   typeRice;
+  variety: string;
 
 
   constructor(private dataApiService: DataApiService) { }
@@ -33,6 +34,7 @@ export class LandsService {
         this.lands[this.landsSelectedIds] = data[0];
         this.typeRice =
           this.arrozSecano.id === data[0].sowing_system ? this.arrozSecano : this.arrozRiego;
+        this.variety = data[0].batchs.variety ? data[0].batchs.variety : undefined;
         return data[0];
       });
   }
