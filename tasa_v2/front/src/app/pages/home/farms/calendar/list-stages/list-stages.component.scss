@@ -1,3 +1,10 @@
+.variety{
+    font-size: 14px;
+    font-weight: 900;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
 .cards-farms-col{
 
     .cards-farms-item{
@@ -37,11 +44,38 @@
         button{
             width: 120px;
             min-width: 120px;
+            
         }
     }
     
 }
 
-@media (max-width: 768px) {
+@media (max-width: 400px) {
 
+    .rounded-button{
+        height: 36px;
+        width: 40px !important;
+        min-width: 40px !important;
+
+        .rounded-button-text{
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 300px) {
+
+    .cards-farms-text-item{
+        font-size: 15px;
+    }
+
+    .rounded-button{
+        height: 36px;
+        width: 40px !important;
+        min-width: 40px !important;
+
+        .rounded-button-text{
+            display: none;
+        }
+    }
 }

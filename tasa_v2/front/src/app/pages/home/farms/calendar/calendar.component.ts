@@ -15,7 +15,6 @@ export class CalendarComponent implements OnInit {
     private route: ActivatedRoute,
     public landsService: LandsService,
     public configService: ConfigurationService,
-    
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
