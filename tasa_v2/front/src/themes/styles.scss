@@ -105,6 +105,16 @@ button.mat-button-base {
 
 button.rounded-button {
   border-radius: 18px;
+
+  .mat-button-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .rounded-button-text{
+      margin-right: 5px;
+    }
+  }
 }
 
 button.transparent-blackground {
@@ -165,7 +175,7 @@ button.white-border {
   
       .line-container-card-green{
         display: flex;
-        height: 20px;
+        align-items: center;
     
         .subtitle-container-card-green{
           font-weight: bold;
@@ -175,6 +185,7 @@ button.white-border {
         p{
           font-size: 16px;
           padding-left: 15px;
+          margin-bottom: 2px;
         }
       }
     }
@@ -226,5 +237,40 @@ button.white-border {
   .form-login {
     height: initial !important;
     overflow: initial !important;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .line-container-card-green{
+    justify-content: space-between;
+
+    p{
+      text-align: right;
+    }
+  }
+}
+
+@media (max-width: 300px) {
+  .card-container{
+
+    .mat-expansion-panel{
+      
+      .mat-expansion-panel-body{
+        padding-right: 0;
+        padding-left: 0;
+      }
+      .content-container-card-green{
+    
+        .line-container-card-green{
+          justify-content: space-between;
+      
+          p{
+            text-align: right;
+          }
+        }
+      }
+    }
+    
   }
 }

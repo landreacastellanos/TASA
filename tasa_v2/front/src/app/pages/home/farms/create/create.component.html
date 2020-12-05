@@ -192,7 +192,7 @@
                         </mat-form-field>
                     </div>
                     <div class="containerForm col-12">
-                        <mat-label class="text-size">Seleccione el influenciador de decisiones de compra</mat-label>
+                        <mat-label class="text-size">Influenciador decisiones compra</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
                             <mat-select formControlName="influencer" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let influencer of influencers" [value]="influencer.id">
@@ -202,7 +202,7 @@
                         </mat-form-field>
                     </div>
                     <div class="containerForm col-12">
-                        <mat-label class="text-size">Seleccione el responsable de decisiones de compra</mat-label>
+                        <mat-label class="text-size">Responsable decisiones compra</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
                             <mat-select formControlName="liable" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let liable of liables" [value]="liable.id">
@@ -222,7 +222,7 @@
                         </mat-form-field>
                     </div>
                     <div class="containerForm col-12">
-                        <mat-label class="text-size">Seleccione el encargado de compras</mat-label>
+                        <mat-label class="text-size">Encargado de compras</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
                             <mat-select formControlName="purchasingAgent" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let purchasingAgent of purchasingAgents"
@@ -233,7 +233,7 @@
                         </mat-form-field>
                     </div>
                     <div class="containerForm col-12">
-                        <mat-label class="text-size">Seleccione el encargado de pagos</mat-label>
+                        <mat-label class="text-size">Encargado de pagos</mat-label>
                         <mat-form-field class="col-12 formOutline" appearance="outline">
                             <mat-select formControlName="paymentAgent" [disabled]="mode === 'view'">
                                 <mat-option *ngFor="let paymentAgent of paymentAgents" [value]="paymentAgent.id">
