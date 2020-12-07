@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
 import {
+  Products,
+  StageBetweenRequest,
   StageBetweenResponse,
   StageOneRequest,
   StageOneResponse,
   UploadFileResponse,
 } from 'src/app/shared/models/calendar';
-import { LandResponse } from '../../../../shared/models/lands';
 import { DataApiService } from '../../../../shared/services/data-api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalendarService {
+  getProducts(
+    idLand: string | number,
+    segmentId: string | number
+  ): Promise<Products[]> {
+    return this.dataApiService
+      .getAll(`get_product?id_land=${idLand}&id_stage=${segmentId}`)
+      .then((dataResponse) => {
+        return dataResponse[0];
+      });
+  }
   constructor(private dataApiService: DataApiService) {}
 
   getStageOne(landId: string | number): Promise<StageOneResponse> {
@@ -28,32 +39,32 @@ export class CalendarService {
   ): Promise<StageBetweenResponse> {
     return (
       this.dataApiService
-        .getAll(`get_stage_two?land_id=${landId}&stage=${stage}` )
+        .getAll(`get_stage_two?land_id=${landId}&stage=${stage}`)
         .then((dataResponse) => {
           return dataResponse[0];
         })
         // FIXME: Only for test
-        // .then(() => ({
-        //   application_date: '2020-10-11T05:00:00.000Z',
-        //   enabled: true,
-        //   end_traking_date: '2020-10-20T05:00:00.000Z',
-        //   start_traking_date: '2020-10-28T05:00:00.000Z',
-        //   observations: 'Está como feo el arroz',
-        //   products: [
-        //     {
-        //       color: 'Verde',
-        //       commercial_name: 'Cosmo agua',
-        //       concentration: '0,05',
-        //       dose_by_ha: 1.9,
-        //       formulator: 'Solitec',
-        //       id: 1,
-        //       ing_active: 'Bacterias',
-        //       presentation: '1 y Lts',
-        //       provider: 'Solitec',
-        //       segment: 'Bactericida',
-        //     },
-        //   ],
-        // }))
+        .then(() => ({
+          application_date: '2020-10-11T05:00:00.000Z',
+          enabled: true,
+          end_traking_date: '2020-10-20T05:00:00.000Z',
+          start_traking_date: '2020-10-28T05:00:00.000Z',
+          observations: 'Está como feo el arroz',
+          products: [
+            {
+              color: 'Verde',
+              commercial_name: 'Cosmo agua',
+              concentration: '0,05',
+              dose_by_ha: 1.9,
+              formulator: 'Solitec',
+              id: 1,
+              ing_active: 'Bacterias',
+              presentation: '1 y Lts',
+              provider: 'Solitec',
+              segment: 'Bactericida',
+            },
+          ],
+        }))
     );
   }
 
@@ -65,7 +76,8 @@ export class CalendarService {
       });
   }
 
-  setBurnStage(data: any /** FIXME: unknown type */): Promise<string> {
+  setBurnStage(data: StageBetweenRequest): Promise<string> {
+    console.debug('CalendarService:setBurnStage', { data });
     return Promise.resolve('FIXME: API NOT INTEGRATED');
     // FIXME: add correct implementation
     // this.dataApiService
