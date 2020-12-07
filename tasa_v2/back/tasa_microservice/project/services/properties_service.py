@@ -113,7 +113,13 @@ class PropertiesServices:
 
     def get_properties(self):
         planting_type = self.__repository_planting.select_all()
-        plant = self.__repository_properties.select_all()
+
+        select_options = {}
+        select_options["order_by"] =\
+                {"column_name": 'name',
+                 "desc": False}
+                 
+        plant = self.__repository_properties.select(entity_name="properties", options=select_options)
 
         data = list(map(lambda  x:{ 
                                 "id": x['id'],

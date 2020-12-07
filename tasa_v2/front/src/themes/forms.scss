@@ -18,8 +18,42 @@
   color: rgba(0, 0, 0, 0.78) !important ;
 }
 
+.mat-radio-disabled.mat-radio-checked {
+  .mat-radio-checked .mat-radio-outer-circle,
+  .mat-radio-outer-circle {
+    border-color: map-get($theme-colors, "primary")!important ;
+  }
+
+  .mat-radio-ripple .mat-ripple-element,
+  .mat-radio-inner-circle {
+    background-color: map-get($theme-colors, "primary")!important ;
+  }
+
+  .mat-radio-label-content {
+    color: rgba(0, 0, 0, 0.78) !important ;
+  }
+}
+
 .mat-select-disabled .mat-select-value{
   color: rgba(0, 0, 0, 0.7) !important ;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+ top: 0px!important;
+ bottom: 0px;
+}
+
+mat-datepicker-toggle{
+  color: #87b017!important;
+  button.mat-icon-button.mat-button-base {
+    position: absolute;
+    top: -1.5em;
+    left: -2.5em;
+  }
+  svg{
+    height: 40px!important;
+    width: 40px!important;
+  }
 }
 
 .card-container-form {

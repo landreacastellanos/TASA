@@ -5,7 +5,20 @@ export interface CalendarChildren {
   /** text used in back button */
   textBack: string;
   onBack: () => any;
-  /**  */
+  /** load 3 photos */
   hasFilesButton?: boolean;
   onChangeFiles?: (files: FileList) => any;
+  /** referencePhoto */
+  hasReferencePhoto?: boolean;
+  urlReferencePhoto?: string;
+  referencePhotoSelected?: 'before' | 'after';
+  onClickBeforeReferencePhoto?: () => any;
+  onClickAfterReferencePhoto?: () => any;
+  /** date range segment */
+
+  hasEndTrackingDate?: boolean;
+  endTrackingDate?: Date;
+
+  hasStartTrackingDate?: boolean;
+  startTrackingDate?: Date;
 }
