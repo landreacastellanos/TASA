@@ -126,7 +126,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     if (!this.seedTimeForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
-        panelClass: ['snackbar-success'],
+        panelClass: ['snackbar-warn'],
       });
     }
     this.configurationService.setLoadingPage(true);
@@ -151,6 +151,10 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
             panelClass: ['snackbar-success'],
           })
       )
+      .then(() => this.calendarService.getStageOne(this.landService.idLand))
+      .then((stageOneData) => {
+        this.init(stageOneData);
+      })
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
