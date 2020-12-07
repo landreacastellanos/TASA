@@ -1,3 +1,16 @@
+export interface Products {
+  color: string;
+  commercial_name: string;
+  concentration: string;
+  dose_by_ha: number;
+  formulator: string;
+  id: number;
+  ing_active: string;
+  presentation: string;
+  provider: string;
+  segment: string;
+}
+
 export interface StageBetween {
   application_date: string;
   end_traking_date: string;
