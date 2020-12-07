@@ -1,10 +1,13 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  Products,
+  StageProduct,
   StageBetweenRequest,
+  StageBetweenResponse,
 } from '../../../../../shared/models/calendar';
 import { ArrozSecano } from '../../../../../shared/models/farm';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
@@ -22,7 +25,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   segmentId: string;
   endTrackingDate: Date;
   startTrackingDate: Date;
-  products: Products[];
+  products: StageProduct[];
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -49,6 +52,16 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   hasReferencePhoto = true;
   urlReferencePhoto = ''; // change after
   referencePhotoSelected: CalendarChildren['referencePhotoSelected'] = 'after';
+  // Selection
+  selection = new SelectionModel<StageProduct>(true, []);
+  displayedColumnsProducts = [
+    'select',
+    'commercial_name',
+    'ing_active',
+    'provider',
+    'dose_by_ha',
+  ];
+  dataSourceProducts: MatTableDataSource<StageProduct>;
 
   burningForSowingForm: FormGroup = this.fb.group({
     observations: [
@@ -137,11 +150,21 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   getUrlReferencePhoto() {
     const sowingSystem =
-      this.landsService.landSelected.sowing_system === new ArrozSecano().id
+      this.landsService.landSelected?.sowing_system === new ArrozSecano().id
         ? 'arroz_secano'
         : 'arroz_riego';
 
     return `../../../../../../assets/img/segments/${sowingSystem}/${this.segmentId}/${this.referencePhotoSelected}.jpg`; // change after
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: StageProduct): string {
+    if (!row) {
+      return ` all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.commercial_name
+    }`;
   }
 
   ngOnInit(): void {
@@ -158,17 +181,26 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           this.segmentId
         )
       )
-      .then((products) => (this.products = products));
+      .then((products) => {
+        this.products = products;
+        this.dataSourceProducts = new MatTableDataSource(products);
+        console.log({
+          products: this.products,
+          datasource: this.dataSourceProducts,
+        });
+      });
   }
 
-  init({
-    observations = '',
-    application_date = '',
-    products = [],
-    enabled = false,
-    end_traking_date = '',
-    start_traking_date = '',
-  } = {}) {
+  init(
+    {
+      observations = '',
+      application_date = '',
+      products = [],
+      enabled = false,
+      end_traking_date = '',
+      start_traking_date = '',
+    }: StageBetweenResponse = {} as StageBetweenResponse
+  ) {
     this.mode = enabled ? 'edit' : 'view';
     // ? ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
@@ -176,6 +208,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.startTrackingDate =
         start_traking_date && new Date(start_traking_date);
       this.urlReferencePhoto = this.getUrlReferencePhoto();
+      //TODO: TEST ME because is not the same instances
+      this.selection.clear();
+      this.selection.select(...products);
     }, 1);
 
     this.configurationService.disableForm(
