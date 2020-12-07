@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  Products,
+  StageProduct,
   StageBetweenRequest,
   StageBetweenResponse,
   StageOneRequest,
@@ -16,7 +16,7 @@ export class CalendarService {
   getProducts(
     idLand: string | number,
     segmentId: string | number
-  ): Promise<Products[]> {
+  ): Promise<StageProduct[]> {
     return this.dataApiService
       .getAll(`get_product?id_land=${idLand}&id_stage=${segmentId}`)
       .then((dataResponse) => {
