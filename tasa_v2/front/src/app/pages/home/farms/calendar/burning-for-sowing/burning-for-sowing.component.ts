@@ -18,7 +18,7 @@ import { LandsService } from '../lands.service';
 @Component({
   selector: 'app-burning-for-sowing',
   templateUrl: './burning-for-sowing.component.html',
-  styleUrls: ['./burning-for-sowing.component.css'],
+  styleUrls: ['./burning-for-sowing.component.scss'],
 })
 export class BurningForSowingComponent implements OnInit, CalendarChildren {
   submitted: boolean;
@@ -26,6 +26,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   endTrackingDate: Date;
   startTrackingDate: Date;
   products: StageProduct[];
+  productsAdd: StageProduct[] = [];
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -62,6 +63,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     'dose_by_ha',
   ];
   dataSourceProducts: MatTableDataSource<StageProduct>;
+  dataSourceProductsAdd: MatTableDataSource<StageProduct>;
 
   burningForSowingForm: FormGroup = this.fb.group({
     observations: [
@@ -162,9 +164,19 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.commercial_name
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
+      }`;
+  }
+
+  selectProduct(event, row) {
+    // tslint:disable-next-line: no-unused-expression
+    event ? this.selection.toggle(row) : null;
+    if (event.checked) {
+      this.productsAdd.push(JSON.parse(JSON.stringify(row)));
+    }else{
+      this.productsAdd = this.productsAdd.filter(data => data.id !== row.id);
+    }
+    this.dataSourceProductsAdd = new MatTableDataSource(this.productsAdd);
   }
 
   ngOnInit(): void {
@@ -184,6 +196,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .then((products) => {
         this.products = products;
         this.dataSourceProducts = new MatTableDataSource(products);
+        this.dataSourceProductsAdd = new MatTableDataSource(this.productsAdd)
         console.log({
           products: this.products,
           datasource: this.dataSourceProducts,
