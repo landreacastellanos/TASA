@@ -100,6 +100,72 @@ class StageServices:
 
         return results
     
+    def get_stage(self, land_id, stage):
+        stage_number = Stage(stage)
+
+        if(stage_number == Stage.stage_two):
+            return self.get_stage_two(land_id)
+    
+    def set_stage(self, data):
+        stage_number = Stage(data['stage_number'])            
+        return self.set_stage_general(data, stage_number)
+
+    def set_stage_general(self, data, stage_number):
+        results = {
+            "data": [],
+            "details": []
+        }
+        
+        land_id = data['land_id']
+        result_tuple = self.get_property_stage('',data['land_id'],stage_number.value)
+
+        property_stage = result_tuple[1]
+        stage_id = result_tuple[2]        
+        
+        images = []
+        stage_db = {}
+        complete_stage = False
+        
+        if("images" in data):
+            images = data['images']
+            stage_db["procedure_image"] = json.dumps(images)
+            data.pop("images")
+        
+        if("application_date" in data and data['application_date']):
+            stage_db["application_date"] = data['application_date']
+            complete_stage = True
+            stage_db["end_date"] = datetime.now()
+        
+        data.pop("land_id")
+        data.pop("stage_number")
+        
+        stage_db['data'] = json.dumps(data)
+        stage_db['stage_complete'] = complete_stage
+
+        if(len(property_stage) == 0):
+
+            property_one = self.__repository_property_stage.select(entity_name="property_stage", options={"filters":
+                             [
+                             ['land_id', "equals", land_id],
+                             "and",
+                             ["crop_complete","equals",False]]
+                             })
+
+            stage_db['land_id'] = land_id            
+            stage_db['crop_complete'] = False
+            stage_db['start_date'] = datetime.now()
+            stage_db['id_crop'] = property_one[0]['id_crop']
+            stage_db['stage_id'] = stage_id
+            self.__repository_property_stage.insert(stage_db)
+            
+        else:
+            property_stage = property_stage[0]['id']
+            self.__repository_property_stage.update(property_stage,stage_db)           
+            
+        results['data'].append("Datos guardados exitosamente")
+
+        return results
+
     def get_stage_two(self, land_id):
         stage_number = Stage.stage_two.value        
 
@@ -163,17 +229,17 @@ class StageServices:
             "equals",
             email]
             ]
-        })        
-
-        edit |= user[0]['role_id'] == Keys.admi.value
+        })      
 
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
 
-        edit |= user[0]['id'] == property_field[0]['manager']
-        edit |= user[0]['id'] == property_field[0]['property_owner']
-        edit |= user[0]['id'] == property_field[0]['seller']
+        if(len(user)>0):
+            edit |= user[0]['role_id'] == Keys.admi.value
+            edit |= user[0]['id'] == property_field[0]['manager']
+            edit |= user[0]['id'] == property_field[0]['property_owner']
+            edit |= user[0]['id'] == property_field[0]['seller']
 
         stage = self.__repository_stage.select(entity_name="stage", options={"filters":
                              [['typePlanning', "equals", sowing_system],
@@ -191,8 +257,8 @@ class StageServices:
                              ["crop_complete","equals",False]]
                              })
 
-        return (edit, property_stage)
-    
+        return (edit, property_stage, stage_id)
+        
     def upload_file(self, files):
         l_files = []
         results = {

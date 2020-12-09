@@ -1,3 +1,34 @@
+export interface StageBetween {
+  application_date: string;
+  end_traking_date: string;
+  observations: string;
+  products: StageProduct[];
+  start_traking_date: string;
+}
+
+export interface StageBetweenRequest extends StageBetween {
+  // images uploaded previously
+  images?: string[];
+  land_id: number;
+}
+
+export interface StageBetweenResponse extends StageBetween {
+  enabled: boolean;
+}
+
+export interface StageProduct {
+  color: string;
+  commercial_name: string;
+  concentration: string;
+  dose_by_ha: number;
+  formulator: string;
+  id: number;
+  ing_active: string;
+  presentation: string;
+  provider: string;
+  segment: string;
+}
+
 interface StageOne {
   real_date?: string;
   sowing_date?: string;

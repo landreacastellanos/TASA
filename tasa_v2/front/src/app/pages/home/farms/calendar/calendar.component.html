@@ -61,11 +61,14 @@
             </div>
           </div>
 
-          <div class="col-12 container-card-title no-margin-padding">
-            Cronograma segmento
+          <div
+            class="col-12 container-card-title no-margin-padding"
+            *ngIf="hasStartTrackingDate || hasEndTrackingDate"
+          >
+            Calendario del segmento
           </div>
 
-          <div class="col-12">
+          <div class="col-12" *ngIf="hasStartTrackingDate">
             <mat-label>Inicio segmento</mat-label>
 
             <mat-form-field
@@ -73,10 +76,11 @@
               appearance="outline"
             >
               <input
-                formControlName="end_segment_date"
+                [ngModel]="startTrackingDate"
                 matInput
                 color="warn"
                 [matDatepicker]="picker_end_segment_date"
+                disabled
               />
               <mat-datepicker-toggle
                 matSuffix
@@ -86,7 +90,7 @@
             </mat-form-field>
           </div>
 
-          <div class="col-12">
+          <div class="col-12" *ngIf="hasEndTrackingDate">
             <mat-label>Fin segmento</mat-label>
 
             <mat-form-field
@@ -94,56 +98,67 @@
               appearance="outline"
             >
               <input
-                formControlName="end_segment_date"
+                [ngModel]="endTrackingDate"
                 matInput
                 color="warn"
                 [matDatepicker]="picker_end_segment_date"
+                disabled
               />
-              <mat-datepicker-toggle class="mat-datepicker-toggle-custom"
+              <mat-datepicker-toggle
+                class="mat-datepicker-toggle-custom"
                 matSuffix
                 [for]="picker_end_segment_date"
               ></mat-datepicker-toggle>
               <mat-datepicker #picker_end_segment_date></mat-datepicker>
             </mat-form-field>
           </div>
+          <ng-container *ngIf="hasReferencePhoto">
+            <div class="col-12 pt-3 container-card-title no-margin-padding">
+              Antes y después de tratamiento
+            </div>
+            <div class="col-12 image_before">
+              <img
+                [src]="urlReferencePhoto"
+                width="100%"
+                height="100%"
+                alt="before"
+              />
+            </div>
 
-          <div class="col-12 pt-3 container-card-title no-margin-padding">
-            Foto de referencia
-          </div>
-          <div class="col-12 image_before">
-            <img
-              src="../../../../../../assets/img/Siembra_Arroz_Voleado.jpg"
-              width="100%"
-              height="100%"
-              alt="before"
-            />
-          </div>
+            <div class="col-12 mt-3 d-flex justify-content-around">
+              <button
+                *ngIf="hasSave"
+                class="rounded-button"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onClickBeforeReferencePhoto()"
+              >
+                <span class="px-2">Antes</span>
+                <mat-icon>{{
+                  referencePhotoSelected == "before"
+                    ? "visibility"
+                    : "visibility_off"
+                }}</mat-icon>
+              </button>
 
-          <div class="col-12 mt-3 d-flex justify-content-around">
-            <button
-              *ngIf="hasSave"
-              class="rounded-button"
-              mat-raised-button
-              color="primary"
-              type="submit"
-              (click)="onSave()"
-            >
-              <span class="px-2">despues</span>
-              <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
-            </button>
-
-            <button
-              *ngIf="hasSave"
-              class="rounded-button"
-              mat-raised-button
-              color="primary"
-              type="submit"
-              (click)="onSave()"
-            >
-              <span class="px-2">despues</span>
-              <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
-            </button>
-          </div>
+              <button
+                *ngIf="hasSave"
+                class="rounded-button"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onClickAfterReferencePhoto()"
+              >
+                <span class="px-2">Después</span>
+                <mat-icon>{{
+                  referencePhotoSelected == "after"
+                    ? "visibility"
+                    : "visibility_off"
+                }}</mat-icon>
+              </button>
+            </div>
+          </ng-container>
         </div>
       </div>
       <div class="col-md-8">
