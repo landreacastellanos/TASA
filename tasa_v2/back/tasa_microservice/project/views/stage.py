@@ -69,13 +69,23 @@ def calendar_stage(id_lote):
         results['details'].append(result)
     return results
 
-def get_stage_two(land_id):
+def set_stage():
+    request_data = GeneralsUtils.get_request_body(connexion.request)    
+    try:        
+        result = StageServices().set_stage(request_data)
+        results = result
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results
+
+def get_stage(land_id, stage_number):
     results = {
             "data": [],
             "details": []
         }
     try:        
-        result = StageServices().get_stage_two(land_id)
+        result = StageServices().get_stage(land_id, stage_number)
         results = result
     except Exception as exception:
         result = exception.args[0]
