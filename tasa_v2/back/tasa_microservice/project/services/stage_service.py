@@ -117,10 +117,10 @@ class StageServices:
         }
         
         land_id = data['land_id']
-        result_tuple = self.get_property_stage('',data['land_id'],stage_number)
+        result_tuple = self.get_property_stage('',data['land_id'],stage_number.value)
 
         property_stage = result_tuple[1]
-        stage_id = result_tuple[2]
+        stage_id = result_tuple[2]        
         
         images = []
         stage_db = {}
@@ -143,10 +143,18 @@ class StageServices:
         stage_db['stage_complete'] = complete_stage
 
         if(len(property_stage) == 0):
+
+            property_one = self.__repository_property_stage.select(entity_name="property_stage", options={"filters":
+                             [
+                             ['land_id', "equals", land_id],
+                             "and",
+                             ["crop_complete","equals",False]]
+                             })
+
             stage_db['land_id'] = land_id            
             stage_db['crop_complete'] = False
             stage_db['start_date'] = datetime.now()
-            stage_db['id_crop'] = str(uuid.uuid1())
+            stage_db['id_crop'] = property_one[0]['id_crop']
             stage_db['stage_id'] = stage_id
             self.__repository_property_stage.insert(stage_db)
             
