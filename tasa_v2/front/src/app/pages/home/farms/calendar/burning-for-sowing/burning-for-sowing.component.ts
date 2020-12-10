@@ -26,27 +26,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   endTrackingDate: Date;
   startTrackingDate: Date;
   products: StageProduct[];
-  productsAdd: StageProduct[] = [];
-  constructor(
-    public fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private landsService: LandsService,
-    private configurationService: ConfigurationService,
-    private calendarService: CalendarService
-  ) {
-    this.segmentId = this.route.snapshot.data.segmentId;
-    this.initAPI();
-  }
   mode: 'edit' | 'view' | 'create' = 'view';
   files: FileList;
-  get hasSave() {
-    return this.mode !== 'view';
-  }
-  get hasFilesButton() {
-    return this.mode !== 'view';
-  }
   textBack = 'Ir a segmentos';
   hasEndTrackingDate = true;
   hasStartTrackingDate = true;
@@ -64,7 +45,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   ];
   dataSourceProducts: MatTableDataSource<StageProduct>;
   dataSourceProductsAdd: MatTableDataSource<StageProduct>;
-
   burningForSowingForm: FormGroup = this.fb.group({
     observations: [
       { value: '', disabled: this.mode === 'view' },
@@ -77,8 +57,86 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     ],
   });
 
+  constructor(
+    public fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private landsService: LandsService,
+    private configurationService: ConfigurationService,
+    private calendarService: CalendarService
+  ) {
+    this.segmentId = this.route.snapshot.data.segmentId;
+    this.initAPI();
+  }
+
+  ngOnInit(): void {
+    this.init();
+  }
+
+  get hasSave() {
+    return this.mode !== 'view';
+  }
+  get hasFilesButton() {
+    return this.mode !== 'view';
+  }
   get controls() {
     return this.burningForSowingForm.controls;
+  }
+
+  initAPI() {
+    return this.calendarService
+      .getProducts(
+        this.landsService.idLand,
+        this.segmentId
+      )
+      .then((products) => {
+        this.products = products;
+        this.dataSourceProducts = new MatTableDataSource(products);
+        console.log({
+          products: this.products,
+          datasource: this.dataSourceProducts,
+        });
+      })
+      .then(() =>
+        this.calendarService.getStage(this.segmentId, this.landsService.idLand)
+      ).then((stageOneData) => this.init(stageOneData));
+  }
+
+  init(
+    {
+      observations = '',
+      application_date = '',
+      products = [],
+      enabled = false,
+      end_traking_date = '',
+      start_traking_date = '',
+    }: StageBetweenResponse = {} as StageBetweenResponse
+  ) {
+    console.log(this.selection.selected);
+
+    this.mode = enabled ? 'edit' : 'view';
+    // ? ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.endTrackingDate = end_traking_date && new Date(end_traking_date);
+      this.startTrackingDate =
+        start_traking_date && new Date(start_traking_date);
+      this.urlReferencePhoto = this.getUrlReferencePhoto();
+      //TODO: TEST ME because is not the same instances
+      this.selection.clear();
+      this.selection.select(...products);
+      this.dataSourceProductsAdd = new MatTableDataSource(this.selection.selected);
+    }, 1);
+
+    this.configurationService.disableForm(
+      this.burningForSowingForm,
+      this.mode === 'view'
+    );
+    this.burningForSowingForm.patchValue({
+      observations,
+      application_date: application_date && new Date(application_date),
+      products,
+    });
   }
 
   // FIXME: implement & integrate with API
@@ -169,71 +227,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   selectProduct(event, row) {
-    // tslint:disable-next-line: no-unused-expression
     event ? this.selection.toggle(row) : null;
-    if (event.checked) {
-      this.productsAdd.push(JSON.parse(JSON.stringify(row)));
-    }else{
-      this.productsAdd = this.productsAdd.filter(data => data.id !== row.id);
-    }
-    this.dataSourceProductsAdd = new MatTableDataSource(this.productsAdd);
-  }
-
-  ngOnInit(): void {
-    this.init();
-  }
-
-  initAPI() {
-    return this.calendarService
-      .getStage(this.segmentId, this.landsService.idLand)
-      .then((stageOneData) => this.init(stageOneData))
-      .then(() =>
-        this.calendarService.getProducts(
-          this.landsService.idLand,
-          this.segmentId
-        )
-      )
-      .then((products) => {
-        this.products = products;
-        this.dataSourceProducts = new MatTableDataSource(products);
-        this.dataSourceProductsAdd = new MatTableDataSource(this.productsAdd)
-        console.log({
-          products: this.products,
-          datasource: this.dataSourceProducts,
-        });
-      });
-  }
-
-  init(
-    {
-      observations = '',
-      application_date = '',
-      products = [],
-      enabled = false,
-      end_traking_date = '',
-      start_traking_date = '',
-    }: StageBetweenResponse = {} as StageBetweenResponse
-  ) {
-    this.mode = enabled ? 'edit' : 'view';
-    // ? ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.endTrackingDate = end_traking_date && new Date(end_traking_date);
-      this.startTrackingDate =
-        start_traking_date && new Date(start_traking_date);
-      this.urlReferencePhoto = this.getUrlReferencePhoto();
-      //TODO: TEST ME because is not the same instances
-      this.selection.clear();
-      this.selection.select(...products);
-    }, 1);
-
-    this.configurationService.disableForm(
-      this.burningForSowingForm,
-      this.mode === 'view'
-    );
-    this.burningForSowingForm.patchValue({
-      observations,
-      application_date: application_date && new Date(application_date),
-      products,
-    });
+    this.dataSourceProductsAdd.data = this.selection.selected;
   }
 }

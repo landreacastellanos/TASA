@@ -13,6 +13,9 @@ import { DataApiService } from '../../../../shared/services/data-api.service';
   providedIn: 'root',
 })
 export class CalendarService {
+
+  constructor(private dataApiService: DataApiService) { }
+
   getProducts(
     idLand: string | number,
     segmentId: string | number
@@ -23,7 +26,6 @@ export class CalendarService {
         return dataResponse[0];
       });
   }
-  constructor(private dataApiService: DataApiService) {}
 
   getStageOne(landId: string | number): Promise<StageOneResponse> {
     return this.dataApiService

@@ -70,7 +70,7 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts"></tr>
               <tr
                 mat-row
-                (click)="selection.toggle(row)"
+                (click)="selectProduct($event, row)"
                 [ngClass]="selection.isSelected(row) ? 'active' : ''"
                 *matRowDef="let row; columns: displayedColumnsProducts"
               ></tr>
