@@ -17,6 +17,7 @@
         </div>
         <div class="container-table mt-2">
           <div class="overflow-auto">
+            <button mat-button (click)="addProduct()">Add</button>
             <table mat-table [dataSource]="dataSourceProducts">
               <!-- Checkbox Column -->
               <ng-container matColumnDef="select">
@@ -91,8 +92,8 @@
               <!-- commercial_name column -->
               <ng-container matColumnDef="commercial_name">
                 <th mat-header-cell class="commercial_name" *matHeaderCellDef>Producto</th>
-                <td mat-cell class="commercial_name" *matCellDef="let row">
-                  <mat-form-field><input matInput></mat-form-field>
+                <td mat-cell class="commercial_name" *matCellDef="let row; let i = index;">
+                  <mat-form-field><input matInput [formControl]="getProductControl(i).commercial_name"></mat-form-field>
                   {{ row.commercial_name }}
                 </td>
               </ng-container>
@@ -136,10 +137,10 @@
               <ng-container matColumnDef="interactive">
                 <th mat-header-cell class="interactive" *matHeaderCellDef>
                 </th>
-                <td mat-cell class="interactive" *matCellDef="let row">
+                <td mat-cell class="interactive" *matCellDef="let row; let i = index">
                   <button mat-mini-fab color="primary"><mat-icon class="size-icon-check">edit_outline</mat-icon></button>
-                  <button mat-mini-fab color="primary" *ngIf="false"><mat-icon class="size-icon-check">check_circle_outline</mat-icon></button>
-                  <button mat-mini-fab color="danger"><mat-icon class="size-icon-check">delete_outline</mat-icon></button>
+                  <button mat-mini-fab color="primary" (click)="saveProduct(row,i)"><mat-icon class="size-icon-check">check_circle_outline</mat-icon></button>
+                  <button mat-mini-fab color="danger" (click)="deleteProduct(row)"><mat-icon class="size-icon-check">delete_outline</mat-icon></button>
                 </td>
               </ng-container>
       
