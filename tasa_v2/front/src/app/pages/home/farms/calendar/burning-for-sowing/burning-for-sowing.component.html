@@ -87,17 +87,14 @@
         <div class="container-table mt-2">
           <div class="overflow-auto">
             <table mat-table [dataSource]="dataSourceProductsAdd">
-              <!-- Checkbox Column -->
-              <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef class="select"></th>
-                <td mat-cell *matCellDef="let row" class="select">
-                </td>
-              </ng-container>
       
               <!-- commercial_name column -->
               <ng-container matColumnDef="commercial_name">
                 <th mat-header-cell class="commercial_name" *matHeaderCellDef>Producto</th>
-                <td mat-cell class="commercial_name" *matCellDef="let row">{{ row.commercial_name }}</td>
+                <td mat-cell class="commercial_name" *matCellDef="let row">
+                  <mat-form-field><input matInput></mat-form-field>
+                  {{ row.commercial_name }}
+                </td>
               </ng-container>
       
               <!-- business_name column -->
@@ -125,14 +122,31 @@
                   {{ row.dose_by_ha }}
                 </td>
               </ng-container>
+
+              <!-- total column -->
+              <ng-container matColumnDef="total">
+                <th mat-header-cell class="total" *matHeaderCellDef> Total
+                </th>
+                <td mat-cell class="total" *matCellDef="let row">
+                  total
+                </td>
+              </ng-container>
+
+              <!-- interactive column -->
+              <ng-container matColumnDef="interactive">
+                <th mat-header-cell class="interactive" *matHeaderCellDef>
+                </th>
+                <td mat-cell class="interactive" *matCellDef="let row">
+                  <button mat-mini-fab color="primary"><mat-icon class="size-icon-check">edit_outline</mat-icon></button>
+                  <button mat-mini-fab color="primary" *ngIf="false"><mat-icon class="size-icon-check">check_circle_outline</mat-icon></button>
+                  <button mat-mini-fab color="danger"><mat-icon class="size-icon-check">delete_outline</mat-icon></button>
+                </td>
+              </ng-container>
       
               <!-- Commons -->
-              <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsProductsAdd"></tr>
               <tr
-                mat-row
-                (click)="selection.toggle(row)"
-                [ngClass]="selection.isSelected(row) ? 'active' : ''"
-                *matRowDef="let row; columns: displayedColumnsProducts"
+                mat-row *matRowDef="let row; columns: displayedColumnsProductsAdd"
               ></tr>
       
               <!-- Row shown when there is no matching data. -->

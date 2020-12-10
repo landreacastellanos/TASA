@@ -41,7 +41,15 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     'commercial_name',
     'ing_active',
     'provider',
+    'dose_by_ha'
+  ];
+  displayedColumnsProductsAdd = [
+    'commercial_name',
+    'ing_active',
+    'provider',
     'dose_by_ha',
+    'total',
+    'interactive',
   ];
   dataSourceProducts: MatTableDataSource<StageProduct>;
   dataSourceProductsAdd: MatTableDataSource<StageProduct>;
