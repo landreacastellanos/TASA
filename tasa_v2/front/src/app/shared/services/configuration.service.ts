@@ -57,9 +57,14 @@ export class ConfigurationService {
   public disableForm(form: FormGroup, disable: boolean): void {
     const keys = Object.keys(form.value);
     keys.forEach((element) => {
-      disable
-        ? form.get(element).disable()
-        : form.get(element).enable();
+      disable ? form.get(element).disable() : form.get(element).enable();
+    });
+  }
+
+  public updateValues(from: object, target: object): void {
+    const keys = Object.keys(from);
+    keys.forEach((key) => {
+      target[key] = from[key];
     });
   }
 }
