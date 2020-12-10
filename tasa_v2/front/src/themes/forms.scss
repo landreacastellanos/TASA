@@ -18,6 +18,10 @@
   color: rgba(0, 0, 0, 0.78) !important ;
 }
 
+.mat-input-element.text-danger:disabled {
+  color: #fa1606 !important;
+}
+
 .mat-radio-disabled.mat-radio-checked {
   .mat-radio-checked .mat-radio-outer-circle,
   .mat-radio-outer-circle {
