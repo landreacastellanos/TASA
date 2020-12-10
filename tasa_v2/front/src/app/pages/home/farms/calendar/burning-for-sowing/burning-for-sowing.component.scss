@@ -1,3 +1,4 @@
+@import "../../../../../../themes/theme.scss";
 .number-button{
   color: white;
   background: #87b017 ;
@@ -9,7 +10,8 @@
   height: 24px;
 }
 
-.caja-fea{
-  background: #c1c9aa ;
-  height: 250px;
+.container-table{
+  border: 2px solid #87b017;
+  padding: 10px;
+  border-radius: 10px;
 }
