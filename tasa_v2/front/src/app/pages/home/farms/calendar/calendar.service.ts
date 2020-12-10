@@ -41,7 +41,7 @@ export class CalendarService {
   ): Promise<StageBetweenResponse> {
     return (
       this.dataApiService
-        .getAll(`get_stage_two?land_id=${landId}&stage=${stage}`)
+        .getAll(`get_stage?land_id=${landId}&stage_number=${stage}`)
         .then((dataResponse) => {
           return dataResponse[0];
         })

@@ -69,8 +69,50 @@ table.mat-table {
   flex-wrap: initial !important;
 }
 
+.container-table{
+  .mat-form-field{
+    width: 120px !important;
+  }
+
+  .mat-input-element {
+    font-size: 14px !important;
+  }
+
+  textarea.mat-input-element.cdk-textarea-autosize{
+    overflow: hidden;
+  }
+
+  .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline{
+    color: white;
+  }
+}
+
 @media (max-width: 768px) {
   .select {
     padding-left: 14px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-table{
+    .mat-form-field{
+      width: 100px !important;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .container-table{
+    .mat-form-field{
+      width: 90px !important;
+    }
+  }
+}
+
+@media (max-width: 300px) {
+  .container-table{
+    .mat-form-field{
+      width: 70px !important;
+    }
   }
 }

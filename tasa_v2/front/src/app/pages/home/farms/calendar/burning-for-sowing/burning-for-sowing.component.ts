@@ -44,12 +44,12 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     'dose_by_ha',
   ];
   displayedColumnsProductsAdd = [
+    'interactive',
     'commercial_name',
     'ing_active',
     'provider',
     'dose_by_ha',
     'total',
-    'interactive',
   ];
   dataSourceProducts: MatTableDataSource<StageProduct>;
   dataSourceProductsAdd: MatTableDataSource<StageProduct>;
@@ -116,8 +116,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       start_traking_date = '',
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
-    console.log(this.selection.selected);
-
     this.mode = enabled ? 'edit' : 'view';
     // ? ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
@@ -154,25 +152,90 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     return (this.productsControl.controls[index] as FormGroup).controls;
   }
 
-  addControl({ commercial_name = '', id = undefined } = {}) {
-    console.log(this.productsControl);
-
+  addControl({
+    commercial_name = '',
+    id = undefined,
+    color = '',
+    concentration = '',
+    dose_by_ha = undefined,
+    formulator = '',
+    ing_active = '',
+    presentation = '',
+    provider = '',
+    segment = '',
+  } = {}) {
     this.productsControl.push(
       this.fb.group({
         commercial_name: [
           {
             value: commercial_name,
-            disabled: this.mode === 'view',
+            disabled: this.mode === 'view' || commercial_name,
           },
           [Validators.required],
         ],
         id: [
           {
             value: id,
-            disabled: this.mode === 'view',
+            disabled: this.mode === 'view' || commercial_name,
           },
           [Validators.required],
         ],
+        color: [
+          {
+            value: color,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        concentration: [
+          {
+            value: concentration,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        dose_by_ha: [
+          {
+            value: dose_by_ha,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        formulator: [
+          {
+            value: formulator,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        ing_active: [
+          {
+            value: ing_active,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        presentation: [
+          {
+            value: presentation,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        provider: [
+          {
+            value: provider,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        segment: [
+          {
+            value: segment,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ]
       })
     );
   }
@@ -265,9 +328,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.commercial_name
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
+      }`;
   }
 
   selectProduct(event, row) {
@@ -282,7 +344,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     this.rehydrateFormProducts();
   }
 
-  addProduct(){
+  addProduct() {
     // FIXME: Please convert StageProduct to class :S
     this.selection.select({} as StageProduct);
     this.dataSourceProductsAdd.data = this.selection.selected;
