@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -41,7 +41,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     'commercial_name',
     'ing_active',
     'provider',
-    'dose_by_ha'
+    'dose_by_ha',
   ];
   displayedColumnsProductsAdd = [
     'commercial_name',
@@ -59,10 +59,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       [Validators.required],
     ],
     application_date: [{ value: '', disabled: this.mode === 'view' }, []],
-    products: [
-      { value: [], disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
+    products: this.fb.array([]),
   });
 
   constructor(
@@ -94,10 +91,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   initAPI() {
     return this.calendarService
-      .getProducts(
-        this.landsService.idLand,
-        this.segmentId
-      )
+      .getProducts(this.landsService.idLand, this.segmentId)
       .then((products) => {
         this.products = products;
         this.dataSourceProducts = new MatTableDataSource(products);
@@ -108,7 +102,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       })
       .then(() =>
         this.calendarService.getStage(this.segmentId, this.landsService.idLand)
-      ).then((stageOneData) => this.init(stageOneData));
+      )
+      .then((stageOneData) => this.init(stageOneData));
   }
 
   init(
@@ -133,7 +128,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       //TODO: TEST ME because is not the same instances
       this.selection.clear();
       this.selection.select(...products);
-      this.dataSourceProductsAdd = new MatTableDataSource(this.selection.selected);
+      this.rehydrateFormProducts();
+      this.dataSourceProductsAdd = new MatTableDataSource(
+        this.selection.selected
+      );
     }, 1);
 
     this.configurationService.disableForm(
@@ -145,6 +143,43 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       application_date: application_date && new Date(application_date),
       products,
     });
+  }
+
+  get productsControl() {
+    return this.burningForSowingForm.get('products') as FormArray;
+  }
+
+  // Table controls
+  getProductControl(index: number) {
+    return (this.productsControl.controls[index] as FormGroup).controls;
+  }
+
+  addControl({ commercial_name = '', id = undefined } = {}) {
+    console.log(this.productsControl);
+
+    this.productsControl.push(
+      this.fb.group({
+        commercial_name: [
+          {
+            value: commercial_name,
+            disabled: this.mode === 'view',
+          },
+          [Validators.required],
+        ],
+        id: [
+          {
+            value: id,
+            disabled: this.mode === 'view',
+          },
+          [Validators.required],
+        ],
+      })
+    );
+  }
+
+  rehydrateFormProducts() {
+    this.productsControl.clear();
+    this.selection.selected.forEach((element) => this.addControl(element));
   }
 
   // FIXME: implement & integrate with API
@@ -230,12 +265,37 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
-      }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.commercial_name
+    }`;
   }
 
   selectProduct(event, row) {
     event ? this.selection.toggle(row) : null;
     this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
+  }
+
+  deleteProduct(row) {
+    this.selection.deselect(row);
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
+  }
+
+  addProduct(){
+    // FIXME: Please convert StageProduct to class :S
+    this.selection.select({} as StageProduct);
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
+  }
+
+  saveProduct(row, i) {
+    const newProduct = this.productsControl.value[i];
+    const oldProduct = this.selection.selected[i];
+
+    this.configurationService.updateValues(newProduct, oldProduct);
+
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
   }
 }
