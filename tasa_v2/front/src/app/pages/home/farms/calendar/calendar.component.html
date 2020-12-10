@@ -166,7 +166,7 @@
       </div>
     </div>
   </div>
-  <div class="m-3">
+  <div class="m-3 d-flex">
     <button
       class="transparent-blackground white-border rounded-button"
       mat-raised-button
@@ -189,10 +189,10 @@
       #buttonFiles
       (click)="files.click()"
       *ngIf="hasSave"
-      class="no-outline rounded-button mt-3 ml-md-5"
+      class="no-outline rounded-button ml-md-5"
       mat-raised-button
       color="primary"
-      type="submit"
+      type="button"
     >
       <span
         >+ 3 Fotografías
@@ -203,7 +203,7 @@
     </button>
     <button
       *ngIf="hasSave"
-      class="no-outline mt-3 ml-md-5 rounded-button"
+      class="no-outline ml-md-5 rounded-button"
       mat-raised-button
       color="primary"
       type="submit"
