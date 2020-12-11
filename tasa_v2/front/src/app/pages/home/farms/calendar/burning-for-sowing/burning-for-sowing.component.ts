@@ -122,8 +122,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       //TODO: TEST ME because is not the same instances
       this.selection.clear();
-      console.log(this.products);
-      console.log(products);
       
       if(this.products){
         products.forEach(product =>{
