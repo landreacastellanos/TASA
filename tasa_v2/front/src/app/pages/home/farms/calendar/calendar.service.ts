@@ -59,7 +59,7 @@ export class CalendarService {
               concentration: '0,05',
               dose_by_ha: 1.9,
               formulator: 'Solitec',
-              id: 1,
+              id: 110,
               ing_active: 'Bacterias',
               presentation: '1 y Lts',
               provider: 'Solitec',

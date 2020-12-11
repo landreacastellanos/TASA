@@ -51,7 +51,7 @@
               <!-- dose_by_ha column -->
               <ng-container matColumnDef="dose_by_ha">
                 <th mat-header-cell class="dose_by_ha" *matHeaderCellDef>
-                  DósisxHA
+                  Dósisx Ha
                 </th>
                 <td mat-cell class="dose_by_ha" *matCellDef="let row">
                   {{ row.dose_by_ha }}
@@ -81,9 +81,17 @@
                 <th mat-header-cell class="interactive" *matHeaderCellDef>
                 </th>
                 <td mat-cell class="interactive" *matCellDef="let row; let i = index">
-                  <mat-icon *ngIf="!row.id">edit_outline</mat-icon>
-                  <mat-icon (click)="saveProduct(row,i)" *ngIf="!row.id">check_circle_outline</mat-icon>
-                  <mat-icon (click)="deleteProduct(row)" *ngIf="mode !== 'view'">delete_outline</mat-icon>
+                  <div class="interactive-container">
+                    <button *ngIf="mode !== 'view'" (click)="deleteProduct(row,i)">
+                      <mat-icon class="delete">delete_outline</mat-icon>
+                    </button>
+                    <button *ngIf="!row.id && !isDisabledProduct(i)" type="submit" (click)="saveProduct(row,i)">
+                      <mat-icon color="primary">check_circle_outline</mat-icon>
+                    </button>
+                    <button *ngIf="!row.id && isDisabledProduct(i)" (click)="editProduct(i)">
+                      <mat-icon color="primary">edit_outline</mat-icon>
+                    </button>
+                  </div>
                 </td>
               </ng-container>
 
@@ -92,8 +100,8 @@
                 <th mat-header-cell class="commercial_name" *matHeaderCellDef>Producto</th>
                 <td mat-cell class="commercial_name" *matCellDef="let row; let i = index;">
                   <mat-form-field appearance="outline">
-                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5" [formControl]="getProductControl(i).commercial_name"></textarea>
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                      [formControl]="getProductControl(i).commercial_name"></textarea>
                   </mat-form-field>
                 </td>
               </ng-container>
@@ -105,8 +113,8 @@
                 </th>
                 <td mat-cell class="ing_active" *matCellDef="let row; let i = index;">
                   <mat-form-field appearance="outline">
-                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5" [formControl]="getProductControl(i).ing_active"></textarea>
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                      [formControl]="getProductControl(i).ing_active"></textarea>
                   </mat-form-field>
                 </td>
               </ng-container>
@@ -116,8 +124,8 @@
                 <th mat-header-cell class="provider" *matHeaderCellDef>Proveedor</th>
                 <td mat-cell class="provider" *matCellDef="let row; let i = index;">
                   <mat-form-field appearance="outline">
-                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5" [formControl]="getProductControl(i).provider"></textarea>
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                      [formControl]="getProductControl(i).provider"></textarea>
                   </mat-form-field>
                 </td>
               </ng-container>
@@ -129,8 +137,8 @@
                 </th>
                 <td mat-cell class="dose_by_ha" *matCellDef="let row; let i = index;">
                   <mat-form-field appearance="outline">
-                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="5" [formControl]="getProductControl(i).dose_by_ha"></textarea>
+                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+                      [formControl]="getProductControl(i).dose_by_ha"></textarea>
                   </mat-form-field>
                 </td>
               </ng-container>
@@ -151,11 +159,12 @@
               <!-- Row shown when there is no matching data. -->
               <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="8">
-                  Cargando ...
+                  Agregar productos
                 </td>
               </tr>
             </table>
-            <button mat-raised-button (click)="addProduct()" type="button" color="primary">Agregar
+            <button mat-raised-button (click)="addProduct()" type="button" color="primary" class="rounded-button add-button">
+              Agregar
               <mat-icon>add_circle_outline</mat-icon>
             </button>
           </div>

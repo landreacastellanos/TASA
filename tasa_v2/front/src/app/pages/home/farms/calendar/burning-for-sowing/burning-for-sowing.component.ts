@@ -61,6 +61,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     application_date: [{ value: '', disabled: this.mode === 'view' }, []],
     products: this.fb.array([]),
   });
+  enableEditProduct = false;
 
   constructor(
     public fb: FormBuilder,
@@ -95,10 +96,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .then((products) => {
         this.products = products;
         this.dataSourceProducts = new MatTableDataSource(products);
-        console.log({
-          products: this.products,
-          datasource: this.dataSourceProducts,
-        });
       })
       .then(() =>
         this.calendarService.getStage(this.segmentId, this.landsService.idLand)
@@ -125,7 +122,17 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       //TODO: TEST ME because is not the same instances
       this.selection.clear();
-      this.selection.select(...products);
+      console.log(this.products);
+      console.log(products);
+      
+      if(this.products){
+        products.forEach(product =>{
+          const selectionProduct = this.products.find(data => data.id === product.id);
+          if(selectionProduct){
+            this.selection.select(selectionProduct);
+          }
+        })
+      }
       this.rehydrateFormProducts();
       this.dataSourceProductsAdd = new MatTableDataSource(
         this.selection.selected
@@ -145,6 +152,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   get productsControl() {
     return this.burningForSowingForm.get('products') as FormArray;
+  }
+
+  isDisabledProduct(index: number){
+    return (this.productsControl.controls[index] as FormGroup).controls.commercial_name.disabled;
   }
 
   // Table controls
@@ -178,21 +189,18 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
             value: id,
             disabled: this.mode === 'view' || commercial_name,
           },
-          [Validators.required],
         ],
         color: [
           {
             value: color,
             disabled: this.mode === 'view' || commercial_name,
           },
-          [Validators.required],
         ],
         concentration: [
           {
             value: concentration,
             disabled: this.mode === 'view' || commercial_name,
-          },
-          [Validators.required],
+          }
         ],
         dose_by_ha: [
           {
@@ -205,8 +213,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: formulator,
             disabled: this.mode === 'view' || commercial_name,
-          },
-          [Validators.required],
+          }
         ],
         ing_active: [
           {
@@ -219,8 +226,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: presentation,
             disabled: this.mode === 'view' || commercial_name,
-          },
-          [Validators.required],
+          }
         ],
         provider: [
           {
@@ -233,8 +239,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: segment,
             disabled: this.mode === 'view' || commercial_name,
-          },
-          [Validators.required],
+          }
         ]
       })
     );
@@ -338,26 +343,47 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     this.rehydrateFormProducts();
   }
 
-  deleteProduct(row) {
+  deleteProduct(row, i) {    
+    if(!this.isDisabledProduct(i)){
+      this.enableEditProduct= false;
+    }
     this.selection.deselect(row);
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();
   }
 
   addProduct() {
-    // FIXME: Please convert StageProduct to class :S
-    this.selection.select({} as StageProduct);
+    if(this.enableEditProduct){
+      return
+    }
+    this.selection.select(new StageProduct);
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();
+    this.enableEditProduct = true;
   }
 
   saveProduct(row, i) {
-    const newProduct = this.productsControl.value[i];
+    const newProduct = this.productsControl.value[0];
+    if(!newProduct.commercial_name || !newProduct.dose_by_ha || !newProduct.provider || !newProduct.commercial_name){
+      this.snackBar.open('Debes llenar todos los campos', 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-warn'],
+      });
+      return
+    }
     const oldProduct = this.selection.selected[i];
-
     this.configurationService.updateValues(newProduct, oldProduct);
 
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();
+    this.enableEditProduct = false;
+  }
+
+  editProduct(index){
+    if(this.enableEditProduct){
+      return
+    }
+    this.enableEditProduct = true;
+    this.configurationService.disableForm(this.productsControl.controls[index] as FormGroup, false)
   }
 }

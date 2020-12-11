@@ -16,7 +16,7 @@ export interface StageBetweenResponse extends StageBetween {
   enabled: boolean;
 }
 
-export interface StageProduct {
+export class StageProduct {
   color: string;
   commercial_name: string;
   concentration: string;
@@ -27,6 +27,19 @@ export interface StageProduct {
   presentation: string;
   provider: string;
   segment: string;
+
+  constructor() {
+    this.color = '';
+    this.commercial_name = '';
+    this.concentration = '';
+    this.dose_by_ha = undefined;
+    this.formulator = '';
+    this.id = undefined;
+    this.ing_active = '';
+    this.presentation = '';
+    this.provider = '';
+    this.segment = '';
+  }
 }
 
 interface StageOne {
