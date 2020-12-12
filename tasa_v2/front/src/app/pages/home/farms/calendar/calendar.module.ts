@@ -13,15 +13,12 @@ import { CalendarComponent } from './calendar.component';
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { ListStagesComponent } from './list-stages/list-stages.component';
 import { SeedtimeComponent } from './seedtime/seedtime.component';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowing.component';
-
-
-
-
+import { SharedDateModule } from '../../../../shared/modules/shared-date.module';
 @NgModule({
   declarations: [
     CalendarComponent,
@@ -46,7 +43,8 @@ import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowi
     MatPaginatorModule,
     MatCheckboxModule,
     CalendarRoutingModule,
-    MatExpansionModule
-  ]
+    MatExpansionModule,
+    SharedDateModule,
+  ],
 })
-export class CalendarModule { }
+export class CalendarModule {}
