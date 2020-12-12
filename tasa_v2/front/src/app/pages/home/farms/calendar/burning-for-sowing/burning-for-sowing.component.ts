@@ -126,7 +126,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.startTrackingDate =
         start_traking_date && new Date(start_traking_date);
       this.urlReferencePhoto = this.getUrlReferencePhoto();
-      //TODO: TEST ME because is not the same instances
       this.selection.clear();
       
       if(this.products){
@@ -281,6 +280,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         const dataRequest: StageBetweenRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landsService.idLand),
+          stage_number: this.segmentId,
           ...values,
         };
         if (filesSaved) {
