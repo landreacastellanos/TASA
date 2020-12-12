@@ -188,7 +188,7 @@
       <div class="mt-3">
         <mat-form-field class="formOutline" appearance="outline">
           <textarea formControlName="observations" class="inputOutline" matInput cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
+            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="20"
             placeholder="Ej. Escribe todas las observaciones que veas pertinentes." required></textarea>
         </mat-form-field>
         <div *ngIf="submitted && controls.observation?.errors?.required" class="warning">
