@@ -286,7 +286,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         if (filesSaved) {
           dataRequest.images = filesSaved;
         }
-        return this.calendarService.setBurnStage(dataRequest);
+        return this.calendarService.setStage(dataRequest);
       })
       .then(
         (message) =>
