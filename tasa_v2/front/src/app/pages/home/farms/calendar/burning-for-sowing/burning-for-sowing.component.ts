@@ -79,7 +79,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   ngOnInit(): void {
     this.init();
   }
-
+  get title() {
+    return (
+      this.route.snapshot.data.title[
+        this.landsService?.landSelected?.sowing_system
+      ] || ''
+    );
+  }
   get hasSave() {
     return this.mode !== 'view';
   }
@@ -237,8 +243,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: segment,
             disabled: this.mode === 'view' || commercial_name,
-          }
-        ]
+          },
+          [Validators.required],
+        ],
       })
     );
   }
@@ -331,8 +338,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
-      }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.commercial_name
+    }`;
   }
 
   selectProduct(event, row) {
