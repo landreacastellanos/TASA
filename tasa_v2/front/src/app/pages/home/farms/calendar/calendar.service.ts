@@ -6,6 +6,7 @@ import {
   StageOneRequest,
   StageOneResponse,
   UploadFileResponse,
+  StageHarvestRequest,
 } from 'src/app/shared/models/calendar';
 import { DataApiService } from '../../../../shared/services/data-api.service';
 
@@ -52,6 +53,17 @@ export class CalendarService {
         return dataResponse[0];
       });
   }
+
+  setStageHarvest(data: StageHarvestRequest): Promise<string> {
+    console.debug('CalendarService:setStageHarvest', { data });
+    
+    return this.dataApiService
+      .post(data, 'set_stage_harvest')
+      .then((dataResponse) => {
+        return dataResponse[0];
+      });
+  }
+
 
   setStage(data: StageBetweenRequest): Promise<string> {
     console.debug('CalendarService:setStage', { data });
