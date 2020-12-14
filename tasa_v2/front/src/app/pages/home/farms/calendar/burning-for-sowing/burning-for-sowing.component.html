@@ -1,7 +1,7 @@
 <form [formGroup]="burningForSowingForm" class="cards-farms">
   <div class="cards-farms-title">
     <img src="../../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png" alt="" />
-    <h4>Quema para la siembra - (texto procesado)</h4>
+    <h4>{{title}}</h4>
   </div>
   <div class="row cards-farms-container">
     <div class="col-12 col-lg-9 row no-gutters">
@@ -9,7 +9,7 @@
         <div class="d-inline-flex">
           <div class="number-button mr-2">1</div>
           <div>
-            <strong>Selecciona de nuestros productos o adiciona otros</strong>
+            <strong>Técnicas agricolas sugiere en este segmento:</strong>
           </div>
         </div>
         <div class="container-table mt-2">
@@ -70,6 +70,12 @@
                 </td>
               </tr>
             </table>
+          </div>
+        </div>
+        <div class="d-inline-flex mt-2">
+          <div class="number-button mr-2">2</div>
+          <div>
+            <strong>Escribe tu decisón y guárdala</strong>
           </div>
         </div>
         <div class="container-table mt-2">
@@ -174,7 +180,7 @@
     <div class="col-12 col-lg-3">
       <!-- OBSERVATION -->
       <div class="d-inline-flex mt-2">
-        <div class="number-button mr-2">2</div>
+        <div class="number-button mr-2">3</div>
         <div>
           <strong>Escribe tus observaciones</strong>
         </div>
@@ -182,7 +188,7 @@
       <div class="mt-3">
         <mat-form-field class="formOutline" appearance="outline">
           <textarea formControlName="observations" class="inputOutline" matInput cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
+            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="20"
             placeholder="Ej. Escribe todas las observaciones que veas pertinentes." required></textarea>
         </mat-form-field>
         <div *ngIf="submitted && controls.observation?.errors?.required" class="warning">
@@ -192,14 +198,14 @@
 
       <!-- APPLY DATE -->
       <div class="d-inline-flex mt-2">
-        <div class="number-button mr-2">3</div>
+        <div class="number-button mr-2">4</div>
         <div>
           <strong>Seleciona la fecha de aplicación</strong>
         </div>
       </div>
       <div class="mt-3">
         <mat-form-field class="formOutline" appearance="outline">
-          <input matInput formControlName="application_date" [matDatepicker]="picker_application_date" />
+          <input matInput class="text-danger" formControlName="application_date" [matDatepicker]="picker_application_date" />
           <mat-datepicker-toggle class="mat-datepicker-toggle-custom" matSuffix [for]="picker_application_date">
           </mat-datepicker-toggle>
           <mat-datepicker #picker_application_date></mat-datepicker>

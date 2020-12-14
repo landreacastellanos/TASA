@@ -10,6 +10,7 @@ export interface StageBetweenRequest extends StageBetween {
   // images uploaded previously
   images?: string[];
   land_id: number;
+  stage_number: number;
 }
 
 export interface StageBetweenResponse extends StageBetween {

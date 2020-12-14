@@ -79,7 +79,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   ngOnInit(): void {
     this.init();
   }
-
+  get title() {
+    return (
+      this.route.snapshot.data.title[
+        this.landsService?.landSelected?.sowing_system
+      ] || ''
+    );
+  }
   get hasSave() {
     return this.mode !== 'view';
   }
@@ -120,7 +126,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.startTrackingDate =
         start_traking_date && new Date(start_traking_date);
       this.urlReferencePhoto = this.getUrlReferencePhoto();
-      //TODO: TEST ME because is not the same instances
       this.selection.clear();
       
       if(this.products){
@@ -237,8 +242,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: segment,
             disabled: this.mode === 'view' || commercial_name,
-          }
-        ]
+          },
+          [Validators.required],
+        ],
       })
     );
   }
@@ -274,12 +280,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         const dataRequest: StageBetweenRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landsService.idLand),
+          stage_number: this.segmentId,
           ...values,
         };
         if (filesSaved) {
           dataRequest.images = filesSaved;
         }
-        return this.calendarService.setBurnStage(dataRequest);
+        return this.calendarService.setStage(dataRequest);
       })
       .then(
         (message) =>
@@ -331,8 +338,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
-      }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.commercial_name
+    }`;
   }
 
   selectProduct(event, row) {

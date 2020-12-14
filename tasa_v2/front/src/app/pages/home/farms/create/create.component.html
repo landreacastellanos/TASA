@@ -251,12 +251,12 @@
                 <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>Ver lista de
                 fincas
             </button>
-            <button class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="button"
+            <button class="ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="button"
                 (click)="edit()" *ngIf="mode === 'view' && roleId === roleIdAdmin">
                 <span class="px-5">Editar</span>
                 <mat-icon class="size-icon-check">edit_outline</mat-icon>
             </button>
-            <button class="no-outline ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="submit"
+            <button class="ml-md-5 rounded-button mt-3" mat-raised-button color="primary" type="submit"
                 (click)="onSubmit()" *ngIf="mode !== 'view'">
                 <span class="px-5">Guardar cambios</span>
                 <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
