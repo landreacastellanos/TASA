@@ -11,12 +11,13 @@ html,
 body {
   margin: 0px;
   padding: 0px;
+  overflow: hidden;
 }
 body {
   font-family: Roboto, "Helvetice New", "Arial", sans-serif;
 }
 
-*{
+* {
   font-size: 16px;
 }
 
@@ -106,12 +107,12 @@ button.mat-button-base {
 button.rounded-button {
   border-radius: 18px;
 
-  .mat-button-wrapper{
+  .mat-button-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .rounded-button-text{
+    .rounded-button-text {
       margin-right: 5px;
     }
   }
@@ -129,60 +130,63 @@ button.white-border {
   height: 20px;
 }
 
-.no-margin-padding{
+.no-margin-padding {
   margin: 0;
   padding: 0;
 }
 
-.card-container{
-
-  .container-card-title{
+.card-container {
+  .container-card-title {
     font-weight: bold;
     margin-bottom: 10px;
-    color: map-get($theme-colors, "secondary")
+    color: map-get($theme-colors, "secondary");
   }
-  .mat-expansion-panel{
+  .mat-expansion-panel {
     background-color: map-get($theme-colors, "primary");
     border-radius: 20px;
     padding: 6px 15px !important;
     margin-bottom: 30px;
     color: white;
 
-    .mat-expansion-panel-header{
+    .mat-expansion-panel-header:hover {
+      background-color: map-get($theme-colors, "primary") !important;
+    }
+
+    .mat-expansion-panel-header {
       padding: 0;
 
-      .mat-expansion-indicator::after{
+      .mat-expansion-indicator::after {
         color: white;
       }
     }
-  
-    .header-container-card-green{
+
+    .header-container-card-green {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 18px;
       color: white;
-  
-      h3{
+
+      h3 {
         font-size: 18px;
         font-weight: bold;
         margin: 0;
       }
     }
-  
-    .content-container-card-green{
+
+    .content-container-card-green {
       margin-top: 10px;
-  
-      .line-container-card-green{
+
+      .line-container-card-green {
         display: flex;
         align-items: center;
-    
-        .subtitle-container-card-green{
+
+        .subtitle-container-card-green {
           font-weight: bold;
           font-size: 16px;
         }
-    
-        p{
+
+        p {
           font-size: 16px;
           padding-left: 15px;
           margin-bottom: 2px;
@@ -191,26 +195,28 @@ button.white-border {
     }
   }
 
-  .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-title, .mat-expansion-panel-header[aria-disabled=true] .mat-expansion-panel-header-description{
+  .mat-expansion-panel-header[aria-disabled="true"]
+    .mat-expansion-panel-header-title,
+  .mat-expansion-panel-header[aria-disabled="true"]
+    .mat-expansion-panel-header-description {
     color: white;
   }
-  
 }
 
-.container-card-green{
+.container-card-green {
   background-color: map-get($theme-colors, "primary");
   border-radius: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-bottom: 30px;
 
-  .header-container-card-green{
+  .header-container-card-green {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 18px;
 
-    h3{
+    h3 {
       font-size: 18px;
       font-weight: bold;
       margin: 0;
@@ -241,36 +247,31 @@ button.white-border {
 }
 
 @media (max-width: 576px) {
-
-  .line-container-card-green{
+  .line-container-card-green {
     justify-content: space-between;
 
-    p{
+    p {
       text-align: right;
     }
   }
 }
 
 @media (max-width: 300px) {
-  .card-container{
-
-    .mat-expansion-panel{
-      
-      .mat-expansion-panel-body{
+  .card-container {
+    .mat-expansion-panel {
+      .mat-expansion-panel-body {
         padding-right: 0;
         padding-left: 0;
       }
-      .content-container-card-green{
-    
-        .line-container-card-green{
+      .content-container-card-green {
+        .line-container-card-green {
           justify-content: space-between;
-      
-          p{
+
+          p {
             text-align: right;
           }
         }
       }
     }
-    
   }
 }
