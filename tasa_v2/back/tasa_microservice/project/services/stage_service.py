@@ -182,11 +182,11 @@ class StageServices:
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
 
-        stage_one = Stage.stage_one.value        
+        stage = self.calulate_stage(stage_number)    
     
         if(len(property_stage) == 0):
 
-            property_stage_one = self.get_property_stage(email, land_id, stage_one)[1]         
+            property_stage_one = self.get_property_stage(email, land_id, stage)[1]         
 
             edit &= (len(property_stage_one) > 0)
 
@@ -198,7 +198,7 @@ class StageServices:
             if(edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-                date =  GeneralsUtils.try_parse_date_time(data['sowing_date'])
+                date =  self.validation_system(stage_number, email, land_id, data)
                 start_traking_date = str(date - timedelta(days=dates[1]))
                 end_traking_date = str(date - timedelta(days=dates[0]))
 
@@ -417,3 +417,25 @@ class StageServices:
            start = DateStage.stage_three_start.value
            end = DateStage.stage_three_end.value
         return (start, end)
+
+    def calulate_stage(self, stage):
+        stage_result = 0
+        if stage == Stage.stage_two.value:
+           stage_result = Stage.stage_one.value
+        elif stage == Stage.stage_three.value:
+           stage_result = Stage.stage_two.value 
+        return stage_result
+    
+    def validation_system(self, stage, email, land_id, data):
+        result = ''
+        if stage == Stage.stage_two.value:
+           result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        elif stage == Stage.stage_three.value:
+           result = self.get_date_initial(email, land_id)
+        return result
+
+    def get_date_initial(self, email, land_id):
+        property_stage_one = self.get_property_stage(email, land_id, Stage.stage_one.value)[1]
+        data = json.loads(property_stage_one[0]['data'])
+        result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        return result
