@@ -57,7 +57,9 @@
           <div class="col-12 container-card-green">
             <div class="header-container-card-green">
               <h3>{{ landsService.landSelected?.batchs?.name }}</h3>
-              <h3>{{ landsService.landSelected?.batchs?.hectares_number }} Ha</h3>
+              <h3>
+                {{ landsService.landSelected?.batchs?.hectares_number }} Ha
+              </h3>
             </div>
           </div>
 
@@ -166,9 +168,9 @@
       </div>
     </div>
   </div>
-  <div class="m-3 d-flex">
+  <div class="m-3 row">
     <button
-      class="transparent-blackground white-border rounded-button"
+      class="transparent-blackground white-border rounded-button col-md-auto col-12 mt-2"
       mat-raised-button
       (click)="onBack()"
       color="primary"
@@ -189,7 +191,7 @@
       #buttonFiles
       (click)="files.click()"
       *ngIf="hasSave"
-      class="no-outline rounded-button ml-md-5"
+      class="no-outline rounded-button ml-md-5 col-md-auto col-12 mt-2"
       mat-raised-button
       color="primary"
       type="button"
@@ -203,13 +205,13 @@
     </button>
     <button
       *ngIf="hasSave"
-      class="no-outline ml-md-5 rounded-button"
+      class="no-outline ml-md-5 rounded-button col-md-auto col-12 mt-2"
       mat-raised-button
       color="primary"
       type="submit"
       (click)="onSave()"
     >
-      <span class="px-5">Guardar cambios</span>
+      <span class="px-1 px-md-5">Guardar cambios</span>
       <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
     </button>
   </div>
