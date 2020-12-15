@@ -19,12 +19,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowing.component';
 import { SharedDateModule } from '../../../../shared/modules/shared-date.module';
+import { HarvestTimeComponent } from './harvest-time/harvest-time.component';
 @NgModule({
   declarations: [
     CalendarComponent,
     ListStagesComponent,
     SeedtimeComponent,
     BurningForSowingComponent,
+    HarvestTimeComponent,
   ],
   imports: [
     MatNativeDateModule,
