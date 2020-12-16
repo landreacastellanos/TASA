@@ -12,12 +12,12 @@
   schemes:
     - http
   paths:
-    /get_roles:
+    /get_notification:
       get:
           tags:
-            - "Roles"
-          summary: "Roles"
-          operationId: "get_roles"
+            - "Notification"
+          summary: "Notification"
+          operationId: "get_notification"
           description: "Roles"
           produces:
             - "application/json"
