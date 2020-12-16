@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArrozSecano } from '../../../../../shared/models/farm';
 import { StageHarvestRequest } from '../../../../../shared/models/calendar';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
@@ -17,20 +17,18 @@ export class HarvestTimeComponent implements OnInit {
   public mode: 'edit' | 'view' | 'create' = 'view';
   submitted: boolean;
   files: FileList;
+  segmentId: string;
   constructor(
     public fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
     private landsService: LandsService,
     private configurationService: ConfigurationService,
     private calendarService: CalendarService
   ) {
-    // FIXME:
-    this.calendarService
-      .getStageOne(this.landsService.idLand)
-      .then((stageOneData) => {
-        this.init(stageOneData);
-      });
+    this.segmentId = this.route.snapshot.data.segmentId;
+    this.intAPI();
   }
   textBack = 'Ir a segmentos';
   get hasSave() {
@@ -39,8 +37,19 @@ export class HarvestTimeComponent implements OnInit {
   get hasFilesButton() {
     return this.mode !== 'view';
   }
+  get title() {
+    return (
+      this.route.snapshot.data.title[
+        this.landsService?.landSelected?.sowing_system
+      ] || ''
+    );
+  }
 
   harvestTimeForm: FormGroup = this.fb.group({
+    amount_quintals: [
+      { value: '', disabled: this.mode === 'view' },
+      [Validators.required],
+    ],
     observations: [
       { value: '', disabled: this.mode === 'view' },
       [Validators.required],
@@ -56,11 +65,10 @@ export class HarvestTimeComponent implements OnInit {
   }
 
   init({
-    type_sowing = '',
-    variety = '',
-    sowing_date = '',
-    real_date = '',
-    enabled = false,
+    amount_quintals = '',
+    observations = '',
+    harvest_date = '',
+    enabled = true,
   } = {}) {
     this.mode = enabled ? 'edit' : 'view';
     this.configurationService.disableForm(
@@ -68,11 +76,19 @@ export class HarvestTimeComponent implements OnInit {
       this.mode === 'view'
     );
     this.harvestTimeForm.patchValue({
-      type_sowing,
-      variety,
-      sowing_date: sowing_date && new Date(sowing_date),
-      real_date: real_date && new Date(real_date),
+      observations,
+      amount_quintals,
+      harvest_date: harvest_date && new Date(harvest_date),
     });
+  }
+
+  intAPI() {
+    // FIXME:
+    return this.calendarService
+      .getStage(this.segmentId, this.landsService.idLand)
+      .then((stageOneData) => {
+        this.init(stageOneData);
+      });
   }
 
   get controls() {
@@ -123,10 +139,7 @@ export class HarvestTimeComponent implements OnInit {
             panelClass: ['snackbar-success'],
           })
       )
-      .then(() => this.calendarService.getStageOne(this.landsService.idLand))
-      .then((stageOneData) => {
-        this.init(stageOneData);
-      })
+      .then(() => this.intAPI())
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });

@@ -1,1 +1,114 @@
-<p>harvest-time works!</p>
+<form [formGroup]="harvestTimeForm" class="cards-farms">
+  <div class="cards-farms-title">
+    <img
+      src="../../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png"
+      alt=""
+    />
+    <h4>{{ title }}</h4>
+  </div>
+  <div class="row cards-farms-container">
+    <div class="specs col-12 col-md-8">
+      <!-- INPUT QUINTALES -->
+      <div class="d-inline-flex mt-3">
+        <div class="number-button mr-2">1</div>
+        <div>
+          <strong>Ingresar los quintales que se produjeron en el lote</strong>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mt-3 col-md-6 col-12">
+          <mat-label>Cantidad de quintales (QQ) por lote:</mat-label>
+          <mat-form-field class="formOutline" appearance="outline">
+            <input
+              matInput
+              placeholder="Ej. 120"
+              formControlName="amount_quintals"
+              type="text"
+              class="inputOutline"
+              required
+            />
+          </mat-form-field>
+          <!-- FIXME:         -->
+          <div
+            *ngIf="submitted && controls.amount_quintals?.errors?.required"
+            class="warning"
+          >
+            Este campo es requerido
+          </div>
+        </div>
+
+        <div class="mt-3 col-md-6 col-12">
+          <mat-label class="text-primary">Cantidad de quintales (QQ) por hectárea:</mat-label>
+          <mat-form-field class="formOutline mat-focused" appearance="outline">
+            <input
+              matInput
+              placeholder="0"
+              formControlName="amount_quintals_ha"
+              type="text"
+              class="inputOutline text-primary"
+              required
+            />
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- OBSERVATION INPUT -->
+      <div class="d-inline-flex mt-3">
+        <div class="number-button mr-2">2</div>
+        <div>
+          <strong>Escribe tus observaciones</strong>
+        </div>
+      </div>
+      <div class="mt-3">
+        <mat-form-field class="formOutline" appearance="outline">
+          <textarea
+            formControlName="observations"
+            class="inputOutline"
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="5"
+            cdkAutosizeMaxRows="20"
+            placeholder="Ej. Escribe todas las observaciones que veas pertinentes."
+            required
+          ></textarea>
+        </mat-form-field>
+        <div
+          *ngIf="submitted && controls.observation?.errors?.required"
+          class="warning"
+        >
+          Este campo es requerido
+        </div>
+      </div>
+
+      <!-- HARVEST DATE -->
+      <div class="d-inline-flex mt-2">
+        <div class="number-button mr-2">3</div>
+        <div>
+          <strong>Seleciona la fecha de cosecha</strong>
+        </div>
+      </div>
+      <div class="mx-2 mt-3">
+        <div><mat-label>Fecha de cosecha</mat-label></div>
+        <div class="mt-3">
+          <mat-form-field class="formOutline" appearance="outline">
+            <input
+              matInput
+              class="text-danger"
+              formControlName="harvest_date"
+              [matDatepicker]="picker_harvest_date"
+            />
+            <mat-datepicker-toggle
+              class="mat-datepicker-toggle-custom"
+              matSuffix
+              [for]="picker_harvest_date"
+            >
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker_harvest_date></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">Menos carga química</div>
+  </div>
+</form>
