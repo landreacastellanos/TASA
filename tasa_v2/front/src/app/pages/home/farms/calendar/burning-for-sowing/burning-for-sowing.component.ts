@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,7 +18,7 @@ import { LandsService } from '../lands.service';
 @Component({
   selector: 'app-burning-for-sowing',
   templateUrl: './burning-for-sowing.component.html',
-  styleUrls: ['./burning-for-sowing.component.css'],
+  styleUrls: ['./burning-for-sowing.component.scss'],
 })
 export class BurningForSowingComponent implements OnInit, CalendarChildren {
   submitted: boolean;
@@ -26,26 +26,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   endTrackingDate: Date;
   startTrackingDate: Date;
   products: StageProduct[];
-  constructor(
-    public fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private snackBar: MatSnackBar,
-    private landsService: LandsService,
-    private configurationService: ConfigurationService,
-    private calendarService: CalendarService
-  ) {
-    this.segmentId = this.route.snapshot.data.segmentId;
-    this.initAPI();
-  }
   mode: 'edit' | 'view' | 'create' = 'view';
   files: FileList;
-  get hasSave() {
-    return this.mode !== 'view';
-  }
-  get hasFilesButton() {
-    return this.mode !== 'view';
-  }
   textBack = 'Ir a segmentos';
   hasEndTrackingDate = true;
   hasStartTrackingDate = true;
@@ -61,22 +43,227 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     'provider',
     'dose_by_ha',
   ];
+  displayedColumnsProductsAdd = [
+    'interactive',
+    'commercial_name',
+    'ing_active',
+    'provider',
+    'dose_by_ha',
+    'total',
+  ];
   dataSourceProducts: MatTableDataSource<StageProduct>;
-
+  dataSourceProductsAdd: MatTableDataSource<StageProduct>;
   burningForSowingForm: FormGroup = this.fb.group({
     observations: [
       { value: '', disabled: this.mode === 'view' },
       [Validators.required],
     ],
     application_date: [{ value: '', disabled: this.mode === 'view' }, []],
-    products: [
-      { value: [], disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
+    products: this.fb.array([]),
   });
+  enableEditProduct = false;
+  validatorFloat = "^[0-9]+([.][0-9]+)?$";
+  hectares = 0;
 
+  constructor(
+    public fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private landsService: LandsService,
+    private configurationService: ConfigurationService,
+    private calendarService: CalendarService
+  ) {
+    this.segmentId = this.route.snapshot.data.segmentId;
+    this.initAPI();
+  }
+
+  ngOnInit(): void {
+    this.init();
+  }
+  get title() {
+    return (
+      this.route.snapshot.data.title[
+      this.landsService?.landSelected?.sowing_system
+      ] || ''
+    );
+  }
+  get hasSave() {
+    return this.mode !== 'view';
+  }
+  get hasFilesButton() {
+    return this.mode !== 'view';
+  }
   get controls() {
     return this.burningForSowingForm.controls;
+  }
+
+  initAPI() {
+    return this.calendarService
+      .getProducts(this.landsService.idLand, this.segmentId)
+      .then((products) => {
+        this.products = products;
+        this.dataSourceProducts = new MatTableDataSource(products);
+      })
+      .then(() =>
+        this.calendarService.getStage(this.segmentId, this.landsService.idLand)
+      )
+      .then((stageOneData) => this.init(stageOneData));
+  }
+
+  init(
+    {
+      observations = '',
+      application_date = '',
+      products = [],
+      enabled = false,
+      end_traking_date = '',
+      start_traking_date = '',
+    }: StageBetweenResponse = {} as StageBetweenResponse
+  ) {
+    this.mode = enabled ? 'edit' : 'view';
+    // ? ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => {
+      this.endTrackingDate = end_traking_date && new Date(end_traking_date);
+      this.startTrackingDate =
+        start_traking_date && new Date(start_traking_date);
+      this.urlReferencePhoto = this.getUrlReferencePhoto();
+      this.selection.clear();
+
+      if (this.products) {
+        products.forEach(product => {
+          const selectionProduct = this.products.find(data => data.id === product.id);
+          if (selectionProduct) {
+            this.selection.select(selectionProduct);
+          } else {
+            this.selection.select(product);
+          }
+        })
+      }
+      this.rehydrateFormProducts();
+      this.dataSourceProductsAdd = new MatTableDataSource(
+        this.selection.selected
+      );
+      this.hectares = this.landsService.lands[this.landsService.landsSelectedIds] ?
+        this.landsService.lands[this.landsService.landsSelectedIds].batchs.hectares_number : 0;
+      console.log(this.hectares);
+
+    }, 1);
+
+    this.configurationService.disableForm(
+      this.burningForSowingForm,
+      this.mode === 'view'
+    );
+    this.burningForSowingForm.patchValue({
+      observations,
+      application_date: application_date && new Date(application_date),
+      products,
+    });
+  }
+
+  get productsControl() {
+    return this.burningForSowingForm.get('products') as FormArray;
+  }
+
+  isDisabledProduct(index: number) {
+    return (this.productsControl.controls[index] as FormGroup).controls.commercial_name.disabled;
+  }
+
+  // Table controls
+  getProductControl(index: number) {
+    return (this.productsControl.controls[index] as FormGroup).controls;
+  }
+
+  getValueProduct(index: number){
+    return this.productsControl.value[index];
+  }
+
+  addControl({
+    commercial_name = '',
+    id = undefined,
+    color = '',
+    concentration = '',
+    dose_by_ha = undefined,
+    formulator = '',
+    ing_active = '',
+    presentation = '',
+    provider = '',
+    segment = '',
+  } = {}) {
+    this.productsControl.push(
+      this.fb.group({
+        commercial_name: [
+          {
+            value: commercial_name,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        id: [
+          {
+            value: id,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+        ],
+        color: [
+          {
+            value: color,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+        ],
+        concentration: [
+          {
+            value: concentration,
+            disabled: this.mode === 'view' || commercial_name,
+          }
+        ],
+        dose_by_ha: [
+          {
+            value: dose_by_ha,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required, Validators.pattern(this.validatorFloat)],
+        ],
+        formulator: [
+          {
+            value: formulator,
+            disabled: this.mode === 'view' || commercial_name,
+          }
+        ],
+        ing_active: [
+          {
+            value: ing_active,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        presentation: [
+          {
+            value: presentation,
+            disabled: this.mode === 'view' || commercial_name,
+          }
+        ],
+        provider: [
+          {
+            value: provider,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+        segment: [
+          {
+            value: segment,
+            disabled: this.mode === 'view' || commercial_name,
+          },
+          [Validators.required],
+        ],
+      })
+    );
+  }
+
+  rehydrateFormProducts() {
+    this.productsControl.clear();
+    this.selection.selected.forEach((element) => this.addControl(element));
   }
 
   // FIXME: implement & integrate with API
@@ -90,8 +277,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       valid: this.burningForSowingForm.valid,
       files: this.files,
     });
-
     const values = this.burningForSowingForm.value;
+    values.products = this.selection.selected.map(product => {
+      product.dose_by_ha = parseFloat(`${product.dose_by_ha}`);
+      return product
+    })
+    values.start_traking_date = this.startTrackingDate;
+    values.end_traking_date = this.endTrackingDate;
     if (!this.burningForSowingForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
@@ -105,12 +297,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         const dataRequest: StageBetweenRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landsService.idLand),
+          stage_number: this.segmentId,
           ...values,
         };
         if (filesSaved) {
           dataRequest.images = filesSaved;
         }
-        return this.calendarService.setBurnStage(dataRequest);
+        return this.calendarService.setStage(dataRequest);
       })
       .then(
         (message) =>
@@ -162,65 +355,64 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.commercial_name
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
+      }`;
   }
 
-  ngOnInit(): void {
-    this.init();
+  selectProduct(event, row) {
+    event ? this.selection.toggle(row) : null;
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
   }
 
-  initAPI() {
-    return this.calendarService
-      .getStage(this.segmentId, this.landsService.idLand)
-      .then((stageOneData) => this.init(stageOneData))
-      .then(() =>
-        this.calendarService.getProducts(
-          this.landsService.idLand,
-          this.segmentId
-        )
-      )
-      .then((products) => {
-        this.products = products;
-        this.dataSourceProducts = new MatTableDataSource(products);
-        console.log({
-          products: this.products,
-          datasource: this.dataSourceProducts,
-        });
+  deleteProduct(row, i) {
+    if (!this.isDisabledProduct(i)) {
+      this.enableEditProduct = false;
+    }
+    this.selection.deselect(row);
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
+  }
+
+  addProduct() {
+    if (this.enableEditProduct) {
+      return
+    }
+    this.selection.select(new StageProduct);
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
+    this.enableEditProduct = true;
+  }
+
+  saveProduct(row, i) {
+    const newProduct = this.productsControl.value[0];
+    const controlsProduct = (this.productsControl.controls[i] as FormGroup).controls;
+
+    if (
+      controlsProduct.commercial_name.errors ||
+      controlsProduct.dose_by_ha.errors ||
+      controlsProduct.provider.errors ||
+      controlsProduct.commercial_name.errors) {
+      this.snackBar.open('Debes llenar todos los campos correctamente', 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-warn'],
       });
+      return
+    }
+    const oldProduct = this.selection.selected[i];
+    this.configurationService.updateValues(newProduct, oldProduct);
+    this.dataSourceProductsAdd.data = this.selection.selected;
+    this.rehydrateFormProducts();
+    this.enableEditProduct = false;
   }
 
-  init(
-    {
-      observations = '',
-      application_date = '',
-      products = [],
-      enabled = false,
-      end_traking_date = '',
-      start_traking_date = '',
-    }: StageBetweenResponse = {} as StageBetweenResponse
-  ) {
-    this.mode = enabled ? 'edit' : 'view';
-    // ? ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.endTrackingDate = end_traking_date && new Date(end_traking_date);
-      this.startTrackingDate =
-        start_traking_date && new Date(start_traking_date);
-      this.urlReferencePhoto = this.getUrlReferencePhoto();
-      //TODO: TEST ME because is not the same instances
-      this.selection.clear();
-      this.selection.select(...products);
-    }, 1);
-
-    this.configurationService.disableForm(
-      this.burningForSowingForm,
-      this.mode === 'view'
-    );
-    this.burningForSowingForm.patchValue({
-      observations,
-      application_date: application_date && new Date(application_date),
-      products,
-    });
+  editProduct(index) {
+    console.log(this.getValueProduct(index));
+    
+    if (this.enableEditProduct) {
+      return
+    }
+    this.enableEditProduct = true;
+    this.configurationService.disableForm(this.productsControl.controls[index] as FormGroup, false)
   }
 }

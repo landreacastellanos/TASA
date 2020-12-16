@@ -4,6 +4,7 @@ import manage
 import uuid
 from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
+from project.models.enum.date_stage_enum import DateStage
 from project.models.enum.keys_enum import Keys
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
@@ -68,7 +69,6 @@ class StageServices:
     def get_stage_one(self, land_id):
         stage_number = Stage.stage_one.value
         edit = False
-
         results = {
             "data": [],
             "details": []
@@ -103,8 +103,8 @@ class StageServices:
     def get_stage(self, land_id, stage):
         stage_number = Stage(stage)
 
-        if(stage_number == Stage.stage_two):
-            return self.get_stage_two(land_id)
+        if(stage_number in (Stage.stage_two, Stage.stage_three)):
+            return self.get_stage_two(land_id, stage_number.value)
     
     def set_stage(self, data):
         stage_number = Stage(data['stage_number'])            
@@ -166,14 +166,14 @@ class StageServices:
 
         return results
 
-    def get_stage_two(self, land_id):
-        stage_number = Stage.stage_two.value        
+    def get_stage_two(self, land_id, stage_number):        
 
         results = {
             "data": [],
             "details": []
         }
 
+        dates = self.calulate_date_stage(stage_number)
         validation_token = SecurityToken().validate_token()
         email = validation_token[2]
 
@@ -182,11 +182,11 @@ class StageServices:
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
 
-        stage_one = Stage.stage_one.value        
+        stage = self.calulate_stage(stage_number)    
     
         if(len(property_stage) == 0):
 
-            property_stage_one = self.get_property_stage(email, land_id, stage_one)[1]         
+            property_stage_one = self.get_property_stage(email, land_id, stage)[1]         
 
             edit &= (len(property_stage_one) > 0)
 
@@ -198,9 +198,9 @@ class StageServices:
             if(edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-                date =  GeneralsUtils.try_parse_date_time(data['sowing_date'])
-                start_traking_date = str(date - timedelta(days=8))
-                end_traking_date = str(date - timedelta(days=5))
+                date =  self.validation_system(stage_number, email, land_id, data)
+                start_traking_date = str(date - timedelta(days=dates[1]))
+                end_traking_date = str(date - timedelta(days=dates[0]))
 
             results['data'].append(
                   {
@@ -405,4 +405,37 @@ class StageServices:
             self.__repository_property_stage.update(property_stage,stage_db)           
             
         results['data'].append("Datos guardados exitosamente")
-        return results        
+        return results
+
+    def calulate_date_stage(self,stage):
+        start = 0
+        end = 0
+        if stage == Stage.stage_two.value:
+           start = DateStage.stage_two_start.value
+           end = DateStage.stage_two_end.value
+        elif stage == Stage.stage_three.value:
+           start = DateStage.stage_three_start.value
+           end = DateStage.stage_three_end.value
+        return (start, end)
+
+    def calulate_stage(self, stage):
+        stage_result = 0
+        if stage == Stage.stage_two.value:
+           stage_result = Stage.stage_one.value
+        elif stage == Stage.stage_three.value:
+           stage_result = Stage.stage_two.value 
+        return stage_result
+    
+    def validation_system(self, stage, email, land_id, data):
+        result = ''
+        if stage == Stage.stage_two.value:
+           result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        elif stage == Stage.stage_three.value:
+           result = self.get_date_initial(email, land_id)
+        return result
+
+    def get_date_initial(self, email, land_id):
+        property_stage_one = self.get_property_stage(email, land_id, Stage.stage_one.value)[1]
+        data = json.loads(property_stage_one[0]['data'])
+        result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        return result
