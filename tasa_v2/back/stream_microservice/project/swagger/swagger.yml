@@ -1,0 +1,43 @@
+---
+  swagger: '2.0'
+  info:
+    description: This is a microservice in Python about RoceServices
+    version: 1.0.0
+    title: Roce Service Microservices
+  tags:
+    - name: Roce
+      description: ''
+    - name: Grids
+      description: Service methods that provide data to build grids on the graphic interface
+  schemes:
+    - http
+  paths:
+    /get_roles:
+      get:
+          tags:
+            - "Roles"
+          summary: "Roles"
+          operationId: "get_roles"
+          description: "Roles"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array                
+          x-swagger-router-controller: "project.views.stream"                                                
+  definitions:
+        Example:
+          type: "object"
+          properties:
+            main:
+              type: "string"
+  externalDocs:
+    description: "Find out more about Swagger"
+    url: "http://swagger.io"

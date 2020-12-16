@@ -1,0 +1,450 @@
+{
+   "type_planting": {
+      "tableName": "type_planting",
+      "type": "object",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         }
+      }
+   },
+   "roles": {
+      "tableName": "role",
+      "type": "object",
+      "properties": {
+         "role": {
+            "dbName": "role",
+            "type": "string"
+         },
+         "key": {
+            "dbName": "id",
+            "type": "string"
+         }
+      }
+   },
+   "user":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "active":{
+            "dbName": "active",
+            "type": "boolean"
+         }
+      }
+   },
+   "createUser":{
+      "tableName": "user",
+      "type": "object",
+      "editable":[
+         "name",
+         "email",
+         "last_name",
+         "age",
+         "profesion",
+         "password",
+         "role_id",
+         "phone"
+      ],
+      "primaryKey":"id",
+      "properties": {
+         "id":{
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "age": {
+            "dbName": "age",
+            "type": "integer"
+         },
+         "profesion": {
+            "dbName": "profesion",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "active":{
+            "dbName": "active",
+            "type": "boolean"
+         },
+         "phone":{
+            "dbName": "phone",
+            "type": "number"
+         },
+         "created_date":{
+            "dbName": "created_date",
+            "type": "dateTime"
+         }
+      }
+   },
+   "security":{
+      "tableName": "security",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "token": {
+            "dbName": "token",
+            "type": "string"
+         },
+         "active": {
+            "dbName": "active",
+            "type": "boolean"
+         }
+      }
+   },
+   "Users":{
+      "tableName": "user",
+      "type": "object",
+      "properties": {
+         "id":{
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "age": {
+            "dbName": "age",
+            "type": "integer"
+         },
+         "profesion": {
+            "dbName": "profesion",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "phone":{
+            "dbName": "phone",
+            "type": "number"
+         }
+      }
+   },
+   "land":{
+      "tableName": "land",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "property_id": {
+            "dbName": "property_id",
+            "type": "integer"
+         },
+         "land_name": {
+            "dbName": "land_name",
+            "type": "string"
+         },
+         "land_ha": {
+            "dbName": "land_ha",
+            "type": "number"
+         },
+         "variety": {
+            "dbName": "variety",
+            "type": "string"
+         },
+         "realtime": {
+            "dbName": "realtime",
+            "type": "dateTime"
+         }
+      }
+   },
+   "properties":{
+      "tableName": "property",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "business_name": {
+            "dbName": "business_name",
+            "type": "string"
+         },
+         "phone": {
+            "dbName": "phone",
+            "type": "number"
+         },
+         "address": {
+            "dbName": "address",
+            "type": "string"
+         },
+         "web_site": {
+            "dbName": "web_site",
+            "type": "string"
+         },
+         "sowing_system": {
+            "dbName": "sowing_system",
+            "type": "integer"
+         },
+         "manager": {
+            "dbName": "property_ca",
+            "type": "integer"
+         },
+         "property_owner": {
+            "dbName": "property_df",
+            "type": "integer"
+         },
+         "purchasing_manager": {
+            "dbName": "property_ec",
+            "type": "integer"
+         },
+         "pay_manager": {
+            "dbName": "property_ep",
+            "type": "integer"
+         },
+         "responsible_purchasing": {
+            "dbName": "property_idc",
+            "type": "integer"
+         },
+         "decision_influencer": {
+            "dbName": "property_rdc",
+            "type": "integer"
+         },
+         "parthner_add": {
+            "dbName": "property_sa",
+            "type": "integer"
+         },
+         "seller": {
+            "dbName": "property_v",
+            "type": "integer"
+         },
+         "created_date":{
+            "dbName": "created_date",
+            "type": "dateTime"
+         },
+         "total":{
+            "dbName": "total",
+            "type": "number"
+         }
+      }
+   },
+   "stage":{
+      "tableName": "stage",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "stage": {
+            "dbName": "stage_name",
+            "type": "string"
+         },
+         "stageNumber": {
+            "dbName": "stage_number",
+            "type": "integer"
+         },
+         "typePlanning":{
+            "dbName": "type_planting",
+            "type": "integer"
+         }
+      }
+   },
+   "propertyProcedure":{
+      "tableName": "property_procedure",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "stageId": {
+            "dbName": "stage_id",
+            "type": "string"
+         },
+         "landId": {
+            "dbName": "land_id",
+            "type": "integer"
+         },
+         "stageComplete":{
+            "dbName": "stage_complete",
+            "type": "boolean"
+         }
+      }
+   },
+   "property_stage":{
+      "tableName": "property_procedure",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_crop": {
+            "dbName": "id_crop",
+            "type": "string"
+         },
+         "stage_id": {
+            "dbName": "stage_id",
+            "type": "integer"
+         },
+         "land_id": {
+            "dbName": "land_id",
+            "type": "integer"
+         },
+         "start_date": {
+            "dbName": "start_date",
+            "type": "dateTime"
+         },
+         "end_date": {
+            "dbName": "end_date",
+            "type": "dateTime"
+         },
+         "data": {
+            "dbName": "data",
+            "type": "string"
+         },
+         "procedure_image": {
+            "dbName": "procedure_image",
+            "type": "string"
+         },
+         "stage_complete": {
+            "dbName": "stage_complete",
+            "type": "boolean"
+         },
+         "crop_complete": {
+            "dbName": "crop_complete",
+            "type": "boolean"
+         }
+      }
+   },
+   "product":{
+      "tableName": "product",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "stage_id": {
+            "dbName": "stage_id",
+            "type": "integer"
+         },
+         "type_planting_id": {
+            "dbName": "type_planting_id",
+            "type": "integer"
+         },
+         "commercial_name": {
+            "dbName": "commercial_name",
+            "type": "string"
+         },
+         "ing_active": {
+            "dbName": "ing_active",
+            "type": "string"
+         },
+         "segment": {
+            "dbName": "segment",
+            "type": "string"
+         },
+         "presentation": {
+            "dbName": "presentation",
+            "type": "string"
+         },
+         "concentration": {
+            "dbName": "concentration",
+            "type": "string"
+         },
+         "color": {
+            "dbName": "color",
+            "type": "string"
+         },
+         "formulator": {
+            "dbName": "formulator",
+            "type": "string"
+         },
+         "provider": {
+            "dbName": "provider",
+            "type": "string"
+         },
+         "dose_by_ha": {
+            "dbName": "dose_by_ha",
+            "type": "number"
+         }
+      }
+   }
+}
