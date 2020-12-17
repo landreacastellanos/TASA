@@ -2,9 +2,9 @@
   class="card-container p-1"
   [ngClass]="{ 'd-none': !landsService.landSelected }"
 >
-  <div class="card-body p-4">
-    <div class="row">
-      <div class="col-md-4">
+  <div class="">
+    <div class="row no-gutters">
+      <div class="col-md-4 card-body p-4">
         <div class="row">
           <div class="col-12 container-card-title no-margin-padding">
             Datos de la finca
@@ -65,7 +65,7 @@
 
           <div
             class="col-12 container-card-title no-margin-padding"
-            *ngIf="hasStartTrackingDate || hasEndTrackingDate"
+            *ngIf="hasStartTrackingDate || hasEndTrackingDate || hasEndHarvestDate"
           >
             Calendario del segmento
           </div>
@@ -112,6 +112,28 @@
                 [for]="picker_end_segment_date"
               ></mat-datepicker-toggle>
               <mat-datepicker #picker_end_segment_date></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-12" *ngIf="hasEndHarvestDate">
+            <mat-label>Fecha de cosecha</mat-label>
+
+            <mat-form-field
+              class="formOutline text-danger"
+              appearance="outline"
+            >
+              <input
+                [ngModel]="hasEndHarvestDate"
+                matInput
+                class="text-danger"
+                [matDatepicker]="picker_has_end_harvest_date"
+                disabled
+              />
+              <mat-datepicker-toggle
+                class="mat-datepicker-toggle-custom"
+                matSuffix
+                [for]="picker_has_end_harvest_date"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker_has_end_harvest_date></mat-datepicker>
             </mat-form-field>
           </div>
           <ng-container *ngIf="hasReferencePhoto">
@@ -163,8 +185,17 @@
           </ng-container>
         </div>
       </div>
-      <div class="col-md-8">
+      <div
+        [ngClass]="hasSponsorSpace ? 'col-md-5' : 'col-md-8'"
+        class="col-md-5 card-body p-4"
+      >
         <router-outlet #routerOutlet="outlet"></router-outlet>
+      </div>
+      <div
+        *ngIf="hasSponsorSpace"
+        class="col-12 pl-md-1 pr-md-0 mh-100 col-md-3"
+      >
+        <div class="sponsors h-100 p-4">Menos carga química</div>
       </div>
     </div>
   </div>
