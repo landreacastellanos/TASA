@@ -342,6 +342,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   getUrlReferencePhoto() {
+    if (!this.landsService.landSelected) return ''
     const sowingSystem =
       this.landsService.landSelected?.sowing_system === new ArrozSecano().id
         ? 'arroz_secano'
