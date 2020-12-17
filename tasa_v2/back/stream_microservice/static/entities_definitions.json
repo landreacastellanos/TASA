@@ -1,0 +1,44 @@
+{ 
+   "notification": {
+      "tableName": "Notification",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "user_name": {
+            "dbName": "user_name",
+            "type": "string"
+         },
+         "Notification": {
+            "dbName": "Notification",
+            "type": "string"
+         }
+      }
+   },
+   "security":{
+      "tableName": "security",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "token": {
+            "dbName": "token",
+            "type": "string"
+         },
+         "active": {
+            "dbName": "active",
+            "type": "boolean"
+         }
+      }
+   }
+}

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ArrozDeRiego, ArrozSecano } from '../../../../shared/models/farm';
 import { BurningForSowingComponent } from './burning-for-sowing/burning-for-sowing.component';
 import { CalendarComponent } from './calendar.component';
+import { HarvestTimeComponent } from './harvest-time/harvest-time.component';
 import { ListStagesComponent } from './list-stages/list-stages.component';
 import { SeedtimeComponent } from './seedtime/seedtime.component';
 
@@ -155,7 +156,7 @@ const routes: Routes = [
         path: '10',
         component: BurningForSowingComponent,
         data: {
-          segmentId: 1,
+          segmentId: 10,
           title: {
             [new ArrozDeRiego().id]: titleArrozRiego[10],
             [new ArrozSecano().id]: titlesArrozSecano[10],
@@ -166,7 +167,7 @@ const routes: Routes = [
         path: '11',
         component: BurningForSowingComponent,
         data: {
-          segmentId: 1,
+          segmentId: 11,
           title: {
             [new ArrozDeRiego().id]: titleArrozRiego[11],
             [new ArrozSecano().id]: titlesArrozSecano[11],
@@ -177,7 +178,7 @@ const routes: Routes = [
         path: '12',
         component: BurningForSowingComponent,
         data: {
-          segmentId: 1,
+          segmentId: 12,
           title: {
             [new ArrozDeRiego().id]: titleArrozRiego[12],
             [new ArrozSecano().id]: titlesArrozSecano[12],
@@ -188,7 +189,7 @@ const routes: Routes = [
         path: '13',
         component: BurningForSowingComponent,
         data: {
-          segmentId: 1,
+          segmentId: 13,
           title: {
             [new ArrozDeRiego().id]: titleArrozRiego[13],
             [new ArrozSecano().id]: titlesArrozSecano[13],
@@ -199,7 +200,7 @@ const routes: Routes = [
         path: '14',
         component: BurningForSowingComponent,
         data: {
-          segmentId: 1,
+          segmentId: 14,
           title: {
             [new ArrozDeRiego().id]: titleArrozRiego[14],
             [new ArrozSecano().id]: titlesArrozSecano[14],
@@ -208,11 +209,11 @@ const routes: Routes = [
       },
       {
         path: '15',
-        component: BurningForSowingComponent,
+        component: HarvestTimeComponent,
         data: {
-          segmentId: 1,
+          segmentId: 15,
           title: {
-            [new ArrozDeRiego().id]: titleArrozRiego[1],
+            [new ArrozDeRiego().id]: titleArrozRiego[15],
             [new ArrozSecano().id]: titlesArrozSecano[15],
           },
         },

@@ -8,3 +8,23 @@ tasa_v2/back/tasa_microservice/env_development/
 tasa_v2/back/tasa_microservice/__pycache__/
 
 tasa_v2/back/tasa_microservice/project/images/
+
+tasa_v2/back/stream_microservice/env_development/
+
+tasa_v2/back/stream_microservice/.vscode/
+
+tasa_v2/back/stream_microservice/__pycache__/
+
+tasa_v2/back/stream_microservice/project/__pycache__/
+
+tasa_v2/back/stream_microservice/project/infrastructure/contexts/__pycache__/
+
+tasa_v2/back/stream_microservice/project/infrastructure/repositories/__pycache__/
+
+tasa_v2/back/stream_microservice/project/models/__pycache__/
+
+tasa_v2/back/stream_microservice/project/resources/utils/__pycache__/
+
+tasa_v2/back/stream_microservice/project/services/__pycache__/
+
+tasa_v2/back/stream_microservice/project/views/__pycache__/
