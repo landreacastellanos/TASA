@@ -1,3 +1,20 @@
+export interface StageHarvest {
+  harvest_date: string;
+  observations: string;
+}
+
+export interface StageHarvestRequest extends StageHarvest {
+  // images uploaded previously
+  images?: string[];
+  land_id: number;
+  stage_number: number;
+}
+
+export interface StageHarvestResponse extends StageHarvest {
+  enabled: boolean;
+}
+
+
 export interface StageBetween {
   application_date: string;
   end_traking_date: string;
@@ -10,6 +27,7 @@ export interface StageBetweenRequest extends StageBetween {
   // images uploaded previously
   images?: string[];
   land_id: number;
+  stage_number: number;
 }
 
 export interface StageBetweenResponse extends StageBetween {

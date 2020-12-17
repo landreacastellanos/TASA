@@ -104,7 +104,7 @@ class StageServices:
         stage_number = Stage(stage)
 
         if(stage_number in (Stage.stage_two, Stage.stage_three, Stage.stage_four)):
-            return self.get_stage_two(land_id, stage_number.value)
+            return self.get_stage_general(land_id, stage_number.value)
     
     def set_stage(self, data):
         stage_number = Stage(data['stage_number'])            
@@ -166,7 +166,7 @@ class StageServices:
 
         return results
 
-    def get_stage_two(self, land_id, stage_number):        
+    def get_stage_general(self, land_id, stage_number):        
 
         results = {
             "data": [],
@@ -186,11 +186,14 @@ class StageServices:
     
         if(len(property_stage) == 0):
 
-            property_stage_one = self.get_property_stage(email, land_id, stage)[1]         
-
+            property_stage_one = self.get_property_stage(email, land_id, stage)[1]
             edit &= (len(property_stage_one) > 0)
 
             edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            if(len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
+                data = json.loads(property_stage_one[0]['data'])
+                edit = data['sowing_date'] != ''
 
             start_traking_date = ""
             end_traking_date = ""

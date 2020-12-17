@@ -18,6 +18,16 @@
   color: rgba(0, 0, 0, 0.78) !important ;
 }
 
+.mat-input-element.text-danger:disabled {
+  color: #fa1606 !important;
+}
+
+.mat-form-field-appearance-outline.form-border-primary .mat-form-field-outline {
+  color: map-get($theme-colors, "primary")!important;
+  border-width: 3px;
+  opacity: 1;
+}
+
 .mat-radio-disabled.mat-radio-checked {
   .mat-radio-checked .mat-radio-outer-circle,
   .mat-radio-outer-circle {

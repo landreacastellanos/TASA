@@ -1,32 +1,44 @@
-.cards-farms{
-  padding-left: 20px;
-
-  .cards-farms-title{
+.cards-farms {
+  .cards-farms-title {
     color: map-get($theme-colors, "primary");
     display: flex;
     padding-top: 20px;
+    h4 {
+      font-size: 2em;
+      font-weight: bolder;
+    }
 
-    img{
-      height: 25px;
+    img {
+      height: 35px;
       padding-right: 20px;
     }
   }
 
-  .cards-farms-container{
+  .cards-farms-container {
     margin-top: 50px;
   }
 }
 
+.number-button{
+  color: white;
+  background: #87b017 ;
+  border-radius: 50%;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-align: -webkit-center;
+  min-width: 24px;
+  height: 24px;
+}
+
 @media (max-width: 768px) {
-  .cards-farms{
+  .cards-farms {
     padding-left: 0;
   }
 }
 
 @media (max-width: 576px) {
-  .cards-farms{
-  
-    .cards-farms-container{
+  .cards-farms {
+    .cards-farms-container {
       margin-top: 20px;
     }
   }
