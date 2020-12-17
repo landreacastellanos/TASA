@@ -103,7 +103,7 @@ class StageServices:
     def get_stage(self, land_id, stage):
         stage_number = Stage(stage)
 
-        if(stage_number in (Stage.stage_two, Stage.stage_three)):
+        if(stage_number in (Stage.stage_two, Stage.stage_three, Stage.stage_four)):
             return self.get_stage_two(land_id, stage_number.value)
     
     def set_stage(self, data):
@@ -341,8 +341,8 @@ class StageServices:
 			"stage_name": data['stage'],
 			"complete": False
         }, stages))
-
-        return result[0]
+        data = sorted(result, key= lambda stage: stage['complete'])
+        return data[1]
 
     def set_stage_one(self,data):
         results = {
@@ -413,14 +413,14 @@ class StageServices:
         if stage == Stage.stage_two.value:
            start = DateStage.stage_two_start.value
            end = DateStage.stage_two_end.value
-        elif stage == Stage.stage_three.value:
+        elif stage == Stage.stage_three.value or stage == Stage.stage_four.value:
            start = DateStage.stage_three_start.value
            end = DateStage.stage_three_end.value
         return (start, end)
 
     def calulate_stage(self, stage):
         stage_result = 0
-        if stage == Stage.stage_two.value:
+        if stage == Stage.stage_two.value or stage == Stage.stage_four.value:
            stage_result = Stage.stage_one.value
         elif stage == Stage.stage_three.value:
            stage_result = Stage.stage_two.value 
@@ -431,7 +431,9 @@ class StageServices:
         if stage == Stage.stage_two.value:
            result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
         elif stage == Stage.stage_three.value:
-           result = self.get_date_initial(email, land_id)
+           result = self.get_date_initial(email, land_id)   
+        elif stage == Stage.stage_four.value:
+            result = GeneralsUtils.try_parse_date_time(data['real_date'])
         return result
 
     def get_date_initial(self, email, land_id):
