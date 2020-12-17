@@ -6,8 +6,8 @@
     />
     <h4>{{ title }}</h4>
   </div>
-  <div class="row cards-farms-container">
-    <div class="specs col-12 col-md-8">
+  <div class="cards-farms-container">
+    <div class="specs">
       <!-- INPUT QUINTALES -->
       <div class="d-inline-flex mt-3">
         <div class="number-button mr-2">1</div>
@@ -23,7 +23,7 @@
               matInput
               placeholder="Ej. 120"
               formControlName="amount_quintals"
-              type="text"
+              type="number"
               class="inputOutline"
               required
             />
@@ -39,13 +39,14 @@
 
         <div class="mt-3 col-md-6 col-12">
           <mat-label class="text-primary">Cantidad de quintales (QQ) por hectárea:</mat-label>
-          <mat-form-field class="formOutline mat-focused" appearance="outline">
+          <mat-form-field class="formOutline form-border-primary" appearance="outline">
             <input
               matInput
               placeholder="0"
               formControlName="amount_quintals_ha"
-              type="text"
+              type="number"
               class="inputOutline text-primary"
+              disabled
               required
             />
           </mat-form-field>
@@ -80,35 +81,6 @@
           Este campo es requerido
         </div>
       </div>
-
-      <!-- HARVEST DATE -->
-      <div class="d-inline-flex mt-2">
-        <div class="number-button mr-2">3</div>
-        <div>
-          <strong>Seleciona la fecha de cosecha</strong>
-        </div>
-      </div>
-      <div class="mx-2 mt-3">
-        <div><mat-label>Fecha de cosecha</mat-label></div>
-        <div class="mt-3">
-          <mat-form-field class="formOutline" appearance="outline">
-            <input
-              matInput
-              class="text-danger"
-              formControlName="harvest_date"
-              [matDatepicker]="picker_harvest_date"
-            />
-            <mat-datepicker-toggle
-              class="mat-datepicker-toggle-custom"
-              matSuffix
-              [for]="picker_harvest_date"
-            >
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker_harvest_date></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
     </div>
-    <div class="col-12 col-md-4">Menos carga química</div>
   </div>
 </form>

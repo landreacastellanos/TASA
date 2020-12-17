@@ -7,17 +7,19 @@ import { StageHarvestRequest } from '../../../../../shared/models/calendar';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { CalendarService } from '../calendar.service';
 import { LandsService } from '../lands.service';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-harvest-time',
   templateUrl: './harvest-time.component.html',
-  styleUrls: ['./harvest-time.component.css'],
+  styleUrls: ['./harvest-time.component.scss'],
 })
 export class HarvestTimeComponent implements OnInit {
   public mode: 'edit' | 'view' | 'create' = 'view';
   submitted: boolean;
   files: FileList;
   segmentId: string;
+  endHarvestDate: Date;
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -31,6 +33,9 @@ export class HarvestTimeComponent implements OnInit {
     this.intAPI();
   }
   textBack = 'Ir a segmentos';
+  hasSponsorSpace = true;
+  textSponsorImage = 'Menos carga química';
+  hasEndHarvestDate = true;
   get hasSave() {
     return this.mode !== 'view';
   }
@@ -47,30 +52,37 @@ export class HarvestTimeComponent implements OnInit {
 
   harvestTimeForm: FormGroup = this.fb.group({
     amount_quintals: [
-      { value: '', disabled: this.mode === 'view' },
+      { value: undefined, disabled: this.mode === 'view' },
       [Validators.required],
     ],
+    amount_quintals_ha: [{ value: undefined, disabled: true }, []],
     observations: [
-      { value: '', disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
-    harvest_date: [
-      { value: '', disabled: this.mode === 'view' },
+      { value: 'undefined', disabled: this.mode === 'view' },
       [Validators.required],
     ],
   });
 
   ngOnInit(): void {
     this.init();
+    this.harvestTimeForm
+      .get('amount_quintals')
+      .valueChanges.subscribe((data) => {
+        const value =
+          typeof data === 'number'
+            ? data / this.landsService.landSelected?.hectares_total
+            : undefined;
+        this.harvestTimeForm.get('amount_quintals_ha').setValue(value);
+      });
   }
 
   init({
-    amount_quintals = '',
+    amount_quintals = undefined,
     observations = '',
     harvest_date = '',
     enabled = true,
   } = {}) {
     this.mode = enabled ? 'edit' : 'view';
+    this.endHarvestDate = harvest_date && new Date(harvest_date);
     this.configurationService.disableForm(
       this.harvestTimeForm,
       this.mode === 'view'
