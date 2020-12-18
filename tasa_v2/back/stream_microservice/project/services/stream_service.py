@@ -25,11 +25,10 @@ class NotificationService():
             "equals",
             email]
             ],
-            "paginate": {"offset": 1, "limit": 5}            
-        })
+            "paginate": {"offset": 0, "limit": 5}            
+        })        
 
-        results['data'] = json.loads(data[0]['Notification'])
-
-        # for item in data:
-        #     self.__repository_notification.delete(item['id'],entity_name="notification")
+        for item in data:
+            results['data'].append(json.loads(item['Notification']))
+            #self.__repository_notification.delete(item['id'],entity_name="notification")
         return results
