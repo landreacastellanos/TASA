@@ -345,7 +345,7 @@ class StageServices:
 			"complete": False
         }, stages))
         data = sorted(result, key= lambda stage: stage['complete'])
-        return data[1]
+        return data[1] if len(data)>1 else data[0]
 
     def set_stage_one(self,data):
         results = {
