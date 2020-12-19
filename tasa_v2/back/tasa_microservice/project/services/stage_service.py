@@ -202,8 +202,9 @@ class StageServices:
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
                 date =  self.validation_system(stage_number, email, land_id, data)
-                start_traking_date = str(date - timedelta(days=dates[1]))
-                end_traking_date = str(date - timedelta(days=dates[0]))
+                dates_calculated = self.validate_dates(date, dates, stage_number)
+                start_traking_date = dates_calculated[1]
+                end_traking_date = dates_calculated[0]
 
             results['data'].append(
                   {
@@ -444,3 +445,14 @@ class StageServices:
         data = json.loads(property_stage_one[0]['data'])
         result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
         return result
+
+    def validate_dates(self, date, date_caluted, stage):
+        start = 0
+        end = 0
+        if stage in (Stage.stage_two.value, Stage.stage_three.value):
+            start = str(date - timedelta(days=date_caluted[1]))
+            end = str(date - timedelta(days=date_caluted[0]))
+        elif stage == Stage.stage_four.value:
+            start = str(date + timedelta(days=date_caluted[1]))
+            end = str(date + timedelta(days=date_caluted[0]))
+        return (start,end)
