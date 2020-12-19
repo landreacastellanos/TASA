@@ -104,7 +104,9 @@ class StageServices:
         stage_number = Stage(stage)
 
         if(stage_number in (Stage.stage_two, Stage.stage_three)):
-            return self.get_stage_two(land_id, stage_number.value)
+            return self.get_stage_general(land_id, stage_number.value)
+        elif stage_number == Stage.stage_four:
+            return self.get_stage_four(land_id, stage_number.value)    
     
     def set_stage(self, data):
         stage_number = Stage(data['stage_number'])            
@@ -166,7 +168,7 @@ class StageServices:
 
         return results
 
-    def get_stage_two(self, land_id, stage_number):        
+    def get_stage_general(self, land_id, stage_number):        
 
         results = {
             "data": [],
@@ -182,15 +184,18 @@ class StageServices:
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
 
-        stage_one = Stage.stage_one.value        
+        stage = self.calulate_stage(stage_number)    
     
         if(len(property_stage) == 0):
 
-            property_stage_one = self.get_property_stage(email, land_id, stage_one)[1]         
-
+            property_stage_one = self.get_property_stage(email, land_id, stage)[1]
             edit &= (len(property_stage_one) > 0)
 
             edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            if(len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
+                data = json.loads(property_stage_one[0]['data'])
+                edit = data['sowing_date'] != ''
 
             start_traking_date = ""
             end_traking_date = ""
@@ -198,9 +203,10 @@ class StageServices:
             if(edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-                date =  GeneralsUtils.try_parse_date_time(data['sowing_date'])
-                start_traking_date = str(date - timedelta(days=dates[1]))
-                end_traking_date = str(date - timedelta(days=dates[0]))
+                date =  self.validation_system(stage_number, email, land_id, data)
+                dates_calculated = self.validate_dates(date, dates, stage_number)
+                start_traking_date = dates_calculated[1]
+                end_traking_date = dates_calculated[0]
 
             results['data'].append(
                   {
@@ -220,6 +226,66 @@ class StageServices:
             results['data'].append(json_data)
 
         return results
+
+    def get_stage_four(self, land_id, stage_number):        
+
+        results = {
+            "data": [],
+            "details": []
+        }
+
+        dates = self.calulate_date_stage(stage_number)
+        validation_token = SecurityToken().validate_token()
+        email = validation_token[2]
+
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+
+        property_stage = tuple_stage[1]
+        edit = tuple_stage[0]
+
+        stage_one = Stage.stage_one.value    
+        stage_three = Stage.stage_three.value
+    
+        if(len(property_stage) == 0):
+
+            property_stage_one = self.get_property_stage(email, land_id, stage_one)[1]
+            property_stage_three = self.get_property_stage(email, land_id, stage_three)[1]
+
+            edit &= (len(property_stage_one) > 0 and len(property_stage_three) > 0)
+
+            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+            edit &= property_stage_three[0]['stage_complete'] if(len(property_stage_three) > 0) else edit
+
+            start_traking_date = ""
+            end_traking_date = ""
+            
+            if(edit):
+                property_stage_one = property_stage_one[0]
+                data = json.loads(property_stage_one['data'])
+                date =  self.validation_system(stage_number, email, land_id, data)
+                dates_calculated = self.validate_dates(date, dates, stage_number)
+                start_traking_date = dates_calculated[1]
+                end_traking_date = dates_calculated[0]
+
+            results['data'].append(
+                  {
+                    "application_date": "",
+                    "end_traking_date": end_traking_date,
+                    "observations": "",
+                    "start_traking_date": start_traking_date,
+                    "enabled": edit,
+                    "products": []
+                }
+            )
+        else:
+            property_stage = property_stage[0]            
+            json_data = json.loads(property_stage['data'])            
+            edit = 'application_date' in json_data and not json_data['application_date']
+            json_data['enabled'] = edit
+            results['data'].append(json_data)
+
+        return results
+    
 
     def get_property_stage(self, email, land_id, stage_number):
         
@@ -341,8 +407,8 @@ class StageServices:
 			"stage_name": data['stage'],
 			"complete": False
         }, stages))
-
-        return result[0]
+        data = sorted(result, key= lambda stage: stage['complete'])
+        return data[1] if len(data)>1 else data[0]
 
     def set_stage_one(self,data):
         results = {
@@ -413,7 +479,42 @@ class StageServices:
         if stage == Stage.stage_two.value:
            start = DateStage.stage_two_start.value
            end = DateStage.stage_two_end.value
-        elif stage == Stage.stage_three.value:
+        elif stage == Stage.stage_three.value or stage == Stage.stage_four.value:
            start = DateStage.stage_three_start.value
            end = DateStage.stage_three_end.value
         return (start, end)
+
+    def calulate_stage(self, stage):
+        stage_result = 0
+        if stage == Stage.stage_two.value or stage == Stage.stage_four.value:
+           stage_result = Stage.stage_one.value
+        elif stage == Stage.stage_three.value:
+           stage_result = Stage.stage_two.value 
+        return stage_result
+    
+    def validation_system(self, stage, email, land_id, data):
+        result = ''
+        if stage == Stage.stage_two.value:
+           result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        elif stage == Stage.stage_three.value:
+           result = self.get_date_initial(email, land_id)   
+        elif stage == Stage.stage_four.value:
+            result = GeneralsUtils.try_parse_date_time(data['real_date'])
+        return result
+
+    def get_date_initial(self, email, land_id):
+        property_stage_one = self.get_property_stage(email, land_id, Stage.stage_one.value)[1]
+        data = json.loads(property_stage_one[0]['data'])
+        result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        return result
+
+    def validate_dates(self, date, date_caluted, stage):
+        start = 0
+        end = 0
+        if stage in (Stage.stage_two.value, Stage.stage_three.value):
+            start = str(date - timedelta(days=date_caluted[1]))
+            end = str(date - timedelta(days=date_caluted[0]))
+        elif stage == Stage.stage_four.value:
+            start = str(date + timedelta(days=date_caluted[1]))
+            end = str(date + timedelta(days=date_caluted[0]))
+        return (start,end)

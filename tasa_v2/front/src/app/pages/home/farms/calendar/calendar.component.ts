@@ -14,7 +14,7 @@ export class CalendarComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public landsService: LandsService,
-    public configService: ConfigurationService,
+    public configService: ConfigurationService
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -86,26 +86,41 @@ export class CalendarComponent implements OnInit {
     (this.outlet?.component as CalendarChildren)?.onClickAfterReferencePhoto &&
       (this.outlet?.component as CalendarChildren).onClickAfterReferencePhoto();
   }
-  
+
   get referencePhotoSelected() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.referencePhotoSelected;
   }
-
-  get hasEndTrackingDate(){
-        // tslint:disable-next-line: no-unused-expression
+  get hasEndTrackingDate() {
+    // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasEndTrackingDate;
   }
-  get endTrackingDate(){
-        // tslint:disable-next-line: no-unused-expression
+  get endTrackingDate() {
+    // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.endTrackingDate;
   }
-  get hasStartTrackingDate(){
-        // tslint:disable-next-line: no-unused-expression
+  get hasStartTrackingDate() {
+    // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasStartTrackingDate;
   }
-  get startTrackingDate(){
-        // tslint:disable-next-line: no-unused-expression
+  get startTrackingDate() {
+    // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.startTrackingDate;
+  }
+  get hasSponsorSpace() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasSponsorSpace;
+  }
+  get textSponsorImage() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
+  }
+  get hasEndHarvestDate() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.hasSponsorSpace;
+  }
+  get endHarvestDate() {
+    // tslint:disable-next-line: no-unused-expression
+    return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
   }
 }

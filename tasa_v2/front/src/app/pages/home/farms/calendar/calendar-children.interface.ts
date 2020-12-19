@@ -21,4 +21,11 @@ export interface CalendarChildren {
 
   hasStartTrackingDate?: boolean;
   startTrackingDate?: Date;
+
+  hasEndHarvestDate?:boolean;
+  endHarvestDate?: Date;
+
+  /** options for sponsors image */
+  hasSponsorSpace?:boolean;
+  textSponsorImage?:string;
 }
