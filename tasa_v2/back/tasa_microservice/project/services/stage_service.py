@@ -205,8 +205,8 @@ class StageServices:
                 data = json.loads(property_stage_one['data'])
                 date =  self.validation_system(stage_number, email, land_id, data)
                 dates_calculated = self.validate_dates(date, dates, stage_number)
-                start_traking_date = dates_calculated[1]
-                end_traking_date = dates_calculated[0]
+                start_traking_date = dates_calculated[0]
+                end_traking_date = dates_calculated[1]
 
             results['data'].append(
                   {
