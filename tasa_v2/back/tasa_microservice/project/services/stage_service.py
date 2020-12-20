@@ -205,8 +205,8 @@ class StageServices:
                 data = json.loads(property_stage_one['data'])
                 date =  self.validation_system(stage_number, email, land_id, data)
                 dates_calculated = self.validate_dates(date, dates, stage_number)
-                start_traking_date = dates_calculated[1]
-                end_traking_date = dates_calculated[0]
+                start_traking_date = dates_calculated[0]
+                end_traking_date = dates_calculated[1]
 
             results['data'].append(
                   {
@@ -392,7 +392,7 @@ class StageServices:
 
     def validation_stage(self, data, stages):
         result = list(map(lambda x: 
-        {
+        {   "stage": "1",
             "id_stage": data['id'],
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
@@ -401,14 +401,17 @@ class StageServices:
         if x['stageId'] == data['id'] and
         (x['stageComplete'])
         else
-        {
+        {   
+            "stage":"2",
             "id_stage": data['id'],
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
 			"complete": False
         }, stages))
-        data = sorted(result, key= lambda stage: stage['complete'])
-        return data[1] if len(data)>1 else data[0]
+
+        data = sorted(result, key= lambda stage: stage['stage'])
+        del data[0]['stage']
+        return data[0]
 
     def set_stage_one(self,data):
         results = {
