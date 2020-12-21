@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArrozSecano } from '../../../../../shared/models/farm';
+import moment, { Moment } from 'moment';
 import { StageHarvestRequest } from '../../../../../shared/models/calendar';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { CalendarService } from '../calendar.service';
 import { LandsService } from '../lands.service';
-import { isNumber } from 'util';
 
 @Component({
   selector: 'app-harvest-time',
@@ -19,7 +18,7 @@ export class HarvestTimeComponent implements OnInit {
   submitted: boolean;
   files: FileList;
   segmentId: string;
-  endHarvestDate: Date;
+  endHarvestDate: Moment;
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -82,7 +81,7 @@ export class HarvestTimeComponent implements OnInit {
     enabled = true,
   } = {}) {
     this.mode = enabled ? 'edit' : 'view';
-    this.endHarvestDate = harvest_date && new Date(harvest_date);
+    this.endHarvestDate = harvest_date && moment(harvest_date);
     this.configurationService.disableForm(
       this.harvestTimeForm,
       this.mode === 'view'
@@ -90,7 +89,7 @@ export class HarvestTimeComponent implements OnInit {
     this.harvestTimeForm.patchValue({
       observations,
       amount_quintals,
-      harvest_date: harvest_date && new Date(harvest_date),
+      harvest_date: harvest_date && moment(harvest_date),
     });
   }
 
