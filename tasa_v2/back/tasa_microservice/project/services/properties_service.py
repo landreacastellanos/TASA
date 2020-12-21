@@ -93,6 +93,14 @@ class PropertiesServices:
 
         try:
             propery = self.__repository_properties.insert(property_data)
+            
+            data = self.__repository_properties.select(
+                options={"filters":
+                             [['business_name', "equals", str(data['business_name'])]]
+                             })
+
+            if len(data)>0:
+                raise Exception("Razon social duplicada.")
 
             land = list(map(lambda  x:{ 
                                 "property_id": propery[1],
