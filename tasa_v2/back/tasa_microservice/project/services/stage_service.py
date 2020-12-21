@@ -10,7 +10,7 @@ from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken   
 from project.resources.utils.generals_utils import GeneralsUtils
-
+from project.models.enum.type_planting_enum import TypePlanting
 
 class StageServices:
     def __init__(self):
@@ -175,11 +175,11 @@ class StageServices:
             "details": []
         }
 
-        dates = self.calulate_date_stage(stage_number)
         validation_token = SecurityToken().validate_token()
         email = validation_token[2]
 
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
+        dates = self.calulate_date_stage(stage_number, tuple_stage[3])
 
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
@@ -234,12 +234,11 @@ class StageServices:
             "details": []
         }
 
-        dates = self.calulate_date_stage(stage_number)
         validation_token = SecurityToken().validate_token()
         email = validation_token[2]
 
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
-
+        dates = self.calulate_date_stage(stage_number, tuple_stage[3])
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
 
@@ -323,7 +322,7 @@ class StageServices:
                              ["crop_complete","equals",False]]
                              })
 
-        return (edit, property_stage, stage_id)
+        return (edit, property_stage, stage_id, sowing_system)
         
     def upload_file(self, files):
         l_files = []
@@ -476,12 +475,15 @@ class StageServices:
         results['data'].append("Datos guardados exitosamente")
         return results
 
-    def calulate_date_stage(self,stage):
+    def calulate_date_stage(self,stage, type_planting):
         start = 0
         end = 0
         if stage == Stage.stage_two.value:
            start = DateStage.stage_two_start.value
            end = DateStage.stage_two_end.value
+        elif stage == Stage.stage_three.value and type_planting == TypePlanting.riego.value:
+           start = DateStage.stage_three_start.value
+           end = DateStage.stage_three_end_secano.value
         elif stage == Stage.stage_three.value or stage == Stage.stage_four.value:
            start = DateStage.stage_three_start.value
            end = DateStage.stage_three_end.value
