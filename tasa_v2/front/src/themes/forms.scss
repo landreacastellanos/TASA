@@ -4,14 +4,14 @@
 }
 
 // change outline with 16px
-.mat-form-field-appearance-outline .mat-form-field-infix{
+.mat-form-field-appearance-outline .mat-form-field-infix {
   border-top: 0px;
 }
 .mat-form-field-appearance-outline .mat-form-field-outline {
-  top: 0px!important;
+  top: 0px !important;
 }
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-  transform: initial!important;
+  transform: initial !important;
 }
 
 .mat-input-element:disabled {
@@ -23,20 +23,26 @@
 }
 
 .mat-form-field-appearance-outline.form-border-primary .mat-form-field-outline {
-  color: map-get($theme-colors, "primary")!important;
+  color: map-get($theme-colors, "primary") !important;
   border-width: 3px;
+  opacity: 1;
+}
+
+// iOS
+input:disabled,
+textarea:disabled {
   opacity: 1;
 }
 
 .mat-radio-disabled.mat-radio-checked {
   .mat-radio-checked .mat-radio-outer-circle,
   .mat-radio-outer-circle {
-    border-color: map-get($theme-colors, "primary")!important ;
+    border-color: map-get($theme-colors, "primary") !important ;
   }
 
   .mat-radio-ripple .mat-ripple-element,
   .mat-radio-inner-circle {
-    background-color: map-get($theme-colors, "primary")!important ;
+    background-color: map-get($theme-colors, "primary") !important ;
   }
 
   .mat-radio-label-content {
@@ -44,25 +50,25 @@
   }
 }
 
-.mat-select-disabled .mat-select-value{
+.mat-select-disabled .mat-select-value {
   color: rgba(0, 0, 0, 0.7) !important ;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-suffix {
- top: 0px!important;
- bottom: 0px;
+  top: 0px !important;
+  bottom: 0px;
 }
 
-mat-datepicker-toggle{
-  color: #87b017!important;
+mat-datepicker-toggle {
+  color: #87b017 !important;
   button.mat-icon-button.mat-button-base {
     position: absolute;
     top: -1.5em;
     left: -2.5em;
   }
-  svg{
-    height: 40px!important;
-    width: 40px!important;
+  svg {
+    height: 40px !important;
+    width: 40px !important;
   }
 }
 
@@ -87,7 +93,7 @@ mat-datepicker-toggle{
       text-align: center;
       color: #87b017;
 
-      img{
+      img {
         vertical-align: top;
         margin-right: 9px;
       }
@@ -128,17 +134,16 @@ mat-datepicker-toggle{
 
   .rounded-button {
     border-radius: 18px;
-
   }
 
   button.transparent-blackground {
     background-color: rgba(134, 174, 23, 0.3);
   }
-  
+
   button.white-border {
     border: 1px solid #f8f9fa;
   }
-  
+
   button {
     outline: none;
 
@@ -154,4 +159,3 @@ mat-datepicker-toggle{
     }
   }
 }
-
