@@ -4,6 +4,7 @@ export interface CalendarChildren {
   /** implement with true if the view child has save button */
   hasSave?: boolean;
   onSave?: () => any;
+  title: string;
   /** text used in back button */
   textBack: string;
   onBack: () => any;
