@@ -6,4 +6,4 @@ source env_development/bin/activate
 pip3 install -r ./requirements/base.txt
 
 export FLASK_APP=manage.py
-flask run --host=0.0.0.0 --port 5024
+flask run --host=0.0.0.0 --port 5025

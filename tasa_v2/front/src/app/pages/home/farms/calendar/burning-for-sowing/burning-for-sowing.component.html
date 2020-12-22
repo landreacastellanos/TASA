@@ -171,7 +171,8 @@
                 </td>
               </tr>
             </table>
-            <button mat-raised-button (click)="addProduct()" type="button" color="primary" class="rounded-button add-button">
+            <button mat-raised-button (click)="addProduct()" type="button" color="primary" class="rounded-button add-button"
+            *ngIf="mode !== 'view'">
               Agregar
               <mat-icon>add_circle_outline</mat-icon>
             </button>
