@@ -159,7 +159,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     );
     this.burningForSowingForm.patchValue({
       observations,
-      application_date: application_date && new Date(application_date),
+      application_date: application_date && moment(application_date),
       products,
     });
   }
@@ -363,9 +363,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   selectProduct(event, row) {
-    if(this.mode === 'view'){
-      return
-    }
     event ? this.selection.toggle(row) : null;
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();

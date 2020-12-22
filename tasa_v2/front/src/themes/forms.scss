@@ -1,3 +1,8 @@
+mat-label{
+  color: map-get($theme-colors, "secondary");
+  font-weight: bolder;
+}
+
 .mat-form-field {
   font-size: 14px;
   width: 100%;
@@ -15,7 +20,7 @@
 }
 
 .mat-input-element:disabled {
-  color: rgba(0, 0, 0, 0.78) !important ;
+  color: map-get($theme-colors, "secondary") !important ;
 }
 
 .mat-input-element.text-danger:disabled {
@@ -46,12 +51,12 @@ textarea:disabled {
   }
 
   .mat-radio-label-content {
-    color: rgba(0, 0, 0, 0.78) !important ;
+    color: map-get($theme-colors, "secondary") !important ;
   }
 }
 
 .mat-select-disabled .mat-select-value {
-  color: rgba(0, 0, 0, 0.7) !important ;
+  color: map-get($theme-colors, "secondary") !important ;
 }
 
 .mat-form-field-appearance-outline .mat-form-field-suffix {
