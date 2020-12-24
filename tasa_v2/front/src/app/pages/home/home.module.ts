@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from './menu/menu.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { MenuComponent } from './menu/menu.component';
   ],
   imports: [
     HomeRoutingModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [HomeComponent]
