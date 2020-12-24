@@ -1,0 +1,15 @@
+
+.cal-header {
+  text-transform: capitalize;
+}
+.cal-cell-header{
+  flex: 1;
+  // display: flex;
+  justify-content: space-between;
+}
+.cal-event-custom{
+  margin: 1px 0px;
+}
+.badge{
+  padding: 0.25em 0.25em;
+}

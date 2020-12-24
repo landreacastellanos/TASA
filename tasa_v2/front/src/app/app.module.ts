@@ -16,18 +16,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { CalendarModule } from 'angular-calendar';
+import moment, { Moment } from 'moment';
+import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 
-// Depending on whether rollup is used, moment needs to be imported differently.
-// Since Moment.js doesn't have a default export, we normally need to import using the `* as`
-// syntax. However, rollup creates a synthetic default module and we thus need to import it using
-// the `default as` syntax.
-import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
-// @ts-ignore
-import {default as _rollupMoment} from 'moment';
-
-const moment: _moment.Moment = _rollupMoment || _moment;
-
+function momentAdapterFactory() {
+  return adapterFactory(moment);
+};
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -62,6 +57,7 @@ export const MY_FORMATS = {
       secondaryColour: '#ffffff',
       tertiaryColour: '#ffffff',
     }),
+    // CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
   ],
   entryComponents: [ConfirmationDialogComponent],
   providers: [
