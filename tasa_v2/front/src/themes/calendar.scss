@@ -16,7 +16,7 @@
 
 .cal-month-view .cal-cell {
   // 100/7
-  max-width: 14.2856%;
+  max-width: calc(100% / 7);
 }
 
 
