@@ -6,6 +6,7 @@ export interface Activity {
   id: number;
   date: Moment;
   land: string;
+  property: string;
 }
 
 export function getRandomDate() {
@@ -14,7 +15,8 @@ export function getRandomDate() {
     date: moment(addDays(setHours(new Date(), 12 + random), random)),
     id: random,
     title: 'Reccoger semillas en la finca',
-    land: 'puerto rico',
+    land: 'Puerto Rico',
+    property: 'El JuanSanero'
   };
   return {
     start: activity.date.toDate(),
@@ -26,5 +28,5 @@ export function getRandomDate() {
 }
 
 export function getRandomListDate() {
-  return new Array(15).fill(0).map((item) => getRandomDate());
+  return new Array(50).fill(0).map((item) => getRandomDate());
 }

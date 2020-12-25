@@ -37,13 +37,13 @@ export class CalendarActivitiesComponent implements OnInit {
   ngOnInit(): void {}
 
   onDayClicked(event: {
-    day: CalendarMonthViewDay;
+    day: CalendarMonthViewDay<Activity>;
     sourceEvent: MouseEvent | any;
   }) {
     console.debug('CalendarActivitiesComponent:onDayClicked', { event });
     let dialogRef = this.dialog.open(ListEventsComponent, {
       // height: '200px',
-      width: '95vw',
+      maxWidth: '95vw',
       maxHeight: '90vh',
       data: event.day,
     });
