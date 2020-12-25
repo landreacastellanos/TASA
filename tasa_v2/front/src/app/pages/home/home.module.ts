@@ -19,6 +19,7 @@ moment.locale('es-CO');
   ],
   imports: [
     HomeRoutingModule,
+    CommonModule,
     MatIconModule,
     CalendarActivitiesModule,
   ],
