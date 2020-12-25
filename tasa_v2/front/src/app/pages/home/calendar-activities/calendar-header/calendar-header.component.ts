@@ -5,7 +5,7 @@ import { CalendarView } from 'angular-calendar';
   selector: 'app-calendar-header',
   template: `
     <div class="row text-center no-gutters">
-      <div class="col-md-4">
+      <div class="offset-md-4 col-md-4">
         <h3 class="calendar-header-month text-capitalize text-primary">{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
       </div>
       <div class="col-md-4 my-2 m-md-0">

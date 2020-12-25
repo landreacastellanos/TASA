@@ -42,9 +42,10 @@ export class CalendarActivitiesComponent implements OnInit {
   }) {
     console.debug('CalendarActivitiesComponent:onDayClicked', { event });
     let dialogRef = this.dialog.open(ListEventsComponent, {
-      height: '90vh',
+      // height: '200px',
       width: '95vw',
-      data: event.day
+      maxHeight: '90vh',
+      data: event.day,
     });
   }
 }
