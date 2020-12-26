@@ -38,7 +38,7 @@ table.mat-table {
 
   tr {
     td {
-      color: gray;
+      color: map-get($theme-colors, "secondary");
       border: solid 2px rgba(0, 0, 0, 0.12);
       border-left: none;
       border-right: none;

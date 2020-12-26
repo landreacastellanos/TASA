@@ -6,6 +6,8 @@
 @import "./tables.scss";
 @import "./login.scss";
 @import "./cards-farms.scss";
+@import "./calendar.scss";
+
 
 html,
 body {
@@ -39,9 +41,6 @@ body {
   padding: 0 !important;
 }
 
-mat-label {
-  color: map-get($theme-colors, "secondary");
-}
 
 .mat-form-field-appearance-outline .mat-form-field-wrapper {
   padding-bottom: 0;

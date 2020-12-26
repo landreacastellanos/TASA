@@ -1,0 +1,43 @@
+<div class="bg-white py-3 p-md-3">
+  <app-calendar-header
+    [(view)]="view"
+    [(viewDate)]="viewDate"
+    [locale]="locale"
+  >
+  </app-calendar-header>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [locale]="locale"
+      [weekStartsOn]="weekStartsOn"
+      [cellTemplate]="customCellTemplate"
+      (dayClicked)="onDayClicked($event)"
+    >
+    </mwl-calendar-month-view>
+  </div>
+</div>
+
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-header flex-grow-0">
+    <span
+      class="cal-day-count badge badge-primary m-1"
+      *ngIf="day.badgeTotal > 0"
+      >{{ day.badgeTotal }}</span
+    >
+    <small class="cal-day-number m-1">{{
+      day.date | calendarDate: "monthViewDayNumber":locale
+    }}</small>
+  </div>
+  <small
+    class="badge badge-primary cal-event-custom"
+    *ngFor="let event of day.events | slice: 0:3"
+    >{{ event.title }}</small
+  >
+  <small
+    *ngIf="day?.events?.length > 3"
+    >...{{day?.events?.length}}</small
+  >
+</ng-template>
