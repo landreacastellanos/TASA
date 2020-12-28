@@ -1,0 +1,49 @@
+<h1 mat-dialog-title class="text-primary">{{ title }}</h1>
+<div mat-dialog-content>
+    <table mat-table [dataSource]="dataSource" class="table-activities">
+      <!-- time column -->
+      <ng-container matColumnDef="time">
+        <th mat-header-cell class="time" *matHeaderCellDef>Hora</th>
+        <td mat-cell class="time" *matCellDef="let row">{{ row.time }}</td>
+      </ng-container>
+
+      <!-- title column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell class="title" *matHeaderCellDef>Actividad</th>
+        <td mat-cell class="title" *matCellDef="let row">
+          {{ row.title }}
+        </td>
+      </ng-container>
+
+      <!-- age column -->
+      <ng-container matColumnDef="age">
+        <th mat-header-cell class="age" *matHeaderCellDef>Edad</th>
+        <td mat-cell class="age" *matCellDef="let row">{{ row.age }}</td>
+      </ng-container>
+
+      <!-- land column -->
+      <ng-container matColumnDef="land">
+        <th mat-header-cell class="land" *matHeaderCellDef>Finca / Lote</th>
+        <td mat-cell class="land" *matCellDef="let row">{{ row.land }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="8">No hay actividades para este día.</td>
+      </tr>
+    </table>
+  <!-- {{ data | json }} -->
+</div>
+<div mat-dialog-actions>
+  <button
+    mat-raised-button
+    color="primary"
+    mat-dialog-close
+    class="rounded-button"
+  >
+    Cerrar
+  </button>
+</div>

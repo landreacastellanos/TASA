@@ -103,7 +103,8 @@ class StageServices:
     def get_stage(self, land_id, stage):
         stage_number = Stage(stage)
 
-        if(stage_number in (Stage.stage_two, Stage.stage_three)):
+        if(stage_number in (Stage.stage_two, Stage.stage_three, Stage.stage_five,
+           Stage.stage_six, Stage.stage_seven)):
             return self.get_stage_general(land_id, stage_number.value)
         elif stage_number == Stage.stage_four:
             return self.get_stage_four(land_id, stage_number.value)    
@@ -487,6 +488,24 @@ class StageServices:
         elif stage == Stage.stage_three.value or stage == Stage.stage_four.value:
            start = DateStage.stage_three_start.value
            end = DateStage.stage_three_end.value
+        elif stage == Stage.stage_five.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_five_start_riego.value
+            end = DateStage.stage_five_end_riego.value
+        elif stage == Stage.stage_five.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_five_start_secano.value
+            end = DateStage.stage_five_end_secano.value 
+        elif stage == Stage.stage_six.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_six_start_secano.value
+            end = DateStage.stage_six_end_secano.value
+        elif stage == Stage.stage_six.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_six_start_riego.value
+            end = DateStage.stage_six_end_riego.value  
+        elif stage == Stage.stage_seven.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_seven_start_secano.value
+            end = DateStage.stage_seven_end_secano.value
+        elif stage == Stage.stage_seven.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_seven_start_riego.value
+            end = DateStage.stage_seven_end_riego.value    
         return (start, end)
 
     def calulate_stage(self, stage):
@@ -495,6 +514,12 @@ class StageServices:
            stage_result = Stage.stage_one.value
         elif stage == Stage.stage_three.value:
            stage_result = Stage.stage_two.value 
+        elif stage == Stage.stage_five.value:
+            stage_result = Stage.stage_four.value
+        elif stage == Stage.stage_six.value:
+            stage_result = Stage.stage_five.value
+        elif stage == Stage.stage_seven.value:
+            stage_result = Stage.stage_six.value     
         return stage_result
     
     def validation_system(self, stage, email, land_id, data):
@@ -502,16 +527,15 @@ class StageServices:
         if stage == Stage.stage_two.value:
            result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
         elif stage == Stage.stage_three.value:
-           result = self.get_date_initial(email, land_id)   
-        elif stage == Stage.stage_four.value:
-            result = GeneralsUtils.try_parse_date_time(data['real_date'])
+           result = GeneralsUtils.try_parse_date_time(self.get_date_initial(email, land_id)['sowing_date'])   
+        else:
+            result = result = GeneralsUtils.try_parse_date_time(self.get_date_initial(email, land_id)['real_date'])
         return result
 
     def get_date_initial(self, email, land_id):
         property_stage_one = self.get_property_stage(email, land_id, Stage.stage_one.value)[1]
         data = json.loads(property_stage_one[0]['data'])
-        result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
-        return result
+        return data
 
     def validate_dates(self, date, date_caluted, stage):
         start = 0
@@ -519,7 +543,7 @@ class StageServices:
         if stage in (Stage.stage_two.value, Stage.stage_three.value):
             start = str(date - timedelta(days=date_caluted[1]))
             end = str(date - timedelta(days=date_caluted[0]))
-        elif stage == Stage.stage_four.value:
+        else:
             start = str(date + timedelta(days=date_caluted[1]))
             end = str(date + timedelta(days=date_caluted[0]))
         return (start,end)

@@ -1,7 +1,10 @@
+import { Moment } from "moment";
+
 export interface CalendarChildren {
   /** implement with true if the view child has save button */
   hasSave?: boolean;
   onSave?: () => any;
+  title: string;
   /** text used in back button */
   textBack: string;
   onBack: () => any;
@@ -17,13 +20,13 @@ export interface CalendarChildren {
   /** date range segment */
 
   hasEndTrackingDate?: boolean;
-  endTrackingDate?: Date;
+  endTrackingDate?: Moment;
 
   hasStartTrackingDate?: boolean;
-  startTrackingDate?: Date;
+  startTrackingDate?: Moment;
 
   hasEndHarvestDate?:boolean;
-  endHarvestDate?: Date;
+  endHarvestDate?: Moment;
 
   /** options for sponsors image */
   hasSponsorSpace?:boolean;

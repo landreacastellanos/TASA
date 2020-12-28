@@ -1,3 +1,6 @@
+@import "../../../../../themes/theme.scss";
+
+
 .sponsors {
   background-size: auto;
   background: url(../../../../../assets/img/menos_carga_quimica.JPG);
@@ -9,4 +12,19 @@
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+}
+
+.cards-farms-title {
+  color: map-get($theme-colors, "primary");
+  display: flex;
+  padding-top: 20px;
+  h4 {
+    font-size: 2em;
+    font-weight: bolder;
+  }
+
+  img {
+    height: 35px;
+    padding-right: 20px;
+  }
 }

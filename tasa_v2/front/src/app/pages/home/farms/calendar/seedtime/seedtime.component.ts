@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import moment, { Moment } from 'moment';
 import { LandsService } from '../lands.service';
 import { ArrozSecano } from 'src/app/shared/models/farm';
 import { CalendarService } from '../calendar.service';
@@ -26,6 +27,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   files: FileList;
   constructor(
     public fb: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
     private landService: LandsService,
@@ -44,6 +46,14 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   }
   get hasFilesButton() {
     return this.mode !== 'view';
+  }
+
+  get title() {
+    return (
+      this.route.snapshot.data.title[
+      this.landService?.landSelected?.sowing_system
+      ] || ''
+    );
   }
 
   events: string[] = [];
@@ -87,8 +97,8 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     this.seedTimeForm.patchValue({
       type_sowing,
       variety,
-      sowing_date: sowing_date && new Date(sowing_date),
-      real_date: real_date && new Date(real_date),
+      sowing_date: sowing_date && moment(sowing_date),
+      real_date: real_date && moment(real_date),
     });
   }
 

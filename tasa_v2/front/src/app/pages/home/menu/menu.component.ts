@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'src/app/shared/services/notifications.service';
 import { RolAdministrador } from '../../../shared/models/role';
 import { AuthService } from '../../../shared/services/auth.service';
 import { StorageService } from '../../../shared/services/storage.service';
@@ -15,10 +16,13 @@ const PERMISSION_BY_PATH = {
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
+
+  viewNotification = false;
   constructor(
     private authService: AuthService,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public notifyService: NotificationsService
   ) { }
 
   ngOnInit(): void { }
@@ -45,5 +49,9 @@ export class MenuComponent implements OnInit {
         this.router.navigate(['/login']);
       }
     });
+  }
+
+  goNotification(){
+    this.viewNotification = !this.viewNotification
   }
 }

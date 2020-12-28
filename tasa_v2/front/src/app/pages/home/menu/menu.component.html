@@ -3,7 +3,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/initial" >INICIO</a>
+        <a class="nav-link" routerLink="/initial">INICIO</a>
       </li>
       <li *ngIf="showItem('/farms')" class="nav-item dropdown" routerLinkActive="active">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkFincas" data-toggle="dropdown"
@@ -11,8 +11,8 @@
           FINCAS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkFincas">
-          <a class="dropdown-item" routerLink="/farms/create"  *ngIf="showItem('/farms/create')">Registrar finca</a>
-          <a class="dropdown-item" routerLink="/farms/list" >Lista de fincas</a>
+          <a class="dropdown-item" routerLink="/farms/create" *ngIf="showItem('/farms/create')">Registrar finca</a>
+          <a class="dropdown-item" routerLink="/farms/list">Lista de fincas</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -26,26 +26,39 @@
         </div>
       </li>
       <li *ngIf="showItem('/users')" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/users" >PERFILES</a>
+        <a class="nav-link" routerLink="/users">PERFILES</a>
       </li>
 
       <hr class="d-lg-none">
       <li class="nav-item d-lg-none">
-        <a class="nav-link" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar sesión</a>
+        <a class="nav-link" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar
+          sesión</a>
       </li>
     </ul>
   </div>
   <div class="header-actions nav-link">
-    <a class="icon" href="/">
+    <a class="icon" routerLink="/calendar-activities">
       <img src="../../../assets/img/calendar.svg" alt="calendar">
     </a>
-    <a class="icon" href="/">
-      <img src="../../../assets/img/bell.svg" alt="bell">
+    <a class="icon icon-bell">
+      <img src="../../../assets/img/bell.svg" alt="bell" (click)="goNotification()">
+      <div class="notification" (click)="goNotification()" *ngIf="notifyService.notifications">
+        {{notifyService.notifications.length}}
+      </div>
+      <div class="box-notification" *ngIf="viewNotification">
+        <div *ngFor="let notify of notifyService.notifications" class="items-box-notification row">
+          <div class="text-box-notification col-10">
+            La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> ha generado la receta del segmento <b>{{notify.stage_name}}</b>
+          </div>
+          <div class="icon-box-notification col-1">X</div>
+        </div>
+      </div>
     </a>
   </div>
   <ul class="navbar-nav d-lg-block d-none">
     <li class="nav-item">
-      <a class="nav-link" href="#"(click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar sesión</a>
+      <a class="nav-link" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar
+        sesión</a>
     </li>
   </ul>
 

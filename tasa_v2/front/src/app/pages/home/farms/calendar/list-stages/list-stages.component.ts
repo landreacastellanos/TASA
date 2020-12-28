@@ -30,4 +30,8 @@ export class ListStagesComponent implements OnInit, CalendarChildren {
   public goItem(item) {
     this.router.navigate(['/farms/calendar/', this.landsService.idProperty, this.landsService.idLand, item.stage_number]);
   }
+
+  get title(){
+    return `Calendario de los segmentos ${this.landsService?.typeRice?.name}`
+  }
 }

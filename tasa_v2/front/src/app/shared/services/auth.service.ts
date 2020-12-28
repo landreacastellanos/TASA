@@ -20,8 +20,8 @@ export class AuthService {
     return this.dataApiService.getAll('get_roles');
   }
 
-  public isAuthenticated(): Promise<any> {
-    return this.dataApiService.getAll('is_authenticated');
+  public isAuthenticated(message?): Promise<any> {
+    return this.dataApiService.getAll('is_authenticated', null, message);
   }
 
   public restorePassword(userValue: string): Promise<any> {
