@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import moment, { Moment } from 'moment';
 import {
   StageProduct,
   StageBetweenRequest,
@@ -23,8 +24,8 @@ import { LandsService } from '../lands.service';
 export class BurningForSowingComponent implements OnInit, CalendarChildren {
   submitted: boolean;
   segmentId: string;
-  endTrackingDate: Date;
-  startTrackingDate: Date;
+  endTrackingDate: Moment;
+  startTrackingDate: Moment;
   products: StageProduct[];
   mode: 'edit' | 'view' | 'create' = 'view';
   files: FileList;
@@ -122,11 +123,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
     this.mode = enabled ? 'edit' : 'view';
+    console.log('BurningForSowingComponent:init',{end_traking_date, this_end_traking_date: this.endTrackingDate});
+    
     // ? ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
-      this.endTrackingDate = end_traking_date && new Date(end_traking_date);
+      this.endTrackingDate = end_traking_date && moment(end_traking_date);
       this.startTrackingDate =
-        start_traking_date && new Date(start_traking_date);
+        start_traking_date && moment(start_traking_date);
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       this.selection.clear();
 
@@ -156,7 +159,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     );
     this.burningForSowingForm.patchValue({
       observations,
-      application_date: application_date && new Date(application_date),
+      application_date: application_date && moment(application_date),
       products,
     });
   }
@@ -266,7 +269,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     this.selection.selected.forEach((element) => this.addControl(element));
   }
 
-  // FIXME: implement & integrate with API
   onSave() {
     this.submitted = true;
     // is needed because is no trigger by submit
@@ -361,9 +363,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   selectProduct(event, row) {
-    if(this.mode === 'view'){
-      return
-    }
     event ? this.selection.toggle(row) : null;
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();

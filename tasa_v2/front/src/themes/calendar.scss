@@ -1,0 +1,30 @@
+.cal-header {
+  text-transform: capitalize;
+}
+
+.cal-month-view .cal-day-number {
+  font-size: 1.2em;
+  font-weight: 400;
+  opacity: 1;
+  float: right;
+}
+
+.cal-month-view .cal-day-cell.cal-today .cal-day-number {
+  font-size: 1.9em;
+  color: map-get($theme-colors, "primary");
+}
+
+.cal-month-view .cal-cell {
+  // 100/7
+  max-width: calc(100% / 7);
+}
+
+
+@media (max-width: 768px) {
+  .cal-month-view .cal-day-number {
+    font-size: 0.8em;
+  }
+  .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    font-size: 0.8em;
+  }
+}

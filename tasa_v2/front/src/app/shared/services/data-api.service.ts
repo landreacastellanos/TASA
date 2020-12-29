@@ -41,18 +41,21 @@ export class DataApiService {
     }
   }
 
-  public getAll(extension: string): Promise<any> {
+  public getAll(extension: string, url?: string, notMessage?: boolean): Promise<any> {
+    const urlGet = url? url : this.urlApi;
     return this.http
-      .get<ResponseBack>(this.urlApi + extension, {
+      .get<ResponseBack>(urlGet + extension, {
         headers: this.getHeaders(),
       })
       .toPromise()
       .then((result) => {
         if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
+          if(notMessage){
+            this.snackBar.open(result.details[0].value, 'x', {
+              duration: 2000,
+              panelClass: ['snackbar-warn'],
+            });
+          }
           return null;
         }
         if (result && result.data) {
