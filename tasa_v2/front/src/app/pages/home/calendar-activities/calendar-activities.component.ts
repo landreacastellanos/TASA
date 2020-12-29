@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarEvent, CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarMonthViewDay,
+  CalendarView,
+  DAYS_OF_WEEK,
+} from 'angular-calendar';
+import { Activity, getRandomListDate } from './calendar-activities.model';
 import moment, { Moment } from 'moment';
 import {
   startOfDay,
@@ -11,12 +17,13 @@ import {
   isSameMonth,
   addHours,
 } from 'date-fns';
-import { colors } from './demo-utils/colors';
+import { MatDialog } from '@angular/material/dialog';
+import { ListEventsComponent } from './list-events/list-events.component';
 
 @Component({
   selector: 'app-calendar-activities',
   templateUrl: './calendar-activities.component.html',
-  styleUrls: ['./calendar-activities.component.scss']
+  styleUrls: ['./calendar-activities.component.scss'],
 })
 export class CalendarActivitiesComponent implements OnInit {
   locale: string = 'es-CO';
@@ -24,54 +31,21 @@ export class CalendarActivitiesComponent implements OnInit {
   // weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   view: CalendarView = CalendarView.Month;
   viewDate: moment.Moment = moment();
-  events: CalendarEvent[]  = [
-    
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
-  constructor() { }
+  events: CalendarEvent<Activity>[] = getRandomListDate();
+  constructor(public dialog: MatDialog) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  onDayClicked(event: {
+    day: CalendarMonthViewDay<Activity>;
+    sourceEvent: MouseEvent | any;
+  }) {
+    console.debug('CalendarActivitiesComponent:onDayClicked', { event });
+    let dialogRef = this.dialog.open(ListEventsComponent, {
+      // height: '200px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      data: event.day,
+    });
   }
-
 }
