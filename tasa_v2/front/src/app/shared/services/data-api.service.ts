@@ -232,10 +232,12 @@ export class DataApiService {
   public delete(
     extension: string,
     id: string,
+    url?: string,
     extraParams?: HttpParams
   ): Promise<any> {
+    const urlGet = url? url : this.urlApi;
     return this.http
-      .delete<ResponseBack>(this.urlApi + extension, {
+      .delete<ResponseBack>(urlGet + extension, {
         headers: this.getHeaders(),
         params: { id, ...extraParams },
       })

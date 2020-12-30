@@ -81,6 +81,13 @@
         &:hover{
           background-color: rgb(13, 122, 13);
         }
+
+        button{
+          min-height: 10px;
+          min-width: 10px;
+          padding: 0 5px;
+          z-index: 15;
+        }
       }
     }
   }
@@ -99,6 +106,14 @@
       height: 50px;
     }
   }
+  .navbar {
+    .icon-bell{
+  
+      .box-notification{
+        top: 50px;
+      }
+    }
+  }
 }
 
 // Large devices (desktops, 992px and up)
@@ -108,6 +123,13 @@
     .navbar-brand img {
       height: 45px;
     }
+
+    .icon-bell{
+  
+      .box-notification{
+        top: 48px;
+      }
+    }
   }
 }
 
@@ -115,6 +137,15 @@
 @media (max-width: 768px) {
   .navbar .navbar-brand img {
     height: 40px;
+  }
+
+  .navbar {
+    .icon-bell{
+  
+      .box-notification{
+        top: 45px;
+      }
+    }
   }
 }
 
@@ -135,5 +166,17 @@
   .material-icons {
     vertical-align: text-bottom;
     font-size: 25px;
+  }
+}
+
+@media (max-width: 350px) {
+  .navbar {
+    .icon-bell{
+  
+      .box-notification{
+        width: 250px;
+        right: -18px;
+      }
+    }
   }
 }

@@ -41,16 +41,18 @@
       <img src="../../../assets/img/calendar.svg" alt="calendar">
     </a>
     <a class="icon icon-bell">
-      <img src="../../../assets/img/bell.svg" alt="bell" (click)="goNotification()">
-      <div class="notification" (click)="goNotification()" *ngIf="notifyService.notifications">
+      <img src="../../../assets/img/bell.svg" alt="bell" (click)="viewNotificationMethod()">
+      <div class="notification" (click)="viewNotificationMethod()" *ngIf="notifyService.notifications">
         {{notifyService.notifications.length}}
       </div>
       <div class="box-notification" *ngIf="viewNotification">
         <div *ngFor="let notify of notifyService.notifications" class="items-box-notification row">
-          <div class="text-box-notification col-10">
+          <div class="text-box-notification col-10" (click)="goNotification(notify)">
             La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> ha generado la receta del segmento <b>{{notify.stage_name}}</b>
           </div>
-          <div class="icon-box-notification col-1">X</div>
+          <div class="icon-box-notification col-1">
+            <button mat-button (click)="closeNotification(notify)">X</button>
+          </div>
         </div>
       </div>
     </a>

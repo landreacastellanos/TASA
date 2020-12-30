@@ -15,11 +15,12 @@ export class NotificationsService {
   getNotifications(){
     return this.dataApiService.getAll('get_notification', environment.urlNotifications).then(data =>{
       this.notifications = data;
-      console.log(data);
-      
-    }).catch(err => {
-      console.log(err);
-      
-    })
+    });
+  }
+
+  deleteNotification(id: string){
+    return this.dataApiService.delete('delete_notification', id, environment.urlNotifications).then(() =>{
+      return this.getNotifications();
+    });
   }
 }
