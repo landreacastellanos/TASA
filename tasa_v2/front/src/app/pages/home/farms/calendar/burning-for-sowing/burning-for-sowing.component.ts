@@ -123,8 +123,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
     this.mode = enabled ? 'edit' : 'view';
-    console.log('BurningForSowingComponent:init',{end_traking_date, this_end_traking_date: this.endTrackingDate});
-    
+
     // ? ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       this.endTrackingDate = end_traking_date && moment(end_traking_date);
@@ -149,7 +148,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       );
       this.hectares = this.landsService.lands[this.landsService.landsSelectedIds] ?
         this.landsService.lands[this.landsService.landsSelectedIds].batchs.hectares_number : 0;
-      console.log(this.hectares);
 
     }, 1);
 
@@ -410,8 +408,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   editProduct(index) {
-    console.log(this.getValueProduct(index));
-    
     if (this.enableEditProduct) {
       return
     }

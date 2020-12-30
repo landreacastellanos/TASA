@@ -51,7 +51,17 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  goNotification(){
+  viewNotificationMethod(){
     this.viewNotification = !this.viewNotification
+  }
+
+  async goNotification(notify){
+    this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
+    this.viewNotification = false;
+    await this.closeNotification(notify);
+  }
+
+  closeNotification(notify){
+    return this.notifyService.deleteNotification(notify.id);  
   }
 }

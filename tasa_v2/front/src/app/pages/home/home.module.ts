@@ -9,6 +9,7 @@ import moment from 'moment';
 import { CalendarActivitiesModule } from './calendar-activities/calendar-activities.module';
 import { registerLocaleData } from '@angular/common';
 import localeEsCO from '@angular/common/locales/es-CO';
+import { MatButtonModule } from '@angular/material/button';
 
 registerLocaleData(localeEsCO);
 moment.locale('es-CO');
@@ -21,6 +22,7 @@ moment.locale('es-CO');
     HomeRoutingModule,
     CommonModule,
     MatIconModule,
+    MatButtonModule,
     CalendarActivitiesModule,
   ],
   providers: [],
