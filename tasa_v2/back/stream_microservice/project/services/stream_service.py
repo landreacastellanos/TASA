@@ -21,9 +21,7 @@ class NotificationService():
         email = validation_token[2]
 
         data = self.__repository_notification.select(entity_name="notification",options={ "filters":
-            [["email",
-            "equals",
-            email]
+            [["user_name", "equals", email]
             ],
             "paginate": {"offset": 0, "limit": 10}            
         })        
