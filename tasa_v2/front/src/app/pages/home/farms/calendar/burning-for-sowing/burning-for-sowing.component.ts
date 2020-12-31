@@ -202,7 +202,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   getValueProduct(index: number) {
-    return this.productsControl.value[index];
+    return this.productsControl.controls[index].value
   }
 
   addControl({
