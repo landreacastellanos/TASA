@@ -30,6 +30,9 @@
    "user":{
       "tableName": "user",
       "type": "object",
+      "primaryKey": [
+         "id"
+      ],
       "properties": {
          "id": {
             "dbName": "id",
@@ -444,6 +447,31 @@
          "dose_by_ha": {
             "dbName": "dose_by_ha",
             "type": "number"
+         }
+      }
+   },
+   "notification": {
+      "tableName": "Notification",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_user": {
+            "dbName": "id_user",
+            "type": "integer"
+         },
+         "user_name": {
+            "dbName": "user_name",
+            "type": "string"
+         },
+         "Notification": {
+            "dbName": "Notification",
+            "type": "string"
          }
       }
    }
