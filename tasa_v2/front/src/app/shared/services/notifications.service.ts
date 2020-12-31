@@ -18,7 +18,7 @@ export class NotificationsService {
     });
   }
 
-  deleteNotification(id: string){
+  deleteNotification(id?: string){
     return this.dataApiService.delete('delete_notification', id, environment.urlNotifications).then(() =>{
       return this.getNotifications();
     });

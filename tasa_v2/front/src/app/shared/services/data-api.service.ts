@@ -236,10 +236,11 @@ export class DataApiService {
     extraParams?: HttpParams
   ): Promise<any> {
     const urlGet = url? url : this.urlApi;
+    const params = id? { id, ...extraParams } : {...extraParams };
     return this.http
       .delete<ResponseBack>(urlGet + extension, {
         headers: this.getHeaders(),
-        params: { id, ...extraParams },
+        params: params,
       })
       .toPromise()
       .then((result) => {
