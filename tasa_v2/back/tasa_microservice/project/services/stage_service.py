@@ -11,6 +11,7 @@ from project.infrastructure.repositories.common_repository\
 from project.resources.utils.security_token import SecurityToken   
 from project.resources.utils.generals_utils import GeneralsUtils
 from project.models.enum.type_planting_enum import TypePlanting
+from project.resources.utils.notification_utils import NotificationUtils
 
 class StageServices:
     def __init__(self):
@@ -144,6 +145,10 @@ class StageServices:
         
         stage_db['data'] = json.dumps(data)
         stage_db['stage_complete'] = complete_stage
+
+        notification_utils = NotificationUtils()
+        if("observations" in data and "products" in data and "images" in data):
+            notification_utils.set_notification(land_id, stage_number.value)
 
         if(len(property_stage) == 0):
 
@@ -413,7 +418,7 @@ class StageServices:
         del data[0]['stage']
         return data[0]
 
-    def set_stage_one(self,data):
+    def set_stage_one(self, data):
         results = {
             "data": [],
             "details": []
@@ -445,6 +450,11 @@ class StageServices:
         images = []
         stage_db = {}
         complete_stage = False
+
+        notification_utils = NotificationUtils()
+
+        if("sowing_date" in data and "type_sowing" in data and "variety" in data):
+            notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
             images = data['images']
@@ -460,6 +470,8 @@ class StageServices:
         
         stage_db['data'] = json.dumps(data)
         stage_db['stage_complete'] = complete_stage
+
+        
 
         if(len(property_stage) == 0):
             stage_db['land_id'] = land_id            
