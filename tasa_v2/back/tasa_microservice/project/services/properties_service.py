@@ -91,16 +91,16 @@ class PropertiesServices:
         if("manager" in data):
             property_data['manager']=data['manager']
 
-        try:
-            propery = self.__repository_properties.insert(property_data)
-            
-            data = self.__repository_properties.select(
+        try:         
+            data_validation = self.__repository_properties.select(
                 options={"filters":
                              [['business_name', "equals", str(data['business_name'])]]
                              })
 
-            if len(data)>0:
+            if len(data_validation)>0:
                 raise Exception("Razon social duplicada.")
+            
+            propery = self.__repository_properties.insert(property_data)
 
             land = list(map(lambda  x:{ 
                                 "property_id": propery[1],
@@ -127,15 +127,46 @@ class PropertiesServices:
                 {"column_name": 'name',
                  "desc": False}
                  
-        plant = self.__repository_properties.select(entity_name="properties", options=select_options)
+        plant = []
+
+        validation_token = SecurityToken().validate_token()
+        
+        role = self.verify_data(validation_token[2])
+
+        if role[0] and role[1]['role_id'] != Keys.admi.value:
+            user = self.__repository_user.select(entity_name="user", options={ "filters":
+                [["email",
+                "equals",
+                validation_token[2]]
+                ]
+            })[0] 
+            select_options['filters'] = [
+                 ["manager", "equals", user['id']],
+                 "or",
+                 ["property_owner", "equals", user['id']],
+                 "or",
+                 ["purchasing_manager", "equals", user['id']],
+                 "or",
+                 ["pay_manager", "equals", user['id']],
+                 "or",
+                 ["responsible_purchasing", "equals", user['id']],
+                 "or",
+                 ["decision_influencer", "equals", user['id']],
+                 "or",
+                 ["parthner_add", "equals", user['id']],
+                 "or",
+                 ["seller", "equals", user['id']]
+                ]            
+        
+        plant = self.__repository_properties.select(entity_name="properties", options=select_options)    
 
         data = list(map(lambda  x:{ 
-                                "id": x['id'],
-                                "name": x['name'],
-                                "business_name": x['business_name'],
-                                "phone": x['phone'],
-                                "type_planting": self.get_type_planting_name(planting_type,x['sowing_system'])['name']
-                            } ,plant))        
+                            "id": x['id'],
+                            "name": x['name'],
+                            "business_name": x['business_name'],
+                            "phone": x['phone'],
+                            "type_planting": self.get_type_planting_name(planting_type,x['sowing_system'])['name']
+                        } ,plant))        
 
         return data
     
