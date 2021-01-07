@@ -533,7 +533,7 @@ class StageServices:
         elif stage == Stage.stage_seven.value:
             stage_result = Stage.stage_six.value
         elif stage == Stage.stage_eight.value:
-            stage_result = Stage.stage_eleven.value
+            stage_result = Stage.stage_seven.value
         elif stage == Stage.stage_nine.value:
             stage_result = Stage.stage_eight.value     
         return stage_result
@@ -560,6 +560,6 @@ class StageServices:
             start = str(date - timedelta(days=date_caluted[1]))
             end = str(date - timedelta(days=date_caluted[0]))
         else:
-            start = str(date + timedelta(days=date_caluted[1]))
-            end = str(date + timedelta(days=date_caluted[0]))
+            start = str(date + timedelta(days=date_caluted[0]))
+            end = str(date + timedelta(days=date_caluted[1]))
         return (start,end)
