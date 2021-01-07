@@ -61,7 +61,7 @@ export class MenuComponent implements OnInit {
     await this.closeNotification(notify);
   }
 
-  closeNotification(notify){
-    return this.notifyService.deleteNotification(notify.id);  
+  closeNotification(notify?){
+    return this.notifyService.deleteNotification(notify? notify.id : '');  
   }
 }

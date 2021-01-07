@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     this.notifyService.getNotifications(); 
     this.notify = setInterval(() => {
       this.notifyService.getNotifications(); 
-    }, 300000);
+    }, 15000);
   }
 
   ngOnDestroy() {

@@ -71,6 +71,12 @@
       box-shadow: 0px 18px 26px -5px rgba(0, 0, 0, 0.895);
       z-index: 10;
 
+      .header-box-notification{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
       .items-box-notification{
         display: flex;
         align-items: center;
