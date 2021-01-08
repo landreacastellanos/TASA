@@ -481,8 +481,8 @@ class StageServices:
            start = DateStage.stage_two_start.value
            end = DateStage.stage_two_end.value
         elif stage == Stage.stage_three.value and type_planting == TypePlanting.riego.value:
-           start = DateStage.stage_three_start.value
-           end = DateStage.stage_three_end_secano.value
+           start = DateStage.stage_three_start_riego.value
+           end = DateStage.stage_three_end_riego.value
         elif stage == Stage.stage_three.value or stage == Stage.stage_four.value:
            start = DateStage.stage_three_start.value
            end = DateStage.stage_three_end.value
@@ -527,7 +527,19 @@ class StageServices:
             end = DateStage.stage_eleven_end_riego.value
         elif stage == Stage.stage_eleven.value and type_planting == TypePlanting.secano.value:
             start = DateStage.stage_eleven_start_secano.value
-            end = DateStage.stage_eleven_end_secano.value    
+            end = DateStage.stage_eleven_end_secano.value  
+        elif stage == Stage.stage_twelve.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_twelve_start_riego.value
+            end = DateStage.stage_twelve_end_riego.value
+        elif stage == Stage.stage_twelve.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_twelve_start_secano.value
+            end = DateStage.stage_twelve_end_secano.value 
+        elif stage == Stage.stage_thirteen.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_thirteen_start_riego.value
+            end = DateStage.stage_thirteen_end_riego.value
+        elif stage == Stage.stage_thirteen.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_thirteen_start_secano.value
+            end = DateStage.stage_thirteen_end_secano.value   
         return (start, end)
 
     def calulate_stage(self, stage):
@@ -549,7 +561,11 @@ class StageServices:
         elif stage == Stage.stage_ten.value:
             stage_result = Stage.stage_nine.value
         elif stage == Stage.stage_eleven.value:
-            stage_result = Stage.stage_ten.value            
+            stage_result = Stage.stage_ten.value  
+        elif stage == Stage.stage_twelve.value:
+            stage_result = Stage.stage_eleven.value
+        elif stage == Stage.stage_thirteen.value:
+            stage_result = Stage.stage_twelve.value               
         return stage_result
     
     def validation_system(self, stage, email, land_id, data):
