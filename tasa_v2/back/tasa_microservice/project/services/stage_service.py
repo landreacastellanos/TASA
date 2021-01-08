@@ -103,12 +103,10 @@ class StageServices:
     def get_stage(self, land_id, stage):
         stage_number = Stage(stage)
 
-        if(stage_number in (Stage.stage_two, Stage.stage_three, Stage.stage_five,
-           Stage.stage_six, Stage.stage_seven, Stage.stage_eight, Stage.stage_nine)):
-            return self.get_stage_general(land_id, stage_number.value)
-        elif stage_number == Stage.stage_four:
+        if stage_number == Stage.stage_four:
             return self.get_stage_four(land_id, stage_number.value)    
-    
+        else:
+            return self.get_stage_general(land_id, stage_number.value)  
     def set_stage(self, data):
         stage_number = Stage(data['stage_number'])            
         return self.set_stage_general(data, stage_number)
@@ -264,8 +262,8 @@ class StageServices:
                 data = json.loads(property_stage_one['data'])
                 date =  self.validation_system(stage_number, email, land_id, data)
                 dates_calculated = self.validate_dates(date, dates, stage_number)
-                start_traking_date = dates_calculated[1]
-                end_traking_date = dates_calculated[0]
+                start_traking_date = dates_calculated[0]
+                end_traking_date = dates_calculated[1]
 
             results['data'].append(
                   {
@@ -518,6 +516,18 @@ class StageServices:
         elif stage == Stage.stage_nine.value and type_planting == TypePlanting.secano.value:
             start = DateStage.stage_nine_start_secano.value
             end = DateStage.stage_nine_end_secano.value
+        elif stage == Stage.stage_ten.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_ten_start_riego.value
+            end = DateStage.stage_ten_end_riego.value
+        elif stage == Stage.stage_ten.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_ten_start_secano.value
+            end = DateStage.stage_ten_end_secano.value 
+        elif stage == Stage.stage_eleven.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_eleven_start_riego.value
+            end = DateStage.stage_eleven_end_riego.value
+        elif stage == Stage.stage_eleven.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_eleven_start_secano.value
+            end = DateStage.stage_eleven_end_secano.value    
         return (start, end)
 
     def calulate_stage(self, stage):
@@ -535,7 +545,11 @@ class StageServices:
         elif stage == Stage.stage_eight.value:
             stage_result = Stage.stage_seven.value
         elif stage == Stage.stage_nine.value:
-            stage_result = Stage.stage_eight.value     
+            stage_result = Stage.stage_eight.value
+        elif stage == Stage.stage_ten.value:
+            stage_result = Stage.stage_nine.value
+        elif stage == Stage.stage_eleven.value:
+            stage_result = Stage.stage_ten.value            
         return stage_result
     
     def validation_system(self, stage, email, land_id, data):

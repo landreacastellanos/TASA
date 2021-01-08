@@ -10,6 +10,9 @@ class UserService():
     def __init__(self):
         self.__repository_user = CommonRepository(
          entity_name="createUser")
+        
+        self.__repository_property = CommonRepository(
+         entity_name="properties")
 
     def create_user(self, data):
         result = {
@@ -89,6 +92,15 @@ class UserService():
         data_validation = self.validation_data(validation_token[2])
         data_email = self.validation_email_update(data)
 
+        if self.validation_user(data["id"]):
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Usuario asignado "
+                }
+            )
+            return result
+
         if len(data_validation['details'])>0:
             return data_validation
 
@@ -143,6 +155,15 @@ class UserService():
 
         validation_token = SecurityToken().validate_token()
         data_validation = self.validation_data(validation_token[2])
+
+        if self.validation_user(id):
+            result['details'].append(
+                {
+                    "key": 400,
+                    "value": "Usuario asignado "
+                }
+            )
+            return result 
 
         if len(data_validation['details'])>0:
             return data_validation
@@ -239,5 +260,29 @@ class UserService():
                     }
                 )
 
-        return result    
+        return result
+
+
+    def validation_user(self, id):
+        result = self.__repository_property\
+                    .select(options={
+                    "filters": [
+                        ["manager", "=", id],
+                        "or",
+                        ["property_owner", "=", id],
+                        "or",
+                        ["purchasing_manager", "=", id],
+                        "or",
+                        ["pay_manager", "=", id],
+                        "or",
+                        ["responsible_purchasing", "=", id],
+                        "or",
+                        ["decision_influencer", "=", id],
+                        "or",
+                        ["parthner_add", "=", id],
+                        "or",
+                        ["seller", "=", id]
+                        ]})
+        return True if len(result)>0 else False
+
     #endregion
