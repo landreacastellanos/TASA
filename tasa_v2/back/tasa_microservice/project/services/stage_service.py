@@ -256,8 +256,8 @@ class StageServices:
 
             edit &= (len(property_stage_one) > 0 and len(property_stage_three) > 0)
 
-            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
-            edit &= property_stage_three[0]['stage_complete'] if(len(property_stage_three) > 0) else edit
+            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0 and len(property_stage_three) > 0) else edit
+            edit &= property_stage_three[0]['stage_complete'] if(len(property_stage_three) > 0 and len(property_stage_one) > 0) else edit
 
             start_traking_date = ""
             end_traking_date = ""
