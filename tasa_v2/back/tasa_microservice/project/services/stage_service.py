@@ -127,11 +127,16 @@ class StageServices:
         images = []
         stage_db = {}
         complete_stage = False
+
+        notification_utils = NotificationUtils()
+        if("observations" in data and "products" in data and "images" in data):
+            notification_utils.set_notification(land_id, stage_number.value)
         
         if("images" in data):
             images = data['images']
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
+
         
         if("application_date" in data and data['application_date']):
             stage_db["application_date"] = data['application_date']
@@ -143,10 +148,6 @@ class StageServices:
         
         stage_db['data'] = json.dumps(data)
         stage_db['stage_complete'] = complete_stage
-
-        notification_utils = NotificationUtils()
-        if("observations" in data and "products" in data and "images" in data):
-            notification_utils.set_notification(land_id, stage_number.value)
 
         if(len(property_stage) == 0):
 
