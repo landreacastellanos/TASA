@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { RolAdministrador } from '../../../../shared/models/role';
 import { LoadingService } from '../../../../shared/services/loading.service';
 import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';

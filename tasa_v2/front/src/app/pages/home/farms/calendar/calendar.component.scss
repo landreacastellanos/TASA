@@ -29,3 +29,15 @@
     padding-right: 20px;
   }
 }
+
+@media (max-width: 470px) {
+  .sponsors {
+    height: 600px;
+  } 
+}
+
+@media (max-width: 370px) {
+  .sponsors {
+    height: 500px;
+  } 
+}
