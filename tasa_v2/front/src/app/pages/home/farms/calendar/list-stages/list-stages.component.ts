@@ -11,12 +11,12 @@ import { LandsService } from '../lands.service';
 })
 export class ListStagesComponent implements OnInit, CalendarChildren {
   public list;
-  textBack = 'Volver al inicio';
+  textBack = 'Ir a lotes';
 
   constructor(private router: Router, public landsService: LandsService) { }
 
   onBack() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/farms/view/', this.landsService.idProperty]);
   }
 
   async ngOnInit(): Promise<void> {

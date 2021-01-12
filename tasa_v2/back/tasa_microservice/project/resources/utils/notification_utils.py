@@ -39,15 +39,6 @@ class NotificationUtils():
             self.insert_data(user_notification, property_field['manager'])
         if(property_field['property_owner'] is not None):
             self.insert_data(user_notification, property_field['property_owner'])
-        if(property_field['purchasing_manager'] is not None):
-            self.insert_data(user_notification, property_field['purchasing_manager'])
-
-        if(property_field['pay_manager'] is not None):
-            self.insert_data(user_notification, property_field['pay_manager'])
-        if(property_field['responsible_purchasing'] is not None):
-            self.insert_data(user_notification, property_field['responsible_purchasing'])
-        if(property_field['decision_influencer'] is not None):
-            self.insert_data(user_notification, property_field['decision_influencer'])
 
         if(property_field['parthner_add'] is not None):
             self.insert_data(user_notification, property_field['parthner_add'])
