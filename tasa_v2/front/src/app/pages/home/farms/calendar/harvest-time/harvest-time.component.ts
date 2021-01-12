@@ -94,11 +94,13 @@ export class HarvestTimeComponent implements OnInit {
   }
 
   intAPI() {
-    // FIXME:
+    this.configurationService.setLoadingPage(true);
     return this.calendarService
       .getStage(this.segmentId, this.landsService.idLand)
       .then((stageOneData) => {
         this.init(stageOneData);
+      }).finally(() => {
+        this.configurationService.setLoadingPage(false);
       });
   }
 
