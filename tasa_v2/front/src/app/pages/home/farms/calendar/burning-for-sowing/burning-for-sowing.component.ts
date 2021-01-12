@@ -101,23 +101,12 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     // Some stages are not available for; @Luz:
     // Las fotos que hacen falta corresponden a las etapas de Fertilización y estas no llevan foto;
     // así que no falta nada.
-    // Riego: 10,12
+    // Riego: 8, 10,12
     // Secano: 8,10,12
     if (!this.landsService.landSelected) {
       return false;
     }
-    if (
-      this.landsService.arrozRiego.id ===
-        this.landsService.landSelected?.sowing_system &&
-      [10, 12].includes(parseInt(this.segmentId, 10))
-    ) {
-      return false;
-    }
-    if (
-      this.landsService.arrozSecano.id ===
-        this.landsService.landSelected?.sowing_system &&
-      [8, 10, 12].includes(parseInt(this.segmentId, 10))
-    ) {
+    if ([8, 10, 12].includes(parseInt(this.segmentId, 10))) {
       return false;
     }
     return true;
