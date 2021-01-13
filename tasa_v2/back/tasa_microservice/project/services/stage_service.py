@@ -191,14 +191,14 @@ class StageServices:
 
         stage = self.calulate_stage(stage_number)    
     
-        if(len(property_stage) == 0):
-
+        if(len(property_stage) == 0):            
+            
             property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            edit &= (len(property_stage_one) > 0)
+            if(edit):                
+                edit &= (len(property_stage_one) > 0)
+                edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
 
-            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
-
-            if(len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
+            if(edit and len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
 
