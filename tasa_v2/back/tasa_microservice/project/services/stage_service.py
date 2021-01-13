@@ -539,7 +539,13 @@ class StageServices:
             end = DateStage.stage_thirteen_end_riego.value
         elif stage == Stage.stage_thirteen.value and type_planting == TypePlanting.secano.value:
             start = DateStage.stage_thirteen_start_secano.value
-            end = DateStage.stage_thirteen_end_secano.value   
+            end = DateStage.stage_thirteen_end_secano.value 
+        elif stage == Stage.stage_fourteen.value and type_planting == TypePlanting.riego.value:
+            start = DateStage.stage_fourteen_start_riego.value
+            end = DateStage.stage_fourteen_end_riego.value
+        elif stage == Stage.stage_fourteen.value and type_planting == TypePlanting.secano.value:
+            start = DateStage.stage_fourteen_start_secano.value
+            end = DateStage.stage_fourteen_end_secano.value      
         return (start, end)
 
     def calulate_stage(self, stage):
@@ -565,7 +571,9 @@ class StageServices:
         elif stage == Stage.stage_twelve.value:
             stage_result = Stage.stage_eleven.value
         elif stage == Stage.stage_thirteen.value:
-            stage_result = Stage.stage_twelve.value               
+            stage_result = Stage.stage_twelve.value
+        elif stage == Stage.stage_fourteen.value:
+            stage_result = Stage.stage_thirteen.value                   
         return stage_result
     
     def validation_system(self, stage, email, land_id, data):
