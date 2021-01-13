@@ -384,6 +384,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   selectProduct(event, row) {
+    if (this.mode === 'view') {
+      return;
+    }
     event ? this.selection.toggle(row) : null;
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();
