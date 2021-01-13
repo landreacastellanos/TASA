@@ -34,11 +34,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     private configurationService: ConfigurationService,
     private calendarService: CalendarService
   ) {
-    this.calendarService
-      .getStageOne(this.landService.idLand)
-      .then((stageOneData) => {
-        this.init(stageOneData);
-      });
+    this.intAPI();
   }
   textBack = 'Ir a segmentos';
   get hasSave() {
@@ -51,7 +47,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   get title() {
     return (
       this.route.snapshot.data.title[
-      this.landService?.landSelected?.sowing_system
+        this.landService?.landSelected?.sowing_system
       ] || ''
     );
   }
@@ -100,6 +96,18 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
       sowing_date: sowing_date && moment(sowing_date),
       real_date: real_date && moment(real_date),
     });
+  }
+
+  intAPI() {
+    this.configurationService.setLoadingPage(true);
+    return this.calendarService
+      .getStageOne(this.landService.idLand)
+      .then((stageOneData) => {
+        this.init(stageOneData);
+      })
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 
   get imageReference() {
@@ -161,10 +169,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
             panelClass: ['snackbar-success'],
           })
       )
-      .then(() => this.calendarService.getStageOne(this.landService.idLand))
-      .then((stageOneData) => {
-        this.init(stageOneData);
-      })
+      .then(() => this.intAPI())
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });

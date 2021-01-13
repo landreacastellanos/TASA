@@ -101,29 +101,19 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     // Some stages are not available for; @Luz:
     // Las fotos que hacen falta corresponden a las etapas de Fertilización y estas no llevan foto;
     // así que no falta nada.
-    // Riego: 10,12
+    // Riego: 8, 10,12
     // Secano: 8,10,12
     if (!this.landsService.landSelected) {
       return false;
     }
-    if (
-      this.landsService.arrozRiego.id ===
-        this.landsService.landSelected?.sowing_system &&
-      [10, 12].includes(parseInt(this.segmentId,10))
-    ) {
-      return false;
-    }
-    if (
-      this.landsService.arrozSecano.id ===
-        this.landsService.landSelected?.sowing_system &&
-      [8, 10, 12].includes(parseInt(this.segmentId,10))
-    ) {
+    if ([8, 10, 12].includes(parseInt(this.segmentId, 10))) {
       return false;
     }
     return true;
   }
 
   initAPI() {
+    this.configurationService.setLoadingPage(true);
     return this.calendarService
       .getProducts(this.landsService.idLand, this.segmentId)
       .then((products) => {
@@ -133,7 +123,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .then(() =>
         this.calendarService.getStage(this.segmentId, this.landsService.idLand)
       )
-      .then((stageOneData) => this.init(stageOneData));
+      .then((stageOneData) => this.init(stageOneData))
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 
   init(
@@ -171,9 +164,12 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.dataSourceProductsAdd = new MatTableDataSource(
         this.selection.selected
       );
-      this.hectares = this.landsService.lands[this.landsService.landsSelectedIds] ?
-        this.landsService.lands[this.landsService.landsSelectedIds].batchs.hectares_number : 0;
-
+      this.hectares = this.landsService.lands[
+        this.landsService.landsSelectedIds
+      ]
+        ? this.landsService.lands[this.landsService.landsSelectedIds].batchs
+            .hectares_number
+        : 0;
     }, 1);
 
     this.configurationService.disableForm(
@@ -388,6 +384,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   selectProduct(event, row) {
+    if (this.mode === 'view') {
+      return;
+    }
     event ? this.selection.toggle(row) : null;
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();

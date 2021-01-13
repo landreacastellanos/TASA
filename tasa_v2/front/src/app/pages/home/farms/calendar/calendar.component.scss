@@ -30,14 +30,20 @@
   }
 }
 
-@media (max-width: 470px) {
+@media (min-width: 100px) {
+  .sponsors {
+    height: 500px;
+  } 
+}
+
+@media (min-width: 370px) {
   .sponsors {
     height: 600px;
   } 
 }
 
-@media (max-width: 370px) {
+@media (min-width: 710px) {
   .sponsors {
-    height: 500px;
+    height: 700px;
   } 
 }
