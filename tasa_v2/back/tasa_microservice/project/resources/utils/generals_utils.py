@@ -175,6 +175,8 @@ class GeneralsUtils:
             '%Y-%m-%d %H:%M:%S',
             '%Y-%m-%d %H:%M:%S.%f')
 
+        if value == "":
+            return ''
         for date_time_format in DATE_TIME_FORMATS:
             try:
                 return datetime.strptime(value, date_time_format)
