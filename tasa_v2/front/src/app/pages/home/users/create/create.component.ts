@@ -111,10 +111,7 @@ export class CreateComponent implements OnInit {
 
     return promise.then((data) => {
       if (data === null) {
-        return this.snackBar.open('Hubo un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
+        return null;
       }
       this.snackBar.open(successMessage, 'x', {
         duration: 2000,
