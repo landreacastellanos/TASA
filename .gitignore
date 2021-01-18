@@ -28,3 +28,5 @@ tasa_v2/back/stream_microservice/project/resources/utils/__pycache__/
 tasa_v2/back/stream_microservice/project/services/__pycache__/
 
 tasa_v2/back/stream_microservice/project/views/__pycache__/
+
+tasa_v2/.idea/*
