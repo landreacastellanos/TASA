@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StageOneRequest } from '../../../../../shared/models/calendar';
+import { checkDates } from './check-dates.validator';
 
 @Component({
   selector: 'app-seedtime',
@@ -64,7 +65,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     ],
     sowing_date: [{ value: '', disabled: this.mode === 'view' }, []],
     real_date: [{ value: '', disabled: this.mode === 'view' }, []],
-  });
+  }, { validators: [checkDates] });
   typeOfPlanting: string[] = [
     'Siembra con arroz tapado',
     'Siembra con arroz voleado',

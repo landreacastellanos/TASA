@@ -4,7 +4,7 @@
       src="../../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png"
       alt=""
     />
-    <h4>{{title}}</h4>
+    <h4>{{ title }}</h4>
   </div>
   <div class="row cards-farms-container">
     <div class="specs col-12 col-md-6">
@@ -70,6 +70,10 @@
         <div><mat-label>Fecha propuesta</mat-label></div>
         <mat-form-field
           class="formOutline"
+          [ngClass]="{
+            'mat-form-field-invalid':
+              submitted && seedTimeForm?.errors?.invalidCheckDates
+          }"
           color="primary"
           appearance="outline"
         >
@@ -84,6 +88,12 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #pickerSowing_date></mat-datepicker>
         </mat-form-field>
+        <div
+          *ngIf="submitted && seedTimeForm?.errors?.invalidCheckDates"
+          class="warning"
+        >
+          Este campo es requerido, si la fecha real es ingresada
+        </div>
         <div><mat-label>Fecha real</mat-label></div>
         <mat-form-field
           class="formOutline"
