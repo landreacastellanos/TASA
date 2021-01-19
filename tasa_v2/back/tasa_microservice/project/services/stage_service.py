@@ -456,7 +456,7 @@ class StageServices:
 
         notification_utils = NotificationUtils()
 
-        if("sowing_date" in data and "type_sowing" in data and "variety" in data and "real_date" not in data):
+        if("sowing_date" in data and "type_sowing" in data and "variety" in data):
             notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
