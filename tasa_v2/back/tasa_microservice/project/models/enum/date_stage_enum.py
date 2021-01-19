@@ -20,7 +20,7 @@ class DateStage(Enum):
     stage_seven_end_secano = 25
     stage_seven_start_riego = 20
     stage_seven_end_riego = 22
-    stage_eight_start_riego = 0
+    stage_eight_start_riego = 25
     stage_eight_end_riego = 25
     stage_eight_start_secano = 22
     stage_eight_end_secano = 25
@@ -48,6 +48,8 @@ class DateStage(Enum):
     stage_fourteen_end_secano = 90
     stage_fourteen_start_riego = 85
     stage_fourteen_end_riego = 90
+    stage_fifteen_start = 110
+    stage_fifteen_end = 120
 
     
     
