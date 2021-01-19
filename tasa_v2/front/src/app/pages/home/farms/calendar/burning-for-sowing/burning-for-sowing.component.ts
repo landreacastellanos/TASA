@@ -28,6 +28,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   startTrackingDate: Moment;
   products: StageProduct[];
   mode: 'edit' | 'view' | 'create' = 'view';
+  listProductError: boolean;
   files: FileList;
   textBack = 'Ir a segmentos';
   hasEndTrackingDate = true;
@@ -298,6 +299,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       form: this.burningForSowingForm,
       valid: this.burningForSowingForm.valid,
       files: this.files,
+      productsDataSourceAdd: this.dataSourceProductsAdd,
+      mappingProductsDataSourceAdd: this.dataSourceProductsAdd.data.map(
+        (row, i) => !row.id && !this.isDisabledProduct(i)
+      ),
     });
     const values = this.burningForSowingForm.value;
     values.products = this.selection.selected.map((product) => {
@@ -306,6 +311,18 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     });
     values.start_traking_date = this.startTrackingDate;
     values.end_traking_date = this.endTrackingDate;
+    const editListProducts = this.dataSourceProductsAdd.data.map(
+      (row, i) => !row.id && !this.isDisabledProduct(i)
+    );
+    if (editListProducts.includes(true)){
+      this.listProductError = true;
+      return this.snackBar.open('Valida todos los productos antes de continuar', 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-warn'],
+      });
+    }else{
+      this.listProductError = false;
+    }
     if (!this.burningForSowingForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
