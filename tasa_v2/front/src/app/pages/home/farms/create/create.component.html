@@ -287,7 +287,7 @@
             </div>
             <div class="col-12 container-button-add">
               <button
-                *ngIf="mode == 'edit'"
+                *ngIf="mode == 'edit' || mode == 'create'"
                 mat-raised-button
                 color="primary"
                 (click)="add()"
