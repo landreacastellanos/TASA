@@ -54,18 +54,21 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   }
 
   events: string[] = [];
-  seedTimeForm: FormGroup = this.fb.group({
-    type_sowing: [
-      { value: '', disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
-    variety: [
-      { value: '', disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
-    sowing_date: [{ value: '', disabled: this.mode === 'view' }, []],
-    real_date: [{ value: '', disabled: this.mode === 'view' }, []],
-  }, { validators: [checkDates] });
+  seedTimeForm: FormGroup = this.fb.group(
+    {
+      type_sowing: [
+        { value: '', disabled: this.mode === 'view' },
+        [Validators.required],
+      ],
+      variety: [
+        { value: '', disabled: this.mode === 'view' },
+        [Validators.required],
+      ],
+      sowing_date: [{ value: '', disabled: this.mode === 'view' }, []],
+      real_date: [{ value: '', disabled: this.mode === 'view' }, []],
+    },
+    { validators: [checkDates] }
+  );
   typeOfPlanting: string[] = [
     'Siembra con arroz tapado',
     'Siembra con arroz voleado',
@@ -171,6 +174,9 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
           })
       )
       .then(() => this.intAPI())
+      .then(() => {
+        this.landService.variety = this.seedTimeForm.controls.variety.value;
+      })
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
