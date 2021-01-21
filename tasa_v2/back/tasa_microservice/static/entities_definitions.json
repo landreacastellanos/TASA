@@ -30,6 +30,7 @@
    "user":{
       "tableName": "user",
       "type": "object",
+      "primaryKey":"id",
       "properties": {
          "id": {
             "dbName": "id",
