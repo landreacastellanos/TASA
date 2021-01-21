@@ -225,7 +225,8 @@ class StageServices:
                     "observations": "",
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
-                    "products": []
+                    "products": [],
+                    "images": None
                 }
             )
         else:
@@ -233,6 +234,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = 'application_date' in json_data and not json_data['application_date']
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
