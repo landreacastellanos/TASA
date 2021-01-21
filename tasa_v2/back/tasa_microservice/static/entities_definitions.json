@@ -446,5 +446,22 @@
             "type": "number"
          }
       }
+   },
+   "property_stage_finish":{
+      "tableName": "property_procedure",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "land_id",
+            "type": "integer"
+         },
+         "crop_complete": {
+            "dbName": "crop_complete",
+            "type": "boolean"
+         }
+      }
    }
 }

@@ -20,6 +20,8 @@ class StageServices:
          entity_name="land")
         self.__repository_property_stage = CommonRepository(
          entity_name="property_stage")
+        self.__repository_property_stage_update = CommonRepository(
+         entity_name="property_stage_finish")
         self.__repository_stage = CommonRepository(
          entity_name="stage")
         self.__repository_procedure = CommonRepository(
@@ -161,8 +163,9 @@ class StageServices:
             
         else:
             property_stage = property_stage[0]['id']
-            self.__repository_property_stage.update(property_stage,stage_db)           
-            
+            self.__repository_property_stage.update(property_stage,stage_db)
+           
+        self.update_segments(land_id, stage_number, complete_stage)
         results['data'].append("Datos guardados exitosamente")
 
         return results
@@ -474,7 +477,8 @@ class StageServices:
         else:
             property_stage = property_stage[0]['id']
             self.__repository_property_stage.update(property_stage,stage_db)           
-            
+
+
         results['data'].append("Datos guardados exitosamente")
         return results
 
@@ -616,3 +620,9 @@ class StageServices:
             start = str(date + timedelta(days=date_caluted[0]))
             end = str(date + timedelta(days=date_caluted[1]))
         return (start,end)
+
+    def update_segments(self, land_id, stage, stage_complete):
+        if stage_complete and stage.value == Stage.stage_fifteen.value:
+            stage_db = {}         
+            stage_db['crop_complete'] = True
+            self.__repository_property_stage_update.update(land_id,stage_db) 
