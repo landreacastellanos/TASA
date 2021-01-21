@@ -451,10 +451,10 @@
       "tableName": "property_procedure",
       "type": "object",
       "primaryKey": [
-         "land_id"
+         "id"
       ],
       "properties": {
-         "land_id": {
+         "id": {
             "dbName": "land_id",
             "type": "integer"
          },
