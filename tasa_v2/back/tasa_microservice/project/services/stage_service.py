@@ -11,6 +11,7 @@ from project.infrastructure.repositories.common_repository\
 from project.resources.utils.security_token import SecurityToken   
 from project.resources.utils.generals_utils import GeneralsUtils
 from project.models.enum.type_planting_enum import TypePlanting
+from project.resources.utils.notification_utils import NotificationUtils
 
 class StageServices:
     def __init__(self):
@@ -128,11 +129,16 @@ class StageServices:
         images = []
         stage_db = {}
         complete_stage = False
+
+        notification_utils = NotificationUtils()
+        if("observations" in data and "products" in data and "images" in data):
+            notification_utils.set_notification(land_id, stage_number.value)
         
         if("images" in data):
             images = data['images']
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
+
         
         if("application_date" in data and data['application_date']):
             stage_db["application_date"] = data['application_date']
@@ -188,14 +194,14 @@ class StageServices:
 
         stage = self.calulate_stage(stage_number)    
     
-        if(len(property_stage) == 0):
-
+        if(len(property_stage) == 0):            
+            
             property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            edit &= (len(property_stage_one) > 0)
+            if(edit):                
+                edit &= (len(property_stage_one) > 0)
+                edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
 
-            edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
-
-            if(len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
+            if(edit and len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
 
@@ -418,7 +424,7 @@ class StageServices:
         del data[0]['stage']
         return data[0]
 
-    def set_stage_one(self,data):
+    def set_stage_one(self, data):
         results = {
             "data": [],
             "details": []
@@ -450,6 +456,11 @@ class StageServices:
         images = []
         stage_db = {}
         complete_stage = False
+
+        notification_utils = NotificationUtils()
+
+        if("sowing_date" in data and "type_sowing" in data and "variety" in data):
+            notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
             images = data['images']
@@ -465,6 +476,8 @@ class StageServices:
         
         stage_db['data'] = json.dumps(data)
         stage_db['stage_complete'] = complete_stage
+
+        
 
         if(len(property_stage) == 0):
             stage_db['land_id'] = land_id            

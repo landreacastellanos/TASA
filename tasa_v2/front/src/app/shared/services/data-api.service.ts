@@ -41,8 +41,42 @@ export class DataApiService {
     }
   }
 
-  public getAll(extension: string, url?: string, notMessage?: boolean): Promise<any> {
-    const urlGet = url? url : this.urlApi;
+  handleOnSuccess = (result: ResponseBack) => {
+    if (result && result.details && result.details.length > 0) {
+      this.snackBar.open(result.details[0].value, 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-warn'],
+      });
+      return null;
+    }
+    if (result && result.data) {
+      return result.data;
+    } else {
+      return null;
+    }
+  };
+
+  handleOnError = (result: ResponseBack | any) => {
+    if (result && result.details && result.details.length > 0) {
+      this.snackBar.open(result.details[0].value, 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-warn'],
+      });
+      return null;
+    }
+    this.snackBar.open('Ocurrio un error', 'x', {
+      duration: 2000,
+      panelClass: ['snackbar-warn'],
+    });
+    return null;
+  };
+
+  public getAll(
+    extension: string,
+    url?: string,
+    notMessage?: boolean
+  ): Promise<any> {
+    const urlGet = url ? url : this.urlApi;
     return this.http
       .get<ResponseBack>(urlGet + extension, {
         headers: this.getHeaders(),
@@ -50,7 +84,7 @@ export class DataApiService {
       .toPromise()
       .then((result) => {
         if (result && result.details && result.details.length > 0) {
-          if(notMessage){
+          if (notMessage) {
             this.snackBar.open(result.details[0].value, 'x', {
               duration: 2000,
               panelClass: ['snackbar-warn'],
@@ -64,13 +98,7 @@ export class DataApiService {
           return null;
         }
       })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .catch(this.handleOnError);
   }
 
   public getById(
@@ -84,27 +112,8 @@ export class DataApiService {
         params: { id, ...extraParams },
       })
       .toPromise()
-      .then((result) => {
-        if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
-          return null;
-        }
-        if (result && result.data) {
-          return result.data;
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
   }
 
   public post(element, extension: string): Promise<any> {
@@ -114,27 +123,8 @@ export class DataApiService {
         headers: this.getHeaders(),
       })
       .toPromise()
-      .then((result) => {
-        if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
-          return null;
-        }
-        if (result && result.data) {
-          return result.data;
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
   }
 
   public postMultipart(element, extension: string): Promise<any> {
@@ -146,27 +136,8 @@ export class DataApiService {
         }),
       })
       .toPromise()
-      .then((result) => {
-        if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
-          return null;
-        }
-        if (result && result.data) {
-          return result.data;
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
   }
 
   public patch(element, extension: string): Promise<any> {
@@ -176,27 +147,8 @@ export class DataApiService {
         headers: this.getHeaders(),
       })
       .toPromise()
-      .then((result) => {
-        if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
-          return null;
-        }
-        if (result && result.data) {
-          return result.data;
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
   }
 
   public update(element, extension: string): Promise<any> {
@@ -206,61 +158,26 @@ export class DataApiService {
         headers: this.getHeaders(),
       })
       .toPromise()
-      .then((result) => {
-        if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
-          return null;
-        }
-        if (result && result.data) {
-          return result.data;
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
   }
 
   public delete(
     extension: string,
     id: string,
+    url?: string,
     extraParams?: HttpParams
   ): Promise<any> {
+    const urlGet = url ? url : this.urlApi;
+    const params = id ? { id, ...extraParams } : { ...extraParams };
     return this.http
-      .delete<ResponseBack>(this.urlApi + extension, {
+      .delete<ResponseBack>(urlGet + extension, {
         headers: this.getHeaders(),
-        params: { id, ...extraParams },
+        params: params,
       })
       .toPromise()
-      .then((result) => {
-        if (result && result.details && result.details.length > 0) {
-          this.snackBar.open(result.details[0].value, 'x', {
-            duration: 2000,
-            panelClass: ['snackbar-warn'],
-          });
-          return null;
-        }
-        if (result && result.data) {
-          return result.data;
-        } else {
-          return null;
-        }
-      })
-      .catch((err) => {
-        this.snackBar.open('Ocurrio un error', 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-warn'],
-        });
-        return null;
-      });
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
   }
 
   cleanObject(element: object) {

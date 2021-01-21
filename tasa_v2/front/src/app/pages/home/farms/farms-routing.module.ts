@@ -19,6 +19,10 @@ const routes: Routes = [
         path: 'calendar', loadChildren: () =>
         import('./calendar/calendar.module').then((m) => m.CalendarModule),
     },
+    {
+        path: 'historical', loadChildren: () =>
+        import('./historical/historical.module').then((m) => m.HistoricalModule),
+    },
     { path: 'list', component: ListComponent },
 ];
 

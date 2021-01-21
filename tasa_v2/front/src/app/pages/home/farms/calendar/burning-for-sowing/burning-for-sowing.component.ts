@@ -10,7 +10,7 @@ import {
   StageBetweenRequest,
   StageBetweenResponse,
 } from '../../../../../shared/models/calendar';
-import { ArrozSecano } from '../../../../../shared/models/farm';
+import { ArrozDeRiego, ArrozSecano } from '../../../../../shared/models/farm';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { CalendarChildren } from '../calendar-children.interface';
 import { CalendarService } from '../calendar.service';
@@ -28,11 +28,11 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   startTrackingDate: Moment;
   products: StageProduct[];
   mode: 'edit' | 'view' | 'create' = 'view';
+  listProductError: boolean;
   files: FileList;
   textBack = 'Ir a segmentos';
   hasEndTrackingDate = true;
   hasStartTrackingDate = true;
-  hasReferencePhoto = true;
   urlReferencePhoto = ''; // change after
   referencePhotoSelected: CalendarChildren['referencePhotoSelected'] = 'after';
   // Selection
@@ -63,7 +63,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     products: this.fb.array([]),
   });
   enableEditProduct = false;
-  validatorFloat = "^[0-9]+([.][0-9]+)?$";
+  validatorFloat = '^[0-9]+([.][0-9]+)?$';
   hectares = 0;
 
   constructor(
@@ -85,7 +85,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   get title() {
     return (
       this.route.snapshot.data.title[
-      this.landsService?.landSelected?.sowing_system
+        this.landsService?.landSelected?.sowing_system
       ] || ''
     );
   }
@@ -98,8 +98,23 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   get controls() {
     return this.burningForSowingForm.controls;
   }
+  get hasReferencePhoto() {
+    // Some stages are not available for; @Luz:
+    // Las fotos que hacen falta corresponden a las etapas de Fertilización y estas no llevan foto;
+    // así que no falta nada.
+    // Riego: 8, 10,12
+    // Secano: 8,10,12
+    if (!this.landsService.landSelected) {
+      return false;
+    }
+    if ([8, 10, 12].includes(parseInt(this.segmentId, 10))) {
+      return false;
+    }
+    return true;
+  }
 
   initAPI() {
+    this.configurationService.setLoadingPage(true);
     return this.calendarService
       .getProducts(this.landsService.idLand, this.segmentId)
       .then((products) => {
@@ -109,7 +124,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .then(() =>
         this.calendarService.getStage(this.segmentId, this.landsService.idLand)
       )
-      .then((stageOneData) => this.init(stageOneData));
+      .then((stageOneData) => this.init(stageOneData))
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 
   init(
@@ -123,34 +141,36 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
     this.mode = enabled ? 'edit' : 'view';
-    console.log('BurningForSowingComponent:init',{end_traking_date, this_end_traking_date: this.endTrackingDate});
-    
+
     // ? ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       this.endTrackingDate = end_traking_date && moment(end_traking_date);
-      this.startTrackingDate =
-        start_traking_date && moment(start_traking_date);
+      this.startTrackingDate = start_traking_date && moment(start_traking_date);
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       this.selection.clear();
 
       if (this.products) {
-        products.forEach(product => {
-          const selectionProduct = this.products.find(data => data.id === product.id);
+        products.forEach((product) => {
+          const selectionProduct = this.products.find(
+            (data) => data.id === product.id
+          );
           if (selectionProduct) {
             this.selection.select(selectionProduct);
           } else {
             this.selection.select(product);
           }
-        })
+        });
       }
       this.rehydrateFormProducts();
       this.dataSourceProductsAdd = new MatTableDataSource(
         this.selection.selected
       );
-      this.hectares = this.landsService.lands[this.landsService.landsSelectedIds] ?
-        this.landsService.lands[this.landsService.landsSelectedIds].batchs.hectares_number : 0;
-      console.log(this.hectares);
-
+      this.hectares = this.landsService.lands[
+        this.landsService.landsSelectedIds
+      ]
+        ? this.landsService.lands[this.landsService.landsSelectedIds].batchs
+            .hectares_number
+        : 0;
     }, 1);
 
     this.configurationService.disableForm(
@@ -169,7 +189,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   isDisabledProduct(index: number) {
-    return (this.productsControl.controls[index] as FormGroup).controls.commercial_name.disabled;
+    return (this.productsControl.controls[index] as FormGroup).controls
+      .commercial_name.disabled;
   }
 
   // Table controls
@@ -177,8 +198,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     return (this.productsControl.controls[index] as FormGroup).controls;
   }
 
-  getValueProduct(index: number){
-    return this.productsControl.value[index];
+  getValueProduct(index: number) {
+    return this.productsControl.controls[index].value;
   }
 
   addControl({
@@ -218,7 +239,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: concentration,
             disabled: this.mode === 'view' || commercial_name,
-          }
+          },
         ],
         dose_by_ha: [
           {
@@ -231,7 +252,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: formulator,
             disabled: this.mode === 'view' || commercial_name,
-          }
+          },
         ],
         ing_active: [
           {
@@ -244,7 +265,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           {
             value: presentation,
             disabled: this.mode === 'view' || commercial_name,
-          }
+          },
         ],
         provider: [
           {
@@ -278,14 +299,30 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       form: this.burningForSowingForm,
       valid: this.burningForSowingForm.valid,
       files: this.files,
+      productsDataSourceAdd: this.dataSourceProductsAdd,
+      mappingProductsDataSourceAdd: this.dataSourceProductsAdd.data.map(
+        (row, i) => !row.id && !this.isDisabledProduct(i)
+      ),
     });
     const values = this.burningForSowingForm.value;
-    values.products = this.selection.selected.map(product => {
+    values.products = this.selection.selected.map((product) => {
       product.dose_by_ha = parseFloat(`${product.dose_by_ha}`);
-      return product
-    })
+      return product;
+    });
     values.start_traking_date = this.startTrackingDate;
     values.end_traking_date = this.endTrackingDate;
+    const editListProducts = this.dataSourceProductsAdd.data.map(
+      (row, i) => !row.id && !this.isDisabledProduct(i)
+    );
+    if (editListProducts.includes(true)){
+      this.listProductError = true;
+      return this.snackBar.open('Valida todos los productos antes de continuar', 'x', {
+        duration: 2000,
+        panelClass: ['snackbar-warn'],
+      });
+    }else{
+      this.listProductError = false;
+    }
     if (!this.burningForSowingForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
@@ -344,7 +381,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   getUrlReferencePhoto() {
-    if (!this.landsService.landSelected) return ''
+    if (!this.landsService.landSelected) return '';
     const sowingSystem =
       this.landsService.landSelected?.sowing_system === new ArrozSecano().id
         ? 'arroz_secano'
@@ -358,11 +395,15 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
-      }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.commercial_name
+    }`;
   }
 
   selectProduct(event, row) {
+    if (this.mode === 'view') {
+      return;
+    }
     event ? this.selection.toggle(row) : null;
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();
@@ -379,9 +420,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   addProduct() {
     if (this.enableEditProduct) {
-      return
+      return;
     }
-    this.selection.select(new StageProduct);
+    this.selection.select(new StageProduct());
     this.dataSourceProductsAdd.data = this.selection.selected;
     this.rehydrateFormProducts();
     this.enableEditProduct = true;
@@ -389,18 +430,20 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   saveProduct(row, i) {
     const newProduct = this.productsControl.value[0];
-    const controlsProduct = (this.productsControl.controls[i] as FormGroup).controls;
+    const controlsProduct = (this.productsControl.controls[i] as FormGroup)
+      .controls;
 
     if (
       controlsProduct.commercial_name.errors ||
       controlsProduct.dose_by_ha.errors ||
       controlsProduct.provider.errors ||
-      controlsProduct.commercial_name.errors) {
+      controlsProduct.commercial_name.errors
+    ) {
       this.snackBar.open('Debes llenar todos los campos correctamente', 'x', {
         duration: 2000,
         panelClass: ['snackbar-warn'],
       });
-      return
+      return;
     }
     const oldProduct = this.selection.selected[i];
     this.configurationService.updateValues(newProduct, oldProduct);
@@ -410,12 +453,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   editProduct(index) {
-    console.log(this.getValueProduct(index));
-    
     if (this.enableEditProduct) {
-      return
+      return;
     }
     this.enableEditProduct = true;
-    this.configurationService.disableForm(this.productsControl.controls[index] as FormGroup, false)
+    this.configurationService.disableForm(
+      this.productsControl.controls[index] as FormGroup,
+      false
+    );
   }
 }

@@ -6,6 +6,7 @@
   background: url(../../../../../assets/img/menos_carga_quimica.JPG);
   background-size: cover;
   color: white;
+  text-shadow: 2px 2px 2px black;
   font-weight: bold;
   font-size: 3em;
   line-height: normal;
@@ -27,4 +28,22 @@
     height: 35px;
     padding-right: 20px;
   }
+}
+
+@media (min-width: 100px) {
+  .sponsors {
+    height: 500px;
+  } 
+}
+
+@media (min-width: 370px) {
+  .sponsors {
+    height: 600px;
+  } 
+}
+
+@media (min-width: 710px) {
+  .sponsors {
+    height: 700px;
+  } 
 }

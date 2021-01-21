@@ -33,7 +33,29 @@
                 type: array
                 items:
                   $ref: '#/definitions/notification'                
-          x-swagger-router-controller: "project.views.stream"                                                
+          x-swagger-router-controller: "project.views.stream"
+    /delete_notification:
+      delete:
+        tags:
+          - "Notification"
+        summary: "Notification"
+        operationId: "delete_notification"
+        description: "delete notification"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "id"
+            required: false  
+        responses:
+          '200':
+            description: response result successful
+        x-swagger-router-controller: "project.views.stream"                                  
   definitions:
         notification:
           type: "object"

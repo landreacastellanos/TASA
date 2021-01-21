@@ -67,6 +67,28 @@
             </div>
           </div>
 
+          <div class="col-12 container-card-title no-margin-padding" *ngIf= "configService.screen > 600">
+            Generar histórico del lote
+          </div>
+          <div class="col-12 no-margin-padding" *ngIf= "configService.screen > 600">
+            <mat-expansion-panel
+              [expanded]="false"
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title class="header-container-card-green">
+                  <h3>Seleccione informe</h3>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="content-container-card-green">
+                <div class="line-container-card-green">
+                  <button mat-button class="subtitle-container-card-green" (click)="goHistorical()">
+                    2020 - Primera cosecha
+                  </button>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+
           <div
             class="col-12 container-card-title no-margin-padding"
             *ngIf="hasStartTrackingDate || hasEndTrackingDate || hasEndHarvestDate"
@@ -197,7 +219,7 @@
         *ngIf="hasSponsorSpace"
         class="col-12 pl-md-1 pr-md-0 mh-100 col-md-3"
       >
-        <div class="sponsors h-100 p-4">Menos carga química</div>
+        <div class="sponsors p-4">Menos carga química</div>
       </div>
     </div>
   </div>
@@ -222,7 +244,7 @@
     />
     <button
       #buttonFiles
-      (click)="files.click()"
+      (click)="files.value=null; files.click()"
       *ngIf="hasSave"
       class="no-outline rounded-button ml-md-5 col-auto mt-2"
       mat-raised-button

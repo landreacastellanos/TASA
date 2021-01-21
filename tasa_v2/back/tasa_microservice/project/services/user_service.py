@@ -96,7 +96,7 @@ class UserService():
             result['details'].append(
                 {
                     "key": 400,
-                    "value": "Usuario asignado "
+                    "value": "El usuario se encuentra asignado a una finca "
                 }
             )
             return result
@@ -160,7 +160,7 @@ class UserService():
             result['details'].append(
                 {
                     "key": 400,
-                    "value": "Usuario asignado "
+                    "value": "El usuario se encuentra asignado a una finca "
                 }
             )
             return result 

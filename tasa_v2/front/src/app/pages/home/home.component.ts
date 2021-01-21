@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'src/app/shared/services/notifications.service';
 
 @Component({
   selector: 'app-home',
@@ -7,13 +8,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+
+  notify;
+
   get isHome(): boolean {
     return '/initial' === this.router.url;
   }
 
   constructor(
-    private router: Router
+    private router: Router,
+    public notifyService: NotificationsService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.notifyService.getNotifications(); 
+    this.notify = setInterval(() => {
+      this.notifyService.getNotifications(); 
+    }, 15000);
+  }
+
+  ngOnDestroy() {
+    if (this.notify) {
+      clearInterval(this.notify);
+    }
+  }
 }

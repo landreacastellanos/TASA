@@ -179,6 +179,9 @@
           </div>
         </div>
       </div>
+      <div *ngIf="submitted && listProductError" class="warning">
+        Todos los productos deben ser validados antes de continuar
+      </div>
     </div>
     <div class="col-12 col-lg-3">
       <!-- OBSERVATION -->
@@ -194,7 +197,7 @@
             #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="20"
             placeholder="Ej. Escribe todas las observaciones que veas pertinentes." required></textarea>
         </mat-form-field>
-        <div *ngIf="submitted && controls.observation?.errors?.required" class="warning">
+        <div *ngIf="submitted && controls.observations?.errors?.required" class="warning">
           Este campo es requerido
         </div>
       </div>

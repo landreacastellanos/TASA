@@ -49,7 +49,7 @@ def get_properties():
         }
     try:        
         result = PropertiesServices().get_properties()
-        results = result
+        results['data'] = result
     except Exception as exception:
         result = exception.args[0]
         results['details'].append(result)

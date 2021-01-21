@@ -50,6 +50,10 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onChangeFiles(files);
   }
 
+  goHistorical(){
+    this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand])
+  }
+
   get hasSave() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasSave;

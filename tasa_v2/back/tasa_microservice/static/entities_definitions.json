@@ -451,16 +451,41 @@
       "tableName": "property_procedure",
       "type": "object",
       "primaryKey": [
-         "id"
+         "land_id"
       ],
       "properties": {
-         "id": {
+         "land_id": {
             "dbName": "land_id",
             "type": "integer"
          },
          "crop_complete": {
             "dbName": "crop_complete",
             "type": "boolean"
+         }
+      }
+   },
+   "notification": {
+      "tableName": "Notification",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_user": {
+            "dbName": "id_user",
+            "type": "integer"
+         },
+         "user_name": {
+            "dbName": "user_name",
+            "type": "string"
+         },
+         "Notification": {
+            "dbName": "Notification",
+            "type": "string"
          }
       }
    }

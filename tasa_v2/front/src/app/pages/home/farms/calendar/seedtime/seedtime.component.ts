@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { StageOneRequest } from '../../../../../shared/models/calendar';
+import { checkDates } from './check-dates.validator';
 
 @Component({
   selector: 'app-seedtime',
@@ -34,11 +35,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     private configurationService: ConfigurationService,
     private calendarService: CalendarService
   ) {
-    this.calendarService
-      .getStageOne(this.landService.idLand)
-      .then((stageOneData) => {
-        this.init(stageOneData);
-      });
+    this.intAPI();
   }
   textBack = 'Ir a segmentos';
   get hasSave() {
@@ -51,24 +48,27 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   get title() {
     return (
       this.route.snapshot.data.title[
-      this.landService?.landSelected?.sowing_system
+        this.landService?.landSelected?.sowing_system
       ] || ''
     );
   }
 
   events: string[] = [];
-  seedTimeForm: FormGroup = this.fb.group({
-    type_sowing: [
-      { value: '', disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
-    variety: [
-      { value: '', disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
-    sowing_date: [{ value: '', disabled: this.mode === 'view' }, []],
-    real_date: [{ value: '', disabled: this.mode === 'view' }, []],
-  });
+  seedTimeForm: FormGroup = this.fb.group(
+    {
+      type_sowing: [
+        { value: '', disabled: this.mode === 'view' },
+        [Validators.required],
+      ],
+      variety: [
+        { value: '', disabled: this.mode === 'view' },
+        [Validators.required],
+      ],
+      sowing_date: [{ value: '', disabled: this.mode === 'view' }, []],
+      real_date: [{ value: '', disabled: this.mode === 'view' }, []],
+    },
+    { validators: [checkDates] }
+  );
   typeOfPlanting: string[] = [
     'Siembra con arroz tapado',
     'Siembra con arroz voleado',
@@ -100,6 +100,18 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
       sowing_date: sowing_date && moment(sowing_date),
       real_date: real_date && moment(real_date),
     });
+  }
+
+  intAPI() {
+    this.configurationService.setLoadingPage(true);
+    return this.calendarService
+      .getStageOne(this.landService.idLand)
+      .then((stageOneData) => {
+        this.init(stageOneData);
+      })
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 
   get imageReference() {
@@ -161,9 +173,9 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
             panelClass: ['snackbar-success'],
           })
       )
-      .then(() => this.calendarService.getStageOne(this.landService.idLand))
-      .then((stageOneData) => {
-        this.init(stageOneData);
+      .then(() => this.intAPI())
+      .then(() => {
+        this.landService.variety = this.seedTimeForm.controls.variety.value;
       })
       .finally(() => {
         this.configurationService.setLoadingPage(false);
