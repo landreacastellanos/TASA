@@ -1,4 +1,6 @@
 export interface StageHarvest {
+  amount_quintals: number;
+  amount_quintals_ha: number;
   harvest_date: string;
   observations: string;
 }
