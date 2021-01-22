@@ -345,7 +345,7 @@ class Repository():
             }
         )
 
-        if query_result.rowcount > 0:
+        if query_result.rowcount == 0:
             raise Exception
 
         return True
