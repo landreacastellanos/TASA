@@ -211,7 +211,7 @@ class StageServices:
             if (edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-            date =  self.validation_system(stage_number, email, land_id, data)
+            date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
                 dates_calculated = self.validate_dates(date, dates, stage_number)
@@ -273,7 +273,7 @@ class StageServices:
             if (edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-            date =  self.validation_system(stage_number, email, land_id, data)
+            date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
                 dates_calculated = self.validate_dates(date, dates, stage_number)
@@ -604,10 +604,10 @@ class StageServices:
             stage_result =  Stage.stage_fourteen.value               
         return stage_result
     
-    def validation_system(self, stage, email, land_id, data):
+    def validation_system(self, stage, email, land_id):
         result = ''
-        if stage == Stage.stage_two.value and len(data)>0:
-           result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        if stage == Stage.stage_two.value:
+           result = GeneralsUtils.try_parse_date_time(self.get_date_initial(email, land_id)['sowing_date']) 
         elif stage == Stage.stage_three.value:
            result = GeneralsUtils.try_parse_date_time(self.get_date_initial(email, land_id)['sowing_date'])   
         elif stage != Stage.stage_two.value:
