@@ -25,9 +25,6 @@ export interface CalendarChildren {
   hasStartTrackingDate?: boolean;
   startTrackingDate?: Moment;
 
-  hasEndHarvestDate?:boolean;
-  endHarvestDate?: Moment;
-
   /** options for sponsors image */
   hasSponsorSpace?:boolean;
   textSponsorImage?:string;
