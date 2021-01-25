@@ -140,7 +140,8 @@ class StageServices:
             data.pop("images")
 
         
-        if("application_date" in data and data['application_date']):
+        if("application_date" in data and data['application_date']) or (stage_number == Stage.stage_fifteen and
+           "amount_quintals" in data):
             stage_db["application_date"] = data['application_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
