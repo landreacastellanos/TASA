@@ -93,7 +93,7 @@ export class HistoricalService {
       };
     };
 
-    /* const segmentHarvest: StageHarvestRequest = {
+    const segmentHarvest: StageHarvestRequest = {
       amount_quintals: 20,
       amount_quintals_ha: 270,
       start_traking_date: `2021-01-${15}T10:00:00.000Z`,
@@ -102,7 +102,7 @@ export class HistoricalService {
       stage_number: 15,
       images: testImages,
       land_id: 22,
-    }; */
+    };
 
     return Promise.resolve({
       title: 'Historico prueba 2021',
