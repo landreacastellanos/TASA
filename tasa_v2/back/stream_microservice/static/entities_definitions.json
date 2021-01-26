@@ -40,5 +40,73 @@
             "type": "boolean"
          }
       }
+   },
+   "chat": {
+      "tableName": "chat",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "message": {
+            "dbName": "message",
+            "type": "string"
+         },
+         "autor": {
+            "dbName": "autor",
+            "type": "string"
+         },
+         "id_autor": {
+            "dbName": "autor_id",
+            "type": "integer"
+         },
+         "land_id": {
+            "dbName": "lote",
+            "type": "integer"
+         },
+         "created_date": {
+            "dbName": "fecha_creacion",
+            "type": "dateTime"
+         }
+      }
+   },   
+   "user":{
+      "tableName": "user",
+      "type": "object",
+      "primaryKey":"id",
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "email": {
+            "dbName": "email",
+            "type": "string"
+         },
+         "last_name": {
+            "dbName": "last_name",
+            "type": "string"
+         },
+         "password": {
+            "dbName": "password",
+            "type": "string"
+         },
+         "role_id":{
+            "dbName": "role_id",
+            "type": "integer"
+         },
+         "active":{
+            "dbName": "active",
+            "type": "boolean"
+         }
+      }
    }
 }
