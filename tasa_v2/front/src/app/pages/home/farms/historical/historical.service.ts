@@ -22,6 +22,18 @@ export class HistoricalService {
         title: 'Historico prueba 2021',
         id: 23,
       },
+      {
+        title: 'Historico prueba 2021',
+        id: 23,
+      },
+      {
+        title: 'Historico prueba 2021',
+        id: 23,
+      },
+      {
+        title: 'Historico prueba 2021',
+        id: 23,
+      },
     ]);
   }
 
