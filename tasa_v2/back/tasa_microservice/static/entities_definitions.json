@@ -339,6 +339,10 @@
          "stageComplete":{
             "dbName": "stage_complete",
             "type": "boolean"
+         },
+         "cropComplete":{
+            "dbName": "crop_complete",
+            "type": "boolean"
          }
       }
    },
