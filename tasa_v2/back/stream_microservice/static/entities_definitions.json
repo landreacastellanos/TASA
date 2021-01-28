@@ -56,11 +56,11 @@
             "dbName": "message",
             "type": "string"
          },
-         "autor": {
+         "author": {
             "dbName": "autor",
             "type": "string"
          },
-         "id_autor": {
+         "id_author": {
             "dbName": "autor_id",
             "type": "integer"
          },

@@ -42,7 +42,8 @@ class LoginService:
             results['data'] = list(map(lambda x: {
                     "name": x['name'] +" " + x['last_name'],
                     "role": x['role_id'],
-                    "token": token},
+                    "token": token,
+                    "user_id": x['id']},
                     result))
         return results
 

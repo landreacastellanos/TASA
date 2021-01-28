@@ -127,9 +127,9 @@
           properties:
             message:
               type: "string"
-            autor:
+            author:
               type: "string"
-            autor_id:
+            author_id:
               type: "integer"
             land_id:
               type: "integer"
