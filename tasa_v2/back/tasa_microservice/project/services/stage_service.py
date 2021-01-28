@@ -3,6 +3,7 @@ import json
 import manage
 import uuid
 import pathlib
+from flask import send_from_directory
 from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.date_stage_enum import DateStage
@@ -15,6 +16,8 @@ from project.models.enum.type_planting_enum import TypePlanting
 from project.resources.utils.notification_utils import NotificationUtils
 
 class StageServices:
+    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s'
+    PATH_IMAGES = "%s/project/images/%s"
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -393,7 +396,9 @@ class StageServices:
 
     def complete_stage(self, data, id_land):
         data_stages = self.__repository_procedure.select(entity_name="propertyProcedure",options={"filters":
-                                [['landId', "equals", id_land]]
+                                [['landId', "equals", id_land],
+                                "and",
+                                ["cropComplete", "equals", False]]
                                 })
         data = list(map(lambda x: 
         {
@@ -643,4 +648,4 @@ class StageServices:
         if stage_complete and stage.value == Stage.stage_fifteen.value:
             stage_db = {}         
             stage_db['crop_complete'] = True
-            self.__repository_property_stage_update.update(land_id,stage_db) 
+            self.__repository_property_stage_update.update(land_id,stage_db)
