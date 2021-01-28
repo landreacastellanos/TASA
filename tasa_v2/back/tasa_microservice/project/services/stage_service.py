@@ -479,7 +479,7 @@ class StageServices:
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
         
-        if("real_date" in data and data['real_date']):
+        if("real_date" in data and data['real_date'] and data['real_date'] != ""):
             stage_db["real_date"] = data['real_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
