@@ -1,0 +1,159 @@
+@import "../../../../themes/theme.scss";
+:host{
+    flex: 1;
+}
+
+:root {
+    --height-value: 679px;
+  }
+
+.row{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    
+    .chat{
+        background-color: white;
+        padding: 0;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        max-height: var(--height-value);
+        height: var(--height-value);
+    
+        .title-chat{
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+            position: relative;
+    
+            .icon{
+                position: absolute;
+                left: 10px;
+                top: 1px;
+            }
+        }
+
+        .header-chat{
+            background-color: map-get($mat-green-custom, 900);
+            color: white;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+        }
+
+        .content-chat{
+            background-color: white;
+            display: flex;
+            flex: 1;
+            overflow-y: scroll;
+
+            .align-right{
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .participant{
+                -webkit-box-shadow: 0px 6px 20px 0px #ADADAD; 
+                box-shadow: 0px 6px 20px 0px #ADADAD;
+                margin: 20px;
+                padding: 5px 15px;
+                padding-bottom: 0;
+                border-radius: 10px;
+                width: 50%;
+
+                .name{
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+
+                .text{
+                    display: flex;
+                    justify-content: space-between;
+                    position: relative;
+
+                    .transparent{
+                        color: transparent;
+                    }
+
+                    .time{
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            .other-participant{
+                background-color: rgb(221, 221, 221);
+
+                .name{
+                    color: green;
+                }
+
+                .text{
+
+                    .time{
+                        color: rgb(116, 116, 116);
+                    }
+                }
+            }
+
+            .i-participant{
+                background-color: map-get($mat-green-custom, 900);
+
+                .name{
+                    color: rgb(255, 183, 183);
+                }
+
+                .text{
+                    color: white;
+
+                    .time{
+                        color: rgb(156, 156, 156);
+                    }
+                }
+            }
+
+            @media (max-width: 544px) {
+                .i-participant{
+                    width: 70%;
+                }
+            
+                .other-participant{
+                    width: 70%;
+                }
+            }
+        }
+
+        .send-message{
+            padding-top: 5px;
+            min-height: 30px;
+            background-color: rgb(23, 39, 31);
+            display: flex;
+            padding: 5px 15px;
+            align-items: center;
+            margin-top: 5px;
+
+            .mat-form-field{
+                background-color: rgb(41, 68, 53);
+                border-radius: 10px;
+                padding: 0 20px !important;
+
+                textarea{
+                    padding: 10px;
+                    min-height: 38px !important;
+                    max-height: 100px !important;
+                    color: white;
+                }
+            }
+
+            .icon-send-message{
+                margin: 10px;
+            }
+        }
+    }
+}

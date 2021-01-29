@@ -224,6 +224,18 @@ button.white-border {
   }
 }
 
+.send-message{
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+  }
+  .mat-form-field-appearance-legacy .mat-form-field-infix{
+    border-top-width: 5px;
+  }
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper{
+    padding-bottom: 5px;
+  }
+}
+
 @media (max-width: 768px) {
   .initial-header {
     height: 80px;

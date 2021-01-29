@@ -116,10 +116,11 @@ export class DataApiService {
       .catch(this.handleOnError);
   }
 
-  public post(element, extension: string): Promise<any> {
+  public post(element, extension: string, url?: string): Promise<any> {
     this.cleanObject(element);
+    const urlGet = url ? url : this.urlApi;
     return this.http
-      .post<ResponseBack>(this.urlApi + extension, element, {
+      .post<ResponseBack>(urlGet + extension, element, {
         headers: this.getHeaders(),
       })
       .toPromise()

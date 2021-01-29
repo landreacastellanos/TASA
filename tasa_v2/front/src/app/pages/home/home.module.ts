@@ -7,6 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CalendarActivitiesModule } from './calendar-activities/calendar-activities.module';
 import { MatButtonModule } from '@angular/material/button';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [

@@ -54,6 +54,10 @@ export class ConfigurationService {
     return window.innerWidth || document.body.clientWidth;
   }
 
+  get screenHeight(): any {
+    return window.innerHeight || document.body.clientHeight;
+  }
+
   public disableForm(form: FormGroup, disable: boolean): void {
     const keys = Object.keys(form.value);
     keys.forEach((element) => {
