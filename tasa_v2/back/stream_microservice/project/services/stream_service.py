@@ -100,7 +100,7 @@ class NotificationService():
         chat = {
             "message": data["message"],
             "author": "{} {}".format(user["name"], user['last_name']),
-            "id_autor": user['id'],
+            "id_author": user['id'],
             "land_id": data['id_land'],
             "created_date": datetime.now()
         }
