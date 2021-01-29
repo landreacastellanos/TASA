@@ -5,6 +5,12 @@
   overflow-y: auto;
 }
 
+.container-pages{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 footer {
   background-image: linear-gradient(
       to top,

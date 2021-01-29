@@ -26,16 +26,20 @@
       <div class="subtitle-box-historical col-4">Variedad:</div>
     </div>
   </div>
-  <div class="pl-5 secundary-title no-gutters">1. Fecha de siembra</div>
-  <div>
-    <div class="row justify-content-center">
-      <div class="col-6 d-flex justify-content-center">Fecha propuesta:</div>
-      <div class="col-6 d-flex justify-content-center">Fecha real:</div>
-    </div>
-    <div class="row py-3 justify-content-center">
-      <div class="col-4 d-flex justify-content-around">imagencita</div>
-      <div class="col-4 d-flex justify-content-around">imagencita</div>
-      <div class="col-4 d-flex justify-content-around">imagencita</div>
+  <div class="box-historical">
+    <div class="title-box-historical">1. Fecha de siembra</div>
+    <div>
+      <div class="row justify-content-center">
+        <div class="col-6 d-flex justify-content-center">Fecha propuesta:</div>
+        <div class="col-6 d-flex justify-content-center">Fecha real:</div>
+      </div>
+      <div class="box-historical">
+        <div class="row py-3 justify-content-center">
+          <div class="col-4 d-flex justify-content-around">imagencita</div>
+          <div class="col-4 d-flex justify-content-around">imagencita</div>
+          <div class="col-4 d-flex justify-content-around">imagencita</div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="box-historical">
@@ -47,49 +51,28 @@
       <div class="subtitle-box-historical col-4">Fecha inicio de segmento</div>
       <div class="subtitle-box-historical col-4">Fecha fin de segmento</div>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="observations d-flex justify-content-end col-1">
-      Observaciones:
-    </div>
-    <div class="col-7">
-      Observaciones realizadas al lote el 19 de enero de 2021 a causa de una
-      plaga de termitas encontradas en el arroz y plagas adicionales.
-    </div>
-  </div>
-  <div class="box-historical">
     <div class="row justify-content-center">
-      <div class="col-4 d-flex justify-content-around">imagencita</div>
-      <div class="col-4 d-flex justify-content-around">imagencita</div>
-      <div class="col-4 d-flex justify-content-around">imagencita</div>
+      <div class="observations d-flex justify-content-end col-1 pt-5">
+        Observaciones:
+      </div>
+      <div class="col-7 py-5">
+        Observaciones realizadas al lote el 19 de enero de 2021 a causa de una
+        plaga de termitas encontradas en el arroz y plagas adicionales.
+      </div>
+    </div>
+    <div class="box-historical">
+      <div class="row justify-content-center">
+        <div class="col-4 d-flex justify-content-around">imagencita</div>
+        <div class="col-4 d-flex justify-content-around">imagencita</div>
+        <div class="col-4 d-flex justify-content-around">imagencita</div>
+      </div>
     </div>
   </div>
-  <div class="pl-5 secundary-title no-gutters">
-    3. Tratamiento de semillas (0 a 3 días antes de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    4. Pre emergencia total (0 a 3 días después de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    5. Post emergencia temprana (12 a 15 días antes de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    6. Pre emergencia tardía (18 a 22 días de días después de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    7. Control de enfermedades preventiva o inmediata (25 a 28 días después de
-    siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    8. Control de enfermedades preventiva (40 a 45 días después de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    10. Control de enfermedades embuchamiento (65 a 70 días después de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    14. Protección de espiga (85 a 90 días después de siembra)
-  </div>
-  <div class="pl-5 secundary-title no-gutters">
-    15. Fecha de cosecha (120 días después de siembra)
+
+  <div
+    class="pl-5 secundary-title no-gutters"
+    *ngFor="let item of segmentsList"
+  >
+    {{ item }}
   </div>
 </div>

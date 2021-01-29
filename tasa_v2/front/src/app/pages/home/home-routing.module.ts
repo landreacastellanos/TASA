@@ -33,6 +33,11 @@ const routes: Routes = [
           import('./initial/initial.module').then((m) => m.InitialModule),
       },
       {
+        path: 'chat/:idProperty/:idLand',
+        loadChildren: () =>
+          import('./chat/chat.module').then((m) => m.ChatModule),
+      },
+      {
         path: 'calendar-activities',
         component: CalendarActivitiesComponent
       },

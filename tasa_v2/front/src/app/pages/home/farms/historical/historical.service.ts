@@ -22,6 +22,18 @@ export class HistoricalService {
         title: 'Historico prueba 2021',
         id: 23,
       },
+      {
+        title: 'Historico prueba 2021',
+        id: 23,
+      },
+      {
+        title: 'Historico prueba 2021',
+        id: 23,
+      },
+      {
+        title: 'Historico prueba 2021',
+        id: 23,
+      },
     ]);
   }
 
@@ -46,7 +58,7 @@ export class HistoricalService {
     ) => {
       return {
         application_date: `2021-01-${dayOffset + 2}T05:00:00.000Z`,
-        end_traking_date: `2021-01-${dayOffset}T10:00:00.000Z`,
+        end_traking_date: `2021-01-${dayOffset + 4}T10:00:00.000Z`,
         images: testImages,
         observations: 'observacin',
         products: [
@@ -87,7 +99,7 @@ export class HistoricalService {
             segment: 'Herbicida',
           },
         ],
-        start_traking_date: `2021-01-${dayOffset + 4}T10:00:00.000Z`,
+        start_traking_date: `2021-01-${dayOffset}T10:00:00.000Z`,
         land_id: 22,
         stage_number: dayOffset,
       };
@@ -96,7 +108,8 @@ export class HistoricalService {
     const segmentHarvest: StageHarvestRequest = {
       amount_quintals: 20,
       amount_quintals_ha: 270,
-      harvest_date: '2021-01-15T10:00:00.000Z',
+      start_traking_date: `2021-01-${15}T10:00:00.000Z`,
+      end_traking_date: `2021-01-${15 + 4}T10:00:00.000Z`,
       observations: 'harvest observations',
       stage_number: 15,
       images: testImages,
@@ -123,7 +136,7 @@ export class HistoricalService {
         getStageBetween(12),
         getStageBetween(13),
         getStageBetween(14),
-        segmentHarvest
+        segmentHarvest,
       ],
     } as HistoricalDetail);
   }

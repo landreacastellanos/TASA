@@ -54,6 +54,10 @@ export class CalendarComponent implements OnInit {
     this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand])
   }
 
+  goChat(){
+    this.router.navigate(['/chat/', this.landsService.idProperty, this.landsService.idLand])
+  }
+
   get hasSave() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasSave;

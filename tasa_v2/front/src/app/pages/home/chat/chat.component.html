@@ -1,0 +1,50 @@
+<div class="row  justify-content-center">
+    <div class="chat col-12 col-md-7">
+        <div class="title-chat">
+            <button mat-mini-fab color="primary" class="icon" (click)="goBack()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            CHAT
+        </div>
+        <div class="header-chat">
+            {{user.name}}
+        </div>
+        <div class="content-chat">
+            <div class="scroll-chat col-12">
+                <div *ngFor="let participant of conversation"
+                    [ngClass]="{ 'align-right': participant.id_author  == user.id}">
+                    <div
+                        [ngClass]="{ 'other-participant': participant.id_author  != user.id, 'i-participant': participant.id_author  == user.id, 'participant': true}">
+                        <div class="name" *ngIf = "participant.id_author != user.id">
+                            {{participant.author}}
+                        </div>
+                        <div class="text">
+                            <div>
+                                {{participant.message}} <span class="transparent">...........</span>
+                            </div>
+                            <div class="time">
+                                {{participant.created_date}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="send-message">
+            <mat-form-field>
+                <textarea
+                    matInput
+                    cdkTextareaAutosize
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"
+                    [(ngModel)]='message'>
+                </textarea>
+            </mat-form-field>
+            <div class="icon-send-message">
+                <button mat-mini-fab color="white" class="icon" (click)="sendMessage()">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
