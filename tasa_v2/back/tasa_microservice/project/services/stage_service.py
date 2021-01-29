@@ -217,7 +217,7 @@ class StageServices:
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
 
-            if not edit and stage_number is Stage.stage_three.value:
+            if not edit and stage_number is Stage.stage_two.value:
                 edit = True
 
             start_traking_date = ''
@@ -650,7 +650,7 @@ class StageServices:
 
     def update_segments(self, land_id, stage, stage_complete):
         if stage_complete and stage.value == Stage.stage_fifteen.value:
-            self.insert_historic(land_id)
+            # self.insert_historic(land_id)
             stage_db = {}         
             stage_db['crop_complete'] = True
             self.__repository_property_stage_update.update(land_id,stage_db)
