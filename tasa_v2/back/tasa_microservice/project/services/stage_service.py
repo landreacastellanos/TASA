@@ -650,7 +650,7 @@ class StageServices:
 
     def update_segments(self, land_id, stage, stage_complete):
         if stage_complete and stage.value == Stage.stage_fifteen.value:
-            # self.insert_historic(land_id)
+            self.insert_historic(land_id)
             stage_db = {}         
             stage_db['crop_complete'] = True
             self.__repository_property_stage_update.update(land_id,stage_db)
