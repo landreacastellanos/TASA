@@ -493,5 +493,26 @@
             "type": "string"
          }
       }
+   },
+   "historical": {
+      "tableName": "historical",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_land": {
+            "dbName": "id_land",
+            "type": "integer"
+         },
+         "data": {
+            "dbName": "data",
+            "type": "string"
+         }
+      }
    }
 }
