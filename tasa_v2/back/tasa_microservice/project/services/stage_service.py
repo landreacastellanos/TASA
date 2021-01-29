@@ -217,6 +217,9 @@ class StageServices:
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
 
+            if not edit and stage_number is Stage.stage_three.value:
+                edit = True
+
             start_traking_date = ''
             end_traking_date = ''
             data = []
@@ -591,7 +594,7 @@ class StageServices:
         if stage == Stage.stage_two.value or stage == Stage.stage_four.value:
            stage_result = Stage.stage_one.value
         elif stage == Stage.stage_three.value:
-           stage_result = Stage.stage_two.value 
+           stage_result = Stage.stage_one.value 
         elif stage == Stage.stage_five.value:
             stage_result = Stage.stage_four.value
         elif stage == Stage.stage_six.value:
