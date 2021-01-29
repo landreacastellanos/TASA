@@ -123,14 +123,6 @@ export class CalendarComponent implements OnInit {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
   }
-  get hasEndHarvestDate() {
-    // tslint:disable-next-line: no-unused-expression
-    return (this.outlet?.component as CalendarChildren)?.hasSponsorSpace;
-  }
-  get endHarvestDate() {
-    // tslint:disable-next-line: no-unused-expression
-    return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
-  }
   get title() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.title;

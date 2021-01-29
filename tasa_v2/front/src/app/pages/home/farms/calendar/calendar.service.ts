@@ -56,22 +56,15 @@ export class CalendarService {
 
   setStageHarvest(data: StageHarvestRequest): Promise<string> {
     console.debug('CalendarService:setStageHarvest', { data });
-    
-    return this.dataApiService
-      .post(data, 'set_stage_harvest')
-      .then((dataResponse) => {
-        return dataResponse[0];
-      });
+
+    return this.setStage({ ...data, stage_number: 15 });
   }
 
-
-  setStage(data: StageBetweenRequest): Promise<string> {
+  setStage(data: StageBetweenRequest | StageHarvestRequest): Promise<string> {
     console.debug('CalendarService:setStage', { data });
-    return this.dataApiService
-      .post(data, 'set_stage')
-      .then((dataResponse) => {
-        return dataResponse[0];
-      });
+    return this.dataApiService.post(data, 'set_stage').then((dataResponse) => {
+      return dataResponse[0];
+    });
   }
 
   uploadFiles(files: FileList): Promise<UploadFileResponse> {

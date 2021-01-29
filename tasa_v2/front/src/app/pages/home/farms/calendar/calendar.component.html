@@ -81,8 +81,10 @@
             </mat-expansion-panel>
           </div>
 
-          <div class="col-12 container-card-title no-margin-padding"
-            *ngIf="hasStartTrackingDate || hasEndTrackingDate || hasEndHarvestDate">
+          <div
+            class="col-12 container-card-title no-margin-padding"
+            *ngIf="hasStartTrackingDate || hasEndTrackingDate"
+          >
             Calendario del segmento
           </div>
 
@@ -106,17 +108,6 @@
               <mat-datepicker-toggle class="mat-datepicker-toggle-custom" matSuffix [for]="picker_end_segment_date">
               </mat-datepicker-toggle>
               <mat-datepicker #picker_end_segment_date></mat-datepicker>
-            </mat-form-field>
-          </div>
-          <div class="col-12" *ngIf="hasEndHarvestDate">
-            <mat-label>Fecha de cosecha</mat-label>
-
-            <mat-form-field class="formOutline text-danger" appearance="outline">
-              <input [ngModel]="hasEndHarvestDate" matInput class="text-danger"
-                [matDatepicker]="picker_has_end_harvest_date" disabled />
-              <mat-datepicker-toggle class="mat-datepicker-toggle-custom" matSuffix [for]="picker_has_end_harvest_date">
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker_has_end_harvest_date></mat-datepicker>
             </mat-form-field>
           </div>
           <ng-container *ngIf="hasReferencePhoto">

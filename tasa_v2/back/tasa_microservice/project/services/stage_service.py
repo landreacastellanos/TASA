@@ -2,6 +2,8 @@ import os
 import json
 import manage
 import uuid
+import pathlib
+from flask import send_from_directory
 from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.date_stage_enum import DateStage
@@ -14,6 +16,8 @@ from project.models.enum.type_planting_enum import TypePlanting
 from project.resources.utils.notification_utils import NotificationUtils
 
 class StageServices:
+    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s'
+    PATH_IMAGES = "%s/project/images/%s"
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -21,6 +25,8 @@ class StageServices:
          entity_name="land")
         self.__repository_property_stage = CommonRepository(
          entity_name="property_stage")
+        self.__repository_property_stage_update = CommonRepository(
+         entity_name="property_stage_finish")
         self.__repository_stage = CommonRepository(
          entity_name="stage")
         self.__repository_procedure = CommonRepository(
@@ -137,7 +143,11 @@ class StageServices:
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
 
-        
+        if (stage_number == Stage.stage_fifteen and
+           "amount_quintals" in data):
+           complete_stage = True
+           stage_db["end_date"] = datetime.now()
+
         if("application_date" in data and data['application_date']):
             stage_db["application_date"] = data['application_date']
             complete_stage = True
@@ -167,8 +177,9 @@ class StageServices:
             
         else:
             property_stage = property_stage[0]['id']
-            self.__repository_property_stage.update(property_stage,stage_db)           
-            
+            self.__repository_property_stage.update(property_stage,stage_db)
+           
+        self.update_segments(land_id, stage_number, complete_stage)
         results['data'].append("Datos guardados exitosamente")
 
         return results
@@ -208,7 +219,7 @@ class StageServices:
             if (edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-            date =  self.validation_system(stage_number, email, land_id, data)
+            date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
                 dates_calculated = self.validate_dates(date, dates, stage_number)
@@ -222,7 +233,8 @@ class StageServices:
                     "observations": "",
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
-                    "products": []
+                    "products": [],
+                    "images": None
                 }
             )
         else:
@@ -230,6 +242,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = 'application_date' in json_data and not json_data['application_date']
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
@@ -268,7 +281,7 @@ class StageServices:
             if (edit):
                 property_stage_one = property_stage_one[0]
                 data = json.loads(property_stage_one['data'])
-            date =  self.validation_system(stage_number, email, land_id, data)
+            date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
                 dates_calculated = self.validate_dates(date, dates, stage_number)
@@ -385,7 +398,9 @@ class StageServices:
 
     def complete_stage(self, data, id_land):
         data_stages = self.__repository_procedure.select(entity_name="propertyProcedure",options={"filters":
-                                [['landId', "equals", id_land]]
+                                [['landId', "equals", id_land],
+                                "and",
+                                ["cropComplete", "equals", False]]
                                 })
         data = list(map(lambda x: 
         {
@@ -464,7 +479,7 @@ class StageServices:
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
         
-        if("real_date" in data and data['real_date']):
+        if("real_date" in data and data['real_date'] and data['real_date'] != ""):
             stage_db["real_date"] = data['real_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
@@ -487,7 +502,8 @@ class StageServices:
         else:
             property_stage = property_stage[0]['id']
             self.__repository_property_stage.update(property_stage,stage_db)           
-            
+
+
         results['data'].append("Datos guardados exitosamente")
         return results
 
@@ -598,10 +614,10 @@ class StageServices:
             stage_result =  Stage.stage_fourteen.value               
         return stage_result
     
-    def validation_system(self, stage, email, land_id, data):
+    def validation_system(self, stage, email, land_id):
         result = ''
-        if stage == Stage.stage_two.value and len(data)>0:
-           result = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+        if stage == Stage.stage_two.value:
+           result = GeneralsUtils.try_parse_date_time(self.get_date_initial(email, land_id)['sowing_date']) 
         elif stage == Stage.stage_three.value:
            result = GeneralsUtils.try_parse_date_time(self.get_date_initial(email, land_id)['sowing_date'])   
         elif stage != Stage.stage_two.value:
@@ -629,3 +645,9 @@ class StageServices:
             start = str(date + timedelta(days=date_caluted[0]))
             end = str(date + timedelta(days=date_caluted[1]))
         return (start,end)
+
+    def update_segments(self, land_id, stage, stage_complete):
+        if stage_complete and stage.value == Stage.stage_fifteen.value:
+            stage_db = {}         
+            stage_db['crop_complete'] = True
+            self.__repository_property_stage_update.update(land_id,stage_db)

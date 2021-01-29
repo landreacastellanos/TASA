@@ -30,9 +30,7 @@
    "user":{
       "tableName": "user",
       "type": "object",
-      "primaryKey": [
-         "id"
-      ],
+      "primaryKey":"id",
       "properties": {
          "id": {
             "dbName": "id",
@@ -341,6 +339,10 @@
          "stageComplete":{
             "dbName": "stage_complete",
             "type": "boolean"
+         },
+         "cropComplete":{
+            "dbName": "crop_complete",
+            "type": "boolean"
          }
       }
    },
@@ -447,6 +449,23 @@
          "dose_by_ha": {
             "dbName": "dose_by_ha",
             "type": "number"
+         }
+      }
+   },
+   "property_stage_finish":{
+      "tableName": "property_procedure",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "land_id",
+            "type": "integer"
+         },
+         "crop_complete": {
+            "dbName": "crop_complete",
+            "type": "boolean"
          }
       }
    },

@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { StageHarvestRequest } from '../../../../../shared/models/calendar';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
+import { HistoricalService } from '../../historical/historical.service';
+import { CalendarChildren } from '../calendar-children.interface';
 import { CalendarService } from '../calendar.service';
 import { LandsService } from '../lands.service';
 
@@ -13,12 +15,13 @@ import { LandsService } from '../lands.service';
   templateUrl: './harvest-time.component.html',
   styleUrls: ['./harvest-time.component.scss'],
 })
-export class HarvestTimeComponent implements OnInit {
+export class HarvestTimeComponent implements OnInit, CalendarChildren {
   public mode: 'edit' | 'view' | 'create' = 'view';
   submitted: boolean;
   files: FileList;
   segmentId: string;
-  endHarvestDate: Moment;
+  endTrackingDate: Moment;
+  startTrackingDate: Moment;
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -26,7 +29,7 @@ export class HarvestTimeComponent implements OnInit {
     private snackBar: MatSnackBar,
     private landsService: LandsService,
     private configurationService: ConfigurationService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
   ) {
     this.segmentId = this.route.snapshot.data.segmentId;
     this.intAPI();
@@ -34,7 +37,8 @@ export class HarvestTimeComponent implements OnInit {
   textBack = 'Ir a segmentos';
   hasSponsorSpace = true;
   textSponsorImage = 'Menos carga química';
-  hasEndHarvestDate = true;
+  hasEndTrackingDate = true;
+  hasStartTrackingDate = true;
   get hasSave() {
     return this.mode !== 'view';
   }
@@ -77,19 +81,23 @@ export class HarvestTimeComponent implements OnInit {
   init({
     amount_quintals = undefined,
     observations = '',
-    harvest_date = '',
+    end_traking_date = '',
+    start_traking_date = '',
     enabled = true,
   } = {}) {
-    this.mode = enabled ? 'edit' : 'view';
-    this.endHarvestDate = harvest_date && moment(harvest_date);
-    this.configurationService.disableForm(
-      this.harvestTimeForm,
-      this.mode === 'view'
-    );
+    setTimeout(() => {
+      this.mode = enabled ? 'edit' : 'view';
+      this.endTrackingDate = end_traking_date && moment(end_traking_date);
+      this.startTrackingDate = start_traking_date && moment(start_traking_date);
+      this.configurationService.disableForm(
+        this.harvestTimeForm,
+        this.mode === 'view'
+      );
+    }, 0);
+    this.harvestTimeForm.get('amount_quintals_ha').disable();
     this.harvestTimeForm.patchValue({
       observations,
       amount_quintals,
-      harvest_date: harvest_date && moment(harvest_date),
     });
   }
 
@@ -99,7 +107,8 @@ export class HarvestTimeComponent implements OnInit {
       .getStage(this.segmentId, this.landsService.idLand)
       .then((stageOneData) => {
         this.init(stageOneData);
-      }).finally(() => {
+      })
+      .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
   }
@@ -124,6 +133,10 @@ export class HarvestTimeComponent implements OnInit {
     });
 
     const values = this.harvestTimeForm.value;
+    values.start_traking_date = this.startTrackingDate;
+    values.end_traking_date = this.endTrackingDate;
+    values.amount_quintals_ha = this.controls.amount_quintals_ha.value;
+
     if (!this.harvestTimeForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
@@ -142,6 +155,8 @@ export class HarvestTimeComponent implements OnInit {
         if (filesSaved) {
           dataRequest.images = filesSaved;
         }
+        console.log({ dataRequest });
+
         return this.calendarService.setStageHarvest(dataRequest);
       })
       .then(
