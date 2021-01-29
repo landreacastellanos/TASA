@@ -223,9 +223,6 @@ class StageServices:
             start_traking_date = ''
             end_traking_date = ''
             data = []
-            if (edit):
-                property_stage_one = property_stage_one[0]
-                data = json.loads(property_stage_one['data'])
             date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
