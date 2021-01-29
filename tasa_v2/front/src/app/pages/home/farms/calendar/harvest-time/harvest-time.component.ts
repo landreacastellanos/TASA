@@ -29,7 +29,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     private snackBar: MatSnackBar,
     private landsService: LandsService,
     private configurationService: ConfigurationService,
-    private calendarService: CalendarService,
+    private calendarService: CalendarService
   ) {
     this.segmentId = this.route.snapshot.data.segmentId;
     this.intAPI();
@@ -167,7 +167,14 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
             panelClass: ['snackbar-success'],
           })
       )
-      .then(() => this.intAPI())
+      .then(() =>
+        this.router.navigate([
+          '/farms/calendar/',
+          this.landsService.idProperty,
+          this.landsService.idLand,
+          'list',
+        ])
+      )
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
