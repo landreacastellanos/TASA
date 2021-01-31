@@ -72,7 +72,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
       .valueChanges.subscribe((data) => {
         const value =
           typeof data === 'number'
-            ? data / this.landsService.landSelected?.hectares_total
+            ? data / this.landsService.landSelected?.batchs.hectares_number
             : undefined;
         this.harvestTimeForm.get('amount_quintals_ha').setValue(value);
       });

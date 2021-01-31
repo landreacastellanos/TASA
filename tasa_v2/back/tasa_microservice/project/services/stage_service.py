@@ -16,8 +16,9 @@ from project.models.enum.type_planting_enum import TypePlanting
 from project.resources.utils.notification_utils import NotificationUtils
 
 class StageServices:
-    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s'
-    PATH_IMAGES = "%s/project/images/%s"
+    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
+    PATH_IMAGES = "%s\\project\\images\\%s"
+
     def __init__(self):
         self.__repository_properties = CommonRepository(
          entity_name="properties")
@@ -32,7 +33,10 @@ class StageServices:
         self.__repository_procedure = CommonRepository(
          entity_name="propertyProcedure") 
         self.__repository_user = CommonRepository(
-         entity_name="user") 
+         entity_name="user")
+        self.__repository_historical = CommonRepository(
+            entity_name="historical"
+        ) 
 
     def get_property_land(self, id, land):
 
@@ -213,12 +217,12 @@ class StageServices:
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
 
+            if not edit and stage_number is Stage.stage_two.value:
+                edit = True
+
             start_traking_date = ''
             end_traking_date = ''
             data = []
-            if (edit):
-                property_stage_one = property_stage_one[0]
-                data = json.loads(property_stage_one['data'])
             date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
@@ -589,7 +593,7 @@ class StageServices:
         if stage == Stage.stage_two.value or stage == Stage.stage_four.value:
            stage_result = Stage.stage_one.value
         elif stage == Stage.stage_three.value:
-           stage_result = Stage.stage_two.value 
+           stage_result = Stage.stage_one.value 
         elif stage == Stage.stage_five.value:
             stage_result = Stage.stage_four.value
         elif stage == Stage.stage_six.value:
@@ -648,6 +652,69 @@ class StageServices:
 
     def update_segments(self, land_id, stage, stage_complete):
         if stage_complete and stage.value == Stage.stage_fifteen.value:
+            self.insert_historic(land_id)
             stage_db = {}         
             stage_db['crop_complete'] = True
             self.__repository_property_stage_update.update(land_id,stage_db)
+
+    def insert_historic(self, id_land):
+        insert_object = {}
+        insert_historical = {}
+        property_stage = self.__repository_property_stage.select(entity_name="property_stage", options={"filters":
+                             [
+                             ['land_id', "equals", id_land],
+                             "and",
+                             ["crop_complete","equals", False]]
+                             })
+        land = self.__repository_land.select(options={"filters":
+                             [
+                             ['id', "equals", id_land]]
+                             })
+        
+        property_ = self.__repository_properties.select(options={"filters":
+                             [
+                             ['id', "equals", land[0]["property_id"]]]
+                             })
+
+        owner =  self.__repository_user.select(options={"filters":
+                             [
+                             ['id', "equals", property_[0]["property_owner"]]]
+                             })
+
+        seller  = self.__repository_user.select(options={"filters":
+                             [
+                             ['id', "equals", property_[0]["seller"]]]
+                             })
+        
+        segments = list(map(lambda x: self.join_segment(json.loads(x['data']), self.get_images(x['procedure_image'])), 
+        property_stage))
+        
+
+        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'])
+        insert_object['owner'] = {
+            "id": owner[0]['id'],
+            "name": owner[0]['name'] + " " + owner[0]['last_name'] 
+        }
+        insert_object['seller'] = {
+            "id": seller[0]['id'],
+            "name": seller[0]['name'] + " " + owner[0]['last_name'] 
+        }
+
+        insert_object['segments'] = segments
+        insert_historical['id_land'] = id_land
+        insert_historical['data'] = json.dumps(insert_object)
+        self.__repository_historical.insert(insert_historical)              
+
+    def get_images(self, data):
+        if data is not None:
+            data = json.loads(data)
+            path = str(pathlib.Path().absolute())
+            list_images = list(map(lambda x: self.PATH_IMAGES % (path, x), data))
+            return list_images
+        return []
+
+    def join_segment(self, data, images):
+        result = {}
+        result['segments'] = data
+        result['segments']['images'] = images
+        return result['segments']
