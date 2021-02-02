@@ -3,7 +3,7 @@ import json
 import manage
 import uuid
 import pathlib
-from flask import send_from_directory
+from flask import send_from_directory, current_app
 from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.date_stage_enum import DateStage
@@ -244,7 +244,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'application_date' in json_data and not json_data['application_date']
+            edit = 'application_date' not in json_data or 'amount_quintals' not in json_data
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
@@ -379,6 +379,10 @@ class StageServices:
 
         return results
     
+    def get_file(self, file):
+        file_upload_folder = os.path.join(current_app.root_path, "images") 
+        return send_from_directory('images', "Evaluame.png")
+
     def calendar_stage(self, id_lote):
         results = {
             "data": [],
