@@ -14,6 +14,8 @@ from project.resources.utils.security_token import SecurityToken
 from project.resources.utils.generals_utils import GeneralsUtils
 from project.models.enum.type_planting_enum import TypePlanting
 from project.resources.utils.notification_utils import NotificationUtils
+from project.services.calendar_service import CalendarService
+
 
 class StageServices:
     MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
@@ -36,7 +38,8 @@ class StageServices:
          entity_name="user")
         self.__repository_historical = CommonRepository(
             entity_name="historical"
-        ) 
+        )
+        self.__service_activities = CalendarService()
 
     def get_property_land(self, id, land):
 
