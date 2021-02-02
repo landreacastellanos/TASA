@@ -6,6 +6,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import jsPDF from 'jspdf';
+import { HistoricalDetail } from 'src/app/shared/models/Historic';
+import { HistoricalService } from "./historical.service";
+
 
 @Component({
   selector: 'app-historical',
@@ -28,12 +31,19 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
     '15. Fecha de cosecha (120 días después de siembra)',
   ];
 
-  constructor() {}
+  constructor( public historicalService: HistoricalService) {
+ 
+  }
+  report: HistoricalDetail;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.historicalService.getHistoricalById(23).then((report)=>{
+      this.report = report;
+    })
+  }
 
   ngAfterViewInit() {
-    this.downloadPDF();
+    /* this.downloadPDF(); */
   }
 
   downloadPDF() {
