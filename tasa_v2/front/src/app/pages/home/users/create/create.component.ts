@@ -132,6 +132,20 @@ export class CreateComponent implements OnInit {
     this.router.navigate(['/users/']);
   }
 
+  get sponsorImg() {
+    return;
+  }
+
+  get sponsorText() {
+    switch (this.mode) {
+      case 'edit':
+        return 'No nos hemos ido de su finca, seguimos monitoreando la productividad de su lote';
+
+      default:
+        return 'Nuestro negocio es incrementar la ganancia de nuestros clientes';
+    }
+  }
+
   get roles(): Role[] {
     return this.storageService.settings.roles;
   }

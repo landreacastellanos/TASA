@@ -78,7 +78,10 @@
             <strong>Escribe tu decisón y guárdala</strong>
           </div>
         </div>
-        <div class="container-table mt-2">
+        <div 
+          [ngClass]="{'border-danger': hasProductError}"
+          class="container-table mt-2 "
+        >
           <div class="overflow-auto">
             <table mat-table [dataSource]="dataSourceProductsAdd">
 
@@ -179,8 +182,11 @@
           </div>
         </div>
       </div>
-      <div *ngIf="submitted && listProductError" class="warning">
+      <div *ngIf="submitted && listProductError.editListProducts" class="warning">
         Todos los productos deben ser validados antes de continuar
+      </div>
+      <div *ngIf="submitted && listProductError.emptyListProducts" class="warning">
+        Debes agregar almenos un producto
       </div>
     </div>
     <div class="col-12 col-lg-3">
