@@ -3,7 +3,7 @@ import json
 import manage
 import uuid
 import pathlib
-from flask import send_from_directory, current_app
+from flask import send_from_directory, current_app, request
 from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.date_stage_enum import DateStage
@@ -20,7 +20,7 @@ from project.resources.utils.data_utils import DataUtils
 
 class StageServices:
     MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
-    PATH_IMAGES = "%s\\project\\images\\%s"
+    PATH_IMAGES = "%stasa_service/get_file/%s"
 
     def __init__(self):
         self.__repository_properties = CommonRepository(
@@ -383,9 +383,18 @@ class StageServices:
 
         return results
     
-    def get_file(self, file):
-        file_upload_folder = os.path.join(current_app.root_path, "images") 
-        return send_from_directory('images', "Evaluame.png")
+    def get_file(self, file, token_new):
+        results = {
+            'details': []
+        }
+        validation_token = SecurityToken().validate_token(token=token_new) 
+        if not validation_token[0] or (not SecurityToken().verify_exist_token(token_new) and "is_authenticated" not in request.base_url):
+            results['details'].append({
+                    "key": 400,
+                    "value": "Token Invalido"
+                })
+            return results 
+        return send_from_directory('images', file)
 
     def calendar_stage(self, id_lote):
         results = {
@@ -657,7 +666,7 @@ class StageServices:
     def get_images(self, data):
         if data is not None:
             data = json.loads(data)
-            path = str(pathlib.Path().absolute())
+            path = request.url_root
             list_images = list(map(lambda x: self.PATH_IMAGES % (path, x), data))
             return list_images
         return []

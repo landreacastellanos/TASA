@@ -20,8 +20,9 @@ class SecurityToken:
                           SecurityToken.get_key()).decode("utf-8")
 
     @staticmethod
-    def validate_token():
+    def validate_token(token=None):
         token_passed = request.headers['Token'] if 'Token' in request.headers else None
+        token_passed = token or token_passed
         if token_passed is not None:
             try:
                 data = jwt.decode(token_passed,SecurityToken.get_key(),
@@ -65,8 +66,9 @@ class SecurityToken:
         return repository_security.delete(result[0]['id']) if len(result) > 0 else False
 
     @staticmethod
-    def verify_exist_token():
+    def verify_exist_token(token_new=None):
         token = request.headers['Token'] if 'Token' in request.headers else None
+        token = token_new or token
         repository_security = CommonRepository(
          entity_name="security")
         result = repository_security.select(
