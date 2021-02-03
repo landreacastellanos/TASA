@@ -3,6 +3,7 @@ from project.infrastructure.repositories.common_repository\
 from datetime import datetime, timedelta
 from project.resources.utils.data_utils import DataUtils
 from project.resources.utils.security_token import SecurityToken  
+from project.models.enum.keys_enum import Keys
 
 
 class CalendarService:
@@ -76,21 +77,37 @@ class CalendarService:
             ]
         })
 
-        calendar = self.__repository_calendar.select(options={ "filters":
-            [["user_id",
-            "equals",
-            user[0]['id']]
-            ]
-        })
+        if(user[0]['role_id'] == Keys.admi.value):
+            calendar = self.__repository_calendar.select_all()
 
-        calendar = list(map( lambda x: {
-            "date": x['date'],
-            "id_land": x['id_land'],
-            "id_user": x['id_user'],
-            "land_name": x['land_name'],
-            "property_id": x['property_id'],
-            "property_name": x['property_name'],
-            "stage_number": x['stage_number'],
-            "stage_name": x['stage_name']
-        }, calendar))
-        return calendar
+            calendar = list(map( lambda x: {
+                "date": x['date'],
+                "id_land": x['id_land'],
+                "id_user": user[0]['id'],                
+                "land_name": x['land_name'],
+                "property_id": x['property_id'],
+                "property_name": x['property_name'],
+                "stage_number": x['stage_number'],
+                "stage_name": x['stage_name']
+            }, calendar))            
+
+            return calendar
+        else:
+            calendar = self.__repository_calendar.select(options={ "filters":
+                [["user_id",
+                "equals",
+                user[0]['id']]
+                ]
+            })
+
+            calendar = list(map( lambda x: {
+                "date": x['date'],
+                "id_land": x['id_land'],
+                "id_user": x['id_user'],
+                "land_name": x['land_name'],
+                "property_id": x['property_id'],
+                "property_name": x['property_name'],
+                "stage_number": x['stage_number'],
+                "stage_name": x['stage_name']
+            }, calendar))
+            return calendar
