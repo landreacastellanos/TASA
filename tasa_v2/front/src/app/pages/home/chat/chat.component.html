@@ -15,7 +15,7 @@
                     [ngClass]="{ 'align-right': participant.id_author  == user.id}">
                     <div
                         [ngClass]="{ 'other-participant': participant.id_author  != user.id, 'i-participant': participant.id_author  == user.id, 'participant': true}">
-                        <div class="name" *ngIf = "participant.id_author != user.id">
+                        <div class="name color-{{participant.color}}" *ngIf = "participant.id_author != user.id">
                             {{participant.author}}
                         </div>
                         <div class="text">

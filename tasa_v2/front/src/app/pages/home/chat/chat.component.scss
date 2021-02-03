@@ -90,10 +90,6 @@
             .other-participant{
                 background-color: rgb(221, 221, 221);
 
-                .name{
-                    color: green;
-                }
-
                 .text{
 
                     .time{
@@ -104,10 +100,6 @@
 
             .i-participant{
                 background-color: map-get($mat-green-custom, 900);
-
-                .name{
-                    color: rgb(255, 183, 183);
-                }
 
                 .text{
                     color: white;
