@@ -14,14 +14,8 @@ import moment from 'moment';
 })
 export class ChatComponent implements OnInit {
 
-  //mocks
-  user = {
-    name: "Camilo Perez",
-    id: 123
-  }
-
-  conversation = []
-
+  user;
+  conversation = [];
   message='';
   chat;
   click = false;
@@ -67,8 +61,10 @@ export class ChatComponent implements OnInit {
         data.created_date = moment(data.created_date).format('hh:mm A');
         return data;
       });
-      console.log(this.conversation);
-      
+      this.conversation.map((chat) =>{
+        chat.color = this.configService.rolesMock.find(role => role.key === chat.role_id).color;
+        return chat
+      });
     })
   }
 
