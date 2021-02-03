@@ -514,5 +514,36 @@
             "type": "string"
          }
       }
+   },
+   "calendar": {
+      "tableName": "calendar_activitie",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_land": {
+            "dbName": "land_id",
+            "type": "integer"
+         },
+         "id_user": {
+            "dbName": "user_id",
+            "type": "integer"
+         },
+         "id_stage": {
+            "dbName": "stage_id",
+            "type": "integer"
+         },
+         "date": {
+            "dbName": "planning_date",
+            "type": "dateTime"
+         }
+      }
    }
+
+
 }
