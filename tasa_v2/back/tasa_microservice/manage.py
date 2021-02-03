@@ -8,7 +8,7 @@ from flask_script import Manager
 from flask_mail import Mail
 
 from datetime import datetime
-from flask import g, request, Response
+from flask import g, request, Response, send_from_directory
 from flask_script import Manager
 
 from project.app import create_app
@@ -31,7 +31,7 @@ def before_request_function():
     g.endpoint = request.endpoint
     validation_url = True
     if any(url_exclude in request.base_url
-    for url_exclude in ("swagger", "restore_password", "login")):
+    for url_exclude in ("swagger", "restore_password", "login", "get_file")):
         validation_url = False
 
     if validation_url:
@@ -52,6 +52,10 @@ def after_request_function(response):
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers['Access-Control-Allow-Headers'] = "*"
     response.headers['Access-Control-Allow-Methods'] = "*"
+
+    if any(url_exclude in request.base_url
+    for url_exclude in ("get_file")):
+        return response
 
     try:
         app_version = ConfigurationManger.get_config("APP_VERSION")
