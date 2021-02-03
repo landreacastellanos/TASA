@@ -363,19 +363,19 @@ class StageServices:
         
         if 'image_1' in files:
             file = files['image_1']
-            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
 
         if 'image_2' in files:
             file = files['image_2']
-            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
 
         if 'image_3' in files:
             file = files['image_1']
-            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
         
