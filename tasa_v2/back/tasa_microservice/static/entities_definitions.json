@@ -541,9 +541,23 @@
          "date": {
             "dbName": "planning_date",
             "type": "dateTime"
+         },
+         "land_name": {
+            "dbName": "land_name",
+            "type": "string"
+         },
+         "property_name": {
+            "dbName": "property_name",
+            "type": "string"
+         },
+         "property_id": {
+            "dbName": "property_id",
+            "type": "integer"
+         },
+         "stage_number": {
+            "dbName": "stage_number",
+            "type": "integer"
          }
       }
    }
-
-
 }

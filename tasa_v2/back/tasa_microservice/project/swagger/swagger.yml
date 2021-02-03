@@ -33,7 +33,29 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_roles'
-          x-swagger-router-controller: "project.views.role" 
+          x-swagger-router-controller: "project.views.role"
+    /get_calendar:
+      get:
+          tags:
+            - "Calendar"
+          summary: "Calendar"
+          operationId: "get_calendar"
+          description: "Roles"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/caledar_events'
+          x-swagger-router-controller: "project.views.calendar" 
     /login:
       post:
           tags:
@@ -1360,3 +1382,24 @@
         title:
           type: "string"
           example: "Cosmo agua"
+    caledar_events:
+      type: "object"
+      properties:
+        user_id:
+          type: "integer"
+          example: 1
+        land_id:
+          type: "integer"
+          example: 1
+        land_name:
+          type: "string"
+          example: "lote 1"
+        property_id:
+          type: "integer"
+          example: 1
+        property_name:
+          type: "string"
+          example: "finca 1"
+        date_event:
+          type: "string"
+          example: "01/01/01"

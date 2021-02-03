@@ -1,5 +1,8 @@
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
+from datetime import datetime, timedelta
+from project.resources.utils.data_utils import DataUtils
+from project.resources.utils.security_token import SecurityToken  
 
 
 class CalendarService:
@@ -16,24 +19,75 @@ class CalendarService:
         self.__repository_stage = CommonRepository(
          entity_name="stage")
     
-    def set_calendar_planning_date(self, land_id, user_id, planning_date):
-        # land = self.__repository_land.select_one(land_id)
-        # property_field = self.__repository_properties.select_one(land[0]['property_id'])
-        # sowing_system = property_field[0]['sowing_system']
+    def set_calendar(self, land_id, user_id, stage_number, date, is_planning):
+        land = self.__repository_land.select_one(land_id)
+        property_field = self.__repository_properties.select_one(land[0]['property_id'])
+        sowing_system = property_field[0]['sowing_system']
 
-        # stage = self.__repository_stage.select(entity_name="stage", options={"filters":
-        #                 [['typePlanning', "equals", sowing_system],
-        #                 "and",
-        #                 ['stageNumber', "equals", 1]]
-        #                 })
+        stage = self.__repository_stage.select(entity_name="stage", options={"filters":
+                        [['typePlanning', "equals", sowing_system],
+                        "and",
+                        ['stageNumber', "equals", stage_number]]
+                        })[0]
 
-        # calendar_activity = {
-        #     "land_id": land_id,
-        #     "user_id": user_id,
+        start = DataUtils.calulate_date_stage(stage_number, sowing_system)[0]
+        if(is_planning):
+            date = date - timedelta(days=start)
+        else:
+            date = date + timedelta(days=start)
 
-        # }
-        # self.__repository_calendar.insert(calendar_activity)
-        return 1
+        calendar_activity = {
+            "id_land": land_id,
+            "id_user": user_id,
+            "id_stage": stage['id'],
+            "date": date,
+            "property_name": property_field[0]['name'],
+            "land_name": land[0]['land_name'],
+            "property_id": property_field[0]['id'],
+            "stage_number": stage_number
+        }       
 
-    def set_calendar_real_date(self, land_id, user_id, real_date):
-        return 1
+        calendar = self.__repository_calendar.select(
+            options={"filters":
+                        [['id_land', "equals", land_id],
+                        "and",
+                        ['id_user', "equals", user_id],
+                        "and",
+                        ['id_stage', "equals", stage['id']]]
+                        }
+        )
+
+        if(any(calendar)):
+            calendar_activity['id'] = calendar[0]['id']
+            self.__repository_calendar.update(calendar[0]['id'], calendar_activity)
+        else:
+            self.__repository_calendar.insert(calendar_activity)
+
+    def get_calendar(self):
+        validation_token = SecurityToken().validate_token() 
+        email = validation_token[2]
+
+        user = self.__repository_user.select(entity_name="user", options={ "filters":
+            [["email",
+            "equals",
+            email]
+            ]
+        })
+
+        calendar = self.__repository_calendar.select(options={ "filters":
+            [["user_id",
+            "equals",
+            user[0]['id']]
+            ]
+        })
+
+        calendar = list(map( lambda x: {
+            "date": x['date'],
+            "id_land": x['id_land'],
+            "id_user": x['id_user'],
+            "land_name": x['land_name'],
+            "property_id": x['property_id'],
+            "property_name": x['property_name'],
+            "stage_number": x['stage_number']
+        }, calendar))
+        return calendar
