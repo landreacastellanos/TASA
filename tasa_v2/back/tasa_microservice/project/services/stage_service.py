@@ -505,6 +505,9 @@ class StageServices:
             complete_stage = True
             stage_db["end_date"] = datetime.now()
             self.set_calendar_real(land_id, property_field[0]['seller'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
 
         data.pop("land_id")
         
@@ -525,12 +528,18 @@ class StageServices:
             self.__repository_property_stage.update(property_stage,stage_db)           
 
         date = GeneralsUtils.try_parse_date_time(data['sowing_date'])
-        self.__service_activities.set_calendar(land_id, property_field[0]['seller'], 2, date, True)
-        self.__service_activities.set_calendar(land_id, property_field[0]['seller'], 3, date, True)
+        self.set_calendar_planning(land_id, property_field[0]['seller'], date)
+        self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
+        self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
+        self.set_calendar_planning(land_id, property_field[0]['manager'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results
-        
+    
+    def set_calendar_planning(self, land_id, user, date):
+        self.__service_activities.set_calendar(land_id, user, 2, date, True)
+        self.__service_activities.set_calendar(land_id, user, 3, date, True)
+
     def set_calendar_real(self, land_id, user, date):
         date = GeneralsUtils.try_parse_date_time(date)
         self.__service_activities.set_calendar(land_id, user, 4, date, False)
