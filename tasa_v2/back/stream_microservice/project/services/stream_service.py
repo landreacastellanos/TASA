@@ -102,6 +102,7 @@ class NotificationService():
             "author": "{} {}".format(user["name"], user['last_name']),
             "id_author": user['id'],
             "land_id": data['id_land'],
+            "role_id": user['role_id'],
             "created_date": datetime.now()
         }
 

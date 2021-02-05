@@ -33,7 +33,29 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_roles'
-          x-swagger-router-controller: "project.views.role" 
+          x-swagger-router-controller: "project.views.role"
+    /get_calendar:
+      get:
+          tags:
+            - "Calendar"
+          summary: "Calendar"
+          operationId: "get_calendar"
+          description: "Roles"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/caledar_events'
+          x-swagger-router-controller: "project.views.calendar" 
     /login:
       post:
           tags:
@@ -643,7 +665,85 @@
                 type: array
                 items:
                   $ref: '#/definitions/result_product'
-        x-swagger-router-controller: "project.views.product"                                                 
+        x-swagger-router-controller: "project.views.product"
+    /get_historical_land:
+      get:
+        tags:
+          - "Historical"
+        summary: "Historical"
+        operationId: "get_historical_land"
+        description: "get Historical"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "id"
+            required: true    
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/result_historical'
+        x-swagger-router-controller: "project.views.historical"
+    /get_historical:
+      get:
+        tags:
+          - "Historical"
+        summary: "Historical"
+        operationId: "get_historical"
+        description: "get Historical"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "id"
+            required: true    
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/product'
+        x-swagger-router-controller: "project.views.historical" 
+    /get_file/{path}:
+      get:
+        tags:
+          - "Stage"
+        summary: "Stage"
+        operationId: "get_file"
+        description: "get file"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "query"
+            required: true
+            type: "string"
+            name: "token"
+          - in: path
+            name: path
+            type: string
+            required: true
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/product'
+        x-swagger-router-controller: "project.views.stage"                                                         
   definitions:
     property:
       type: object
@@ -1281,4 +1381,51 @@
           example: "Solitec"
         dose_by_ha:  
           type: "number"
-          example: 1.9    
+          example: 1.9
+    result_historical:
+      type: "object"
+      properties:
+        apiVersion:
+          type: "string"
+        status:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: '#/definitions/historical'
+        details:
+          type: "array"
+          items:
+              $ref: '#/definitions/responseDetail'
+        method:
+          type: "string"
+    historical:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        title:
+          type: "string"
+          example: "Cosmo agua"
+    caledar_events:
+      type: "object"
+      properties:
+        user_id:
+          type: "integer"
+          example: 1
+        land_id:
+          type: "integer"
+          example: 1
+        land_name:
+          type: "string"
+          example: "lote 1"
+        property_id:
+          type: "integer"
+          example: 1
+        property_name:
+          type: "string"
+          example: "finca 1"
+        date_event:
+          type: "string"
+          example: "01/01/01"

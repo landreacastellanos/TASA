@@ -28,7 +28,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   startTrackingDate: Moment;
   products: StageProduct[];
   mode: 'edit' | 'view' | 'create' = 'view';
-  listProductError: boolean;
+  listProductError: { emptyListProducts: boolean; editListProducts: boolean };
   files: FileList;
   textBack = 'Ir a segmentos';
   hasEndTrackingDate = true;
@@ -81,6 +81,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   ngOnInit(): void {
     this.init();
+    console.log({ productsForm: this.burningForSowingForm.controls.products });
+    this.burningForSowingForm.controls.products.valueChanges.subscribe(
+      (products) => this.productsValidation(products)
+    );
   }
   get title() {
     return (
@@ -177,6 +181,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.burningForSowingForm,
       this.mode === 'view'
     );
+    if (!observations && !products.length) {
+      this.burningForSowingForm.controls.application_date.disable();
+    }
     this.burningForSowingForm.patchValue({
       observations,
       application_date: application_date && moment(application_date),
@@ -186,6 +193,23 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   get productsControl() {
     return this.burningForSowingForm.get('products') as FormArray;
+  }
+
+  productsValidation(products: StageProduct[]) {
+    const editListProducts = products
+      .map((row, i) => !row.id && !this.isDisabledProduct(i))
+      .includes(true);
+    const emptyListProducts = !products.length;
+    this.listProductError = { emptyListProducts, editListProducts };
+    return this.listProductError;
+  }
+
+  get hasProductError() {
+    return (
+      this.submitted &&
+      (this.listProductError.editListProducts ||
+        this.listProductError.emptyListProducts)
+    );
   }
 
   isDisabledProduct(index: number) {
@@ -300,9 +324,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       valid: this.burningForSowingForm.valid,
       files: this.files,
       productsDataSourceAdd: this.dataSourceProductsAdd,
-      mappingProductsDataSourceAdd: this.dataSourceProductsAdd.data.map(
-        (row, i) => !row.id && !this.isDisabledProduct(i)
-      ),
     });
     const values = this.burningForSowingForm.value;
     values.products = this.selection.selected.map((product) => {
@@ -311,17 +332,15 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     });
     values.start_traking_date = this.startTrackingDate;
     values.end_traking_date = this.endTrackingDate;
-    const editListProducts = this.dataSourceProductsAdd.data.map(
-      (row, i) => !row.id && !this.isDisabledProduct(i)
-    );
-    if (editListProducts.includes(true)){
-      this.listProductError = true;
-      return this.snackBar.open('Valida todos los productos antes de continuar', 'x', {
-        duration: 2000,
-        panelClass: ['snackbar-warn'],
-      });
-    }else{
-      this.listProductError = false;
+    if (Object.values(this.listProductError).includes(true)) {
+      return this.snackBar.open(
+        'Valida todos los productos antes de continuar',
+        'x',
+        {
+          duration: 2000,
+          panelClass: ['snackbar-warn'],
+        }
+      );
     }
     if (!this.burningForSowingForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {

@@ -67,6 +67,9 @@
          "land_id": {
             "dbName": "lote",
             "type": "integer"
+         },"role_id": {
+            "dbName": "role_id",
+            "type": "integer"
          },
          "created_date": {
             "dbName": "fecha_creacion",

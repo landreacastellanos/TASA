@@ -56,6 +56,16 @@ def upload_file():
 
     return results
 
+def get_file(path, token):
+    try:
+        results = {}
+        result = StageServices().get_file(path, token)
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+
+    return result
+
 def calendar_stage(id_lote):
     results = {
             "data": [],
