@@ -557,6 +557,10 @@
          "stage_number": {
             "dbName": "stage_number",
             "type": "integer"
+         },
+         "stage_name": {
+            "dbName": "stage_name",
+            "type": "string"
          }
       }
    }
