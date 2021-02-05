@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import { report } from 'process';
 import { HistoricalDetail } from 'src/app/shared/models/Historic';
+import { ConfigurationService } from '../../../../shared/services/configuration.service';
 import { LandsService } from '../calendar/lands.service';
 import { HistoricalService } from './historical.service';
 
@@ -37,6 +38,7 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
   ];
 
   constructor(
+    public configService: ConfigurationService,
     public historicalService: HistoricalService,
     private route: ActivatedRoute,
     public landsService: LandsService
@@ -48,8 +50,31 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
     );
     this.landsService.idLand = this.route.snapshot.paramMap.get('idLand');
     this.historicalId = this.route.snapshot.paramMap.get('idHistorical');
+    this.initApi();
+  }
+  report: HistoricalDetail;
 
-    this.historicalService
+  ngOnInit(): void {}
+
+  initApi() {
+    this.configService.setLoadingPage(true);
+    return Promise.all([
+      this.getReport(),
+      this.landsService.getLandById(
+        this.landsService.idProperty,
+        this.landsService.idLand
+      ),
+    ]).finally(() => {
+      this.configService.setLoadingPage(false);
+    });
+  }
+
+  ngAfterViewInit() {
+    // this.downloadPDF();
+  }
+
+  getReport() {
+    return this.historicalService
       .getHistoricalById(this.historicalId)
       .then((report) => {
         // inmutable functional based
@@ -60,22 +85,8 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
       })
       .then((report) => {
         this.report = report;
-        console.log(report);
-        console.log(this.landsService);
+        console.log({report, landService: this.landsService});
       });
-    this.landsService.getLandById(
-      this.landsService.idProperty,
-      this.landsService.idLand
-    );
-    // Here is the answer of promise
-    // this.landsService.landSelected
-  }
-  report: HistoricalDetail;
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
-    this.downloadPDF();
   }
 
   downloadPDF() {

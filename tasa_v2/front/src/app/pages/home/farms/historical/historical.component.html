@@ -95,15 +95,21 @@
       <div class="subtitle-box-historical col-4">
         Fecha de aplicación: {{ stage.application_date | date: "short" }}
       </div>
-      <div class="subtitle-box-historical col-4">Fecha inicio de segmento: {{report.segments[1].start_traking_date | date: "short"}}</div>
-      <div class="subtitle-box-historical col-4">Fecha fin de segmento: {{report.segments[1].end_traking_date | date: "short"}}</div>
+      <div class="subtitle-box-historical col-4">
+        Fecha inicio de segmento:
+        {{ report.segments[1].start_traking_date | date: "short" }}
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Fecha fin de segmento:
+        {{ report.segments[1].end_traking_date | date: "short" }}
+      </div>
     </div>
     <div class="row justify-content-center">
       <div class="observations d-flex justify-content-end col-1 pt-5">
-        Observaciones: 
+        Observaciones:
       </div>
       <div class="col-7 py-5">
-        {{report.segments[1].observations}}
+        {{ report.segments[1].observations }}
       </div>
     </div>
     <div class="box-historical">
