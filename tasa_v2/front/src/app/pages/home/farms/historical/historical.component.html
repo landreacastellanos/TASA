@@ -1,4 +1,9 @@
-<div class="historical" id="contentToConvert" #contentToConvert>
+<div
+  class="historical"
+  id="contentToConvert"
+  #contentToConvert
+  *ngIf="report && landsService.landSelected"
+>
   <div class="row no-gutters px-4 py-4">
     <img
       src="../../../assets/img/logo.png"
