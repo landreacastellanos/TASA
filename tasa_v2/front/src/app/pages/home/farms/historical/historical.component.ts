@@ -5,7 +5,12 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
+import { report } from 'process';
+import { HistoricalDetail } from 'src/app/shared/models/Historic';
+import { LandsService } from '../calendar/lands.service';
+import { HistoricalService } from './historical.service';
 
 @Component({
   selector: 'app-historical',
@@ -15,8 +20,11 @@ import jsPDF from 'jspdf';
 export class HistoricalComponent implements OnInit, AfterViewInit {
   @ViewChild('contentToConvert', { static: false })
   contentToConvert: ElementRef;
+  historicalId: string;
 
   public segmentsList: string[] = [
+    '1. Fecha de siembra',
+    '2. Quema para siembra (5 a 8 días antes de la siembra)',
     '3. Tratamiento de semillas (0 a 3 días antes de siembra)',
     '4. Pre emergencia total (0 a 3 días después de siembra',
     '5. Post emergencia temprana (12 a 15 días antes de siembra)',
@@ -28,7 +36,41 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
     '15. Fecha de cosecha (120 días después de siembra)',
   ];
 
-  constructor() {}
+  constructor(
+    public historicalService: HistoricalService,
+    private route: ActivatedRoute,
+    public landsService: LandsService
+  ) {
+    console.log(report);
+
+    this.landsService.idProperty = this.route.snapshot.paramMap.get(
+      'idProperty'
+    );
+    this.landsService.idLand = this.route.snapshot.paramMap.get('idLand');
+    this.historicalId = this.route.snapshot.paramMap.get('idHistorical');
+
+    this.historicalService
+      .getHistoricalById(this.historicalId)
+      .then((report) => {
+        // inmutable functional based
+        report.segments = report.segments.map((item, index) => {
+          return { ...item, title: this.segmentsList[index] };
+        });
+        return report;
+      })
+      .then((report) => {
+        this.report = report;
+        console.log(report);
+        console.log(this.landsService);
+      });
+    this.landsService.getLandById(
+      this.landsService.idProperty,
+      this.landsService.idLand
+    );
+    // Here is the answer of promise
+    // this.landsService.landSelected
+  }
+  report: HistoricalDetail;
 
   ngOnInit(): void {}
 
