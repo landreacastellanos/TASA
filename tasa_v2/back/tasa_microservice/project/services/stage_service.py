@@ -525,13 +525,14 @@ class StageServices:
             self.__repository_property_stage.insert(stage_db)
         else:
             property_stage = property_stage[0]['id']
-            self.__repository_property_stage.update(property_stage,stage_db)           
+            self.__repository_property_stage.update(property_stage,stage_db)      
 
-        date = GeneralsUtils.try_parse_date_time(data['sowing_date'])
-        self.set_calendar_planning(land_id, property_field[0]['seller'], date)
-        self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
-        self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
-        self.set_calendar_planning(land_id, property_field[0]['manager'], date)
+        if("sowing_date" in data and len(data['sowing_date'].strip()) > 0 ):
+            date = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+            self.set_calendar_planning(land_id, property_field[0]['seller'], date)
+            self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
+            self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
+            self.set_calendar_planning(land_id, property_field[0]['manager'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results
