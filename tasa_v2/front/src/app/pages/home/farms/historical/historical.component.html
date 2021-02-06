@@ -70,15 +70,9 @@
         </div>
       </div>
       <div class="box-historical">
-        <div class="row py-3 justify-content-center">
-          <div class="col-4 d-flex justify-content-around">
-            <img src="{{ report.segments[0].images[0] }}" height="290px" />
-          </div>
-          <div class="col-4 d-flex justify-content-around">
-            <img src="{{ report.segments[1].images[1] }}" height="290px" />
-          </div>
-          <div class="col-4 d-flex justify-content-around">
-            <img src="{{ report.segments[1].images[2] }}" height="290px" />
+        <div class="row py-3">
+          <div class="col-4" *ngFor="let image of report.segments[0].images">
+            <img src="{{ image }}" />
           </div>
         </div>
       </div>
@@ -97,11 +91,11 @@
       </div>
       <div class="subtitle-box-historical col-4">
         Fecha inicio de segmento:
-        {{ report.segments[1].start_traking_date | date: "short" }}
+        {{ stage.start_traking_date | date: "short" }}
       </div>
       <div class="subtitle-box-historical col-4">
         Fecha fin de segmento:
-        {{ report.segments[1].end_traking_date | date: "short" }}
+        {{ stage.end_traking_date | date: "short" }}
       </div>
     </div>
     <div class="row justify-content-center">
@@ -109,19 +103,13 @@
         Observaciones:
       </div>
       <div class="col-7 py-5">
-        {{ report.segments[1].observations }}
+        {{ stage.observations }}
       </div>
     </div>
     <div class="box-historical">
-      <div class="row justify-content-center">
-        <div class="col-4 d-flex justify-content-around">
-          <img src="{{ report.segments[1].images[0] }}" height="290px" />
-        </div>
-        <div class="col-4 d-flex justify-content-around">
-          <img src="{{ report.segments[1].images[1] }}" height="290px" />
-        </div>
-        <div class="col-4 d-flex justify-content-around">
-          <img src="{{ report.segments[1].images[2] }}" height="290px" />
+      <div class="row">
+        <div class="col-4" *ngFor="let image of stage.images">
+          <img src="{{ image }}" />
         </div>
       </div>
     </div>
