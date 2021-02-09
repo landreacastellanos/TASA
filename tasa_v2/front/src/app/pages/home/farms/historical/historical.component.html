@@ -18,43 +18,48 @@
   <div class="box-historical">
     <div class="title-box-historical">Datos básicos de la finca:</div>
     <div class="info-box-historical row">
-      <div class="subtitle-box-historical col-3">
-        Nombre: {{ landsService.landSelected.name }}
-      </div>
-      <div class="subtitle-box-historical col-3">
-        Razón social: {{ landsService.landSelected.business_name }}
-      </div>
-      <div class="subtitle-box-historical col-3">
-        Teléfono: {{ landsService.landSelected.phone }}
-      </div>
-      <div class="subtitle-box-historical col-3">
-        Dirección Web: {{ landsService.landSelected.web_page }}
-      </div>
-      <div class="subtitle-box-historical col-12">
-        Dirección: {{ landsService.landSelected.direction }}
+      <div class="subtitle-box-historical col-4">
+        Nombre: <span>{{ landsService.landSelected.name }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
-        Total hectáreas finca: {{ landsService.landSelected.hectares_total }}
+        Razón social: <span>{{ landsService.landSelected.business_name }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
-        Sistema de siembra finca: {{ landsService.landSelected.sowing_system }}
+        Teléfono: <span>{{ landsService.landSelected.phone }}</span>
+      </div>
+      <div class="subtitle-box-historical col-6">
+        Dirección Web: <span>{{ landsService.landSelected.web_page }}</span>
+      </div>
+      <div class="subtitle-box-historical col-6">
+        Dirección: <span>{{ landsService.landSelected.direction }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Total hectáreas finca:
+        <span>{{ landsService.landSelected.hectares_total }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Sistema de siembra finca:
+        <span>{{ landsService.landSelected.sowing_system }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
         Fecha de siembra:
-        {{ landsService.landSelected.created_date | date: "short" }}
+        <span>{{
+          landsService.landSelected.created_date | date: formatDates
+        }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
-        Nombre del lote: {{ landsService.landSelected.batchs.name }}
+        Nombre del lote:
+        <span>{{ landsService.landSelected.batchs.name }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
         Hectáreas del lote:
-        {{ landsService.landSelected.batchs.hectares_number }}
+        <span>{{ landsService.landSelected.batchs.hectares_number }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
-        Tipo de siembra: {{ report.segments[0].type_sowing }}
+        Tipo de siembra: <span>{{ report.segments[0].type_sowing }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
-        Variedad: {{ report.segments[0].variety }}
+        Variedad: <span>{{ report.segments[0].variety }}</span>
       </div>
     </div>
   </div>
@@ -62,54 +67,56 @@
     <div class="title-box-historical">1. Fecha de siembra</div>
     <div>
       <div class="row justify-content-center">
-        <div class="col-6 d-flex justify-content-center">
-          Fecha propuesta: {{ report.segments[0].sowing_date | date: "short" }}
+        <div class="col-6 text-center subtitle-box-historical">
+          Fecha propuesta:
+          <span> {{ report.segments[0].sowing_date | date: formatDates }}</span>
         </div>
-        <div class="col-6 d-flex justify-content-center">
-          Fecha real : {{ report.segments[0].real_date | date: "short" }}
+        <div class="col-6 text-center subtitle-box-historical">
+          Fecha real:
+          <span> {{ report.segments[0].real_date | date: formatDates }}</span>
         </div>
       </div>
       <div class="box-historical">
         <div class="row py-3">
           <div class="col-4" *ngFor="let image of report.segments[0].images">
-            <img src="{{ image }}" />
+            <img class="w-100" src="{{ image }}" />
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div
-    class="box-historical"
-    *ngFor="let stage of report.segments | slice: 1:10"
-  >
+  <div class="box-historical" *ngFor="let stage of report.segments | slice: 1">
     <div class="title-box-historical">
       {{ stage.title }}
     </div>
     <div class="info-box-historical row">
-      <div class="subtitle-box-historical col-4">
-        Fecha de aplicación: {{ stage.application_date | date: "short" }}
+      <div class="subtitle-box-historical text-center col-4">
+        Fecha de aplicación:
+        <span>{{ stage.application_date | date: formatDates }}</span>
       </div>
-      <div class="subtitle-box-historical col-4">
+      <div class="subtitle-box-historical text-center col-4">
         Fecha inicio de segmento:
-        {{ stage.start_traking_date | date: "short" }}
+        <span>{{ stage.start_traking_date | date: formatDates }}</span>
       </div>
-      <div class="subtitle-box-historical col-4">
+      <div class="subtitle-box-historical text-center col-4">
         Fecha fin de segmento:
-        {{ stage.end_traking_date | date: "short" }}
+        <span>{{ stage.end_traking_date | date: formatDates }}</span>
       </div>
     </div>
-    <div class="row justify-content-center">
-      <div class="observations d-flex justify-content-end col-1 pt-5">
-        Observaciones:
+    <div class="row justify-content-center observations">
+      <div
+        class="text-center col-3 d-flex align-items-center justify-content-center"
+      >
+        <div class="subtitle-box-historical">Observaciones:</div>
       </div>
-      <div class="col-7 py-5">
-        {{ stage.observations }}
+      <div class="col-9 text-center d-flex  align-items-center">
+        <div>{{ stage.observations }}</div>
       </div>
     </div>
     <div class="box-historical">
       <div class="row">
         <div class="col-4" *ngFor="let image of stage.images">
-          <img src="{{ image }}" />
+          <img class="w-100" src="{{ image }}" />
         </div>
       </div>
     </div>

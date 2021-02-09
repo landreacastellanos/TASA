@@ -22,12 +22,13 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
   @ViewChild('contentToConvert', { static: false })
   contentToConvert: ElementRef;
   historicalId: string;
+  formatDates = 'd-MMM-y';
 
   public segmentsList: string[] = [
     '1. Fecha de siembra',
     '2. Quema para siembra (5 a 8 días antes de la siembra)',
     '3. Tratamiento de semillas (0 a 3 días antes de siembra)',
-    '4. Pre emergencia total (0 a 3 días después de siembra',
+    '4. Pre emergencia total (0 a 3 días después de siembra)',
     '5. Post emergencia temprana (12 a 15 días antes de siembra)',
     '6. Pre emergencia tardía (18 a 22 días de días después de siembra)',
     '7. Control de enfermedades preventiva o inmediata (25 a 28 días después de siembra)',
@@ -85,7 +86,7 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
       })
       .then((report) => {
         this.report = report;
-        console.log({report, landService: this.landsService});
+        console.log({ report, landService: this.landsService });
       });
   }
 

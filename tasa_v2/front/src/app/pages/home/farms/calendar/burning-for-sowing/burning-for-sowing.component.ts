@@ -305,6 +305,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       ),
     });
     const values = this.burningForSowingForm.value;
+    values.application_date = !!values.application_date ? values.application_date : undefined;
     values.products = this.selection.selected.map((product) => {
       product.dose_by_ha = parseFloat(`${product.dose_by_ha}`);
       return product;
@@ -314,13 +315,17 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     const editListProducts = this.dataSourceProductsAdd.data.map(
       (row, i) => !row.id && !this.isDisabledProduct(i)
     );
-    if (editListProducts.includes(true)){
+    if (editListProducts.includes(true)) {
       this.listProductError = true;
-      return this.snackBar.open('Valida todos los productos antes de continuar', 'x', {
-        duration: 2000,
-        panelClass: ['snackbar-warn'],
-      });
-    }else{
+      return this.snackBar.open(
+        'Valida todos los productos antes de continuar',
+        'x',
+        {
+          duration: 2000,
+          panelClass: ['snackbar-warn'],
+        }
+      );
+    } else {
       this.listProductError = false;
     }
     if (!this.burningForSowingForm.valid) {
