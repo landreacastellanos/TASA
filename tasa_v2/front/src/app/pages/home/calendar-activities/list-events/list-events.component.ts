@@ -21,12 +21,11 @@ export class ListEventsComponent implements OnInit {
     const listActivities = data.events
       .map((event) => event.meta as Activity)
       .map((activity) => ({
-        land: `${activity.property} / ${activity.land}`,
-        title: activity.title,
-        time: activity.date.format('LT'),
+        land: `${activity.property_name} / ${activity.land_name}`,
+        title: activity.stage_name,
+        time: moment(activity.date).format('LT'),
       }));
     this.dataSource = new MatTableDataSource(listActivities);
-    console.log(this.dataSource);
   }
 
   ngOnInit(): void {}
