@@ -157,7 +157,7 @@ class StageServices:
             stage_db["application_date"] = data['application_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
-        else:
+        elif "application_date" in data and len(data['application_date']) == 0:
             data.pop('application_date')    
         
         data.pop("land_id")
