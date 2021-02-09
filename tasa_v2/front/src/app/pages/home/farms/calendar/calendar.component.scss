@@ -37,6 +37,10 @@
 
   .buttons-left{
     flex: 1;
+    
+    button{
+      border-radius: 18px;
+    }
   }
 
   .buttons-right{
@@ -64,10 +68,5 @@
 @media (min-width: 710px) {
   .sponsors {
     height: 700px;
-  }
-
-  .buttons-left{
-    display: flex;
-    align-items: center;
   }
 }

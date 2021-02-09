@@ -35,6 +35,7 @@ export interface StageBetweenRequest extends StageBetween {
 
 export interface StageBetweenResponse extends StageBetween {
   enabled: boolean;
+  images?: string[];
 }
 
 export class StageProduct {
@@ -72,6 +73,7 @@ interface StageOne {
 
 export interface StageOneResponse extends StageOne {
   enabled: boolean;
+  images?: string[];
 }
 
 export interface StageOneRequest extends StageOne {

@@ -13,4 +13,4 @@ export interface HistoricalDetail {
   segments: Segments[];
 }
 
-type Segments = StageOneRequest & StageBetweenRequest & StageHarvestRequest & {title?: string};
+type Segments = StageOneRequest & StageBetweenRequest & StageHarvestRequest & {title?: string, productsDataSource: any};
