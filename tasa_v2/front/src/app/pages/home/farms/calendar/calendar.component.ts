@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { Historical } from 'src/app/shared/models/Historic';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
+import { HistoricalService } from '../historical/historical.service';
 import { CalendarChildren } from './calendar-children.interface';
 import { LandsService } from './lands.service';
 
@@ -10,11 +12,16 @@ import { LandsService } from './lands.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+
+  historicalResult: Historical[] = [];
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public landsService: LandsService,
-    public configService: ConfigurationService
+    public configService: ConfigurationService,
+    public historicalService: HistoricalService,
+    
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -24,6 +31,9 @@ export class CalendarComponent implements OnInit {
       this.landsService.idProperty,
       this.landsService.idLand
     );
+    this.historicalService.getListHistorical(this.landsService.idLand).then((resultPromise)=>{
+     this.historicalResult = resultPromise
+    })
   }
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
@@ -50,8 +60,8 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onChangeFiles(files);
   }
 
-  goHistorical(){
-    this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand])
+  goHistorical(id: number){
+    this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand, id])
   }
 
   goChat(){

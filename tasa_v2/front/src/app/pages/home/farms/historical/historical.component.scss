@@ -34,31 +34,20 @@
       background-color: white;
       padding: 0 10px;
     }
-
-    .info-box-historical {
-      .subtitle-box-historical {
-        font-size: 16px;
-        font-weight: bold;
-        margin: 0;
-      }
-    }
+  }
+}
+.subtitle-box-historical {
+  margin: 0;
+  font-weight: bold;
+  span {
+    font-weight: normal;
   }
 }
 
-.no-gutters {
-  margin-right: 0;
-  margin-left: 0;
-
-  > .col,
-  > [class*="col-"] {
-    padding-right: 0;
-    padding-left: 0;
-  }
+.text-vertical{
+  
 }
 
 .observations {
-    font-size: large;
-    font-weight: bold;
-    background-color: white;
-    padding:10px;
-  }
+  min-height: 100px;
+}

@@ -1,9 +1,15 @@
-<div class="card-container p-1" [ngClass]="{ 'd-none': !landsService.landSelected }">
+<div
+  class="card-container p-1"
+  [ngClass]="{ 'd-none': !landsService.landSelected }"
+>
   <div class="">
     <div class="row no-gutters">
       <div class="cards-farms-title card-body col-12 p-4 d-md-none">
-        <img src="../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png" alt="" />
-        <h4>{{title}}</h4>
+        <img
+          src="../../../../../assets/img/Atech_ObjetoVectorial.PNG-15PEQUEÑO.png"
+          alt=""
+        />
+        <h4>{{ title }}</h4>
       </div>
       <div class="col-md-4 card-body p-4">
         <div class="row">
@@ -11,7 +17,10 @@
             Datos de la finca
           </div>
           <div class="col-12 no-margin-padding">
-            <mat-expansion-panel [disabled]="configService.screen > 768" [expanded]="true">
+            <mat-expansion-panel
+              [disabled]="configService.screen > 768"
+              [expanded]="true"
+            >
               <mat-expansion-panel-header>
                 <mat-panel-title class="header-container-card-green">
                   <h3>{{ landsService.landSelected?.name }}</h3>
@@ -61,10 +70,16 @@
             </div>
           </div>
 
-          <div class="col-12 container-card-title no-margin-padding" *ngIf="configService.screen > 600">
+          <div
+            class="col-12 container-card-title no-margin-padding"
+            *ngIf="configService.screen > 600"
+          >
             Generar histórico del lote
           </div>
-          <div class="col-12 no-margin-padding" *ngIf="configService.screen > 600">
+          <div
+            class="col-12 no-margin-padding"
+            *ngIf="configService.screen > 600"
+          >
             <mat-expansion-panel [expanded]="false">
               <mat-expansion-panel-header>
                 <mat-panel-title class="header-container-card-green">
@@ -72,15 +87,21 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="content-container-card-green">
-                <div class="line-container-card-green">
-                  <button mat-button class="subtitle-container-card-green" (click)="goHistorical()">
-                    2020 - Primera cosecha
+                <div
+                  class="line-container-card-green"
+                  *ngFor="let historyList of historicalResult"
+                >
+                  <button
+                    mat-button
+                    class="subtitle-container-card-green text-wrap"
+                    (click)="goHistorical(historyList.id)"
+                  >
+                    {{ historyList.title }}
                   </button>
                 </div>
               </div>
             </mat-expansion-panel>
           </div>
-
           <div
             class="col-12 container-card-title no-margin-padding"
             *ngIf="hasStartTrackingDate || hasEndTrackingDate"
@@ -91,10 +112,21 @@
           <div class="col-12" *ngIf="hasStartTrackingDate">
             <mat-label>Inicio segmento</mat-label>
 
-            <mat-form-field class="formOutline text-danger" appearance="outline">
-              <input [ngModel]="startTrackingDate" matInput class="text-danger"
-                [matDatepicker]="picker_end_segment_date" disabled />
-              <mat-datepicker-toggle matSuffix [for]="picker_end_segment_date"></mat-datepicker-toggle>
+            <mat-form-field
+              class="formOutline text-danger"
+              appearance="outline"
+            >
+              <input
+                [ngModel]="startTrackingDate"
+                matInput
+                class="text-danger"
+                [matDatepicker]="picker_end_segment_date"
+                disabled
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker_end_segment_date"
+              ></mat-datepicker-toggle>
               <mat-datepicker #picker_end_segment_date></mat-datepicker>
             </mat-form-field>
           </div>
@@ -102,10 +134,22 @@
           <div class="col-12" *ngIf="hasEndTrackingDate">
             <mat-label>Fin segmento</mat-label>
 
-            <mat-form-field class="formOutline text-danger" appearance="outline">
-              <input [ngModel]="endTrackingDate" matInput class="text-danger" [matDatepicker]="picker_end_segment_date"
-                disabled />
-              <mat-datepicker-toggle class="mat-datepicker-toggle-custom" matSuffix [for]="picker_end_segment_date">
+            <mat-form-field
+              class="formOutline text-danger"
+              appearance="outline"
+            >
+              <input
+                [ngModel]="endTrackingDate"
+                matInput
+                class="text-danger"
+                [matDatepicker]="picker_end_segment_date"
+                disabled
+              />
+              <mat-datepicker-toggle
+                class="mat-datepicker-toggle-custom"
+                matSuffix
+                [for]="picker_end_segment_date"
+              >
               </mat-datepicker-toggle>
               <mat-datepicker #picker_end_segment_date></mat-datepicker>
             </mat-form-field>
@@ -115,55 +159,106 @@
               Antes y después de tratamiento
             </div>
             <div class="col-12 image_before">
-              <img [src]="urlReferencePhoto" width="100%" height="100%" alt="before" />
+              <img
+                [src]="urlReferencePhoto"
+                width="100%"
+                height="100%"
+                alt="before"
+              />
             </div>
 
             <div class="col-12 mt-3 d-flex justify-content-around">
-              <button class="rounded-button" mat-raised-button color="primary" type="submit"
-                (click)="onClickBeforeReferencePhoto()">
+              <button
+                class="rounded-button"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onClickBeforeReferencePhoto()"
+              >
                 <span class="px-2">Antes</span>
                 <mat-icon>{{
                   referencePhotoSelected == "before"
-                  ? "visibility"
-                  : "visibility_off"
-                  }}</mat-icon>
+                    ? "visibility"
+                    : "visibility_off"
+                }}</mat-icon>
               </button>
 
-              <button class="rounded-button" mat-raised-button color="primary" type="submit"
-                (click)="onClickAfterReferencePhoto()">
+              <button
+                class="rounded-button"
+                mat-raised-button
+                color="primary"
+                type="submit"
+                (click)="onClickAfterReferencePhoto()"
+              >
                 <span class="px-2">Después</span>
                 <mat-icon>{{
                   referencePhotoSelected == "after"
-                  ? "visibility"
-                  : "visibility_off"
-                  }}</mat-icon>
+                    ? "visibility"
+                    : "visibility_off"
+                }}</mat-icon>
               </button>
             </div>
           </ng-container>
         </div>
       </div>
-      <div [ngClass]="hasSponsorSpace ? 'col-md-5' : 'col-md-8'" class="col-md-5 card-body p-4">
+      <div
+        [ngClass]="hasSponsorSpace ? 'col-md-5' : 'col-md-8'"
+        class="col-md-5 card-body p-4"
+      >
         <router-outlet #routerOutlet="outlet"></router-outlet>
       </div>
-      <div *ngIf="hasSponsorSpace" class="col-12 pl-md-1 pr-md-0 mh-100 col-md-3">
+      <div
+        *ngIf="hasSponsorSpace"
+        class="col-12 pl-md-1 pr-md-0 mh-100 col-md-3"
+      >
         <div class="sponsors p-4">Menos carga química</div>
       </div>
     </div>
   </div>
   <div class="buttons row">
     <div class="buttons-left">
-      <button class="transparent-blackground white-border rounded-button col-auto" mat-raised-button
-        (click)="onBack()" color="primary" type="button">
-        <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>{{ textBack }}
+      <button
+        class="transparent-blackground white-border rounded-button col-auto"
+        mat-raised-button
+        (click)="onBack()"
+        color="primary"
+        type="button"
+      >
+        <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon
+        >{{ textBack }}
       </button>
-      <input #files class="d-none" type="file" multiple accept="image/*" (change)="onChangeFiles(files.files)" />
-      <button #buttonFiles (click)="files.value=null; files.click()" *ngIf="hasSave"
-        class="no-outline rounded-button col-auto" mat-raised-button color="primary" type="button">
-        <span>+ 3 Fotografías
-          <img class="pl-1 img-as-icon" src="../../../../../assets/svg/Atech_ObjetoVectorial-18.svg" /></span>
+      <input
+        #files
+        class="d-none"
+        type="file"
+        multiple
+        accept="image/*"
+        (change)="onChangeFiles(files.files)"
+      />
+      <button
+        #buttonFiles
+        (click)="files.value = null; files.click()"
+        *ngIf="hasSave"
+        class="no-outline rounded-button col-auto"
+        mat-raised-button
+        color="primary"
+        type="button"
+      >
+        <span
+          >+ 3 Fotografías
+          <img
+            class="pl-1 img-as-icon"
+            src="../../../../../assets/svg/Atech_ObjetoVectorial-18.svg"
+        /></span>
       </button>
-      <button *ngIf="hasSave" class="no-outline rounded-button col-auto" mat-raised-button color="primary"
-        type="submit" (click)="onSave()">
+      <button
+        *ngIf="hasSave"
+        class="no-outline rounded-button col-auto"
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="onSave()"
+      >
         <span class="px-1 px-md-5">Guardar cambios</span>
         <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
       </button>
