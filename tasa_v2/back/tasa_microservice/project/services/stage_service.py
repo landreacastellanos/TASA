@@ -103,7 +103,8 @@ class StageServices:
                     "sowing_date": "",
                     "type_sowing": "",
                     "variety": "",
-                    "enabled": edit
+                    "enabled": edit,
+                    "images": None
                 }
             )
         else:
@@ -111,6 +112,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = 'real_date' in json_data and not json_data['real_date']
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
