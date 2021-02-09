@@ -18,6 +18,9 @@ export interface CalendarChildren {
   onClickBeforeReferencePhoto?: () => any;
   onClickAfterReferencePhoto?: () => any;
 
+  /** delete pictures */
+  deletePicture?: (picture?: string) => any;
+
   /** date range segment */
 
   hasEndTrackingDate?: boolean;

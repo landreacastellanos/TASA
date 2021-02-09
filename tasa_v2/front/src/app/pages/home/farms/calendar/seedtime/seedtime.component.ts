@@ -158,6 +158,13 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
       });
   }
 
+  deletePicture(picture) {
+    this.configurationService.setLoadingPage(true);
+    this.pictures = this.pictures.filter(data => data !== picture);
+    this.files = null;
+    this.onSave();
+  }
+
   onSave() {
     this.submitted = true;
     // is needed because is no trigger by submit
@@ -185,7 +192,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
           land_id: parseInt(this.landService.idLand),
           ...values,
         };
-        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;
+        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;        
         return this.calendarService.setStageOne(dataRequest);
       })
       .then(

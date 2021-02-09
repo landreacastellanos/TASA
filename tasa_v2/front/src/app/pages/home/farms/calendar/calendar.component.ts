@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { fi } from 'date-fns/locale';
 import { Historical } from 'src/app/shared/models/Historic';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { HistoricalService } from '../historical/historical.service';
@@ -54,6 +53,13 @@ export class CalendarComponent implements OnInit {
     // tslint:disable-next-line: no-unused-expression
     (this.outlet?.component as CalendarChildren)?.onSave &&
       (this.outlet?.component as CalendarChildren).onSave();
+  }
+
+  deletePicture(picture : string) {
+    console.debug('CalendarComponent:delete');
+    // tslint:disable-next-line: no-unused-expression
+    (this.outlet?.component as CalendarChildren)?.deletePicture &&
+      (this.outlet?.component as CalendarChildren).deletePicture(picture);
   }
 
   onChangeFiles(files: FileList, picture?: string) {

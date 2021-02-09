@@ -363,7 +363,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           stage_number: this.segmentId,
           ...values,
         };
-        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;
+        dataRequest.images = filesSaved ? filesSaved : this.pictures.length > 0 ? this.calendarService.returnPicture(this.pictures) as string[] : null;
         return this.calendarService.setStage(dataRequest);
       })
       .then(
@@ -386,7 +386,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        listPictures= listPictures.map(element => {
+        listPictures = listPictures.map(element => {
           element = element === picture ? filesSaved[0] : element;
           return element
         });
@@ -397,6 +397,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
+  }
+
+  deletePicture(picture) {
+    this.configurationService.setLoadingPage(true);
+    this.pictures = this.pictures.filter(data => data !== picture);
+    this.files = null;
+    this.onSave();
   }
 
   onBack() {

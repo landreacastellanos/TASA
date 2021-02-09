@@ -209,4 +209,11 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
         this.configurationService.setLoadingPage(false);
       });
   }
+
+  deletePicture(picture) {
+    this.configurationService.setLoadingPage(true);
+    this.pictures = this.pictures.filter(data => data !== picture);
+    this.files = null;
+    this.onSave();
+  }
 }
