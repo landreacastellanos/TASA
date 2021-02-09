@@ -121,7 +121,8 @@ class StageServices:
         if stage_number == Stage.stage_four:
             return self.get_stage_four(land_id, stage_number.value)    
         else:
-            return self.get_stage_general(land_id, stage_number.value)  
+            return self.get_stage_general(land_id, stage_number.value)
+  
     def set_stage(self, data):
         stage_number = Stage(data['stage_number'])            
         return self.set_stage_general(data, stage_number)
@@ -156,10 +157,12 @@ class StageServices:
            complete_stage = True
            stage_db["end_date"] = datetime.now()
 
-        if("application_date" in data and data['application_date']):
+        if("application_date" in data and len(data['application_date']) > 0):
             stage_db["application_date"] = data['application_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
+        else:
+            data.pop('application_date')    
         
         data.pop("land_id")
         data.pop("stage_number")
@@ -248,8 +251,9 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'application_date' not in json_data or (stage_number == Stage.stage_fifteen.value and 
-            'amount_quintals' in json_data)
+            edit = (stage_number == Stage.stage_fifteen.value and 
+            'amount_quintals' not in json_data) or ('application_date' not in json_data and 
+            stage_number != Stage.stage_fifteen.value)
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
