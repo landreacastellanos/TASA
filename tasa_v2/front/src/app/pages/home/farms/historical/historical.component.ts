@@ -151,15 +151,4 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
     });
   }
 }
-// doc.addHTML(
-//   document.getElementById('toHTML'),
-//   10,
-//   10,
-//   {
-//     pagesplit: true,
-//     margin: { top: 10, right: 10, bottom: 10, left: 10, useFor: 'page' },
-//   },
-//   function () {
-//     doc.save('Report.pdf');
-//   }
-// );
+
