@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import { report } from 'process';
@@ -12,6 +13,7 @@ import { HistoricalDetail } from 'src/app/shared/models/Historic';
 import { ConfigurationService } from '../../../../shared/services/configuration.service';
 import { LandsService } from '../calendar/lands.service';
 import { HistoricalService } from './historical.service';
+import moment, { Moment } from 'moment';
 
 @Component({
   selector: 'app-historical',
@@ -25,18 +27,31 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
   formatDates = 'd-MMM-y';
 
   public segmentsList: string[] = [
-    '1. Fecha de siembra',
-    '2. Quema para siembra (5 a 8 días antes de la siembra)',
-    '3. Tratamiento de semillas (0 a 3 días antes de siembra)',
-    '4. Pre emergencia total (0 a 3 días después de siembra)',
-    '5. Post emergencia temprana (12 a 15 días antes de siembra)',
-    '6. Pre emergencia tardía (18 a 22 días de días después de siembra)',
-    '7. Control de enfermedades preventiva o inmediata (25 a 28 días después de siembra)',
-    '8. Control de enfermedades preventiva (40 a 45 días después de siembra)',
-    '10. Control de enfermedades embuchamiento (65 a 70 días después de siembra)',
-    '14. Protección de espiga (85 a 90 días después de siembra)',
-    '15. Fecha de cosecha (120 días después de siembra)',
+    '1. Fecha de Siembra',
+    '2. Quema para la siembra (5 a 8 días antes de la siembra)',
+    '3. Tratamiento de semillas (0 a 3 días antes de la siembra)',
+    '4. Premergencia total (0 a 3 días después de la siembra)',
+    '5. Posemergencia temprana (12 a 15 días después de la siembra)',
+    '6. Fertilización de siembra # 1 (13 a 16 días después de la siembra)',
+    '7. Posemergencia tardía (20 a 25 días después de la siembra)',
+    '8. Fertilización # 2 (22 a 25 días después de la siembra)',
+    '9. Control de enfermedades (Intermedia 25 a 28 días después de la siembra)',
+    '10. Fertilización # 3 (33 a 38 días después de la siembra)',
+    '11. Control de enfermedades (Preventiva 40 a 45 días después de la siembra)',
+    '12. Fertilización # 4 (48 a 50 días después de la siembra)',
+    '13. Control de enfermedades (Embuchamiento 65 a 70 días después de la siembra)',
+    '14. Protección de espiga (85 - 90 días después de la siembra)',
+    '15. Fecha de cosecha (110 a 120 días después de la siembra)',
   ];
+
+  displayedColumnsProducts = [
+    'commercial_name',
+    'ing_active',
+    'provider',
+    'dose_by_ha',
+    'total',
+  ];
+  hectares: number;
 
   constructor(
     public configService: ConfigurationService,
@@ -65,9 +80,23 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
         this.landsService.idProperty,
         this.landsService.idLand
       ),
-    ]).finally(() => {
-      this.configService.setLoadingPage(false);
-    });
+    ])
+      .then(() => {
+        this.hectares = this.landsService.lands[
+          this.landsService.landsSelectedIds
+        ]
+          ? this.landsService.lands[this.landsService.landsSelectedIds].batchs
+              .hectares_number
+          : 0;
+      })
+      .finally(() => {
+        this.configService.setLoadingPage(false);
+        setTimeout(() => {
+          console.log('PDF');
+
+          this.downloadPDF();
+        }, 300);
+      });
   }
 
   ngAfterViewInit() {
@@ -80,7 +109,11 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
       .then((report) => {
         // inmutable functional based
         report.segments = report.segments.map((item, index) => {
-          return { ...item, title: this.segmentsList[index] };
+          return {
+            ...item,
+            title: this.segmentsList[index],
+            productsDataSource: new MatTableDataSource(item.products),
+          };
         });
         return report;
       })
@@ -111,10 +144,22 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
         return true;
       },
     };
-    pdf.html(source, {
-      callback: function (pdf) {
-        pdf.save('Prueba pdf.pdf');
+    pdf.html(source, {margin: [200,200,200,200],
+      callback: (pdf) => {
+        pdf.save(`${this.report.title}.pdf`);
       },
     });
   }
 }
+// doc.addHTML(
+//   document.getElementById('toHTML'),
+//   10,
+//   10,
+//   {
+//     pagesplit: true,
+//     margin: { top: 10, right: 10, bottom: 10, left: 10, useFor: 'page' },
+//   },
+//   function () {
+//     doc.save('Report.pdf');
+//   }
+// );
