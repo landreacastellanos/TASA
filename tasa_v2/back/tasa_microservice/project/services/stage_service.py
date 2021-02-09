@@ -248,7 +248,8 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'application_date' not in json_data or 'amount_quintals' not in json_data
+            edit = 'application_date' not in json_data or (stage_number == Stage.stage_fifteen.value and 
+            'amount_quintals' in json_data)
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
@@ -309,7 +310,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'application_date' in json_data and not json_data['application_date']
+            edit = 'application_date' not in json_data
             json_data['enabled'] = edit
             results['data'].append(json_data)
 
@@ -374,7 +375,7 @@ class StageServices:
             file.save(os.path.join(manage.uploads_dir, new_file))
 
         if 'image_3' in files:
-            file = files['image_1']
+            file = files['image_3']
             new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
@@ -525,13 +526,14 @@ class StageServices:
             self.__repository_property_stage.insert(stage_db)
         else:
             property_stage = property_stage[0]['id']
-            self.__repository_property_stage.update(property_stage,stage_db)           
+            self.__repository_property_stage.update(property_stage,stage_db)      
 
-        date = GeneralsUtils.try_parse_date_time(data['sowing_date'])
-        self.set_calendar_planning(land_id, property_field[0]['seller'], date)
-        self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
-        self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
-        self.set_calendar_planning(land_id, property_field[0]['manager'], date)
+        if("sowing_date" in data and len(data['sowing_date'].strip()) > 0 ):
+            date = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+            self.set_calendar_planning(land_id, property_field[0]['seller'], date)
+            self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
+            self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
+            self.set_calendar_planning(land_id, property_field[0]['manager'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results

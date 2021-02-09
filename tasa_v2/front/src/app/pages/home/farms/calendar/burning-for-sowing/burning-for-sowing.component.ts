@@ -326,6 +326,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       productsDataSourceAdd: this.dataSourceProductsAdd,
     });
     const values = this.burningForSowingForm.value;
+    values.application_date = !!values.application_date ? values.application_date : undefined;
     values.products = this.selection.selected.map((product) => {
       product.dose_by_ha = parseFloat(`${product.dose_by_ha}`);
       return product;
