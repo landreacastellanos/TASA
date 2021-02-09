@@ -117,7 +117,8 @@ class StageServices:
         if stage_number == Stage.stage_four:
             return self.get_stage_four(land_id, stage_number.value)    
         else:
-            return self.get_stage_general(land_id, stage_number.value)  
+            return self.get_stage_general(land_id, stage_number.value)
+  
     def set_stage(self, data):
         stage_number = Stage(data['stage_number'])            
         return self.set_stage_general(data, stage_number)
