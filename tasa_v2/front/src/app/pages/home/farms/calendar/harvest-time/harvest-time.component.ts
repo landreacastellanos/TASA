@@ -22,6 +22,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
   segmentId: string;
   endTrackingDate: Moment;
   startTrackingDate: Moment;
+  pictures= [];
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -84,6 +85,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     end_traking_date = '',
     start_traking_date = '',
     enabled = true,
+    images = []
   } = {}) {
     setTimeout(() => {
       this.mode = enabled ? 'edit' : 'view';
@@ -93,6 +95,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
         this.harvestTimeForm,
         this.mode === 'view'
       );
+      this.pictures = images? images : [];
     }, 0);
     this.harvestTimeForm.get('amount_quintals_ha').disable();
     this.harvestTimeForm.patchValue({
@@ -117,8 +120,11 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     return this.harvestTimeForm.controls;
   }
 
-  onChangeFiles(files: FileList) {
+  onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
+    if (this.pictures.length > 0) {
+      this.editPicture(picture, listPictures)
+    }
   }
 
   onSave() {
@@ -152,11 +158,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
           land_id: parseInt(this.landsService.idLand),
           ...values,
         };
-        if (filesSaved) {
-          dataRequest.images = filesSaved;
-        }
-        console.log({ dataRequest });
-
+        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;
         return this.calendarService.setStageHarvest(dataRequest);
       })
       .then(
@@ -187,5 +189,24 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
       this.landsService.idLand,
       'list',
     ]);
+  }
+
+  editPicture(picture, listPictures) {
+    listPictures = this.calendarService.returnPicture(listPictures);
+    picture = this.calendarService.returnPicture(picture);
+    Promise.resolve(this.files)
+      .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
+      .then((filesSaved) => {
+        listPictures= listPictures.map(element => {
+          element = element === picture ? filesSaved[0] : element;
+          return element
+        });
+        this.pictures = this.calendarService.setPictureFile(listPictures);
+        this.files = null;
+        return this.onSave();
+      })
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 }

@@ -26,6 +26,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   public mode: 'edit' | 'view' | 'create' = 'view';
   submitted: boolean;
   files: FileList;
+  pictures = [];
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -88,12 +89,14 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     sowing_date = '',
     real_date = '',
     enabled = false,
+    images = []
   } = {}) {
     this.mode = enabled ? 'edit' : 'view';
     this.configurationService.disableForm(
       this.seedTimeForm,
       this.mode === 'view'
     );
+    this.pictures = images? images : [];
     this.seedTimeForm.patchValue({
       type_sowing,
       variety,
@@ -129,8 +132,30 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     return this.seedTimeForm.controls;
   }
 
-  onChangeFiles(files: FileList) {
+  onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
+    if (this.pictures.length > 0) {
+      this.editPicture(picture, listPictures)
+    }
+  }
+
+  editPicture(picture, listPictures) {
+    listPictures = this.calendarService.returnPicture(listPictures);
+    picture = this.calendarService.returnPicture(picture);
+    Promise.resolve(this.files)
+      .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
+      .then((filesSaved) => {
+        listPictures= listPictures.map(element => {
+          element = element === picture ? filesSaved[0] : element;
+          return element
+        });
+        this.pictures = this.calendarService.setPictureFile(listPictures);
+        this.files = null;
+        return this.onSave();
+      })
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
   }
 
   onSave() {
@@ -160,9 +185,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
           land_id: parseInt(this.landService.idLand),
           ...values,
         };
-        if (filesSaved) {
-          dataRequest.images = filesSaved;
-        }
+        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;
         return this.calendarService.setStageOne(dataRequest);
       })
       .then(

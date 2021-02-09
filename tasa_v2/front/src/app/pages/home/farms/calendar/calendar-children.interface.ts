@@ -10,13 +10,14 @@ export interface CalendarChildren {
   onBack: () => any;
   /** load 3 photos */
   hasFilesButton?: boolean;
-  onChangeFiles?: (files: FileList) => any;
+  onChangeFiles?: (files: FileList, picture?: string, listPictures?: string[]) => any;
   /** referencePhoto */
   hasReferencePhoto?: boolean;
   urlReferencePhoto?: string;
   referencePhotoSelected?: 'before' | 'after';
   onClickBeforeReferencePhoto?: () => any;
   onClickAfterReferencePhoto?: () => any;
+
   /** date range segment */
 
   hasEndTrackingDate?: boolean;
@@ -28,4 +29,7 @@ export interface CalendarChildren {
   /** options for sponsors image */
   hasSponsorSpace?:boolean;
   textSponsorImage?:string;
+
+  /** view pictures */
+  pictures?: string[];
 }

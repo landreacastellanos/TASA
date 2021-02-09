@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { fi } from 'date-fns/locale';
 import { Historical } from 'src/app/shared/models/Historic';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { HistoricalService } from '../historical/historical.service';
@@ -12,6 +14,7 @@ import { LandsService } from './lands.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   historicalResult: Historical[] = [];
 
@@ -21,7 +24,7 @@ export class CalendarComponent implements OnInit {
     public landsService: LandsService,
     public configService: ConfigurationService,
     public historicalService: HistoricalService,
-    
+    private modal: NgbModal,
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -53,11 +56,17 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onSave();
   }
 
-  onChangeFiles(files: FileList) {
+  onChangeFiles(files: FileList, picture?: string) {
     console.debug('CalendarComponent:onChangeFiles', { files });
     // tslint:disable-next-line: no-unused-expression
-    (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
+    if(picture){
+      (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
+      (this.outlet?.component as CalendarChildren).onChangeFiles(files, picture, this.pictures);
+    } else{
+      (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
       (this.outlet?.component as CalendarChildren).onChangeFiles(files);
+    }
+    
   }
 
   goHistorical(id: number){
@@ -68,9 +77,17 @@ export class CalendarComponent implements OnInit {
     this.router.navigate(['/chat/', this.landsService.idProperty, this.landsService.idLand])
   }
 
+  openPictures(){
+    this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
   get hasSave() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasSave;
+  }
+
+  get pictures(){
+    return (this.outlet?.component as CalendarChildren)?.pictures;
   }
 
   get textBack() {
