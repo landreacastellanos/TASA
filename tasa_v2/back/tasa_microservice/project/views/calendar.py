@@ -13,4 +13,4 @@ def get_calendar():
         result = exception.args[0]
         results['details'].append(result)
         return results
-    return result
+    return results
