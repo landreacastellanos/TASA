@@ -375,7 +375,7 @@ class StageServices:
             file.save(os.path.join(manage.uploads_dir, new_file))
 
         if 'image_3' in files:
-            file = files['image_1']
+            file = files['image_3']
             new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
