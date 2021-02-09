@@ -1411,10 +1411,10 @@
     caledar_events:
       type: "object"
       properties:
-        user_id:
+        id_user:
           type: "integer"
           example: 1
-        land_id:
+        id_land:
           type: "integer"
           example: 1
         land_name:
@@ -1426,6 +1426,12 @@
         property_name:
           type: "string"
           example: "finca 1"
-        date_event:
+        stage_name:
+          type: "string"
+          example: "pre-emergencia"
+        stage_number:
+          type: "integer"
+          example: "123"
+        date:
           type: "string"
           example: "01/01/01"
