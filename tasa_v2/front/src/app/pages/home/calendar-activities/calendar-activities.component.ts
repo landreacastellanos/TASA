@@ -19,6 +19,7 @@ import {
 } from 'date-fns';
 import { MatDialog } from '@angular/material/dialog';
 import { ListEventsComponent } from './list-events/list-events.component';
+import { CalendarActivitiesService } from './calendar-activities.service';
 
 @Component({
   selector: 'app-calendar-activities',
@@ -31,10 +32,21 @@ export class CalendarActivitiesComponent implements OnInit {
   // weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   view: CalendarView = CalendarView.Month;
   viewDate: moment.Moment = moment();
-  events: CalendarEvent<Activity>[] = getRandomListDate();
-  constructor(public dialog: MatDialog) {}
+  events: CalendarEvent<Activity>[];
+  activities: Activity[];
 
-  ngOnInit(): void {}
+
+  constructor(
+    public dialog: MatDialog,
+    public calendarActivitiesService: CalendarActivitiesService
+    ) {}
+
+  ngOnInit(): void {
+    this.calendarActivitiesService.getActivities().then((activities)=> {
+      this.activities= activities
+      this.events= this.calendarActivitiesService.getDate(this.activities);
+    })
+  }
 
   onDayClicked(event: {
     day: CalendarMonthViewDay<Activity>;
