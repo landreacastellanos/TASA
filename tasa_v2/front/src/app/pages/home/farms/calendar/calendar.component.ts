@@ -2,7 +2,9 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Historical } from 'src/app/shared/models/Historic';
+import { RolAdministrador, RolCapataz, RolDuenoDeLaFinca, RolSocioAdicional, RolVendedorTASA } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
 import { HistoricalService } from '../historical/historical.service';
 import { CalendarChildren } from './calendar-children.interface';
 import { LandsService } from './lands.service';
@@ -16,6 +18,7 @@ export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   historicalResult: Historical[] = [];
+  chat=false;
 
   constructor(
     private router: Router,
@@ -24,6 +27,7 @@ export class CalendarComponent implements OnInit {
     public configService: ConfigurationService,
     public historicalService: HistoricalService,
     private modal: NgbModal,
+    private storageService: StorageService
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -33,14 +37,16 @@ export class CalendarComponent implements OnInit {
       this.landsService.idProperty,
       this.landsService.idLand
     );
-    this.historicalService.getListHistorical(this.landsService.idLand).then((resultPromise)=>{
-     this.historicalResult = resultPromise
+    this.historicalService.getListHistorical(this.landsService.idLand).then((resultPromise) => {
+      this.historicalResult = resultPromise
     })
   }
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.chat=this.viewChat();
+  }
 
   onBack() {
     // tslint:disable-next-line: no-unused-expression
@@ -55,7 +61,7 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onSave();
   }
 
-  deletePicture(picture : string) {
+  deletePicture(picture: string) {
     console.debug('CalendarComponent:delete');
     // tslint:disable-next-line: no-unused-expression
     (this.outlet?.component as CalendarChildren)?.deletePicture &&
@@ -65,25 +71,25 @@ export class CalendarComponent implements OnInit {
   onChangeFiles(files: FileList, picture?: string) {
     console.debug('CalendarComponent:onChangeFiles', { files });
     // tslint:disable-next-line: no-unused-expression
-    if(picture){
+    if (picture) {
       (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
-      (this.outlet?.component as CalendarChildren).onChangeFiles(files, picture, this.pictures);
-    } else{
+        (this.outlet?.component as CalendarChildren).onChangeFiles(files, picture, this.pictures);
+    } else {
       (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
-      (this.outlet?.component as CalendarChildren).onChangeFiles(files);
+        (this.outlet?.component as CalendarChildren).onChangeFiles(files);
     }
-    
+
   }
 
-  goHistorical(id: number){
+  goHistorical(id: number) {
     this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand, id])
   }
 
-  goChat(){
+  goChat() {
     this.router.navigate(['/chat/', this.landsService.idProperty, this.landsService.idLand])
   }
 
-  openPictures(){
+  openPictures() {
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
@@ -92,7 +98,7 @@ export class CalendarComponent implements OnInit {
     return (this.outlet?.component as CalendarChildren)?.hasSave;
   }
 
-  get pictures(){
+  get pictures() {
     return (this.outlet?.component as CalendarChildren)?.pictures;
   }
 
@@ -159,5 +165,17 @@ export class CalendarComponent implements OnInit {
   get title() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.title;
+  }
+
+  viewChat() {
+    let role = this.storageService.getValue('user')?.roleId;
+    const roles: Array<number> = [
+      new RolAdministrador().key,
+      new RolVendedorTASA().key,
+      new RolCapataz().key,
+      new RolDuenoDeLaFinca().key,
+      new RolSocioAdicional().key
+    ];
+    return roles.includes(role);
   }
 }

@@ -10,8 +10,8 @@ import { Activity } from '../calendar-activities.model';
   styleUrls: ['./list-events.component.scss'],
 })
 export class ListEventsComponent implements OnInit {
-  dataSource: MatTableDataSource<{ land: string; title: string; time: string }>;
-  displayedColumns: string[] = ['time', 'land', 'title'];
+  dataSource: MatTableDataSource<{ land: string; title: string}>;
+  displayedColumns: string[] = ['land', 'title'];
   title: string;
   constructor(
     public dialogRef: MatDialogRef<ListEventsComponent>,
@@ -23,7 +23,6 @@ export class ListEventsComponent implements OnInit {
       .map((activity) => ({
         land: `${activity.property_name} / ${activity.land_name}`,
         title: activity.stage_name,
-        time: moment(activity.date).format('LT'),
       }));
     this.dataSource = new MatTableDataSource(listActivities);
   }

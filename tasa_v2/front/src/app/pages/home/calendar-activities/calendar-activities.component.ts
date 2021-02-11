@@ -5,7 +5,7 @@ import {
   CalendarView,
   DAYS_OF_WEEK,
 } from 'angular-calendar';
-import { Activity, getRandomListDate } from './calendar-activities.model';
+import { Activity } from './calendar-activities.model';
 import moment, { Moment } from 'moment';
 import {
   startOfDay,
