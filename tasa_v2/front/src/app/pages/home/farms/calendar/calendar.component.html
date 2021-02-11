@@ -73,7 +73,7 @@
               </mat-expansion-panel-header>
               <div class="content-container-card-green">
                 <div class="line-container-card-green" *ngFor="let historyList of historicalResult">
-                  <button mat-button class="subtitle-container-card-green" (click)="goHistorical(historyList.id)">
+                  <button mat-button class="subtitle-container-card-green text-wrap" (click)="goHistorical(historyList.id)">
                     {{ historyList.title }}
                   </button>
                 </div>
@@ -168,7 +168,7 @@
         <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
       </button>
     </div>
-    <div class="buttons-right">
+    <div class="buttons-right" *ngIf="chat">
       <button mat-mini-fab color="primary" type="button" (click)="goChat()">
         <mat-icon class="size-icon-check">chat</mat-icon>
       </button>

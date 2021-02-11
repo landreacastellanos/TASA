@@ -9,7 +9,7 @@
         <div class="header-chat">
             {{user.name}}
         </div>
-        <div class="content-chat">
+        <div class="content-chat" id="chat">
             <div class="scroll-chat col-12">
                 <div *ngFor="let participant of conversation"
                     [ngClass]="{ 'align-right': participant.id_author  == user.id}">
