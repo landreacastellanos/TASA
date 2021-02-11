@@ -6,17 +6,7 @@ import {
   DAYS_OF_WEEK,
 } from 'angular-calendar';
 import { Activity } from './calendar-activities.model';
-import moment, { Moment } from 'moment';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { ListEventsComponent } from './list-events/list-events.component';
 import { CalendarActivitiesService } from './calendar-activities.service';
