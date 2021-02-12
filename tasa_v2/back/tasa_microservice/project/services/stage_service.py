@@ -248,7 +248,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = (stage_number == Stage.stage_fifteen.value and 
             'amount_quintals' not in json_data) or ('application_date' not in json_data and 
-            stage_number != Stage.stage_fifteen.value)
+            stage_number != Stage.stage_fifteen.value) and (edit)
             json_data['enabled'] = edit
             results['data'].append(json_data)
 
@@ -308,7 +308,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'application_date' not in json_data
+            edit = edit and 'application_date' not in json_data
             json_data['enabled'] = edit
             results['data'].append(json_data)
 
