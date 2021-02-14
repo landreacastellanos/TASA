@@ -305,6 +305,20 @@ button.white-border {
   }
 }
 
+.cal-month-view .cal-day-cell.cal-today{
+  border: 2px solid red !important;
+}
+
+.cal-month-view .cal-day-cell.cal-in-month.cal-has-events{
+  small, .small {
+    display: none;
+  }
+
+  .cal-event-custom{
+    display: block;
+  }
+}
+
 @media (max-width: 576px) {
   .line-container-card-green {
     justify-content: space-between;

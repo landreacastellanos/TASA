@@ -153,12 +153,12 @@
         <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>{{ textBack }}
       </button>
       <input #files class="d-none" type="file" multiple accept="image/*" (change)="onChangeFiles(files.files)" />
-      <button #buttonFiles (click)="files.value = null; files.click()" *ngIf="hasSave" class="no-outline"
+      <button #buttonFiles (click)="files.value = null; files.click()" *ngIf="hasSave && pictures.length < 3" class="no-outline"
         mat-raised-button color="primary" type="button">
         <span>+ 3 Fotografías
           <img class="pl-1 img-as-icon" src="../../../../../assets/svg/Atech_ObjetoVectorial-18.svg" /></span>
       </button>
-      <button *ngIf="pictures && pictures.length > 0" class="no-outline" mat-raised-button color="primary" type="button"
+      <button *ngIf="pictures && pictures.length" class="no-outline" mat-raised-button color="primary" type="button"
         (click)="openPictures()">
         <span class="px-1 px-md-5">Ver fotos</span>
         <mat-icon class="size-icon-check">photo</mat-icon>

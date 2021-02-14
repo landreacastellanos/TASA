@@ -11,8 +11,14 @@
       </ng-container>
 
       <!-- land column -->
+      <ng-container matColumnDef="property">
+        <th mat-header-cell class="property" *matHeaderCellDef>Finca</th>
+        <td mat-cell class="property" *matCellDef="let row">{{ row.property }}</td>
+      </ng-container>
+
+      <!-- property column -->
       <ng-container matColumnDef="land">
-        <th mat-header-cell class="land" *matHeaderCellDef>Finca / Lote</th>
+        <th mat-header-cell class="land" *matHeaderCellDef>Lote</th>
         <td mat-cell class="land" *matCellDef="let row">{{ row.land }}</td>
       </ng-container>
 
