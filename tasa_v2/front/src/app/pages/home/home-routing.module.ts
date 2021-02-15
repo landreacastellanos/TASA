@@ -23,10 +23,6 @@ const routes: Routes = [
         data: {
           roles: [
             new RolAdministrador().key,
-            new RolVendedorTASA().key,
-            new RolCapataz().key,
-            new RolDuenoDeLaFinca().key,
-            new RolSocioAdicional().key,
           ]
         },
       },
@@ -45,7 +41,15 @@ const routes: Routes = [
         loadChildren: () =>
           import('./chat/chat.module').then((m) => m.ChatModule),
         canActivate: [RoleByIdGuard],
-        data: { roles: [new RolAdministrador().key] },
+        data: {
+          roles: [
+            new RolAdministrador().key,
+            new RolVendedorTASA().key,
+            new RolCapataz().key,
+            new RolDuenoDeLaFinca().key,
+            new RolSocioAdicional().key,
+          ]
+        },
       },
       {
         path: 'calendar-activities',

@@ -192,7 +192,8 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
           land_id: parseInt(this.landService.idLand),
           ...values,
         };
-        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;        
+        dataRequest.images =
+          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null;  
         return this.calendarService.setStageOne(dataRequest);
       })
       .then(
@@ -210,6 +211,14 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
+  }
+
+  addNewFiles(filesSaved: string[]) {
+    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    if (filesSaved) {
+      oldPictures.push(...filesSaved)
+    }
+    return oldPictures;
   }
 
   public disabledForm() {

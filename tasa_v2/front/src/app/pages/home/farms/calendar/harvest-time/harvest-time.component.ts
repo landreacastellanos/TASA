@@ -158,8 +158,9 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
           land_id: parseInt(this.landsService.idLand),
           ...values,
         };
-        dataRequest.images = filesSaved? filesSaved : this.pictures.length > 0? this.calendarService.returnPicture(this.pictures) as string[]: null;
-        return this.calendarService.setStageHarvest(dataRequest);
+        dataRequest.images =
+          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null
+        return this.calendarService.setStage(dataRequest);
       })
       .then(
         (message) =>
@@ -180,6 +181,14 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
+  }
+
+  addNewFiles(filesSaved: string[]) {
+    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    if (filesSaved) {
+      oldPictures.push(...filesSaved)
+    }
+    return oldPictures;
   }
 
   onBack() {

@@ -11,7 +11,7 @@ import { Activity } from '../calendar-activities.model';
 })
 export class ListEventsComponent implements OnInit {
   dataSource: MatTableDataSource<{ land: string; title: string}>;
-  displayedColumns: string[] = ['land', 'title'];
+  displayedColumns: string[] = ['property', 'land', 'title'];
   title: string;
   constructor(
     public dialogRef: MatDialogRef<ListEventsComponent>,
@@ -21,7 +21,8 @@ export class ListEventsComponent implements OnInit {
     const listActivities = data.events
       .map((event) => event.meta as Activity)
       .map((activity) => ({
-        land: `${activity.property_name} / ${activity.land_name}`,
+        property: `${activity.property_name}`,
+        land: `${activity.land_name}`,
         title: activity.stage_name,
       }));
     this.dataSource = new MatTableDataSource(listActivities);
