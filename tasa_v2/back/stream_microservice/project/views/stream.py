@@ -10,9 +10,9 @@ def get_notification():
         return result
     return result
 
-def delete_notification(id = None ):
+def delete_notification(type,id = None ):
     try:
-        result = NotificationService().delete_notification(id)
+        result = NotificationService().delete_notification(type, id)
     except Exception as exception:
         result = exception.args[0]
         return result
