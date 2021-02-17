@@ -99,6 +99,10 @@
             name: "Token"
           - in: "query"
             type: "integer"
+            name: "type"
+            required: false 
+          - in: "query"
+            type: "integer"
             name: "id"
             required: false  
         responses:
