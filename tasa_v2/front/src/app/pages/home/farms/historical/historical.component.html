@@ -18,42 +18,32 @@
   <div class="box-historical m-5">
     <div class="title-box-historical">Datos básicos de la finca:</div>
     <div class="info-box-historical row">
-      <div class="subtitle-box-historical col-3">
+      <div class="subtitle-box-historical col-4">
         Nombre: <span>{{ landsService.landSelected.name }}</span>
       </div>
-      <div class="subtitle-box-historical col-3">
+      <div class="subtitle-box-historical col-4">
         Razón social: <span>{{ landsService.landSelected.business_name }}</span>
       </div>
-      <div class="subtitle-box-historical col-3">
+      <div class="subtitle-box-historical col-4">
         Teléfono: <span>{{ landsService.landSelected.phone }}</span>
       </div>
-      <div class="subtitle-box-historical col-3">
-        Dirección Web: <span>{{ landsService.landSelected.web_page }}</span>
+      <div class="subtitle-box-historical col-4">
+        Sistema de siembra finca:
+        <span>{{ sowing_system_text }}</span>
       </div>
-      <div class="subtitle-box-historical col-12">
+      <div class="subtitle-box-historical col-4">
         Dirección: <span>{{ landsService.landSelected.direction }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Dirección Web: <span>{{ landsService.landSelected.web_page }}</span>
       </div>
       <div class="subtitle-box-historical col-4">
         Total hectáreas finca:
         <span>{{ landsService.landSelected.hectares_total }}</span>
       </div>
-      <div class="subtitle-box-historical col-4">
-        Sistema de siembra finca:
-        <span>{{ landsService.landSelected.sowing_system }}</span>
-      </div>
-      <div class="subtitle-box-historical col-4">
-        Fecha de siembra:
-        <span>{{
-          report.segments[0].real_date | date: formatDates
-        }}</span>
-      </div>
-      <div class="subtitle-box-historical col-4 offset-8">
-        Fecha de Cosecha:
-        <span>{{
-          report.segments[14].end_traking_date | date: formatDates
-        }}</span>
-      </div>
-      <hr>
+
+      <hr />
+
       <div class="subtitle-box-historical col-4">
         Nombre del lote:
         <span>{{ landsService.landSelected.batchs.name }}</span>
@@ -73,6 +63,21 @@
       </div>
       <div class="subtitle-box-historical col-4">
         Vendedor TASA: <span>{{ report.seller.name }}</span>
+      </div>
+
+      <hr />
+
+      <div class="row col-12 justify-content-around">
+        <div class="subtitle-box-historical">
+          Fecha de siembra:
+          <span>{{ report.segments[0].real_date | date: formatDates }}</span>
+        </div>
+        <div class="subtitle-box-historical">
+          Fecha de Cosecha:
+          <span>{{
+            report.segments[14].end_traking_date | date: formatDates
+          }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -98,7 +103,10 @@
       </div>
     </div>
   </div>
-  <div class="box-historical m-5" *ngFor="let stage of report.segments | slice: 1">
+  <div
+    class="box-historical m-5"
+    *ngFor="let stage of report.segments | slice: 1"
+  >
     <div class="title-box-historical">
       {{ stage.title }}
     </div>

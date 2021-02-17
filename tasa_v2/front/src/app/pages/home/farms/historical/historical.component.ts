@@ -14,6 +14,7 @@ import { ConfigurationService } from '../../../../shared/services/configuration.
 import { LandsService } from '../calendar/lands.service';
 import { HistoricalService } from './historical.service';
 import moment, { Moment } from 'moment';
+import { ArrozDeRiego, ArrozSecano } from '../../../../shared/models/farm';
 
 @Component({
   selector: 'app-historical',
@@ -144,11 +145,17 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
         return true;
       },
     };
-    pdf.html(source, {margin: [200,200,200,200],
+    pdf.html(source, {
+      margin: [200, 200, 200, 200],
       callback: (pdf) => {
         pdf.save(`${this.report.title}.pdf`);
       },
     });
   }
+  get sowing_system_text() {
+    return this.landsService.landSelected?.sowing_system ===
+      new ArrozSecano().id
+      ? new ArrozSecano().name
+      : new ArrozDeRiego().name;
+  }
 }
-
