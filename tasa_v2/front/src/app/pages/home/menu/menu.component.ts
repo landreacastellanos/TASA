@@ -18,6 +18,10 @@ const PERMISSION_BY_PATH = {
 export class MenuComponent implements OnInit {
 
   viewNotification = false;
+  title = '';
+  notifications;
+  type;
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -51,17 +55,34 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  viewNotificationMethod(){
+  viewNotificationMethod(type) {
     this.viewNotification = !this.viewNotification
+    if(this.viewNotification){
+      this.type = type;
+      switch (type) {
+        case 'notifications':
+          this.title = 'Notificaciones';
+          this.notifications = this.notifyService.notifications;
+          break;  
+        case 'alerts':
+          this.title = 'Alertas';
+          this.notifications = this.notifyService.alerts;
+          break;
+        case 'notificationsChat':
+          this.title = 'Mensajes';
+          this.notifications = this.notifyService.notificationsChat;
+          break;
+      }
+    }
   }
 
-  async goNotification(notify){
+  async goNotification(notify) {
     this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
     this.viewNotification = false;
     await this.closeNotification(notify);
   }
 
-  closeNotification(notify?){
-    return this.notifyService.deleteNotification(notify? notify.id : '');  
+  closeNotification(notify?) {
+    return this.notifyService.deleteNotification(notify ? notify.id : '');
   }
 }

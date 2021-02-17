@@ -134,16 +134,16 @@ class NotificationService():
                 "property_id": property_field['id'], 
                 "property_name": property_field['name'],
                 "id_user": user['id'],
-                "user_name": user['email'],
+                "user_name": user['name'] +' '+ user['last_name'],
         }        
-        if(property_field['manager'] is not None):
+        if(property_field['manager'] is not None and property_field['manager'] != user_id):
             self.insert_data(notification, property_field['manager'])
-        if(property_field['property_owner'] is not None):
+        if(property_field['property_owner'] is not None and property_field['property_owner'] != user_id):
             self.insert_data(notification, property_field['property_owner'])
 
-        if(property_field['parthner_add'] is not None):
+        if(property_field['parthner_add'] is not None and property_field['parthner_add'] != user_id):
             self.insert_data(notification, property_field['parthner_add'])
-        if(property_field['seller'] is not None):
+        if(property_field['seller'] is not None and property_field['seller'] != user_id):
             self.insert_data(notification, property_field['seller'])
 
 

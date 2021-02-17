@@ -114,8 +114,10 @@ export class ChatComponent implements OnInit {
       return height - 71;
     } else if (width > 544) {
       return height - 65;
+    } else if (width > 416) {
+      return height - 56;
     } else {
-      return height - 55;
+      return height - 86;
     }
   }
 
