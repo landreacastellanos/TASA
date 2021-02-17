@@ -95,9 +95,9 @@
         </div>
       </div>
       <div class="box-historical" *ngIf="report.segments[0].images.length">
-        <div class="row py-3">
-          <div class="col-4" *ngFor="let image of report.segments[0].images">
-            <img class="segment-image" src="{{ image }}" />
+        <div class="row py-3 justify-content-around align-items-center">
+          <div class="px-3 my-3 w-100" *ngFor="let image of report.segments[0].images">
+            <img class="w-100" src="{{ image }}" />
           </div>
         </div>
       </div>
@@ -229,8 +229,8 @@
     </div>
     <div class="box-historical" *ngIf="stage.images.length">
       <div class="row justify-content-around align-items-center">
-        <div class="px-3" *ngFor="let image of stage.images">
-          <img class="segment-image" src="{{ image }}" />
+        <div class="px-3 my-3 w-100" *ngFor="let image of stage.images">
+          <img class="w-100" src="{{ image }}" />
         </div>
       </div>
     </div>

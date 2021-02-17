@@ -58,5 +58,7 @@ hr {
 }
 
 .segment-image{
-  height: 230px;
+  max-height: 350px;
+  min-width: 45%;
+  max-width: 100%;
 }
