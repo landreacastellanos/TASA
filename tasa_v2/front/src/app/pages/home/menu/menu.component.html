@@ -26,36 +26,9 @@
       </li>
     </ul>
   </div>
-  <div class="header-actions nav-link">
-    <a class="icon" routerLink="/calendar-activities">
-      <img src="../../../assets/img/calendar.svg" alt="calendar">
-    </a>
-    <a class="icon icon-bell">
-      <img src="../../../assets/img/bell.svg" alt="bell" (click)="viewNotificationMethod()">
-      <div class="notification" (click)="viewNotificationMethod()" *ngIf="notifyService.notifications">
-        {{notifyService.notifications.length}}
-      </div>
-      <div class="box-notification" *ngIf="viewNotification">
-        <div class="header-box-notification">
-          <div>Notificaciones:</div>
-          <button mat-button (click)="closeNotification()">
-            <mat-icon >delete_outline</mat-icon>
-          </button>
-        </div>
-        <div *ngFor="let notify of notifyService.notifications" class="items-box-notification row">
-          <div class="text-box-notification col-10" (click)="goNotification(notify)">
-            La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> ha generado la receta del segmento <b>{{notify.stage_name}}</b>
-          </div>
-          <div class="icon-box-notification col-1">
-            <button mat-button (click)="closeNotification(notify)">X</button>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
   <ul class="navbar-nav d-lg-block d-none">
     <li class="nav-item">
-      <a class="nav-link" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar
+      <a class="nav-link close-session" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar
         sesión</a>
     </li>
   </ul>
@@ -64,4 +37,51 @@
     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+
+  <div class="header-actions nav-link">
+    <a class="icon notifications">
+      <img src="../../../assets/img/bell.svg" alt="bell" (click)="viewNotificationMethod('notifications')">
+      <div class="notification" (click)="viewNotificationMethod('notifications')" *ngIf="notifyService.notifications">
+        {{notifyService.notifications.length}}
+      </div>
+    </a>
+    <a class="icon notifications">
+      <img src="../../../assets/img/bell.svg" alt="bell" (click)="viewNotificationMethod('alerts')">
+      <div class="notification" (click)="viewNotificationMethod('alerts')" *ngIf="notifyService.alerts">
+        {{notifyService.alerts.length}}
+      </div>
+    </a>
+    <a class="icon notifications">
+      <mat-icon class="size-icon-check" (click)="viewNotificationMethod('notificationsChat')">chat</mat-icon>
+      <div class="notification" (click)="viewNotificationMethod('notificationsChat')"
+        *ngIf="notifyService.notificationsChat">
+        {{notifyService.notificationsChat.length}}
+      </div>
+    </a>
+    <a class="icon" routerLink="/calendar-activities">
+      <img src="../../../assets/img/calendar.svg" alt="calendar">
+    </a>
+    <div class="box-notification" *ngIf="viewNotification">
+      <div class="header-box-notification">
+        <div>{{title}}:</div>
+        <button mat-button (click)="closeNotification()">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+      <div *ngFor="let notify of notifications" class="items-box-notification row">
+        <div class="text-box-notification col-10" (click)="goNotification(notify)">
+          <div *ngIf="type === 'notifications'">
+            La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> ha generado la receta del
+            segmento <b>{{notify.stage_name}}</b>
+          </div>
+          <div *ngIf="type ==='notificationsChat'">
+            Tienes un mensaje nuevo de <b>{{notify.user_name}}</b>, en la finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b>
+          </div>
+        </div>
+        <div class="icon-box-notification col-1">
+          <button mat-button (click)="closeNotification(notify)">X</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>
