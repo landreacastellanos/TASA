@@ -462,9 +462,13 @@ class StageServices:
             "details": []
         }
         
+        validation_token = SecurityToken().validate_token()
+        email = validation_token[2]
         land_id = data['land_id']         
         
         stage_number = Stage.stage_one.value
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
@@ -492,6 +496,7 @@ class StageServices:
         notification_utils = NotificationUtils()
 
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
+            self.set_alarms(land_id, tuple_stage[3], data)
             notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
@@ -734,3 +739,34 @@ class StageServices:
         result['segments'] = data
         result['segments']['images'] = images
         return result['segments']
+
+    def set_alarms(self, land_id, type_land, type_date, date):
+        segments = ()
+        if "sowing_date" in type_date:
+            segments = (Stage.stage_two.value, Stage.stage_three.value)
+        else:
+            segments = (Stage.stage_four.value, Stage.stage_five.value,
+            Stage.stage_six.value, Stage.stage_seven.value, Stage.stage_eight.value,
+            Stage.stage_nine.value, Stage.stage_ten.value, Stage.stage_eleven.value,
+            Stage.stage_twelve.value, Stage.stage_thirteen.value, Stage.stage_fourteen.value,
+            Stage.stage_fifteen.value)
+
+        result = list(map(lambda x: {"batch_name": "Finca Pepito", "id": 18, 
+        "land_id": 159, "property_id": 181, "property_name": "Lote 55", "type": 2, "date": "2020-02-01", "title": "Segmetno 3"}, segments))
+        
+        self.get_data_alarms(1, type_land, type_land, "")
+
+    def get_data_alarms(self, land_id, stage, type_land, date):
+        result = {}
+        land = self.__repository_land.select(options={"filters":
+                             [
+                             ['id', "equals", land_id]]
+                             })
+        
+        property_ = self.__repository_properties.select(options={"filters":
+                             [
+                             ['id', "equals", land[0]["property_id"]]]
+                             })
+        dates = self.calulate_date_stage(stage, type_land)
+        self.validate_dates(date, dates, stage)
+        
