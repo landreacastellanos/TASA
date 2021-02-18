@@ -11,7 +11,7 @@
         </div>
         <div class="content-chat" id="chat">
             <div class="scroll-chat col-12">
-                <div *ngFor="let participant of conversation"
+                <div *ngFor="let participant of chatService.conversation"
                     [ngClass]="{ 'align-right': participant.id_author  == user.id}">
                     <div
                         [ngClass]="{ 'other-participant': participant.id_author  != user.id, 'i-participant': participant.id_author  == user.id, 'participant': true}">

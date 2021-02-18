@@ -4,6 +4,7 @@ import { NotificationsService } from 'src/app/shared/services/notifications.serv
 import { RolAdministrador } from '../../../shared/models/role';
 import { AuthService } from '../../../shared/services/auth.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { ChatService } from '../chat/chat.service';
 
 const PERMISSION_BY_PATH = {
   '/users': [new RolAdministrador().key],
@@ -26,7 +27,8 @@ export class MenuComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
-    public notifyService: NotificationsService
+    public notifyService: NotificationsService,
+    private chatService: ChatService
   ) { }
 
   ngOnInit(): void { }
@@ -57,13 +59,13 @@ export class MenuComponent implements OnInit {
 
   viewNotificationMethod(type) {
     this.viewNotification = !this.viewNotification
-    if(this.viewNotification){
+    if (this.viewNotification) {
       this.type = type;
       switch (type) {
         case 'notifications':
           this.title = 'Notificaciones';
           this.notifications = this.notifyService.notifications;
-          break;  
+          break;
         case 'alerts':
           this.title = 'Alertas';
           this.notifications = this.notifyService.alerts;
@@ -77,12 +79,25 @@ export class MenuComponent implements OnInit {
   }
 
   async goNotification(notify) {
-    this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
     this.viewNotification = false;
     await this.closeNotification(notify);
+    switch (this.type) {
+      case 'notifications':
+        this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
+        break;
+      case 'alerts':
+        break;
+      case 'notificationsChat':
+        this.chatService.getMessage(notify.land_id, notify.property_id);
+        this.router.navigate(['/chat/', notify.property_id, notify.land_id]);
+        this.chatService.scrollPerson = false;
+        this.chatService.count = 0;
+        break;
+    }
   }
 
   closeNotification(notify?) {
-    return this.notifyService.deleteNotification(notify ? notify.id : '');
+    const type = this.type === 'notifications' ? 1 : this.type === 'alerts' ? 2 : 3;
+    return this.notifyService.deleteNotification(notify ? notify.id : '', { type });
   }
 }
