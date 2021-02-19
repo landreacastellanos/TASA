@@ -509,6 +509,7 @@ class StageServices:
             data.pop("images")
         
         if("real_date" in data and data['real_date']):
+            self.set_alarms(land_id, tuple_stage[3], data, data['real_date'])
             stage_db["real_date"] = data['real_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
@@ -755,9 +756,7 @@ class StageServices:
             Stage.stage_twelve.value, Stage.stage_thirteen.value, Stage.stage_fourteen.value,
             Stage.stage_fifteen.value)
 
-        result = list(map(lambda x: self.get_data_alarms(land_id, x, type_land, date), segments))
-        
-        a = result
+        list(map(lambda x: self.get_data_alarms(land_id, x, type_land, date), segments))
 
     def get_data_alarms(self, land_id, stage, type_land, date):
         date_calculated = []
@@ -797,7 +796,7 @@ class StageServices:
             "stage_id": stage_name[0]['id']
         }
 
-        return result
+        NotificationUtils().set_alarms(result)
 
     def get_date_holidays(self, date):
         date_alarm = (GeneralsUtils.try_parse_date_time(date) - timedelta(days=2))
