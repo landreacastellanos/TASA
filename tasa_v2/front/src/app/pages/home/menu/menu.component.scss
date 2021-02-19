@@ -47,7 +47,7 @@
   .header-actions{
     position: absolute;
     right: 170px;
-    top: 20px;
+    top: 42px;
 
     .notifications{
       position: relative;
@@ -131,9 +131,13 @@
     }
   }
   .navbar {
-    .notifications{
-      .box-notification{
-        top: 50px;
+    .header-actions{
+      top: 20px;
+
+      .notifications{
+        .box-notification{
+          top: 50px;
+        }
       }
     }
   }
