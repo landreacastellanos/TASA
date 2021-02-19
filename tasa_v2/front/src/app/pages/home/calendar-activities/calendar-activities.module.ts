@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 
 import moment from 'moment';
+import { SharedDateModule } from '../../../shared/modules/shared-date.module';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -27,6 +28,7 @@ export function momentAdapterFactory() {
     MatIconModule,
     MatButtonModule,
     MatTableModule,
+    SharedDateModule
   ],
   exports: [
     CalendarHeaderComponent,

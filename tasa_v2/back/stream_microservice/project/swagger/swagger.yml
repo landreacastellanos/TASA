@@ -34,6 +34,55 @@
                 items:
                   $ref: '#/definitions/notification'                
           x-swagger-router-controller: "project.views.stream"
+    /get_chat_message:
+      get:
+          tags:
+            - "Notification"
+          summary: "Notification"
+          operationId: "get_chat_message"
+          description: "get chat"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: "query"
+              type: "integer"
+              name: "land_id"
+              required: true  
+          responses:
+            '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/get_chat'                
+          x-swagger-router-controller: "project.views.stream"
+    /set_chat_message:
+      post:
+          tags:
+            - "Notification"
+          summary: "Notification"
+          operationId: "set_chat_message"
+          description: "set message chat"
+          produces:
+            - "application/json"
+          parameters:
+            - in: "header"
+              type: "string"
+              name: "Token"
+              required: true
+            - in: body
+              name: data
+              required: true
+              schema:
+                  $ref: '#/definitions/set_chat'  
+          responses:
+            '200':
+              description: response result successful               
+          x-swagger-router-controller: "project.views.stream"
     /delete_notification:
       delete:
         tags:
@@ -48,6 +97,10 @@
             required: true
             type: "string"
             name: "Token"
+          - in: "query"
+            type: "integer"
+            name: "type"
+            required: false 
           - in: "query"
             type: "integer"
             name: "id"
@@ -66,6 +119,26 @@
               type: "integer"
             Property_id:
               type: "integer"
+        set_chat:
+          type: "object"
+          properties:
+            id_land:
+              type: "integer"
+            message:
+              type: "string"
+        get_chat:
+          type: "object"
+          properties:
+            message:
+              type: "string"
+            author:
+              type: "string"
+            author_id:
+              type: "integer"
+            land_id:
+              type: "integer"
+            created_date:
+              type: "string"
   externalDocs:
     description: "Find out more about Swagger"
     url: "http://swagger.io"

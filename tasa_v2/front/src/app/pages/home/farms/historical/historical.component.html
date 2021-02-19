@@ -1,49 +1,238 @@
-<div class="historical" id="contentToConvert" #contentToConvert>
-    <div class="title-historical">
-        Informe de Visita
+<div
+  class="historical"
+  id="contentToConvert"
+  #contentToConvert
+  *ngIf="report && landsService.landSelected"
+>
+  <div class="row no-gutters px-4 py-4">
+    <img
+      src="../../../assets/img/logo.png"
+      class="col-3"
+      style="width: 10rem; height: 5rem; flex: none"
+    />
+    <div class="col-9 ml-5 title-historical d-flex justify-content-start">
+      Historial del lote {{ landsService.landSelected.batchs.name }} de la finca
+      {{ landsService.landSelected.name }}
     </div>
-    <div class="box-historical">
-        <div class="title-box-historical">
-            Datos básicos de la finca
+  </div>
+  <div class="box-historical m-5">
+    <div class="title-box-historical">Datos básicos de la finca:</div>
+    <div class="info-box-historical row">
+      <div class="subtitle-box-historical col-4">
+        Nombre: <span>{{ landsService.landSelected.name }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Razón social: <span>{{ landsService.landSelected.business_name }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Teléfono: <span>{{ landsService.landSelected.phone }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Sistema de siembra finca:
+        <span>{{ sowing_system_text }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Dirección: <span>{{ landsService.landSelected.direction }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Dirección Web: <span>{{ landsService.landSelected.web_page }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Total hectáreas finca:
+        <span>{{ landsService.landSelected.hectares_total }}</span>
+      </div>
+
+      <hr />
+
+      <div class="subtitle-box-historical col-4">
+        Nombre del lote:
+        <span>{{ landsService.landSelected.batchs.name }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Hectáreas del lote:
+        <span>{{ landsService.landSelected.batchs.hectares_number }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Tipo de siembra: <span>{{ report.segments[0].type_sowing }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Variedad: <span>{{ report.segments[0].variety }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Dueño de la finca: <span>{{ report.owner.name }}</span>
+      </div>
+      <div class="subtitle-box-historical col-4">
+        Vendedor TASA: <span>{{ report.seller.name }}</span>
+      </div>
+
+      <hr />
+
+      <div class="row col-12 justify-content-around">
+        <div class="subtitle-box-historical">
+          Fecha de siembra:
+          <span>{{ report.segments[0].real_date | date: formatDates }}</span>
         </div>
-        <div class="info-box-historical row">
-            <div class="subtitle-box-historical col-3">
-                Nombre:
-            </div>
-            <div class="subtitle-box-historical col-3">
-                Razón social
-            </div>
-            <div class="subtitle-box-historical col-3">
-                Teléfono
-            </div>
-            <div class="subtitle-box-historical col-3">
-                Dirección Web:
-            </div>
-            <div class="subtitle-box-historical col-12">
-                Dirección:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Total hectarias finca:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Sistema de siembra finca:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Fecha de siembra:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Nombre del lote:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Héctareas del lote:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Tipo de siembra:
-            </div>
-            <div class="subtitle-box-historical col-4">
-                Variedad:
-            </div>
+        <div class="subtitle-box-historical">
+          Fecha de Cosecha:
+          <span>{{
+            report.segments[14].end_traking_date | date: formatDates
+          }}</span>
         </div>
+      </div>
     </div>
-    
+  </div>
+  <div class="box-historical m-5">
+    <div class="title-box-historical">1. Fecha de siembra</div>
+    <div>
+      <div class="row justify-content-center">
+        <div class="col-6 text-center subtitle-box-historical">
+          Fecha propuesta:
+          <span> {{ report.segments[0].sowing_date | date: formatDates }}</span>
+        </div>
+        <div class="col-6 text-center subtitle-box-historical">
+          Fecha real:
+          <span> {{ report.segments[0].real_date | date: formatDates }}</span>
+        </div>
+      </div>
+      <div class="box-historical" *ngIf="report.segments[0].images.length">
+        <div class="row py-3 justify-content-around align-items-center">
+          <div class="px-3 my-3 w-100" *ngFor="let image of report.segments[0].images">
+            <img class="w-100" src="{{ image }}" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="box-historical m-5"
+    *ngFor="let stage of report.segments | slice: 1"
+  >
+    <div class="title-box-historical">
+      {{ stage.title }}
+    </div>
+    <div class="info-box-historical row py-2 justify-content-center">
+      <div
+        class="subtitle-box-historical text-center col-4"
+        *ngIf="stage.application_date"
+      >
+        Fecha de aplicación:
+        <span>{{ stage.application_date | date: formatDates }}</span>
+      </div>
+      <div class="subtitle-box-historical text-center col-4">
+        Fecha inicio de segmento:
+        <span>{{ stage.start_traking_date | date: formatDates }}</span>
+      </div>
+      <div class="subtitle-box-historical text-center col-4">
+        Fecha fin de segmento:
+        <span>{{ stage.end_traking_date | date: formatDates }}</span>
+      </div>
+    </div>
+
+    <!-- ETAPA 15 -->
+
+    <div
+      class="info-box-historical row py-2 justify-content-center"
+      *ngIf="stage.amount_quintals"
+    >
+      <div class="subtitle-box-historical text-center col-4">
+        Cantidad de quintales (QQ) por lote:
+        <span>{{ stage.amount_quintals }}</span>
+      </div>
+      <div class="subtitle-box-historical text-center col-4">
+        Cantidad de quintales (QQ) por hectárea::
+        <span>{{ stage.amount_quintals_ha }}</span>
+      </div>
+    </div>
+
+    <div class="box-historical mt-2" *ngIf="stage.products">
+      <div class="overflow-auto">
+        <table mat-table [dataSource]="stage.productsDataSource">
+          <!-- commercial_name column -->
+          <ng-container matColumnDef="commercial_name">
+            <th mat-header-cell class="commercial_name" *matHeaderCellDef>
+              Producto
+            </th>
+            <td
+              mat-cell
+              class="commercial_name"
+              *matCellDef="let row; let i = index"
+            >
+              {{ row.commercial_name }}
+            </td>
+          </ng-container>
+
+          <!-- ing_active column -->
+          <ng-container matColumnDef="ing_active">
+            <th mat-header-cell class="ing_active" *matHeaderCellDef>
+              Ing Activo
+            </th>
+            <td
+              mat-cell
+              class="ing_active"
+              *matCellDef="let row; let i = index"
+            >
+              {{ row.ing_active }}
+            </td>
+          </ng-container>
+
+          <!-- provider column -->
+          <ng-container matColumnDef="provider">
+            <th mat-header-cell class="provider" *matHeaderCellDef>
+              Proveedor
+            </th>
+            <td mat-cell class="provider" *matCellDef="let row; let i = index">
+              {{ row.provider }}
+            </td>
+          </ng-container>
+
+          <!-- dose_by_ha column -->
+          <ng-container matColumnDef="dose_by_ha">
+            <th mat-header-cell class="dose_by_ha" *matHeaderCellDef>
+              Dósisx Ha
+            </th>
+            <td
+              mat-cell
+              class="dose_by_ha"
+              *matCellDef="let row; let i = index"
+            >
+              {{ row.dose_by_ha }}
+            </td>
+          </ng-container>
+
+          <!-- total column -->
+          <ng-container matColumnDef="total">
+            <th mat-header-cell class="total" *matHeaderCellDef>Total</th>
+            <td mat-cell class="total" *matCellDef="let row; let i = index">
+              {{ hectares * row.dose_by_ha | number: "1.2-5" }}
+            </td>
+          </ng-container>
+
+          <!-- Commons -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsProducts"
+          ></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row justify-content-center observations mt-2">
+      <div
+        class="text-center col-3 d-flex align-items-center justify-content-center"
+      >
+        <div class="subtitle-box-historical">Observaciones:</div>
+      </div>
+      <div class="col-9 text-center d-flex align-items-center">
+        <div class="text-left">{{ stage.observations }}</div>
+      </div>
+    </div>
+    <div class="box-historical" *ngIf="stage.images.length">
+      <div class="row justify-content-around align-items-center">
+        <div class="px-3 my-3 w-100" *ngFor="let image of stage.images">
+          <img class="w-100" src="{{ image }}" />
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -30,7 +30,8 @@ class NotificationUtils():
                              })[0]
 
         user_notification = {
-                "land_id": land['id'], 
+                "land_id": land['id'],
+                "type": 1, 
                 "batch_name": land['land_name'], 
                 "stage_name": stage['stage'], 
                 "property_id": property_field['id'], 
@@ -61,7 +62,7 @@ class NotificationUtils():
             user_notification = {
                 "id_user": user['id'],
                 "user_name": user['email'],
-                "Notification": json.dumps(notification)
+                "Notification": json.dumps(notification)                
             }
             self.__repository_notification.insert(user_notification)
 

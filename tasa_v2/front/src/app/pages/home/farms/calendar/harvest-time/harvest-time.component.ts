@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { StageHarvestRequest } from '../../../../../shared/models/calendar';
 import { ConfigurationService } from '../../../../../shared/services/configuration.service';
+import { HistoricalService } from '../../historical/historical.service';
+import { CalendarChildren } from '../calendar-children.interface';
 import { CalendarService } from '../calendar.service';
 import { LandsService } from '../lands.service';
 
@@ -13,12 +15,14 @@ import { LandsService } from '../lands.service';
   templateUrl: './harvest-time.component.html',
   styleUrls: ['./harvest-time.component.scss'],
 })
-export class HarvestTimeComponent implements OnInit {
+export class HarvestTimeComponent implements OnInit, CalendarChildren {
   public mode: 'edit' | 'view' | 'create' = 'view';
   submitted: boolean;
   files: FileList;
   segmentId: string;
-  endHarvestDate: Moment;
+  endTrackingDate: Moment;
+  startTrackingDate: Moment;
+  pictures= [];
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -34,7 +38,8 @@ export class HarvestTimeComponent implements OnInit {
   textBack = 'Ir a segmentos';
   hasSponsorSpace = true;
   textSponsorImage = 'Menos carga química';
-  hasEndHarvestDate = true;
+  hasEndTrackingDate = true;
+  hasStartTrackingDate = true;
   get hasSave() {
     return this.mode !== 'view';
   }
@@ -68,7 +73,7 @@ export class HarvestTimeComponent implements OnInit {
       .valueChanges.subscribe((data) => {
         const value =
           typeof data === 'number'
-            ? data / this.landsService.landSelected?.hectares_total
+            ? data / this.landsService.landSelected?.batchs.hectares_number
             : undefined;
         this.harvestTimeForm.get('amount_quintals_ha').setValue(value);
       });
@@ -77,19 +82,25 @@ export class HarvestTimeComponent implements OnInit {
   init({
     amount_quintals = undefined,
     observations = '',
-    harvest_date = '',
+    end_traking_date = '',
+    start_traking_date = '',
     enabled = true,
+    images = []
   } = {}) {
-    this.mode = enabled ? 'edit' : 'view';
-    this.endHarvestDate = harvest_date && moment(harvest_date);
-    this.configurationService.disableForm(
-      this.harvestTimeForm,
-      this.mode === 'view'
-    );
+    setTimeout(() => {
+      this.mode = enabled ? 'edit' : 'view';
+      this.endTrackingDate = end_traking_date && moment(end_traking_date);
+      this.startTrackingDate = start_traking_date && moment(start_traking_date);
+      this.configurationService.disableForm(
+        this.harvestTimeForm,
+        this.mode === 'view'
+      );
+      this.pictures = images? images : [];
+    }, 0);
+    this.harvestTimeForm.get('amount_quintals_ha').disable();
     this.harvestTimeForm.patchValue({
       observations,
       amount_quintals,
-      harvest_date: harvest_date && moment(harvest_date),
     });
   }
 
@@ -99,7 +110,8 @@ export class HarvestTimeComponent implements OnInit {
       .getStage(this.segmentId, this.landsService.idLand)
       .then((stageOneData) => {
         this.init(stageOneData);
-      }).finally(() => {
+      })
+      .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
   }
@@ -108,8 +120,11 @@ export class HarvestTimeComponent implements OnInit {
     return this.harvestTimeForm.controls;
   }
 
-  onChangeFiles(files: FileList) {
+  onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
+    if (this.pictures.length > 0) {
+      this.editPicture(picture, listPictures)
+    }
   }
 
   onSave() {
@@ -124,6 +139,10 @@ export class HarvestTimeComponent implements OnInit {
     });
 
     const values = this.harvestTimeForm.value;
+    values.start_traking_date = this.startTrackingDate;
+    values.end_traking_date = this.endTrackingDate;
+    values.amount_quintals_ha = this.controls.amount_quintals_ha.value;
+
     if (!this.harvestTimeForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
@@ -139,10 +158,9 @@ export class HarvestTimeComponent implements OnInit {
           land_id: parseInt(this.landsService.idLand),
           ...values,
         };
-        if (filesSaved) {
-          dataRequest.images = filesSaved;
-        }
-        return this.calendarService.setStageHarvest(dataRequest);
+        dataRequest.images =
+          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null
+        return this.calendarService.setStage(dataRequest);
       })
       .then(
         (message) =>
@@ -152,10 +170,25 @@ export class HarvestTimeComponent implements OnInit {
             panelClass: ['snackbar-success'],
           })
       )
-      .then(() => this.intAPI())
+      .then(() =>
+        this.router.navigate([
+          '/farms/calendar/',
+          this.landsService.idProperty,
+          this.landsService.idLand,
+          'list',
+        ])
+      )
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
+  }
+
+  addNewFiles(filesSaved: string[]) {
+    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    if (filesSaved) {
+      oldPictures.push(...filesSaved)
+    }
+    return oldPictures;
   }
 
   onBack() {
@@ -165,5 +198,31 @@ export class HarvestTimeComponent implements OnInit {
       this.landsService.idLand,
       'list',
     ]);
+  }
+
+  editPicture(picture, listPictures) {
+    listPictures = this.calendarService.returnPicture(listPictures);
+    picture = this.calendarService.returnPicture(picture);
+    Promise.resolve(this.files)
+      .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
+      .then((filesSaved) => {
+        listPictures= listPictures.map(element => {
+          element = element === picture ? filesSaved[0] : element;
+          return element
+        });
+        this.pictures = this.calendarService.setPictureFile(listPictures);
+        this.files = null;
+        return this.onSave();
+      })
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
+  }
+
+  deletePicture(picture) {
+    this.configurationService.setLoadingPage(true);
+    this.pictures = this.pictures.filter(data => data !== picture);
+    this.files = null;
+    this.onSave();
   }
 }

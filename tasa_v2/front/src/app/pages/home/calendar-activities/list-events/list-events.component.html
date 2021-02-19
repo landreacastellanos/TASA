@@ -1,11 +1,6 @@
 <h1 mat-dialog-title class="text-primary">{{ title }}</h1>
 <div mat-dialog-content>
     <table mat-table [dataSource]="dataSource" class="table-activities">
-      <!-- time column -->
-      <ng-container matColumnDef="time">
-        <th mat-header-cell class="time" *matHeaderCellDef>Hora</th>
-        <td mat-cell class="time" *matCellDef="let row">{{ row.time }}</td>
-      </ng-container>
 
       <!-- title column -->
       <ng-container matColumnDef="title">
@@ -15,15 +10,15 @@
         </td>
       </ng-container>
 
-      <!-- age column -->
-      <ng-container matColumnDef="age">
-        <th mat-header-cell class="age" *matHeaderCellDef>Edad</th>
-        <td mat-cell class="age" *matCellDef="let row">{{ row.age }}</td>
+      <!-- land column -->
+      <ng-container matColumnDef="property">
+        <th mat-header-cell class="property" *matHeaderCellDef>Finca</th>
+        <td mat-cell class="property" *matCellDef="let row">{{ row.property }}</td>
       </ng-container>
 
-      <!-- land column -->
+      <!-- property column -->
       <ng-container matColumnDef="land">
-        <th mat-header-cell class="land" *matHeaderCellDef>Finca / Lote</th>
+        <th mat-header-cell class="land" *matHeaderCellDef>Lote</th>
         <td mat-cell class="land" *matCellDef="let row">{{ row.land }}</td>
       </ng-container>
 

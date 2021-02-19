@@ -92,7 +92,9 @@ class UserService():
         data_validation = self.validation_data(validation_token[2])
         data_email = self.validation_email_update(data)
 
-        if self.validation_user(data["id"]):
+        user_data = self.__repository_user.select_one(data["id"])[0]
+
+        if self.validation_user(data["id"]) and user_data['role_id'] != data['role_id']:
             result['details'].append(
                 {
                     "key": 400,

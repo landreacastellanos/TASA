@@ -15,6 +15,7 @@ import { ConfigurationService } from '../../../../../shared/services/configurati
 import { CalendarChildren } from '../calendar-children.interface';
 import { CalendarService } from '../calendar.service';
 import { LandsService } from '../lands.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-burning-for-sowing',
@@ -28,7 +29,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   startTrackingDate: Moment;
   products: StageProduct[];
   mode: 'edit' | 'view' | 'create' = 'view';
-  listProductError: boolean;
+  listProductError: { emptyListProducts: boolean; editListProducts: boolean };
   files: FileList;
   textBack = 'Ir a segmentos';
   hasEndTrackingDate = true;
@@ -65,6 +66,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   enableEditProduct = false;
   validatorFloat = '^[0-9]+([.][0-9]+)?$';
   hectares = 0;
+  pictures = [];
 
   constructor(
     public fb: FormBuilder,
@@ -81,11 +83,14 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   ngOnInit(): void {
     this.init();
+    this.burningForSowingForm.controls.products.valueChanges.subscribe(
+      (products) => this.productsValidation(products)
+    );
   }
   get title() {
     return (
       this.route.snapshot.data.title[
-        this.landsService?.landSelected?.sowing_system
+      this.landsService?.landSelected?.sowing_system
       ] || ''
     );
   }
@@ -138,6 +143,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       enabled = false,
       end_traking_date = '',
       start_traking_date = '',
+      images = []
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
     this.mode = enabled ? 'edit' : 'view';
@@ -148,6 +154,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.startTrackingDate = start_traking_date && moment(start_traking_date);
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       this.selection.clear();
+      this.pictures = images ? images : [];
+
 
       if (this.products) {
         products.forEach((product) => {
@@ -169,7 +177,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         this.landsService.landsSelectedIds
       ]
         ? this.landsService.lands[this.landsService.landsSelectedIds].batchs
-            .hectares_number
+          .hectares_number
         : 0;
     }, 1);
 
@@ -177,6 +185,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.burningForSowingForm,
       this.mode === 'view'
     );
+    if (!observations && !products.length) {
+      this.burningForSowingForm.controls.application_date.disable();
+    }
     this.burningForSowingForm.patchValue({
       observations,
       application_date: application_date && moment(application_date),
@@ -186,6 +197,23 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   get productsControl() {
     return this.burningForSowingForm.get('products') as FormArray;
+  }
+
+  productsValidation(products: StageProduct[]) {
+    const editListProducts = products
+      .map((row, i) => !row.id && !this.isDisabledProduct(i))
+      .includes(true);
+    const emptyListProducts = !products.length;
+    this.listProductError = { emptyListProducts, editListProducts };
+    return this.listProductError;
+  }
+
+  get hasProductError() {
+    return (
+      this.submitted &&
+      (this.listProductError.editListProducts ||
+        this.listProductError.emptyListProducts)
+    );
   }
 
   isDisabledProduct(index: number) {
@@ -300,28 +328,24 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       valid: this.burningForSowingForm.valid,
       files: this.files,
       productsDataSourceAdd: this.dataSourceProductsAdd,
-      mappingProductsDataSourceAdd: this.dataSourceProductsAdd.data.map(
-        (row, i) => !row.id && !this.isDisabledProduct(i)
-      ),
     });
     const values = this.burningForSowingForm.value;
+    values.application_date = !!values.application_date ? values.application_date : undefined;
     values.products = this.selection.selected.map((product) => {
       product.dose_by_ha = parseFloat(`${product.dose_by_ha}`);
       return product;
     });
     values.start_traking_date = this.startTrackingDate;
     values.end_traking_date = this.endTrackingDate;
-    const editListProducts = this.dataSourceProductsAdd.data.map(
-      (row, i) => !row.id && !this.isDisabledProduct(i)
-    );
-    if (editListProducts.includes(true)){
-      this.listProductError = true;
-      return this.snackBar.open('Valida todos los productos antes de continuar', 'x', {
-        duration: 2000,
-        panelClass: ['snackbar-warn'],
-      });
-    }else{
-      this.listProductError = false;
+    if (Object.values(this.listProductError).includes(true)) {
+      return this.snackBar.open(
+        'Valida todos los productos antes de continuar',
+        'x',
+        {
+          duration: 2000,
+          panelClass: ['snackbar-warn'],
+        }
+      );
     }
     if (!this.burningForSowingForm.valid) {
       return this.snackBar.open('Rectifica los campos', 'x', {
@@ -339,9 +363,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           stage_number: this.segmentId,
           ...values,
         };
-        if (filesSaved) {
-          dataRequest.images = filesSaved;
-        }
+        dataRequest.images =
+          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null;
         return this.calendarService.setStage(dataRequest);
       })
       .then(
@@ -358,6 +381,40 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       });
   }
 
+  addNewFiles(filesSaved: string[]) {
+    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    if (filesSaved) {
+      oldPictures.push(...filesSaved)
+    }
+    return oldPictures;
+  }
+
+  editPicture(picture, listPictures) {
+    listPictures = this.calendarService.returnPicture(listPictures);
+    picture = this.calendarService.returnPicture(picture);
+    Promise.resolve(this.files)
+      .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
+      .then((filesSaved) => {
+        listPictures = listPictures.map(element => {
+          element = element === picture ? filesSaved[0] : element;
+          return element
+        });
+        this.pictures = this.calendarService.setPictureFile(listPictures);
+        this.files = null;
+        return this.onSave();
+      })
+      .finally(() => {
+        this.configurationService.setLoadingPage(false);
+      });
+  }
+
+  deletePicture(picture) {
+    this.configurationService.setLoadingPage(true);
+    this.pictures = this.pictures.filter(data => data !== picture);
+    this.files = null;
+    this.onSave();
+  }
+
   onBack() {
     this.router.navigate([
       '/farms/calendar/',
@@ -366,8 +423,12 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       'list',
     ]);
   }
-  onChangeFiles(files: FileList) {
+
+  onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
+    if (this.pictures.length > 0 && picture) {
+      this.editPicture(picture, listPictures)
+    }
   }
 
   onClickAfterReferencePhoto() {
@@ -395,9 +456,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
-      row.commercial_name
-    }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
+      }`;
   }
 
   selectProduct(event, row) {

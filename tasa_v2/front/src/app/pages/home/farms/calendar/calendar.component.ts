@@ -1,6 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Historical } from 'src/app/shared/models/Historic';
+import { RolAdministrador, RolCapataz, RolDuenoDeLaFinca, RolSocioAdicional, RolVendedorTASA } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { HistoricalService } from '../historical/historical.service';
 import { CalendarChildren } from './calendar-children.interface';
 import { LandsService } from './lands.service';
 
@@ -10,11 +15,19 @@ import { LandsService } from './lands.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
+
+  historicalResult: Historical[] = [];
+  chat=false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     public landsService: LandsService,
-    public configService: ConfigurationService
+    public configService: ConfigurationService,
+    public historicalService: HistoricalService,
+    private modal: NgbModal,
+    private storageService: StorageService
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -24,11 +37,16 @@ export class CalendarComponent implements OnInit {
       this.landsService.idProperty,
       this.landsService.idLand
     );
+    this.historicalService.getListHistorical(this.landsService.idLand).then((resultPromise) => {
+      this.historicalResult = resultPromise
+    })
   }
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.chat=this.viewChat();
+  }
 
   onBack() {
     // tslint:disable-next-line: no-unused-expression
@@ -43,20 +61,45 @@ export class CalendarComponent implements OnInit {
       (this.outlet?.component as CalendarChildren).onSave();
   }
 
-  onChangeFiles(files: FileList) {
-    console.debug('CalendarComponent:onChangeFiles', { files });
+  deletePicture(picture: string) {
+    console.debug('CalendarComponent:delete');
     // tslint:disable-next-line: no-unused-expression
-    (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
-      (this.outlet?.component as CalendarChildren).onChangeFiles(files);
+    (this.outlet?.component as CalendarChildren)?.deletePicture &&
+      (this.outlet?.component as CalendarChildren).deletePicture(picture);
   }
 
-  goHistorical(){
-    this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand])
+  onChangeFiles(files: FileList, picture?: string) {
+    console.debug('CalendarComponent:onChangeFiles', { files });
+    // tslint:disable-next-line: no-unused-expression
+    if (picture) {
+      (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
+        (this.outlet?.component as CalendarChildren).onChangeFiles(files, picture, this.pictures);
+    } else {
+      (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
+        (this.outlet?.component as CalendarChildren).onChangeFiles(files);
+    }
+
+  }
+
+  goHistorical(id: number) {
+    this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand, id])
+  }
+
+  goChat() {
+    this.router.navigate(['/chat/', this.landsService.idProperty, this.landsService.idLand])
+  }
+
+  openPictures() {
+    this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   get hasSave() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.hasSave;
+  }
+
+  get pictures() {
+    return (this.outlet?.component as CalendarChildren)?.pictures;
   }
 
   get textBack() {
@@ -119,16 +162,20 @@ export class CalendarComponent implements OnInit {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
   }
-  get hasEndHarvestDate() {
-    // tslint:disable-next-line: no-unused-expression
-    return (this.outlet?.component as CalendarChildren)?.hasSponsorSpace;
-  }
-  get endHarvestDate() {
-    // tslint:disable-next-line: no-unused-expression
-    return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
-  }
   get title() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.title;
+  }
+
+  viewChat() {
+    let role = this.storageService.getValue('user')?.roleId;
+    const roles: Array<number> = [
+      new RolAdministrador().key,
+      new RolVendedorTASA().key,
+      new RolCapataz().key,
+      new RolDuenoDeLaFinca().key,
+      new RolSocioAdicional().key
+    ];
+    return roles.includes(role);
   }
 }

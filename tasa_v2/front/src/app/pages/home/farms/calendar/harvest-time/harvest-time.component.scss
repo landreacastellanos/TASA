@@ -1,0 +1,6 @@
+@import "../../../../../../themes/theme.scss";
+
+
+.mat-input-element.text-primary:disabled {
+  color: map-get($theme-colors, "primary")!important;
+}

@@ -7,14 +7,17 @@ from flask import send_from_directory, current_app, request
 from datetime import datetime, timedelta
 from project.models.enum.stage_enum import Stage
 from project.models.enum.date_stage_enum import DateStage
+from project.models.enum.type_planting_enum import TypePlanting
 from project.models.enum.keys_enum import Keys
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken   
 from project.resources.utils.generals_utils import GeneralsUtils
-from project.models.enum.type_planting_enum import TypePlanting
 from project.resources.utils.notification_utils import NotificationUtils
 from holidays_co import is_holiday_date
+from project.services.calendar_service import CalendarService
+from project.resources.utils.data_utils import DataUtils
+
 
 class StageServices:
     MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
@@ -41,6 +44,7 @@ class StageServices:
         self.__repository_stage = CommonRepository(
             entity_name="stage"
         ) 
+        self.__service_activities = CalendarService()
 
     def get_property_land(self, id, land):
 
@@ -103,7 +107,8 @@ class StageServices:
                     "sowing_date": "",
                     "type_sowing": "",
                     "variety": "",
-                    "enabled": edit
+                    "enabled": edit,
+                    "images": None
                 }
             )
         else:
@@ -111,6 +116,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = 'real_date' in json_data and not json_data['real_date']
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
@@ -206,7 +212,7 @@ class StageServices:
         email = validation_token[2]
 
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
-        dates = self.calulate_date_stage(stage_number, tuple_stage[3])
+        dates = DataUtils.calulate_date_stage(stage_number, tuple_stage[3])
 
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
@@ -244,7 +250,8 @@ class StageServices:
                     "observations": "",
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
-                    "products": []
+                    "products": [],
+                    "images": None
                 }
             )
         else:
@@ -254,6 +261,7 @@ class StageServices:
             'amount_quintals' not in json_data) or ('application_date' not in json_data and 
             stage_number != Stage.stage_fifteen.value) and (edit)
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
@@ -269,7 +277,7 @@ class StageServices:
         email = validation_token[2]
 
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
-        dates = self.calulate_date_stage(stage_number, tuple_stage[3])
+        dates = DataUtils.calulate_date_stage(stage_number, tuple_stage[3])
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
 
@@ -366,19 +374,19 @@ class StageServices:
         
         if 'image_1' in files:
             file = files['image_1']
-            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
 
         if 'image_2' in files:
             file = files['image_2']
-            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
 
         if 'image_3' in files:
-            file = files['image_1']
-            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[1]
+            file = files['image_3']
+            new_file = str(uuid.uuid1()) +"."+ file.filename.split(".")[-1]
             l_files.append(new_file)
             file.save(os.path.join(manage.uploads_dir, new_file))
         
@@ -497,7 +505,7 @@ class StageServices:
         stage_db = {}
         complete_stage = False
 
-        notification_utils = NotificationUtils()
+        notification_utils = NotificationUtils()        
 
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
             self.set_alarms(land_id, tuple_stage[3], data, data['sowing_date'])
@@ -508,11 +516,15 @@ class StageServices:
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
         
-        if("real_date" in data and data['real_date']):
-            self.set_alarms(land_id, tuple_stage[3], data, data['real_date'])
+        if("real_date" in data and len(data['real_date'].strip()) > 0 ):
             stage_db["real_date"] = data['real_date']
             complete_stage = True
             stage_db["end_date"] = datetime.now()
+            self.set_calendar_real(land_id, property_field[0]['seller'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
+            self.set_alarms(land_id, tuple_stage[3], data, data['real_date'])
 
         data.pop("land_id")
         
@@ -528,91 +540,38 @@ class StageServices:
             stage_db['id_crop'] = str(uuid.uuid1())
             stage_db['stage_id'] = stage_id
             self.__repository_property_stage.insert(stage_db)
-            
         else:
             property_stage = property_stage[0]['id']
-            self.__repository_property_stage.update(property_stage,stage_db)           
+            self.__repository_property_stage.update(property_stage,stage_db)      
 
+        if("sowing_date" in data and len(data['sowing_date'].strip()) > 0 ):
+            date = GeneralsUtils.try_parse_date_time(data['sowing_date'])
+            self.set_calendar_planning(land_id, property_field[0]['seller'], date)
+            self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
+            self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
+            self.set_calendar_planning(land_id, property_field[0]['manager'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results
+    
+    def set_calendar_planning(self, land_id, user, date):
+        self.__service_activities.set_calendar(land_id, user, 2, date, True)
+        self.__service_activities.set_calendar(land_id, user, 3, date, True)
 
-    def calulate_date_stage(self,stage, type_planting):
-        start = 0
-        end = 0
-        if stage == Stage.stage_two.value:
-           start = DateStage.stage_two_start.value
-           end = DateStage.stage_two_end.value
-        elif stage == Stage.stage_three.value and type_planting == TypePlanting.riego.value:
-           start = DateStage.stage_three_start_riego.value
-           end = DateStage.stage_three_end_riego.value
-        elif stage == Stage.stage_three.value or stage == Stage.stage_four.value:
-           start = DateStage.stage_three_start.value
-           end = DateStage.stage_three_end.value
-        elif stage == Stage.stage_five.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_five_start_riego.value
-            end = DateStage.stage_five_end_riego.value
-        elif stage == Stage.stage_five.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_five_start_secano.value
-            end = DateStage.stage_five_end_secano.value 
-        elif stage == Stage.stage_six.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_six_start_secano.value
-            end = DateStage.stage_six_end_secano.value
-        elif stage == Stage.stage_six.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_six_start_riego.value
-            end = DateStage.stage_six_end_riego.value  
-        elif stage == Stage.stage_seven.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_seven_start_secano.value
-            end = DateStage.stage_seven_end_secano.value
-        elif stage == Stage.stage_seven.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_seven_start_riego.value
-            end = DateStage.stage_seven_end_riego.value 
-        elif stage == Stage.stage_eight.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_eight_start_riego.value
-            end = DateStage.stage_eight_end_riego.value
-        elif stage == Stage.stage_eight.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_eight_start_secano.value
-            end = DateStage.stage_eight_end_secano.value
-        elif stage == Stage.stage_nine.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_nine_start_riego.value
-            end = DateStage.stage_nine_end_riego.value
-        elif stage == Stage.stage_nine.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_nine_start_secano.value
-            end = DateStage.stage_nine_end_secano.value
-        elif stage == Stage.stage_ten.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_ten_start_riego.value
-            end = DateStage.stage_ten_end_riego.value
-        elif stage == Stage.stage_ten.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_ten_start_secano.value
-            end = DateStage.stage_ten_end_secano.value 
-        elif stage == Stage.stage_eleven.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_eleven_start_riego.value
-            end = DateStage.stage_eleven_end_riego.value
-        elif stage == Stage.stage_eleven.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_eleven_start_secano.value
-            end = DateStage.stage_eleven_end_secano.value  
-        elif stage == Stage.stage_twelve.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_twelve_start_riego.value
-            end = DateStage.stage_twelve_end_riego.value
-        elif stage == Stage.stage_twelve.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_twelve_start_secano.value
-            end = DateStage.stage_twelve_end_secano.value 
-        elif stage == Stage.stage_thirteen.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_thirteen_start_riego.value
-            end = DateStage.stage_thirteen_end_riego.value
-        elif stage == Stage.stage_thirteen.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_thirteen_start_secano.value
-            end = DateStage.stage_thirteen_end_secano.value 
-        elif stage == Stage.stage_fourteen.value and type_planting == TypePlanting.riego.value:
-            start = DateStage.stage_fourteen_start_riego.value
-            end = DateStage.stage_fourteen_end_riego.value
-        elif stage == Stage.stage_fourteen.value and type_planting == TypePlanting.secano.value:
-            start = DateStage.stage_fourteen_start_secano.value
-            end = DateStage.stage_fourteen_end_secano.value 
-        elif stage == Stage.stage_fifteen.value:
-            start = DateStage.stage_fifteen_start.value
-            end = DateStage.stage_fifteen_end.value      
-        return (start, end)
+    def set_calendar_real(self, land_id, user, date):
+        date = GeneralsUtils.try_parse_date_time(date)
+        self.__service_activities.set_calendar(land_id, user, 4, date, False)
+        self.__service_activities.set_calendar(land_id, user, 5, date, False)
+        self.__service_activities.set_calendar(land_id, user, 6, date, False)
+        self.__service_activities.set_calendar(land_id, user, 7, date, False)
+        self.__service_activities.set_calendar(land_id, user, 8, date, False)
+        self.__service_activities.set_calendar(land_id, user, 9, date, False)
+        self.__service_activities.set_calendar(land_id, user, 10, date, False)
+        self.__service_activities.set_calendar(land_id, user, 11, date, False)
+        self.__service_activities.set_calendar(land_id, user, 12, date, False)
+        self.__service_activities.set_calendar(land_id, user, 13, date, False)
+        self.__service_activities.set_calendar(land_id, user, 14, date, False)
+        self.__service_activities.set_calendar(land_id, user, 15, date, False)
 
     def calulate_stage(self, stage):
         stage_result = 0

@@ -2,12 +2,12 @@
   // Client request
   // background-color: transparent!important;
   justify-content: space-between;
+  position: relative;
 
   a {
     font-size: 1.2rem;
   }
   .navbar-brand {
-    flex: 1;
     img {
       height: 90px;
     }
@@ -40,23 +40,41 @@
     margin: 0 15px;
   }
 
-  .icon-bell{
-    position: relative;
-    cursor: pointer;
+  .close-session{
+    margin-left: 170px;
+  }
 
-    .notification{
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background-color: red;
-      color: white;
-      font-size: 10px;
-      width: 18px;
-      height: 18px;
-      justify-content: center;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
+  .header-actions{
+    position: absolute;
+    right: 170px;
+    top: 42px;
+
+    .notifications{
+      position: relative;
+      cursor: pointer;
+
+      mat-icon{
+        color: white;
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        margin: 0 15px;
+      }
+  
+      .notification{
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background-color: red;
+        color: white;
+        font-size: 10px;
+        width: 18px;
+        height: 18px;
+        justify-content: center;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+      }
     }
 
     .box-notification{
@@ -113,10 +131,13 @@
     }
   }
   .navbar {
-    .icon-bell{
-  
-      .box-notification{
-        top: 50px;
+    .header-actions{
+      top: 20px;
+
+      .notifications{
+        .box-notification{
+          top: 50px;
+        }
       }
     }
   }
@@ -130,10 +151,18 @@
       height: 45px;
     }
 
-    .icon-bell{
+    .close-session{
+      margin-left: 0;
+    }
   
-      .box-notification{
-        top: 48px;
+    .header-actions{
+      right: 70px;
+
+      .notifications{
+    
+        .box-notification{
+          top: 48px;
+        }
       }
     }
   }
@@ -146,7 +175,7 @@
   }
 
   .navbar {
-    .icon-bell{
+    .notifications{
   
       .box-notification{
         top: 45px;
@@ -161,11 +190,37 @@
     height: 30px;
   }
   .navbar {
-    .icon-bell{
-  
-      .box-notification{
-        top: 40px;
+
+    .header-actions{
+      top: 12px;
+
+      .notifications{
+
+        mat-icon{
+          height: 25px;
+        }
+    
+        .box-notification{
+          top: 40px;
+        }
       }
+    }
+  }
+
+  .material-icons {
+    vertical-align: text-bottom;
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 416px) {
+  .navbar {
+
+    .header-actions{
+      position: static;
+      right: 0;
+      width: 100%;
+      text-align: right;
     }
   }
 
@@ -177,7 +232,7 @@
 
 @media (max-width: 375px) {
   .navbar {
-    .icon-bell{
+    .notifications{
   
       .box-notification{
         width: 250px;

@@ -4,7 +4,7 @@ import { HistoricalComponent } from './historical.component';
 
 const routes: Routes = [
   {
-    path: ':idProperty/:idLand',
+    path: ':idProperty/:idLand/:idHistorical',
     component: HistoricalComponent,  
   },
 ];

@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
             (roles) => {
               this.storageService.setValue('roles', roles[0].role);
               const roleName = this.storageService.settings.roles.find(role => role.key === data[0].role);
-              this.storageService.setValue('user', { name: data[0].nombre, roleId: roleName.key, role: roleName.role });
+              this.storageService.setValue('user', { name: data[0].name, id: data[0].user_id, roleId: roleName.key, role: roleName.role });
               this.configService.loading = false;
               this.router.navigate(['']);
             });

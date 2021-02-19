@@ -30,6 +30,29 @@
   }
 }
 
+.buttons{
+  display: flex;
+  align-items: flex-start;
+  margin: 10px 0;
+
+  .buttons-left{
+    flex: 1;
+    
+    button{
+      border-radius: 18px;
+    }
+  }
+
+  .buttons-right{
+    display: flex;
+    width: 60px;
+  }
+
+  button{
+    margin: 5px;
+  }
+}
+
 @media (min-width: 100px) {
   .sponsors {
     height: 500px;
@@ -45,5 +68,5 @@
 @media (min-width: 710px) {
   .sponsors {
     height: 700px;
-  } 
+  }
 }

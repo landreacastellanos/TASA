@@ -10,8 +10,8 @@ import { Activity } from '../calendar-activities.model';
   styleUrls: ['./list-events.component.scss'],
 })
 export class ListEventsComponent implements OnInit {
-  dataSource: MatTableDataSource<{ land: string; title: string; time: string }>;
-  displayedColumns: string[] = ['time', 'land', 'title'];
+  dataSource: MatTableDataSource<{ land: string; title: string}>;
+  displayedColumns: string[] = ['property', 'land', 'title'];
   title: string;
   constructor(
     public dialogRef: MatDialogRef<ListEventsComponent>,
@@ -21,12 +21,11 @@ export class ListEventsComponent implements OnInit {
     const listActivities = data.events
       .map((event) => event.meta as Activity)
       .map((activity) => ({
-        land: `${activity.property} / ${activity.land}`,
-        title: activity.title,
-        time: activity.date.format('LT'),
+        property: `${activity.property_name}`,
+        land: `${activity.land_name}`,
+        title: activity.stage_name,
       }));
     this.dataSource = new MatTableDataSource(listActivities);
-    console.log(this.dataSource);
   }
 
   ngOnInit(): void {}
