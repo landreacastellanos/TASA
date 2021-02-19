@@ -14,6 +14,7 @@ from project.infrastructure.repositories.common_repository\
 from project.resources.utils.security_token import SecurityToken   
 from project.resources.utils.generals_utils import GeneralsUtils
 from project.resources.utils.notification_utils import NotificationUtils
+from holidays_co import is_holiday_date
 from project.services.calendar_service import CalendarService
 from project.resources.utils.data_utils import DataUtils
 
@@ -40,6 +41,9 @@ class StageServices:
         self.__repository_historical = CommonRepository(
             entity_name="historical"
         )
+        self.__repository_stage = CommonRepository(
+            entity_name="stage"
+        ) 
         self.__service_activities = CalendarService()
 
     def get_property_land(self, id, land):
@@ -470,9 +474,13 @@ class StageServices:
             "details": []
         }
         
+        validation_token = SecurityToken().validate_token()
+        email = validation_token[2]
         land_id = data['land_id']         
         
         stage_number = Stage.stage_one.value
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
@@ -500,6 +508,7 @@ class StageServices:
         notification_utils = NotificationUtils()        
 
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
+            self.set_alarms(land_id, tuple_stage[3], data, data['sowing_date'])
             notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
@@ -515,6 +524,7 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
+            self.set_alarms(land_id, tuple_stage[3], data, data['real_date'])
 
         data.pop("land_id")
         
@@ -693,3 +703,62 @@ class StageServices:
         result['segments'] = data
         result['segments']['images'] = images
         return result['segments']
+
+    def set_alarms(self, land_id, type_land, type_date, date):
+        segments = []
+        if "sowing_date" in type_date:
+            segments = [Stage.stage_one.value, Stage.stage_two.value, Stage.stage_three.value]
+        else:
+            segments = (Stage.stage_four.value, Stage.stage_five.value,
+            Stage.stage_six.value, Stage.stage_seven.value, Stage.stage_eight.value,
+            Stage.stage_nine.value, Stage.stage_ten.value, Stage.stage_eleven.value,
+            Stage.stage_twelve.value, Stage.stage_thirteen.value, Stage.stage_fourteen.value,
+            Stage.stage_fifteen.value)
+
+        list(map(lambda x: self.get_data_alarms(land_id, x, type_land, date), segments))
+
+    def get_data_alarms(self, land_id, stage, type_land, date):
+        date_calculated = []
+        stage_name = self.__repository_stage.select(options={"filters":
+                             [
+                             ['stageNumber', "equals", stage],
+                             'and',
+                             ['typePlanning', "equals", type_land]]
+                             })
+        land = self.__repository_land.select(options={"filters":
+                             [
+                             ['id', "equals", land_id]]
+                             })
+        
+        property_ = self.__repository_properties.select(options={"filters":
+                             [
+                             ['id', "equals", land[0]["property_id"]]]
+                             })
+        if stage == Stage.stage_one.value:
+            date_alarm = self.get_date_holidays(date)
+            date_calculated = date
+        else:
+            dates = DataUtils.calulate_date_stage(stage, type_land)
+            date_calculated = self.validate_dates(GeneralsUtils.try_parse_date_time(date), dates, stage)[0]
+            date_alarm = self.get_date_holidays(date_calculated)
+        
+        result = {
+            "batch_name": property_[0]['name'],
+            "property_name": land[0]['land_name'],
+            "title": stage_name[0]['stage'],
+            "land_id": land_id,
+            "property_id": property_[0]['id'],
+            "type": 2,
+            "date": date_calculated,
+            "date_alarm": date_alarm,
+            "stage_number": stage,
+            "stage_id": stage_name[0]['id']
+        }
+
+        NotificationUtils().set_alarms(result)
+
+    def get_date_holidays(self, date):
+        date_alarm = (GeneralsUtils.try_parse_date_time(date) - timedelta(days=2))
+        while is_holiday_date(date_alarm):
+            date_alarm = (date_alarm + timedelta(days=1))
+        return str(date_alarm)
