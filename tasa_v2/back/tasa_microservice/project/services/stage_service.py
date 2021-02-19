@@ -738,7 +738,7 @@ class StageServices:
             date_alarm = self.get_date_holidays(date)
             date_calculated = date
         else:
-            dates = self.calulate_date_stage(stage, type_land)
+            dates = DataUtils.calulate_date_stage(stage, type_land)
             date_calculated = self.validate_dates(GeneralsUtils.try_parse_date_time(date), dates, stage)[0]
             date_alarm = self.get_date_holidays(date_calculated)
         
