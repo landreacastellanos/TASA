@@ -3,10 +3,12 @@ from datetime import datetime
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken
+from project.resources.utils.generals_utils import GeneralsUtils
 from project.resources.utils.encryption_utils import Encryption
 
 class NotificationService():
-
+    START_DATE = "%s-%sT00:00:00Z"
+    END_DATE = "%s-%sT23:59:59Z"
     def __init__(self):
         self.__repository_notification = CommonRepository(
          entity_name="notification")
@@ -34,14 +36,35 @@ class NotificationService():
         email = validation_token[2]
 
         data = self.__repository_notification.select(entity_name="notification",options={ "filters":
-            [["user_name", "equals", email]
+            [["user_name", "equals", email],
+            "and",
+            ["alarm", "equals", False]
             ]         
         })        
 
         for item in data:
             data = json.loads(item['Notification'])
             data['id'] = item['id']
-            results['data'].append(data)            
+            results['data'].append(data) 
+
+
+        start = self.START_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
+        end = self.END_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
+        alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
+            [["user_name", "equals", email],
+            "and",
+            ["alarm", "equals", True],
+            "and",
+            ["alarm_date", ">=", start],
+            "and",
+            ["alarm_date", "<=", end]
+            ]         
+        })
+        
+        for item in alarms:
+            data = json.loads(item['Notification'])
+            data['id'] = item['id']
+            results['data'].append(data) 
         return results
 
     def delete_notification(self, type_id, data):
