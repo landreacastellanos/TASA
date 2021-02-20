@@ -82,6 +82,9 @@
       box-shadow: 0px 18px 26px -5px rgba(0, 0, 0, 0.895);
       z-index: 10;
 
+      max-height: 80vh;
+      overflow-y: auto;
+
       .header-box-notification {
         display: flex;
         justify-content: space-between;
@@ -129,7 +132,6 @@
     }
     .notifications {
       mat-icon {
-        // height: calc(( #{(map-get($map, "height"))} - 15% )/ 2);
         max-height: calc(( #{(map-get($map, "height"))} + 0.5em )/ 2);
       }
     }

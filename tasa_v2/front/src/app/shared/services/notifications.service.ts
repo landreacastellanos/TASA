@@ -13,8 +13,8 @@ export class NotificationsService {
   constructor(public dataApiService: DataApiService) {}
 
   getNotifications() {
-    // return this.dataApiService.getAll('get_notification', environment.urlNotifications)
-    return this.getNotificationsMock()
+    return this.dataApiService.getAll('get_notification', environment.urlNotifications)
+    // return this.getNotificationsMock()
     .then(data => {
       this.notifications = data.length ? data.filter(notification => notification.type === 1 ) : [];
       this.alerts = data.length ? data.filter(notification => notification.type === 2 ) : [];
