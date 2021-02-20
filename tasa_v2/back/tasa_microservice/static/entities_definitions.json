@@ -30,7 +30,9 @@
    "user":{
       "tableName": "user",
       "type": "object",
-      "primaryKey":"id",
+      "primaryKey": [
+         "id"
+      ],
       "properties": {
          "id": {
             "dbName": "id",
@@ -512,6 +514,47 @@
          "data": {
             "dbName": "data",
             "type": "string"
+         }
+      }
+   },
+   "alarms": {
+      "tableName": "Notification",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "id_user": {
+            "dbName": "id_user",
+            "type": "integer"
+         },
+         "user_name": {
+            "dbName": "user_name",
+            "type": "string"
+         },
+         "Notification": {
+            "dbName": "Notification",
+            "type": "string"
+         },
+         "id_land": {
+            "dbName": "id_land",
+            "type": "integer"
+         },
+         "stage_id": {
+            "dbName": "stage_id",
+            "type": "integer"
+         },
+         "alarm": {
+            "dbName": "alarm",
+            "type": "boolean"
+         },
+         "alarm_date": {
+            "dbName": "alarm_date",
+            "type": "dateTime"
          }
       }
    },
