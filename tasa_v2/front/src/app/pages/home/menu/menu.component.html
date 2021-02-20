@@ -46,7 +46,7 @@
       </div>
     </a>
     <a class="icon notifications">
-      <img src="../../../assets/img/bell.svg" alt="bell" (click)="viewNotificationMethod('alerts')">
+      <img src="../../../assets/img/siren.svg" alt="bell" (click)="viewNotificationMethod('alerts')">
       <div class="notification" (click)="viewNotificationMethod('alerts')" *ngIf="notifyService.alerts">
         {{notifyService.alerts.length}}
       </div>
@@ -76,6 +76,9 @@
           </div>
           <div *ngIf="type ==='notificationsChat'">
             Tienes un mensaje nuevo de <b>{{notify.user_name}}</b>, en la finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b>
+          </div>
+          <div *ngIf="type ==='alerts'">
+            La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> el <b>{{notify.date | date: formatDates }}</b> iniciará <b>{{notify.title}}</b>
           </div>
         </div>
         <div class="icon-box-notification col-1">

@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit {
   title = '';
   notifications;
   type;
+  formatDates = 'd-MMM-y';
 
   constructor(
     private authService: AuthService,

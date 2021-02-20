@@ -382,7 +382,4 @@ class Repository():
         except Exception as error:
             error_detected = error
 
-        if query_result.rowcount != 1:
-            raise Exception("Error deleting.", error_detected)
-
         return True    

@@ -3,7 +3,7 @@ import { DataApiService } from 'src/app/shared/services/data-api.service';
 import { environment } from 'src/environments/environment';
 import moment from 'moment';
 import { LandsService } from '../farms/calendar/lands.service';
-import { ActivatedRoute } from '@angular/router';
+import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,7 @@ export class ChatService {
   constructor(
     public dataApiService: DataApiService,
     public landsService: LandsService,
+    public configService: ConfigurationService,
   ) { 
   }
 
@@ -26,6 +27,7 @@ export class ChatService {
     return this.dataApiService.getAll(`get_chat_message?land_id=${idLandSent}`, environment.urlNotifications).then((chat) => {
       this.conversation = chat[0].map((data) => {
         data.created_date = moment(data.created_date).format('hh:mm A');
+        data.color = this.configService.rolesMock.find(role => role.key === data.role_id).color;
         return data;
       });
     })
