@@ -19,6 +19,18 @@ export class ConfigurationService {
     {key: 9, color: 'salmon'},
   ]
 
+  public rolesMock =[
+    {key: 1, color: 'red'},
+    {key: 2, color: 'blue'},
+    {key: 3, color: 'pink'},
+    {key: 4, color: 'yellow'},
+    {key: 5, color: 'brown'},
+    {key: 6, color: 'black'},
+    {key: 7, color: 'orange'},
+    {key: 8, color: 'gray'},
+    {key: 9, color: 'salmon'},
+  ]
+
   constructor() {}
 
   public setLoadingPage(loading): void {
