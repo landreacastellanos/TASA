@@ -21,6 +21,14 @@
          "Notification": {
             "dbName": "Notification",
             "type": "string"
+         },
+         "alarm": {
+            "dbName": "alarm",
+            "type": "boolean"
+         },
+         "alarm_date": {
+            "dbName": "alarm_date",
+            "type": "dateTime"
          }
       }
    },
