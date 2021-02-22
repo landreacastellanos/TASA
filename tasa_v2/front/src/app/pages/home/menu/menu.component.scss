@@ -113,7 +113,7 @@
   }
 }
 
-.material-icons {
+a .material-icons {
   vertical-align: bottom;
   font-size: 25px;
 }
@@ -125,14 +125,17 @@
       height: map-get($map, "height");
     }
     .header-actions {
-      top: calc(( #{(map-get($map, "height"))} - 4px )/ 2);
+      top: calc((#{(map-get($map, "height"))} - 4px) / 2);
     }
     .box-notification {
-      top: calc((#{(map-get($map, "height"))} ) - (#{(map-get($map, "height"))} / 2 - 28px)); 
+      top: calc(
+        (#{(map-get($map, "height"))}) -
+          (#{(map-get($map, "height"))} / 2 - 28px)
+      );
     }
     .notifications {
       mat-icon {
-        max-height: calc(( #{(map-get($map, "height"))} + 0.5em )/ 2);
+        max-height: calc((#{(map-get($map, "height"))} + 0.5em) / 2);
       }
     }
   }
@@ -193,7 +196,7 @@
     )
   );
 
-  .material-icons {
+  a .material-icons {
     vertical-align: text-bottom;
     font-size: 25px;
   }
@@ -213,12 +216,16 @@
       width: 100%;
       text-align: right;
     }
+    div.box-notification{
+      top: 85px; // Double header
+    }
   }
 
-  .material-icons {
+  a .material-icons {
     vertical-align: text-bottom;
     font-size: 25px;
   }
+
 }
 
 @media (max-width: 375px) {
@@ -228,12 +235,8 @@
       height: 30px,
     )
   );
-  .navbar {
-    .notifications {
-      .box-notification {
-        width: 250px;
-        right: -18px;
-      }
-    }
+  .box-notification {
+    width: 250px;
+    right: -18px;
   }
 }
