@@ -83,10 +83,9 @@ export class MenuComponent implements OnInit {
     this.viewNotification = false;
     await this.closeNotification(notify);
     switch (this.type) {
+      case 'alerts':
       case 'notifications':
         this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
-        break;
-      case 'alerts':
         break;
       case 'notificationsChat':
         this.chatService.getMessage(notify.land_id, notify.property_id);
