@@ -71,9 +71,9 @@ class NotificationUtils():
         id_land = data['land_id']
         stage_id = data['stage_id']
         alarm_date = data['date_alarm']
-        del data['land_id']
         del data['stage_id']
         del data['date_alarm']
+        self.delete_alarm(id_land, stage_id)
         if(property_field['manager'] is not None):
             self.insert_data_alarm(data, property_field['manager'], id_land, stage_id, alarm_date)
         if(property_field['property_owner'] is not None):
@@ -104,4 +104,11 @@ class NotificationUtils():
             "alarm": True
         }
         self.__repository_alarm.insert(result)
+
+    def delete_alarm(self, id_land, stage_id):
+        data = {
+            "id_land": id_land,
+            "stage_id": stage_id,
+        }
+        self.__repository_alarm.delete_compound_key(data)
             
