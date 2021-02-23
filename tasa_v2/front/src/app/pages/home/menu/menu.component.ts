@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'src/app/shared/services/notifications.service';
 import { RolAdministrador } from '../../../shared/models/role';
@@ -17,7 +17,8 @@ const PERMISSION_BY_PATH = {
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-
+  @ViewChild('menuToggle', { static: false })
+  menuToggle: ElementRef;
   viewNotification = false;
   title = '';
   notifications;
@@ -30,9 +31,9 @@ export class MenuComponent implements OnInit {
     private storageService: StorageService,
     public notifyService: NotificationsService,
     private chatService: ChatService
-  ) { }
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   get role() {
     return this.storageService.settings?.user?.roleId;
@@ -59,7 +60,14 @@ export class MenuComponent implements OnInit {
   }
 
   viewNotificationMethod(type) {
-    this.viewNotification = !this.viewNotification
+    // Close menu
+    if (!this.menuToggle.nativeElement.classList.contains('collapsed')) {
+      this.menuToggle.nativeElement.click();
+    }
+
+    if (!(this.viewNotification && this.type !== type)) {
+      this.viewNotification = !this.viewNotification;
+    }
     if (this.viewNotification) {
       this.type = type;
       switch (type) {
@@ -85,7 +93,12 @@ export class MenuComponent implements OnInit {
     switch (this.type) {
       case 'alerts':
       case 'notifications':
-        this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
+        this.router.navigate([
+          '/farms/calendar/',
+          notify.property_id,
+          notify.land_id,
+          notify.stage_number,
+        ]);
         break;
       case 'notificationsChat':
         this.chatService.getMessage(notify.land_id, notify.property_id);
@@ -97,7 +110,10 @@ export class MenuComponent implements OnInit {
   }
 
   closeNotification(notify?) {
-    const type = this.type === 'notifications' ? 1 : this.type === 'alerts' ? 2 : 3;
-    return this.notifyService.deleteNotification(notify ? notify.id : '', { type });
+    const type =
+      this.type === 'notifications' ? 1 : this.type === 'alerts' ? 2 : 3;
+    return this.notifyService.deleteNotification(notify ? notify.id : '', {
+      type,
+    });
   }
 }
