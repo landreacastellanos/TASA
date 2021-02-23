@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" routerLink="/initial"><img src="../../../assets/img/logo.png" alt=""></a>
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+  <div #navbarNavDropdown class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="/initial">INICIO</a>
@@ -40,20 +40,20 @@
 
   <div class="header-actions nav-link">
     <a class="icon notifications">
-      <img src="../../../assets/img/bell.svg" alt="bell" (click)="viewNotificationMethod('notifications')">
-      <div class="notification" (click)="viewNotificationMethod('notifications')" *ngIf="notifyService.notifications">
+      <img src="../../../assets/img/bell.svg" alt="bell" (click)="onClickViewNotificationMethod('notifications')">
+      <div class="notification" (click)="onClickViewNotificationMethod('notifications')" *ngIf="notifyService.notifications">
         {{notifyService.notifications.length}}
       </div>
     </a>
     <a class="icon notifications">
-      <img src="../../../assets/img/siren.svg" alt="bell" (click)="viewNotificationMethod('alerts')">
-      <div class="notification" (click)="viewNotificationMethod('alerts')" *ngIf="notifyService.alerts">
+      <img src="../../../assets/img/siren.svg" alt="bell" (click)="onClickViewNotificationMethod('alerts')">
+      <div class="notification" (click)="onClickViewNotificationMethod('alerts')" *ngIf="notifyService.alerts">
         {{notifyService.alerts.length}}
       </div>
     </a>
     <a class="icon notifications">
-      <mat-icon class="size-icon-check" (click)="viewNotificationMethod('notificationsChat')">chat</mat-icon>
-      <div class="notification" (click)="viewNotificationMethod('notificationsChat')"
+      <mat-icon class="size-icon-check" (click)="onClickViewNotificationMethod('notificationsChat')">chat</mat-icon>
+      <div class="notification" (click)="onClickViewNotificationMethod('notificationsChat')"
         *ngIf="notifyService.notificationsChat">
         {{notifyService.notificationsChat.length}}
       </div>
