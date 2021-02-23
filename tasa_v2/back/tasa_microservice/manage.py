@@ -31,7 +31,7 @@ def before_request_function():
     g.endpoint = request.endpoint
     validation_url = True
     if any(url_exclude in request.base_url
-    for url_exclude in ("swagger", "restore_password", "login", "get_file")):
+    for url_exclude in ("swagger", "restore_password", "reset_password", "login", "get_file")):
         validation_url = False
 
     if validation_url:

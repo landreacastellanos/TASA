@@ -493,6 +493,10 @@
          "Notification": {
             "dbName": "Notification",
             "type": "string"
+         },
+         "alarm": {
+            "dbName": "alarm",
+            "type": "boolean"
          }
       }
    },

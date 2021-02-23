@@ -175,6 +175,7 @@ class NotificationService():
             user_notification = {
                 "id_user": user['id'],
                 "user_name": user['email'],
-                "Notification": json.dumps(notification)                
+                "Notification": json.dumps(notification),
+                "alarm": False                
             }
             self.__repository_notification.insert(user_notification)
