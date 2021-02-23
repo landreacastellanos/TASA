@@ -515,6 +515,8 @@ class StageServices:
             images = data['images']
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
+        else:
+            stage_db["procedure_image"] = None
         
         if("real_date" in data and len(data['real_date'].strip()) > 0 ):
             stage_db["real_date"] = data['real_date']
@@ -529,9 +531,7 @@ class StageServices:
         data.pop("land_id")
         
         stage_db['data'] = json.dumps(data)
-        stage_db['stage_complete'] = complete_stage
-
-        
+        stage_db['stage_complete'] = complete_stage        
 
         if(len(property_stage) == 0):
             stage_db['land_id'] = land_id            
