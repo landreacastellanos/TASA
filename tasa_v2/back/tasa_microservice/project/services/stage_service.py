@@ -222,7 +222,7 @@ class StageServices:
         if(len(property_stage) == 0):            
             
             property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            if(edit):                
+            if(edit and not stage_number is Stage.stage_two.value):                
                 edit &= (len(property_stage_one) > 0)
                 edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
 
