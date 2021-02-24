@@ -19,9 +19,11 @@ const PERMISSION_BY_PATH = {
 export class MenuComponent implements OnInit {
   @ViewChild('menuToggle', { static: false })
   menuToggle: ElementRef;
+  @ViewChild('navbarNavDropdown', { static: false })
+  navbarNavDropdown: ElementRef;
   viewNotification = false;
-  title = '';
-  notifications;
+  // title = '';
+  // notifications;
   type;
   formatDates = 'd-MMM-y';
 
@@ -59,31 +61,45 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  viewNotificationMethod(type) {
+  onClickViewNotificationMethod(type) {
     // Close menu
-    if (!this.menuToggle.nativeElement.classList.contains('collapsed')) {
+    if (this.navbarNavDropdown.nativeElement.classList.contains('show')) {
       this.menuToggle.nativeElement.click();
     }
 
     if (!(this.viewNotification && this.type !== type)) {
       this.viewNotification = !this.viewNotification;
     }
+
     if (this.viewNotification) {
       this.type = type;
-      switch (type) {
-        case 'notifications':
-          this.title = 'Notificaciones';
-          this.notifications = this.notifyService.notifications;
-          break;
-        case 'alerts':
-          this.title = 'Alertas';
-          this.notifications = this.notifyService.alerts;
-          break;
-        case 'notificationsChat':
-          this.title = 'Mensajes';
-          this.notifications = this.notifyService.notificationsChat;
-          break;
-      }
+    }
+  }
+
+  get title() {
+    switch (this.type) {
+      case 'notifications':
+        return 'Notificaciones';
+        break;
+      case 'alerts':
+        return 'Alertas';
+        break;
+      case 'notificationsChat':
+        return 'Mensajes';
+        break;
+    }
+  }
+
+  get notifications() {
+    switch (this.type) {
+      case 'notifications':
+        return this.notifyService.notifications;
+      case 'alerts':
+        return this.notifyService.alerts;
+      case 'notificationsChat':
+        return this.notifyService.notificationsChat;
+      default:
+        return [];
     }
   }
 

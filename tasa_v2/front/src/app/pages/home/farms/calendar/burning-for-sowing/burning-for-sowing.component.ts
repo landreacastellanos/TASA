@@ -90,7 +90,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   get title() {
     return (
       this.route.snapshot.data.title[
-      this.landsService?.landSelected?.sowing_system
+        this.landsService?.landSelected?.sowing_system
       ] || ''
     );
   }
@@ -143,7 +143,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       enabled = false,
       end_traking_date = '',
       start_traking_date = '',
-      images = []
+      images = [],
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
     this.mode = enabled ? 'edit' : 'view';
@@ -155,7 +155,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       this.selection.clear();
       this.pictures = images ? images : [];
-
 
       if (this.products) {
         products.forEach((product) => {
@@ -177,7 +176,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         this.landsService.landsSelectedIds
       ]
         ? this.landsService.lands[this.landsService.landsSelectedIds].batchs
-          .hectares_number
+            .hectares_number
         : 0;
     }, 1);
 
@@ -330,7 +329,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       productsDataSourceAdd: this.dataSourceProductsAdd,
     });
     const values = this.burningForSowingForm.value;
-    values.application_date = !!values.application_date ? values.application_date : undefined;
+    values.application_date = !!values.application_date
+      ? values.application_date
+      : undefined;
     values.products = this.selection.selected.map((product) => {
       product.dose_by_ha = parseFloat(`${product.dose_by_ha}`);
       return product;
@@ -363,8 +364,11 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           stage_number: this.segmentId,
           ...values,
         };
-        dataRequest.images =
-          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null;
+        dataRequest.images = this.pictures.length
+          ? this.addNewFiles(filesSaved)
+          : filesSaved
+          ? filesSaved
+          : null;
         return this.calendarService.setStage(dataRequest);
       })
       .then(
@@ -382,11 +386,14 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
 
   addNewFiles(filesSaved: string[]) {
-    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    const oldPictures = this.calendarService.returnPicture(
+      this.pictures
+    ) as string[];
     if (filesSaved) {
-      oldPictures.push(...filesSaved)
+      oldPictures.push(...filesSaved);
     }
-    return oldPictures;
+    // Only last 3
+    return oldPictures.slice(-3);
   }
 
   editPicture(picture, listPictures) {
@@ -395,9 +402,14 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        listPictures = listPictures.map(element => {
+        // Prevent upload again
+        this.files = undefined;
+        return filesSaved;
+      })
+      .then((filesSaved) => {
+        listPictures = listPictures.map((element) => {
           element = element === picture ? filesSaved[0] : element;
-          return element
+          return element;
         });
         this.pictures = this.calendarService.setPictureFile(listPictures);
         this.files = null;
@@ -410,7 +422,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   deletePicture(picture) {
     this.configurationService.setLoadingPage(true);
-    this.pictures = this.pictures.filter(data => data !== picture);
+    this.pictures = this.pictures.filter((data) => data !== picture);
     this.files = null;
     this.onSave();
   }
@@ -427,7 +439,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
     if (this.pictures.length > 0 && picture) {
-      this.editPicture(picture, listPictures)
+      this.editPicture(picture, listPictures);
     }
   }
 
@@ -456,8 +468,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     if (!row) {
       return ` all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.commercial_name
-      }`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.commercial_name
+    }`;
   }
 
   selectProduct(event, row) {

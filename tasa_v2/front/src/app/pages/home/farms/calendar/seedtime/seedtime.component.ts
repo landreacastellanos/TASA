@@ -89,14 +89,14 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     sowing_date = '',
     real_date = '',
     enabled = false,
-    images = []
+    images = [],
   } = {}) {
     this.mode = enabled ? 'edit' : 'view';
     this.configurationService.disableForm(
       this.seedTimeForm,
       this.mode === 'view'
     );
-    this.pictures = images? images : [];
+    this.pictures = images ? images : [];
     this.seedTimeForm.patchValue({
       type_sowing,
       variety,
@@ -135,7 +135,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
     if (this.pictures.length > 0) {
-      this.editPicture(picture, listPictures)
+      this.editPicture(picture, listPictures);
     }
   }
 
@@ -145,9 +145,9 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        listPictures= listPictures.map(element => {
+        listPictures = listPictures.map((element) => {
           element = element === picture ? filesSaved[0] : element;
-          return element
+          return element;
         });
         this.pictures = this.calendarService.setPictureFile(listPictures);
         this.files = null;
@@ -160,7 +160,7 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
 
   deletePicture(picture) {
     this.configurationService.setLoadingPage(true);
-    this.pictures = this.pictures.filter(data => data !== picture);
+    this.pictures = this.pictures.filter((data) => data !== picture);
     this.files = null;
     this.onSave();
   }
@@ -187,13 +187,21 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
+        // Prevent upload again
+        this.files = undefined;
+        return filesSaved;
+      })
+      .then((filesSaved) => {
         const dataRequest: StageOneRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landService.idLand),
           ...values,
         };
-        dataRequest.images =
-          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null;  
+        dataRequest.images = this.pictures.length
+          ? this.addNewFiles(filesSaved)
+          : filesSaved
+          ? filesSaved
+          : null;
         return this.calendarService.setStageOne(dataRequest);
       })
       .then(
@@ -214,11 +222,14 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
   }
 
   addNewFiles(filesSaved: string[]) {
-    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    const oldPictures = this.calendarService.returnPicture(
+      this.pictures
+    ) as string[];
     if (filesSaved) {
-      oldPictures.push(...filesSaved)
+      oldPictures.push(...filesSaved);
     }
-    return oldPictures;
+    // Only last 3
+    return oldPictures.slice(-3);
   }
 
   public disabledForm() {
