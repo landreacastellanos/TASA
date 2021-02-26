@@ -161,6 +161,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
         const dataRequest: StageHarvestRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landsService.idLand),
+          stage_number: this.segmentId,
           ...values,
         };
         dataRequest.images =
