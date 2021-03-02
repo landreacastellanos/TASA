@@ -95,7 +95,7 @@ class CalendarService:
             return calendar
         else:
             calendar = self.__repository_calendar.select(options={ "filters":
-                [["user_id",
+                [["id_user",
                 "equals",
                 user[0]['id']]
                 ]
