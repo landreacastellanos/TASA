@@ -506,9 +506,8 @@ class StageServices:
         complete_stage = False
 
         notification_utils = NotificationUtils()        
-
+        self.set_alarms(land_id, tuple_stage[3], data)
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
-            self.set_alarms(land_id, tuple_stage[3], data, data['sowing_date'])
             notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
@@ -524,7 +523,6 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
-            self.set_alarms(land_id, tuple_stage[3], data, data['real_date'])
 
         data.pop("land_id")
         
@@ -704,18 +702,18 @@ class StageServices:
         result['segments']['images'] = images
         return result['segments']
 
-    def set_alarms(self, land_id, type_land, type_date, date):
+    def set_alarms(self, land_id, type_land, type_date):
         segments = []
         if "sowing_date" in type_date:
             segments = [Stage.stage_one.value, Stage.stage_two.value, Stage.stage_three.value]
-        else:
+            list(map(lambda x: self.get_data_alarms(land_id, x, type_land,  type_date['sowing_date']), segments))
+        if "real_date" in type_date:
             segments = (Stage.stage_four.value, Stage.stage_five.value,
             Stage.stage_six.value, Stage.stage_seven.value, Stage.stage_eight.value,
             Stage.stage_nine.value, Stage.stage_ten.value, Stage.stage_eleven.value,
             Stage.stage_twelve.value, Stage.stage_thirteen.value, Stage.stage_fourteen.value,
             Stage.stage_fifteen.value)
-
-        list(map(lambda x: self.get_data_alarms(land_id, x, type_land, date), segments))
+            list(map(lambda x: self.get_data_alarms(land_id, x, type_land, type_date['real_date']), segments))
 
     def get_data_alarms(self, land_id, stage, type_land, date):
         date_calculated = []
