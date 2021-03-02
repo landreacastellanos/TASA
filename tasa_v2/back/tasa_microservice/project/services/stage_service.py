@@ -505,7 +505,7 @@ class StageServices:
         complete_stage = False
 
         notification_utils = NotificationUtils()        
-        #self.set_alarms(land_id, tuple_stage[3], data)
+        self.set_alarms(land_id, tuple_stage[3], data)
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
             notification_utils.set_notification(land_id, stage_number)
         
