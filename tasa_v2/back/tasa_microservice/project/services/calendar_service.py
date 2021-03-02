@@ -31,11 +31,12 @@ class CalendarService:
                             "and",
                             ['stageNumber', "equals", stage_number]]
                             })[0]
-
-            start = DataUtils.calulate_date_stage(stage_number, sowing_system)[0]
+            
             if(is_planning):
+                start = DataUtils.calulate_date_stage(stage_number, sowing_system)[1]
                 date = date - timedelta(days=start)
             else:
+                start = DataUtils.calulate_date_stage(stage_number, sowing_system)[0]
                 date = date + timedelta(days=start)
 
             calendar_activity = {

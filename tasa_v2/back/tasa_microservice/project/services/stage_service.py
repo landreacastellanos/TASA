@@ -556,6 +556,7 @@ class StageServices:
     def set_calendar_planning(self, land_id, user, date):
         self.__service_activities.set_calendar(land_id, user, 2, date, True)
         self.__service_activities.set_calendar(land_id, user, 3, date, True)
+        self.__service_activities.set_calendar(land_id, user, 1, date, True)
 
     def set_calendar_real(self, land_id, user, date):
         date = GeneralsUtils.try_parse_date_time(date)
