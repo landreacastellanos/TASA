@@ -704,10 +704,10 @@ class StageServices:
 
     def set_alarms(self, land_id, type_land, type_date):
         segments = []
-        if "sowing_date" in type_date:
+        if "sowing_date" in type_date and len(type_date['sowing_date'] > 0):
             segments = [Stage.stage_one.value, Stage.stage_two.value, Stage.stage_three.value]
             list(map(lambda x: self.get_data_alarms(land_id, x, type_land,  type_date['sowing_date']), segments))
-        if "real_date" in type_date:
+        if "real_date" in type_date and len(type_date['real_date'] > 0):
             segments = (Stage.stage_four.value, Stage.stage_five.value,
             Stage.stage_six.value, Stage.stage_seven.value, Stage.stage_eight.value,
             Stage.stage_nine.value, Stage.stage_ten.value, Stage.stage_eleven.value,
