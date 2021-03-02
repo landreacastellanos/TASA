@@ -22,11 +22,6 @@
 
 <ng-template #customCellTemplate let-day="day" let-locale="locale">
   <div class="cal-cell-header flex-grow-0">
-    <span
-      class="cal-day-count badge badge-primary m-1"
-      *ngIf="day.badgeTotal > 0"
-      >{{ day.badgeTotal }}</span
-    >
     <small class="cal-day-number m-1">{{
       day.date | calendarDate: "monthViewDayNumber":locale
     }}</small>
