@@ -36,8 +36,4 @@
     *ngFor="let event of day.events | slice: 0:3"
     >{{ event.title }}</small
   >
-  <small
-    *ngIf="day?.events?.length > 3"
-    >...{{day?.events?.length}}</small
-  >
 </ng-template>
