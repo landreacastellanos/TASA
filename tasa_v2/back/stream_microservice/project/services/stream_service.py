@@ -50,7 +50,6 @@ class NotificationService():
 
         start = self.START_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
         end = self.END_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
-        
         alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
             [["user_name", "equals", email],
             "and",
@@ -61,6 +60,8 @@ class NotificationService():
             ["alarm_date", "<=", end]
             ]         
         })
+        print("------")
+        print(alarms)
         
         for item in alarms:
             data = json.loads(item['Notification'])
