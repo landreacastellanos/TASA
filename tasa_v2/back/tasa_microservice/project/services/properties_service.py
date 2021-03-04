@@ -288,23 +288,40 @@ class PropertiesServices:
             property_data['parthner_add']=data['parthner_add']
         
         if("manager" in data):
-            property_data['manager']=data['manager']        
+            property_data['manager']=data['manager']
 
-        self.__repository_properties.update(data['id'],property_data)
+        try:
+            data_validation = self.__repository_properties.select(
+                options={"filters":
+                             [['business_name', "equals", str(data['business_name'])]]
+                             })
 
-        for item in data['batchs']:
-            batch = {
-                'land_name':item['name'],
-                'land_ha': float(item['hectares_number'])
-            }
-            if("id" in item):
-                self.__repository_land.update(item['id'],batch)
-            else:
-                batch['property_id']=data['id']
-                self.__repository_land.insert(batch)
+            if len(data_validation)>0:
+                raise Exception("Razon social duplicada.")
+
+            self.__repository_properties.update(data['id'],property_data)
+
+            for item in data['batchs']:
+                batch = {
+                    'land_name':item['name'],
+                    'land_ha': float(item['hectares_number'])
+                }
+                if("id" in item):
+                    self.__repository_land.update(item['id'],batch)
+                else:
+                    batch['property_id']=data['id']
+                    self.__repository_land.insert(batch)
         
-        results['data'].append({
-                                "key": 200,
-                                "value": "Finca actualizada"
-                                })
+            results['data'].append({
+                                    "key": 200,
+                                    "value": "Finca actualizada"
+                                    })
+
+        except Exception as exception:
+            results['details'].append(
+                {
+                    "key": 500,
+                    "value": "Error al registrar finca: "+str(exception)
+                }
+            )        
         return results
