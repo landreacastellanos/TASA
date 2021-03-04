@@ -60,6 +60,8 @@ class NotificationService():
             ["alarm_date", "<=", end]
             ]         
         })
+        print("------")
+        print(alarms)
         
         for item in alarms:
             data = json.loads(item['Notification'])

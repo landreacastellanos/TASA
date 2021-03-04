@@ -222,9 +222,14 @@ class StageServices:
         if(len(property_stage) == 0):            
             
             property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            if(edit and not stage_number is Stage.stage_two.value):                
+            if(edit and not stage_number in (Stage.stage_two.value,Stage.stage_three.value)):                
                 edit &= (len(property_stage_one) > 0)
                 edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            if(edit and stage_number is Stage.stage_three.value):
+                data = json.loads(property_stage_one[0]['data'])
+                edit &= (len(property_stage_one) > 0 and 'sowing_date' in data
+                and len(data['sowing_date']) > 0)  
 
             if(edit and len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
                 data = json.loads(property_stage_one[0]['data'])
@@ -741,8 +746,8 @@ class StageServices:
             date_alarm = self.get_date_holidays(date_calculated)
         
         result = {
-            "batch_name": property_[0]['name'],
-            "property_name": land[0]['land_name'],
+            "batch_name": land[0]['land_name'],
+            "property_name": property_[0]['name'],
             "title": stage_name[0]['stage'],
             "land_id": land_id,
             "property_id": property_[0]['id'],
