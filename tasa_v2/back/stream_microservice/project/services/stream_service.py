@@ -50,13 +50,6 @@ class NotificationService():
 
         start = self.START_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
         end = self.END_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
-        print("start")
-        print(start)
-        print("end")
-        print(end)
-        print("email")
-        print(email)
-
         alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
             [["user_name", "equals", email],
             "and",
