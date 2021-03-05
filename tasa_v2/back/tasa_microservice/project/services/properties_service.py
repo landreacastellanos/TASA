@@ -296,7 +296,7 @@ class PropertiesServices:
                              [['business_name', "equals", str(data['business_name'])]]
                              })
 
-            if len(data_validation)>0:
+            if len(data_validation)>0 and data_validation[0]['business_name'] != data['business_name']:
                 raise Exception("Razon social duplicada.")
 
             self.__repository_properties.update(data['id'],property_data)
@@ -307,7 +307,10 @@ class PropertiesServices:
                     'land_ha': float(item['hectares_number'])
                 }
                 if("id" in item):
-                    self.__repository_land.update(item['id'],batch)
+                    if("delete" in item and item['delete'] == True):
+                        self.__repository_land.delete(item['id'])
+                    else:
+                        self.__repository_land.update(item['id'],batch)
                 else:
                     batch['property_id']=data['id']
                     self.__repository_land.insert(batch)
