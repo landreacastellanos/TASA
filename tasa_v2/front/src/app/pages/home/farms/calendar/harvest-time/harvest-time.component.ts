@@ -153,9 +153,15 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
+        // Prevent upload again
+        this.files = undefined;
+        return filesSaved;
+      })
+      .then((filesSaved) => {
         const dataRequest: StageHarvestRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landsService.idLand),
+          stage_number: this.segmentId,
           ...values,
         };
         dataRequest.images =
@@ -184,11 +190,14 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
   }
 
   addNewFiles(filesSaved: string[]) {
-    const oldPictures = this.calendarService.returnPicture(this.pictures) as string[];
+    const oldPictures = this.calendarService.returnPicture(
+      this.pictures
+    ) as string[];
     if (filesSaved) {
-      oldPictures.push(...filesSaved)
+      oldPictures.push(...filesSaved);
     }
-    return oldPictures;
+    // Only last 3
+    return oldPictures.slice(-3);
   }
 
   onBack() {

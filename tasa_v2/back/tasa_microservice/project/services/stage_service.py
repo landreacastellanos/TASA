@@ -114,7 +114,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'real_date' in json_data and not json_data['real_date']
+            edit = 'real_date' in json_data and not json_data['real_date'] and edit
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
@@ -222,16 +222,18 @@ class StageServices:
         if(len(property_stage) == 0):            
             
             property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            if(edit):                
+            if(edit and not stage_number in (Stage.stage_two.value,Stage.stage_three.value)):                
                 edit &= (len(property_stage_one) > 0)
                 edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            if(edit and stage_number is Stage.stage_three.value):
+                data = json.loads(property_stage_one[0]['data'])
+                edit &= (len(property_stage_one) > 0 and 'sowing_date' in data
+                and len(data['sowing_date']) > 0)  
 
             if(edit and len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
-
-            if not edit and stage_number is Stage.stage_two.value:
-                edit = True
 
             start_traking_date = ''
             end_traking_date = ''
@@ -314,7 +316,8 @@ class StageServices:
                     "observations": "",
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
-                    "products": []
+                    "products": [],
+                    "images": None
                 }
             )
         else:
@@ -322,6 +325,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = edit and 'application_date' not in json_data
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
@@ -506,15 +510,16 @@ class StageServices:
         complete_stage = False
 
         notification_utils = NotificationUtils()        
-
+        self.set_alarms(land_id, tuple_stage[3], data)
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
-            self.set_alarms(land_id, tuple_stage[3], data, data['sowing_date'])
             notification_utils.set_notification(land_id, stage_number)
         
         if("images" in data):
             images = data['images']
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
+        else:
+            stage_db["procedure_image"] = None
         
         if("real_date" in data and len(data['real_date'].strip()) > 0 ):
             stage_db["real_date"] = data['real_date']
@@ -524,14 +529,11 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
-            self.set_alarms(land_id, tuple_stage[3], data, data['real_date'])
 
         data.pop("land_id")
         
         stage_db['data'] = json.dumps(data)
-        stage_db['stage_complete'] = complete_stage
-
-        
+        stage_db['stage_complete'] = complete_stage        
 
         if(len(property_stage) == 0):
             stage_db['land_id'] = land_id            
@@ -557,6 +559,7 @@ class StageServices:
     def set_calendar_planning(self, land_id, user, date):
         self.__service_activities.set_calendar(land_id, user, 2, date, True)
         self.__service_activities.set_calendar(land_id, user, 3, date, True)
+        self.__service_activities.set_calendar(land_id, user, 1, date, True)
 
     def set_calendar_real(self, land_id, user, date):
         date = GeneralsUtils.try_parse_date_time(date)
@@ -704,18 +707,18 @@ class StageServices:
         result['segments']['images'] = images
         return result['segments']
 
-    def set_alarms(self, land_id, type_land, type_date, date):
+    def set_alarms(self, land_id, type_land, type_date):
         segments = []
-        if "sowing_date" in type_date:
+        if "sowing_date" in type_date and len(type_date['sowing_date']) > 0:
             segments = [Stage.stage_one.value, Stage.stage_two.value, Stage.stage_three.value]
-        else:
+            list(map(lambda x: self.get_data_alarms(land_id, x, type_land,  type_date['sowing_date']), segments))
+        if "real_date" in type_date and len(type_date['real_date']) > 0:
             segments = (Stage.stage_four.value, Stage.stage_five.value,
             Stage.stage_six.value, Stage.stage_seven.value, Stage.stage_eight.value,
             Stage.stage_nine.value, Stage.stage_ten.value, Stage.stage_eleven.value,
             Stage.stage_twelve.value, Stage.stage_thirteen.value, Stage.stage_fourteen.value,
             Stage.stage_fifteen.value)
-
-        list(map(lambda x: self.get_data_alarms(land_id, x, type_land, date), segments))
+            list(map(lambda x: self.get_data_alarms(land_id, x, type_land, type_date['real_date']), segments))
 
     def get_data_alarms(self, land_id, stage, type_land, date):
         date_calculated = []
@@ -743,8 +746,8 @@ class StageServices:
             date_alarm = self.get_date_holidays(date_calculated)
         
         result = {
-            "batch_name": property_[0]['name'],
-            "property_name": land[0]['land_name'],
+            "batch_name": land[0]['land_name'],
+            "property_name": property_[0]['name'],
             "title": stage_name[0]['stage'],
             "land_id": land_id,
             "property_id": property_[0]['id'],
