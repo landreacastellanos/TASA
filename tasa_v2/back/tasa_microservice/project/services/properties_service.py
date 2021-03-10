@@ -15,6 +15,15 @@ class PropertiesServices:
         self.__repository_land = CommonRepository(
          entity_name="land")
 
+        self.__repository_notification = CommonRepository(
+         entity_name="notification")
+        self.__repository_historical = CommonRepository(
+         entity_name="historical")
+        self.__repository_calendar = CommonRepository(
+         entity_name="calendar")
+        self.__repository_procedure = CommonRepository(
+         entity_name="propertyProcedure") 
+
 
     def get_planting_type(self):       
         data = self.__repository_planting.select_all()          
@@ -308,7 +317,7 @@ class PropertiesServices:
                 }
                 if("id" in item):
                     if("delete" in item and item['delete'] == True):
-                        self.__repository_land.delete(item['id'])
+                        self.delete_batch(item['id'])
                     else:
                         self.__repository_land.update(item['id'],batch)
                 else:
@@ -328,3 +337,30 @@ class PropertiesServices:
                 }
             )        
         return results
+    
+    def delete_batch(self, land_id):
+        notifications = self.__repository_notification.select(options={"filters":
+                            [['id_land', "equals", land_id]]
+                            })
+        for item in notifications:
+            self.__repository_notification.delete(item['id'])    
+        
+        historical = self.__repository_historical.select(options={"filters":
+                            [['id_land', "equals", land_id]]
+                            })
+        for item in historical:
+            self.__repository_historical.delete(item['id']) 
+
+        calendar = self.__repository_calendar.select(options={"filters":
+                            [['id_land', "equals", land_id]]
+                            })
+        for item in calendar:
+            self.__repository_calendar.delete(item['id'])
+
+        stages = self.__repository_procedure.select(options={"filters":
+                            [['landId', "equals", land_id]]
+                            })
+        for item in stages:
+            self.__repository_procedure.delete(item['id'])
+   
+        self.__repository_land.delete(land_id)

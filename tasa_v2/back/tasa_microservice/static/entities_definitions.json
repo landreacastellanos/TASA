@@ -497,6 +497,10 @@
          "alarm": {
             "dbName": "alarm",
             "type": "boolean"
+         },
+         "id_land": {
+            "dbName": "id_land",
+            "type": "integer"
          }
       }
    },
