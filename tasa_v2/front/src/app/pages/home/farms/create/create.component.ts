@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { element } from 'protractor';
 import { RolAdministrador } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -18,6 +19,7 @@ export class CreateComponent implements OnInit {
   public farmForm: FormGroup;
   public submitted = false;
   public listLot = [];
+  public initialListLot = [];
   public users = [];
   public systems = [];
   public mode: 'edit' | 'view' | 'create';
@@ -118,6 +120,19 @@ export class CreateComponent implements OnInit {
         }
       });
     }
+    if (this.idLot) {
+      this.initialListLot.push({
+        name: this.farmForm.value.lotName,
+        value: this.farmForm.value.lotHectare,
+        error: false,
+        id: this.idLot
+      });
+      if (this.listLot.length) {
+        this.listLot.forEach((element) => {
+          this.initialListLot.push({ name: element.name, value: element.value, error: false, id: element.id });
+        })
+      }
+    }
     this.disabledForm();
     this.configService.loading = false;
   }
@@ -155,7 +170,17 @@ export class CreateComponent implements OnInit {
     } else {
       lots.push({ name: this.farmForm.value.lotName, hectares_number: this.farmForm.value.lotHectare });
     }
-
+    this.initialListLot.forEach(lot => {
+      const deleteLot = lots.find(element => element.id === lot.id);
+      if (!deleteLot) {
+        lots.push({
+          name: lot.name,
+          hectares_number: lot.value,
+          id: lot.id,
+          delete: true
+        });
+      }
+    })
     const farm = {
       batchs: lots,
       business_name: this.farmForm.value.businessName,
@@ -232,13 +257,35 @@ export class CreateComponent implements OnInit {
   public viewLot(lot?) {
     if (lot) {
       this.router.navigate(['/farms/calendar/', this.id, lot.id]);
-    } else{
+    } else {
       this.router.navigate(['/farms/calendar/', this.id, this.idLot]);
     }
   }
 
   public getIdRole(value: number) {
     return this.storageService.settings.roles.find(rol => rol.key === value);
+  }
+
+  public deleteLot(lot?) {
+    if (!lot) {
+      if (this.listLot.length) {
+        this.farmForm.get('lotName').setValue(this.listLot[0].name);
+        this.farmForm.get('lotHectare').setValue(this.listLot[0].value);
+        this.idLot = this.listLot[0].id;
+        this.listLot = this.listLot.filter(item => item.id !== this.idLot);
+      } else {
+        this.farmForm.get('lotName').setValue('');
+        this.farmForm.get('lotHectare').setValue('');
+        this.idLot = null;
+      }
+    } else {
+      if (lot.id) {
+        this.listLot = this.listLot.filter(item => item.id !== lot.id);
+      } else {
+        this.listLot = this.listLot.filter(item => item.name !== lot.name);
+      }
+    }
+
   }
 
   get vendors() {
