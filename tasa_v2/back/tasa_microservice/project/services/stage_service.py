@@ -20,7 +20,7 @@ from project.resources.utils.data_utils import DataUtils
 
 
 class StageServices:
-    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
+    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha de cosecha %s'
     PATH_IMAGES = "%stasa_service/get_file/%s"
 
     def __init__(self):
@@ -93,6 +93,7 @@ class StageServices:
             "details": []
         }
 
+        self.insert_historic(land_id)
         validation_token = SecurityToken().validate_token() 
         email = validation_token[2]
         
@@ -678,7 +679,7 @@ class StageServices:
         property_stage))
         
 
-        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'])
+        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'].strftime('%Y-%m-%d'))
         insert_object['owner'] = {
             "id": owner[0]['id'],
             "name": owner[0]['name'] + " " + owner[0]['last_name'] 
