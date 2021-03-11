@@ -304,8 +304,8 @@ class PropertiesServices:
                 options={"filters":
                              [['business_name', "equals", str(data['business_name'])]]
                              })
-
-            if len(data_validation)>0 and data_validation[0]['business_name'] != data['business_name']:
+            data_before_upd = self.__repository_properties.select_one(data['id'])
+            if len(data_validation)>0 and data_before_upd[0]['business_name'] != data['business_name']:
                 raise Exception("Razon social duplicada.")
 
             self.__repository_properties.update(data['id'],property_data)
