@@ -360,6 +360,9 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .then((filesSaved) => {
         // ? prevent duplicates saves
         delete this.files;
+        return filesSaved;
+      })
+      .then((filesSaved) => {
         const dataRequest: StageBetweenRequest = {
           // tslint:disable-next-line: radix
           land_id: parseInt(this.landsService.idLand),
@@ -404,8 +407,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        // Prevent upload again
-        this.files = undefined;
+        // ? prevent duplicates saves
+        delete this.files;
         return filesSaved;
       })
       .then((filesSaved) => {
@@ -414,7 +417,6 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           return element;
         });
         this.pictures = this.calendarService.setPictureFile(listPictures);
-        this.files = null;
         return this.onSave();
       })
       .finally(() => {
