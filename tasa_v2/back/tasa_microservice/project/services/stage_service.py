@@ -93,7 +93,6 @@ class StageServices:
             "details": []
         }
 
-        self.insert_historic(land_id)
         validation_token = SecurityToken().validate_token() 
         email = validation_token[2]
         
