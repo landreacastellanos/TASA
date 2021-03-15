@@ -347,6 +347,7 @@ class StageServices:
 
         if(len(user)>0):
             edit |= user[0]['role_id'] == Keys.admi.value
+            edit |= user[0]['id'] == property_field[0]['decision_influencer']
             edit |= user[0]['id'] == property_field[0]['manager']
             edit |= user[0]['id'] == property_field[0]['property_owner']
             edit |= user[0]['id'] == property_field[0]['seller']
@@ -528,6 +529,7 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['seller'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['decision_influencer'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
 
         data.pop("land_id")
@@ -552,6 +554,7 @@ class StageServices:
             self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
             self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
             self.set_calendar_planning(land_id, property_field[0]['manager'], date)
+            self.set_calendar_planning(land_id, property_field[0]['decision_influencer'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results

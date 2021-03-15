@@ -170,6 +170,8 @@ class NotificationService():
             self.insert_data(notification, property_field['parthner_add'])
         if(property_field['seller'] is not None and property_field['seller'] != user_id):
             self.insert_data(notification, property_field['seller'])
+        if(property_field['decision_influencer'] is not None and property_field['decision_influencer'] != user_id):
+            self.insert_data(notification, property_field['decision_influencer'])
 
 
     def insert_data(self, notification, user_id):
