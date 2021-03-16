@@ -7,7 +7,6 @@ from project.resources.utils.generals_utils import GeneralsUtils
 from project.resources.utils.encryption_utils import Encryption
 
 class NotificationService():
-    START_DATE = "%s-%sT00:00:00Z"
     END_DATE = "%s-%sT23:59:59Z"
     def __init__(self):
         self.__repository_notification = CommonRepository(
@@ -47,15 +46,11 @@ class NotificationService():
             data['id'] = item['id']
             results['data'].append(data) 
 
-
-        start = self.START_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
         end = self.END_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
         alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
             [["user_name", "equals", email],
             "and",
             ["alarm", "equals", True],
-            "and",
-            ["alarm_date", ">=", start],
             "and",
             ["alarm_date", "<=", end]
             ]         
