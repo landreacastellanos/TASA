@@ -139,15 +139,26 @@ class StageServices:
             "details": []
         }
         
+        validation_token = SecurityToken().validate_token() 
+        email = validation_token[2]
+
         land_id = data['land_id']
         result_tuple = self.get_property_stage('',data['land_id'],stage_number.value)
 
         property_stage = result_tuple[1]
         stage_id = result_tuple[2]        
         
+        validation = self.get_validation_stage(email, land_id, stage_number.value)
         images = []
         stage_db = {}
         complete_stage = False
+        
+        if validation:
+            results['details'].append({
+                    "key": 400,
+                    "value": "The Stage is complete"
+                })
+            return results
 
         notification_utils = NotificationUtils()
         if("observations" in data and "products" in data and "images" in data):
@@ -347,6 +358,7 @@ class StageServices:
 
         if(len(user)>0):
             edit |= user[0]['role_id'] == Keys.admi.value
+            edit |= user[0]['id'] == property_field[0]['decision_influencer']
             edit |= user[0]['id'] == property_field[0]['manager']
             edit |= user[0]['id'] == property_field[0]['property_owner']
             edit |= user[0]['id'] == property_field[0]['seller']
@@ -488,6 +500,13 @@ class StageServices:
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
+        validation = self.get_validation_stage(email, land_id, Stage.stage_one.value)
+        if validation:
+            results['details'].append({
+                    "key": 400,
+                    "value": "The Stage is complete"
+                })
+            return results
 
         stage = self.__repository_stage.select(entity_name="stage", options={"filters":
                              [['typePlanning', "equals", sowing_system],
@@ -528,6 +547,7 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['seller'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['decision_influencer'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
 
         data.pop("land_id")
@@ -552,6 +572,7 @@ class StageServices:
             self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
             self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
             self.set_calendar_planning(land_id, property_field[0]['manager'], date)
+            self.set_calendar_planning(land_id, property_field[0]['decision_influencer'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results
@@ -765,3 +786,7 @@ class StageServices:
         while is_holiday_date(date_alarm):
             date_alarm = (date_alarm + timedelta(days=1))
         return str(date_alarm)
+
+    def get_validation_stage(self, email, land, stage):
+        property_stage_one = self.get_property_stage(email, land, stage)[1]
+        return property_stage_one[0]['stage_complete']
