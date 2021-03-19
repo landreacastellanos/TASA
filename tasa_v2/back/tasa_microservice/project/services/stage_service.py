@@ -20,7 +20,7 @@ from project.resources.utils.data_utils import DataUtils
 
 
 class StageServices:
-    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
+    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha de cosecha %s'
     PATH_IMAGES = "%stasa_service/get_file/%s"
 
     def __init__(self):
@@ -139,8 +139,11 @@ class StageServices:
             "details": []
         }
         
+        validation_token = SecurityToken().validate_token() 
+        email = validation_token[2]
+
         land_id = data['land_id']
-        result_tuple = self.get_property_stage('',data['land_id'],stage_number.value)
+        result_tuple = self.get_property_stage(email, data['land_id'],stage_number.value)
 
         property_stage = result_tuple[1]
         stage_id = result_tuple[2]        
@@ -148,6 +151,13 @@ class StageServices:
         images = []
         stage_db = {}
         complete_stage = False
+        
+        if len(result_tuple[1]) > 0 and result_tuple[1][0]['stage_complete']:
+            results['details'].append({
+                    "key": 400,
+                    "value": "Etapa completa"
+                })
+            return results
 
         notification_utils = NotificationUtils()
         if("observations" in data and "products" in data and "images" in data):
@@ -347,6 +357,7 @@ class StageServices:
 
         if(len(user)>0):
             edit |= user[0]['role_id'] == Keys.admi.value
+            edit |= user[0]['id'] == property_field[0]['decision_influencer']
             edit |= user[0]['id'] == property_field[0]['manager']
             edit |= user[0]['id'] == property_field[0]['property_owner']
             edit |= user[0]['id'] == property_field[0]['seller']
@@ -488,6 +499,13 @@ class StageServices:
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
+        
+        if len(tuple_stage[1]) > 0 and tuple_stage[1][0]['stage_complete']:
+            results['details'].append({
+                    "key": 400,
+                    "value": "The Stage is complete"
+                })
+            return results
 
         stage = self.__repository_stage.select(entity_name="stage", options={"filters":
                              [['typePlanning', "equals", sowing_system],
@@ -528,6 +546,7 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['seller'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['decision_influencer'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
 
         data.pop("land_id")
@@ -552,6 +571,7 @@ class StageServices:
             self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
             self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
             self.set_calendar_planning(land_id, property_field[0]['manager'], date)
+            self.set_calendar_planning(land_id, property_field[0]['decision_influencer'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results
@@ -678,7 +698,7 @@ class StageServices:
         property_stage))
         
 
-        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'])
+        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'].strftime('%Y-%m-%d'))
         insert_object['owner'] = {
             "id": owner[0]['id'],
             "name": owner[0]['name'] + " " + owner[0]['last_name'] 

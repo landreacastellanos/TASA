@@ -22,7 +22,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
   segmentId: string;
   endTrackingDate: Moment;
   startTrackingDate: Moment;
-  pictures= [];
+  pictures = [];
   constructor(
     public fb: FormBuilder,
     private route: ActivatedRoute,
@@ -85,7 +85,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     end_traking_date = '',
     start_traking_date = '',
     enabled = true,
-    images = []
+    images = [],
   } = {}) {
     setTimeout(() => {
       this.mode = enabled ? 'edit' : 'view';
@@ -95,7 +95,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
         this.harvestTimeForm,
         this.mode === 'view'
       );
-      this.pictures = images? images : [];
+      this.pictures = images ? images : [];
     }, 0);
     this.harvestTimeForm.get('amount_quintals_ha').disable();
     this.harvestTimeForm.patchValue({
@@ -123,7 +123,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
   onChangeFiles(files: FileList, picture?: string, listPictures?: string[]) {
     this.files = files;
     if (this.pictures.length > 0) {
-      this.editPicture(picture, listPictures)
+      this.editPicture(picture, listPictures);
     }
   }
 
@@ -153,8 +153,8 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        // Prevent upload again
-        this.files = undefined;
+        // ? prevent duplicates saves
+        delete this.files;
         return filesSaved;
       })
       .then((filesSaved) => {
@@ -164,8 +164,11 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
           stage_number: this.segmentId,
           ...values,
         };
-        dataRequest.images =
-          this.pictures.length ? this.addNewFiles(filesSaved) : filesSaved ? filesSaved : null
+        dataRequest.images = this.pictures.length
+          ? this.addNewFiles(filesSaved)
+          : filesSaved
+          ? filesSaved
+          : [];
         return this.calendarService.setStage(dataRequest);
       })
       .then(
@@ -215,12 +218,16 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        listPictures= listPictures.map(element => {
+        // ? prevent duplicates saves
+        delete this.files;
+        return filesSaved;
+      })
+      .then((filesSaved) => {
+        listPictures = listPictures.map((element) => {
           element = element === picture ? filesSaved[0] : element;
-          return element
+          return element;
         });
         this.pictures = this.calendarService.setPictureFile(listPictures);
-        this.files = null;
         return this.onSave();
       })
       .finally(() => {
@@ -230,7 +237,7 @@ export class HarvestTimeComponent implements OnInit, CalendarChildren {
 
   deletePicture(picture) {
     this.configurationService.setLoadingPage(true);
-    this.pictures = this.pictures.filter(data => data !== picture);
+    this.pictures = this.pictures.filter((data) => data !== picture);
     this.files = null;
     this.onSave();
   }
