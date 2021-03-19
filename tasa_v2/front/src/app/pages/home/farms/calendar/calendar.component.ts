@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Historical } from 'src/app/shared/models/Historic';
-import { RolAdministrador, RolCapataz, RolDuenoDeLaFinca, RolSocioAdicional, RolVendedorTASA } from 'src/app/shared/models/role';
+import { RolAdministrador, RolCapataz, RolDuenoDeLaFinca, RolSecretaria, RolSocioAdicional, RolVendedorTASA } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { HistoricalService } from '../historical/historical.service';
@@ -173,6 +173,7 @@ export class CalendarComponent implements OnInit {
       new RolAdministrador().key,
       new RolVendedorTASA().key,
       new RolCapataz().key,
+      new RolSecretaria().key,
       new RolDuenoDeLaFinca().key,
       new RolSocioAdicional().key
     ];
