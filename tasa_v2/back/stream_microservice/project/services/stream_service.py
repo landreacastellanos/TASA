@@ -47,6 +47,7 @@ class NotificationService():
             results['data'].append(data) 
 
         end = self.END_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
+        
         alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
             [["user_name", "equals", email],
             "and",
@@ -55,6 +56,8 @@ class NotificationService():
             ["alarm_date", "<=", end]
             ]         
         })
+        if len(alarms) > 0:
+            alarms = sorted(alarms, key=lambda alarm : alarm['id'])
         print("------")
         print(alarms)
         
