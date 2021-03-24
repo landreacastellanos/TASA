@@ -4,10 +4,7 @@
       <div class="form-body col-12 col-md-8 py-3">
         <div class="center-children mt-2">
           <h4>
-            <img
-              src="../../../../../assets/img/Atech_ObjetoVectorial.PNG-12.png"
-              alt=""
-            />{{ title }}
+            <img src="../../../../../assets/img/Atech_ObjetoVectorial.PNG-12.png" alt="" />{{ title }}
           </h4>
         </div>
         <div class="form-inputs row py-3">
@@ -19,149 +16,77 @@
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size"> Nombre </mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input
-                  appAutofocus
-                  matInput
-                  formControlName="name"
-                  type="text"
-                  class="inputOutline"
-                  required
-                />
+                <input appAutofocus matInput formControlName="name" type="text" class="inputOutline" required />
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.name?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.name?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
-              <div
-                *ngIf="submitted && controls.name?.errors?.minlength"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.name?.errors?.minlength" class="warning">
                 Debe contener al menos 3 caracteres
               </div>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Razón social</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input
-                  matInput
-                  formControlName="businessName"
-                  type="text"
-                  class="inputOutline"
-                  required
-                />
+                <input matInput formControlName="businessName" type="text" class="inputOutline" required />
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.businessName?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.businessName?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
-              <div
-                *ngIf="submitted && controls.businessName?.errors?.minlength"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.businessName?.errors?.minlength" class="warning">
                 Debe contener al menos 3 caracteres
               </div>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Dirección</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input
-                  matInput
-                  formControlName="address"
-                  type="text"
-                  class="inputOutline"
-                />
+                <input matInput formControlName="address" type="text" class="inputOutline" />
               </mat-form-field>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Dirección web</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input
-                  matInput
-                  formControlName="web"
-                  type="text"
-                  class="inputOutline"
-                />
+                <input matInput formControlName="web" type="text" class="inputOutline" />
               </mat-form-field>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Telefono</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input
-                  matInput
-                  formControlName="phone"
-                  type="number"
-                  class="inputOutline"
-                />
+                <input matInput formControlName="phone" type="number" class="inputOutline" />
               </mat-form-field>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Total hectáres finca</mat-label>
-              <mat-form-field
-                class="col-12 formOutline profesion-size"
-                appearance="outline"
-              >
-                <input
-                  matInput
-                  formControlName="totalHectares"
-                  type="number"
-                  class="inputOutline"
-                />
+              <mat-form-field class="col-12 formOutline profesion-size" appearance="outline">
+                <input matInput formControlName="totalHectares" type="number" class="inputOutline" />
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.totalHectares?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.totalHectares?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Sistema de siembra</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <mat-select
-                  matNativeControl
-                  formControlName="system"
-                  required
-                  [disabled]="mode === 'view'"
-                >
-                  <mat-option
-                    *ngFor="let system of systems"
-                    [value]="system.id"
-                  >
+                <mat-select matNativeControl formControlName="system" required [disabled]="mode === 'view'">
+                  <mat-option *ngFor="let system of systems" [value]="system.id">
                     {{ system.name }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.system?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.system?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
             </div>
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Seleccione el vendedor</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <mat-select
-                  formControlName="vendor"
-                  required
-                  [disabled]="mode === 'view'"
-                >
-                  <mat-option
-                    *ngFor="let vendor of vendors"
-                    [value]="vendor.id"
-                  >
+                <mat-select formControlName="vendor" required [disabled]="mode === 'view'">
+                  <mat-option *ngFor="let vendor of vendors" [value]="vendor.id">
                     {{ vendor.name }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.vendor?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.vendor?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
             </div>
@@ -177,123 +102,81 @@
             <div class="containerForm col-12 col-md-6">
               <mat-label class="text-size">Nombre del lote</mat-label>
               <mat-form-field class="formOutline" appearance="outline">
-                <input
-                  matInput
-                  formControlName="lotName"
-                  type="text"
-                  class="inputOutline"
-                  required
-                />
+                <input matInput formControlName="lotName" type="text" class="inputOutline" required />
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.lotName?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.lotName?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
             </div>
-            <div
-              [ngClass]="{
+            <div [ngClass]="{
                 containerForm: true,
-                'col-12': mode != 'view',
-                'col-11': mode === 'view' && idLot,
-                'col-md-6': mode != 'view',
-                'col-md-5': mode === 'view' && idLot
-              }"
-            >
+                'col-12': mode === 'create',
+                'col-11': mode !== 'create' && idLot,
+                'col-md-6': mode === 'create',
+                'col-md-5': mode !== 'create' && idLot
+              }">
               <mat-label class="text-size">Hectáreas del lote</mat-label>
               <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input
-                  matInput
-                  formControlName="lotHectare"
-                  class="inputOutline"
-                  required
-                  type="number"
-                />
+                <input matInput formControlName="lotHectare" class="inputOutline" required type="number" />
               </mat-form-field>
-              <div
-                *ngIf="submitted && controls.lotHectare?.errors?.required"
-                class="warning"
-              >
+              <div *ngIf="submitted && controls.lotHectare?.errors?.required" class="warning">
                 Este campo es requerido
               </div>
             </div>
             <div class="col-1 container-icon" *ngIf="mode == 'view'">
-              <button
-                mat-mini-fab
-                color="primary"
-                aria-label="Example icon button with a delete icon"
-                (click)="viewLot()"
-              >
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
+                (click)="viewLot()">
                 <mat-icon>visibility</mat-icon>
               </button>
             </div>
+            <div class="col-1 container-icon" *ngIf="mode == 'edit'">
+              <button mat-mini-fab color="primary" (click)="deleteLot()"
+                aria-label="Example icon button with a delete icon">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
             <div class="container-lots col-12">
-              <div
-                *ngFor="let lot of listLot; index as i"
-                class="container-lots row"
-              >
+              <div *ngFor="let lot of listLot; index as i" class="container-lots row">
                 <div class="containerForm col-12 col-md-6">
                   <mat-label class="text-size">Nombre del lote</mat-label>
                   <mat-form-field class="formOutline" appearance="outline">
-                    <input
-                      matInput
-                      type="text"
-                      class="inputOutline"
-                      [(ngModel)]="listLot[i].name"
-                      [ngModelOptions]="{ standalone: true }"
-                      [disabled]="mode === 'view'"
-                    />
+                    <input matInput type="text" class="inputOutline" [(ngModel)]="listLot[i].name"
+                      [ngModelOptions]="{ standalone: true }" [disabled]="mode === 'view'" />
                   </mat-form-field>
                   <div *ngIf="lot.error" class="warning">
                     Recuerda llenar ambos campos
                   </div>
                 </div>
-                <div
-                  [ngClass]="{
-                    containerForm: true,
-                    'col-12': mode != 'view',
-                    'col-11': mode === 'view' && lot.id,
-                    'col-md-6': mode != 'view',
-                    'col-md-5': mode === 'view' && lot.id
-                  }"
-                >
+                <div [ngClass]="{
+                  containerForm: true,
+                  'col-12': mode === 'create',
+                  'col-11': mode !== 'create' && idLot,
+                  'col-md-6': mode === 'create',
+                  'col-md-5': mode !== 'create' && idLot
+                }">
                   <mat-label class="text-size">Hectáreas del lote</mat-label>
-                  <mat-form-field
-                    class="col-12 formOutline"
-                    appearance="outline"
-                  >
-                    <input
-                      matInput
-                      class="inputOutline"
-                      type="number"
-                      [(ngModel)]="lot.value"
-                      [ngModelOptions]="{ standalone: true }"
-                      [disabled]="mode === 'view'"
-                    />
+                  <mat-form-field class="col-12 formOutline" appearance="outline">
+                    <input matInput class="inputOutline" type="number" [(ngModel)]="lot.value"
+                      [ngModelOptions]="{ standalone: true }" [disabled]="mode === 'view'" />
                   </mat-form-field>
                 </div>
                 <div class="col-1 container-icon" *ngIf="mode == 'view'">
-                  <button
-                    mat-mini-fab
-                    color="primary"
-                    (click)="viewLot(lot)"
-                    aria-label="Example icon button with a delete icon"
-                  >
+                  <button mat-mini-fab color="primary" (click)="viewLot(lot)"
+                    aria-label="Example icon button with a delete icon">
                     <mat-icon>visibility</mat-icon>
+                  </button>
+                </div>
+                <div class="col-1 container-icon" *ngIf="mode == 'edit'">
+                  <button mat-mini-fab color="primary" (click)="deleteLot(lot)"
+                    aria-label="Example icon button with a delete icon">
+                    <mat-icon>delete</mat-icon>
                   </button>
                 </div>
               </div>
             </div>
             <div class="col-12 container-button-add">
-              <button
-                *ngIf="mode == 'edit' || mode == 'create'"
-                mat-raised-button
-                color="primary"
-                (click)="add()"
-                type="button"
-                class="rounded-button"
-              >
+              <button *ngIf="mode == 'edit' || mode == 'create'" mat-raised-button color="primary" (click)="add()"
+                type="button" class="rounded-button">
                 <span>Agregar</span>
                 <mat-icon>add_circle_outline</mat-icon>
               </button>
@@ -309,65 +192,40 @@
             </h4>
           </div>
           <div class="containerForm col-12">
-            <mat-label class="text-size"
-              >Seleccione el dueño de la finca</mat-label
-            >
+            <mat-label class="text-size">Seleccione el dueño de la finca</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
-              <mat-select
-                formControlName="owner"
-                required
-                [disabled]="mode === 'view'"
-              >
+              <mat-select formControlName="owner" required [disabled]="mode === 'view'">
                 <mat-option *ngFor="let owner of owners" [value]="owner.id">
                   {{ owner.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <div
-              *ngIf="submitted && controls.owner?.errors?.required"
-              class="warning"
-            >
+            <div *ngIf="submitted && controls.owner?.errors?.required" class="warning">
               Este campo es requerido
             </div>
           </div>
           <div class="containerForm col-12">
             <mat-label class="text-size">Seleccione el socio</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
-              <mat-select
-                formControlName="partner"
-                [disabled]="mode === 'view'"
-              >
-                <mat-option
-                  *ngFor="let partner of partners"
-                  [value]="partner.id"
-                >
+              <mat-select formControlName="partner" [disabled]="mode === 'view'">
+                <mat-option *ngFor="let partner of partners" [value]="partner.id">
                   {{ partner.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="containerForm col-12">
-            <mat-label class="text-size"
-              >Influenciador decisiones compra</mat-label
-            >
+            <mat-label class="text-size">Secretaria</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
-              <mat-select
-                formControlName="influencer"
-                [disabled]="mode === 'view'"
-              >
-                <mat-option
-                  *ngFor="let influencer of influencers"
-                  [value]="influencer.id"
-                >
+              <mat-select formControlName="influencer" [disabled]="mode === 'view'">
+                <mat-option *ngFor="let influencer of influencers" [value]="influencer.id">
                   {{ influencer.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="containerForm col-12">
-            <mat-label class="text-size"
-              >Responsable decisiones compra</mat-label
-            >
+            <mat-label class="text-size">Responsable decisiones compra</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
               <mat-select formControlName="liable" [disabled]="mode === 'view'">
                 <mat-option *ngFor="let liable of liables" [value]="liable.id">
@@ -379,14 +237,8 @@
           <div class="containerForm col-12">
             <mat-label class="text-size">Seleccione el capataz</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
-              <mat-select
-                formControlName="foreman"
-                [disabled]="mode === 'view'"
-              >
-                <mat-option
-                  *ngFor="let foreman of foremen"
-                  [value]="foreman.id"
-                >
+              <mat-select formControlName="foreman" [disabled]="mode === 'view'">
+                <mat-option *ngFor="let foreman of foremen" [value]="foreman.id">
                   {{ foreman.name }}
                 </mat-option>
               </mat-select>
@@ -395,14 +247,8 @@
           <div class="containerForm col-12">
             <mat-label class="text-size">Encargado de compras</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
-              <mat-select
-                formControlName="purchasingAgent"
-                [disabled]="mode === 'view'"
-              >
-                <mat-option
-                  *ngFor="let purchasingAgent of purchasingAgents"
-                  [value]="purchasingAgent.id"
-                >
+              <mat-select formControlName="purchasingAgent" [disabled]="mode === 'view'">
+                <mat-option *ngFor="let purchasingAgent of purchasingAgents" [value]="purchasingAgent.id">
                   {{ purchasingAgent.name }}
                 </mat-option>
               </mat-select>
@@ -411,14 +257,8 @@
           <div class="containerForm col-12">
             <mat-label class="text-size">Encargado de pagos</mat-label>
             <mat-form-field class="col-12 formOutline" appearance="outline">
-              <mat-select
-                formControlName="paymentAgent"
-                [disabled]="mode === 'view'"
-              >
-                <mat-option
-                  *ngFor="let paymentAgent of paymentAgents"
-                  [value]="paymentAgent.id"
-                >
+              <mat-select formControlName="paymentAgent" [disabled]="mode === 'view'">
+                <mat-option *ngFor="let paymentAgent of paymentAgents" [value]="paymentAgent.id">
                   {{ paymentAgent.name }}
                 </mat-option>
               </mat-select>
@@ -428,35 +268,18 @@
       </div>
     </div>
     <div class="m-3 row">
-      <button
-        class="transparent-blackground white-border rounded-button col-auto mt-2"
-        mat-raised-button
-        (click)="goBack()"
-        color="primary"
-        type="button"
-      >
+      <button class="transparent-blackground white-border rounded-button col-auto mt-2" mat-raised-button
+        (click)="goBack()" color="primary" type="button">
         <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>Ver lista
         de fincas
       </button>
-      <button
-        class="no-outline rounded-button ml-md-5 col-auto mt-2"
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="edit()"
-        *ngIf="mode === 'view' && roleId === roleIdAdmin"
-      >
+      <button class="no-outline rounded-button ml-md-5 col-auto mt-2" mat-raised-button color="primary" type="button"
+        (click)="edit()" *ngIf="mode === 'view' && roleId === roleIdAdmin">
         <span class="px-5">Editar</span>
         <mat-icon class="size-icon-check">edit_outline</mat-icon>
       </button>
-      <button
-        class="no-outline rounded-button ml-md-5 col-auto mt-2"
-        mat-raised-button
-        color="primary"
-        type="submit"
-        (click)="onSubmit()"
-        *ngIf="mode !== 'view'"
-      >
+      <button class="no-outline rounded-button ml-md-5 col-auto mt-2" mat-raised-button color="primary" type="submit"
+        (click)="onSubmit()" *ngIf="mode !== 'view'">
         <span class="px-5">Guardar cambios</span>
         <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
       </button>

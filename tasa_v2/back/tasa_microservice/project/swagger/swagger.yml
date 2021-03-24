@@ -836,6 +836,8 @@
           type: string
         hectares_number:
           type: number
+        delete:
+          type: boolean
     responseDetail:
       type: object
       properties:

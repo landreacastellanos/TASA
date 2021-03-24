@@ -145,12 +145,16 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
+        // ? prevent duplicates saves
+        delete this.files;
+        return filesSaved;
+      })
+      .then((filesSaved) => {
         listPictures = listPictures.map((element) => {
           element = element === picture ? filesSaved[0] : element;
           return element;
         });
         this.pictures = this.calendarService.setPictureFile(listPictures);
-        this.files = null;
         return this.onSave();
       })
       .finally(() => {
@@ -187,8 +191,8 @@ export class SeedtimeComponent implements OnInit, CalendarChildren {
     Promise.resolve(this.files)
       .then((files) => (files ? this.calendarService.uploadFiles(files) : null))
       .then((filesSaved) => {
-        // Prevent upload again
-        this.files = undefined;
+        // ? prevent duplicates saves
+        delete this.files;
         return filesSaved;
       })
       .then((filesSaved) => {

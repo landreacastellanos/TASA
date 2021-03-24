@@ -50,6 +50,8 @@ class NotificationService():
         
         alarms = self.__repository_notification.select(entity_name="notification" ,options={
              "filters":
+        alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
+
             [["user_name", "equals", email],
             "and",
             ["alarm", "equals", True],
@@ -59,6 +61,8 @@ class NotificationService():
         })
 
         alarms = sorted(alarms, key=lambda alarm : alarm['id'])
+        print("------")
+        print(alarms)
         
         for item in alarms:
             data = json.loads(item['Notification'])
@@ -167,6 +171,8 @@ class NotificationService():
             self.insert_data(notification, property_field['parthner_add'])
         if(property_field['seller'] is not None and property_field['seller'] != user_id):
             self.insert_data(notification, property_field['seller'])
+        if(property_field['decision_influencer'] is not None and property_field['decision_influencer'] != user_id):
+            self.insert_data(notification, property_field['decision_influencer'])
 
 
     def insert_data(self, notification, user_id):

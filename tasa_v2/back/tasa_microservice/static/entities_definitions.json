@@ -269,11 +269,11 @@
             "type": "integer"
          },
          "responsible_purchasing": {
-            "dbName": "property_idc",
+            "dbName": "property_rdc",
             "type": "integer"
          },
          "decision_influencer": {
-            "dbName": "property_rdc",
+            "dbName": "property_idc",
             "type": "integer"
          },
          "parthner_add": {
@@ -497,6 +497,10 @@
          "alarm": {
             "dbName": "alarm",
             "type": "boolean"
+         },
+         "id_land": {
+            "dbName": "id_land",
+            "type": "integer"
          }
       }
    },
