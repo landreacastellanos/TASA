@@ -79,14 +79,11 @@ export class MenuComponent implements OnInit {
   get title() {
     switch (this.type) {
       case 'notifications':
-        return 'Notificaciones';
-        break;
+        return 'Receta';
       case 'alerts':
         return 'Alertas';
-        break;
       case 'notificationsChat':
         return 'Mensajes';
-        break;
     }
   }
 
