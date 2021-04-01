@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ArrozDeRiego, ArrozSecano } from 'src/app/shared/models/farm';
 import { CalendarChildren } from '../calendar-children.interface';
 import { LandsService } from '../lands.service';
 
@@ -12,6 +11,7 @@ import { LandsService } from '../lands.service';
 export class ListStagesComponent implements OnInit, CalendarChildren {
   public list;
   textBack = 'Ir a lotes';
+  showHistoricList = true;
 
   constructor(private router: Router, public landsService: LandsService) { }
 

@@ -1,4 +1,4 @@
-import { Moment } from "moment";
+import { Moment } from 'moment';
 
 export interface CalendarChildren {
   /** implement with true if the view child has save button */
@@ -10,7 +10,11 @@ export interface CalendarChildren {
   onBack: () => any;
   /** load 3 photos */
   hasFilesButton?: boolean;
-  onChangeFiles?: (files: FileList, picture?: string, listPictures?: string[]) => any;
+  onChangeFiles?: (
+    files: FileList,
+    picture?: string,
+    listPictures?: string[]
+  ) => any;
   /** referencePhoto */
   hasReferencePhoto?: boolean;
   urlReferencePhoto?: string;
@@ -30,9 +34,11 @@ export interface CalendarChildren {
   startTrackingDate?: Moment;
 
   /** options for sponsors image */
-  hasSponsorSpace?:boolean;
-  textSponsorImage?:string;
+  hasSponsorSpace?: boolean;
+  textSponsorImage?: string;
 
   /** view pictures */
   pictures?: string[];
+
+  showHistoricList?: boolean;
 }

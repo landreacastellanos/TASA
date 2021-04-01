@@ -18,7 +18,9 @@ export class CalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
   historicalResult: Historical[] = [];
-  chat=false;
+  chat = false;
+  public roleIdAdmin = new RolAdministrador().key;
+  public roleId: any;
 
   constructor(
     private router: Router,
@@ -37,15 +39,18 @@ export class CalendarComponent implements OnInit {
       this.landsService.idProperty,
       this.landsService.idLand
     );
-    this.historicalService.getListHistorical(this.landsService.idLand).then((resultPromise) => {
-      this.historicalResult = resultPromise
-    })
+    this.historicalService
+      .getListHistorical(this.landsService.idLand)
+      .then((resultPromise) => {
+        this.historicalResult = resultPromise;
+      });
+    this.roleId = this.storageService.settings.user.roleId;
   }
 
   @ViewChild(RouterOutlet, { static: true }) outlet;
 
   ngOnInit(): void {
-    this.chat=this.viewChat();
+    this.chat = this.viewChat();
   }
 
   onBack() {
@@ -73,20 +78,32 @@ export class CalendarComponent implements OnInit {
     // tslint:disable-next-line: no-unused-expression
     if (picture) {
       (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
-        (this.outlet?.component as CalendarChildren).onChangeFiles(files, picture, this.pictures);
+        (this.outlet?.component as CalendarChildren).onChangeFiles(
+          files,
+          picture,
+          this.pictures
+        );
     } else {
       (this.outlet?.component as CalendarChildren)?.onChangeFiles &&
         (this.outlet?.component as CalendarChildren).onChangeFiles(files);
     }
-
   }
 
   goHistorical(id: number) {
-    this.router.navigate(['/farms/historical/', this.landsService.idProperty, this.landsService.idLand, id])
+    this.router.navigate([
+      '/farms/historical/',
+      this.landsService.idProperty,
+      this.landsService.idLand,
+      id,
+    ]);
   }
 
   goChat() {
-    this.router.navigate(['/chat/', this.landsService.idProperty, this.landsService.idLand])
+    this.router.navigate([
+      '/chat/',
+      this.landsService.idProperty,
+      this.landsService.idLand,
+    ]);
   }
 
   openPictures() {
@@ -162,6 +179,16 @@ export class CalendarComponent implements OnInit {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.textSponsorImage;
   }
+  get showHistoricList() {
+    // tslint:disable-next-line: no-unused-expression
+    const componentHasShowHistoricList = (this.outlet
+      ?.component as CalendarChildren)?.showHistoricList;
+    return (
+      this.configService.screen > 600 &&
+      this.roleId === this.roleIdAdmin &&
+      componentHasShowHistoricList
+    );
+  }
   get title() {
     // tslint:disable-next-line: no-unused-expression
     return (this.outlet?.component as CalendarChildren)?.title;
@@ -175,7 +202,7 @@ export class CalendarComponent implements OnInit {
       new RolCapataz().key,
       new RolSecretaria().key,
       new RolDuenoDeLaFinca().key,
-      new RolSocioAdicional().key
+      new RolSocioAdicional().key,
     ];
     return roles.includes(role);
   }

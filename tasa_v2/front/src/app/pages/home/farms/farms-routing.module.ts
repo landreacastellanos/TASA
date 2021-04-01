@@ -22,6 +22,8 @@ const routes: Routes = [
     {
         path: 'historical', loadChildren: () =>
         import('./historical/historical.module').then((m) => m.HistoricalModule),
+        canActivate: [RoleByIdGuard],
+        data: { roles: [new RolAdministrador().key] },
     },
     { path: 'list', component: ListComponent },
 ];
