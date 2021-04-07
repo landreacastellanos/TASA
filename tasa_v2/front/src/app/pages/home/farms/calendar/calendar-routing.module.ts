@@ -21,7 +21,7 @@ const titlesArrozSecano = [
   'Fertilización # 3 (33 a 38 días después de la siembra)',
   'Control de enfermedades (Preventiva 40 a 45 días después de la siembra)',
   'Fertilización # 4 (48 a 50 días después de la siembra)',
-  'Control de enfermedades (Embuchamiento 65 a 70 días después de la siembra)',
+  'Control de enfermedades (Embuchamiento 60 a 65 días después de la siembra)',
   'Protección de espiga (85 - 90 días después de la siembra)',
   'Fecha de cosecha (110 a 120 días después de la siembra)',
 ];
@@ -40,7 +40,7 @@ const titleArrozRiego = [
   'Fertilización # 3 (30 a 38 días después de la siembra)',
   'Control de Hongos - Preventiva (45 a 48 días después de la siembra)',
   'Fertilización # 4 (45 a 50 días después de la siembra)',
-  'Aplicación de Embuchamiento (65 a 70 días después de la siembra)',
+  'Aplicación de Embuchamiento (60 a 65 días después de la siembra)',
   'Protección de espiga o de grano (85 - 90 días después de la siembra)',
   'Fecha de Cosecha (110 a 120 días después de la siembra)',
   
