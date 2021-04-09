@@ -7,6 +7,8 @@ import { RolAdministrador } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { FarmsService } from '../farms.service';
+import { ConfirmationDialogComponent } from '../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create',
@@ -37,6 +39,7 @@ export class CreateComponent implements OnInit {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private storageService: StorageService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): Promise<void> {
@@ -267,24 +270,32 @@ export class CreateComponent implements OnInit {
   }
 
   public deleteLot(lot?) {
-    if (!lot) {
-      if (this.listLot.length) {
-        this.farmForm.get('lotName').setValue(this.listLot[0].name);
-        this.farmForm.get('lotHectare').setValue(this.listLot[0].value);
-        this.idLot = this.listLot[0].id;
-        this.listLot = this.listLot.filter(item => item.id !== this.idLot);
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result) {
+      if (!lot) {
+        if (this.listLot.length) {
+          this.farmForm.get('lotName').setValue(this.listLot[0].name);
+          this.farmForm.get('lotHectare').setValue(this.listLot[0].value);
+          this.idLot = this.listLot[0].id;
+          this.listLot = this.listLot.filter(item => item.id !== this.idLot);
+        } else {
+          this.farmForm.get('lotName').setValue('');
+          this.farmForm.get('lotHectare').setValue('');
+          this.idLot = null;
+        }
       } else {
-        this.farmForm.get('lotName').setValue('');
-        this.farmForm.get('lotHectare').setValue('');
-        this.idLot = null;
-      }
-    } else {
-      if (lot.id) {
-        this.listLot = this.listLot.filter(item => item.id !== lot.id);
-      } else {
-        this.listLot = this.listLot.filter(item => item.name !== lot.name);
+        if (lot.id) {
+          this.listLot = this.listLot.filter(item => item.id !== lot.id);
+        } else {
+          this.listLot = this.listLot.filter(item => item.name !== lot.name);
+        }
       }
     }
+    });    
 
   }
 
