@@ -267,6 +267,7 @@ export class CreateComponent implements OnInit {
   }
 
   public deleteLot(lot?) {
+    if(confirm("¿Está seguro que desea eliminar este lote?")) {    
     if (!lot) {
       if (this.listLot.length) {
         this.farmForm.get('lotName').setValue(this.listLot[0].name);
@@ -285,6 +286,7 @@ export class CreateComponent implements OnInit {
         this.listLot = this.listLot.filter(item => item.name !== lot.name);
       }
     }
+  }
 
   }
 
