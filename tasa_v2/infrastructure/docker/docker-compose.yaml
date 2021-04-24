@@ -46,6 +46,24 @@ services:
     restart: always
     ports:
       - 8080:8080
+  
+  # BACK
+  tasa_ms:
+    build: 
+      context: ../../back/tasa_microservice/
+      dockerfile: Dockerfile
+      # args:
+      #   DATABASE_NAME: $DATABASE_NAME
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_PORT: 3606
+      DATABASE_NAME: $DATABASE_NAME
+    expose:
+      - "5024"
+    ports:
+      - "5024:5024"
 
   # proxy:
   #   image: nginx
