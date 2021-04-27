@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import { report } from 'process';
-import { HistoricalDetail } from 'src/app/shared/models/Historic';
+import { HistoricalDetail } from 'src/app/shared/models/historic';
 import { ConfigurationService } from '../../../../shared/services/configuration.service';
 import { LandsService } from '../calendar/lands.service';
 import { HistoricalService } from './historical.service';
