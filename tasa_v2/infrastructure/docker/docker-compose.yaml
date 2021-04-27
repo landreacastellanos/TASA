@@ -97,9 +97,9 @@ services:
       - "8082:80"
     restart: always
     environment:
-      VIRTUAL_HOST: docker.juansebestia.com
+      VIRTUAL_HOST: app.tecnicasagricolas.com
       VIRTUAL_PORT: 80
-      LETSENCRYPT_HOST: docker.juansebestia.com
+      LETSENCRYPT_HOST: app.tecnicasagricolas.com
       LETSENCRYPT_EMAIL: juanse.cloud@gmail.com
     volumes:
       - ./proxy.conf:/etc/nginx/conf.d/default.conf:ro
