@@ -78,7 +78,7 @@
             Tienes un mensaje nuevo de <b>{{notify.user_name}}</b>, en la finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b>
           </div>
           <div *ngIf="type ==='alerts'">
-            La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> el <b>{{notify.date | date: formatDates }}</b> iniciará <b>{{notify.title}}</b>
+            La finca <b>{{notify.property_name}}</b>, en el lote <b>{{notify.batch_name}}</b> el <b>{{formatDate(notify.date)}}</b> iniciará <b>{{notify.title}}</b>
           </div>
         </div>
         <div class="icon-box-notification col-1">
