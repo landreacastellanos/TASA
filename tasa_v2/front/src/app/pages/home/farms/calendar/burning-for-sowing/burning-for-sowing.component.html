@@ -157,7 +157,7 @@
                 <th mat-header-cell class="total" *matHeaderCellDef> Total
                 </th>
                 <td mat-cell class="total" *matCellDef="let row; let i = index;">
-                  <div *ngIf="getValueProduct(i) && getValueProduct(i).dose_by_ha">
+                  <div *ngIf="showTotal(i)">
                     {{(hectares * getValueProduct(i).dose_by_ha) | number: '1.2-5'}}
                   </div>
                 </td>
