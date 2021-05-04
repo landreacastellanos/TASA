@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Historical } from 'src/app/shared/models/Historic';
+import { Historical } from 'src/app/shared/models/historic';
 import { RolAdministrador, RolCapataz, RolDuenoDeLaFinca, RolSecretaria, RolSocioAdicional, RolVendedorTASA } from 'src/app/shared/models/role';
 import { ConfigurationService } from 'src/app/shared/services/configuration.service';
 import { StorageService } from 'src/app/shared/services/storage.service';

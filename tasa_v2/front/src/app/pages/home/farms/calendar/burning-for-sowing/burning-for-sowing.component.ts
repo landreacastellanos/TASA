@@ -229,6 +229,11 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     return this.productsControl.controls[index].value;
   }
 
+  showTotal(index: number) {
+    const product = this.getValueProduct(index);
+    return product && !Number.isNaN(product.dose_by_ha);
+  }
+
   addControl({
     commercial_name = '',
     id = undefined,

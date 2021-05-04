@@ -1,0 +1,117 @@
+version: "2.2"
+
+services:
+  # We are using these 2 containers because automatic TLS certs from docker registry don't work
+  # Estamos usando estos 2 contenedores porque los certs automaticos con docker registry no funcionan
+  # https://github.com/docker/distribution/issues/2545
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - ./certs:/etc/nginx/certs:ro
+      - ./nginx-custom.conf:/etc/nginx/conf.d/custom.conf:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+    volumes:
+      - ./certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    volumes_from:
+      - nginx-proxy:rw
+  
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
+    volumes:
+      - /data/mysql:/var/lib/mysql
+    expose:
+      - "3606"
+    ports:
+        - 3606:3606
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  # BACK
+  tasa_ms:
+    build: 
+      context: ../../back/tasa_microservice/
+      dockerfile: Dockerfile
+      # args:
+      #   DATABASE_NAME: $DATABASE_NAME
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_PORT: 3606
+      DATABASE_NAME: $DATABASE_NAME
+    volumes:
+      - /data/tasa_ms:/app/images
+    expose:
+      - "5024"
+    ports:
+      - "5024:5024"
+    restart: always
+
+  stream_ms:
+    build: 
+      context: ../../back/stream_microservice/
+      dockerfile: Dockerfile
+      # args:
+      #   DATABASE_NAME: $DATABASE_NAME
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_PORT: 3606
+      DATABASE_NAME: $DATABASE_NAME
+    expose:
+      - "5024"
+    ports:
+      - "5025:5024"
+    restart: always
+  
+  # Also contain front files
+  proxy:
+    build: 
+      context: ../../front/
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    ports:
+      - "8082:80"
+    restart: always
+    environment:
+      VIRTUAL_HOST: app.tecnicasagricolas.com
+      VIRTUAL_PORT: 80
+      LETSENCRYPT_HOST: app.tecnicasagricolas.com
+      LETSENCRYPT_EMAIL: juanse.cloud@gmail.com
+    volumes:
+      - ./proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - nginx-proxy
+  
+  # JOBS
+  back-migration:
+    image: flyway/flyway
+    command: "-locations=\"filesystem:/flyway/sql\" -url=jdbc:mysql://mysql/ -schemas=$DATABASE_NAME -user=$MYSQL_USER -password=$MYSQL_PASSWORD -connectRetries=60 migrate"
+    volumes:
+      - ../../back/migrations/seeds:/flyway/sql
+    depends_on:
+      - mysql
+

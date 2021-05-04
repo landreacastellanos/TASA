@@ -8,7 +8,7 @@ import {
 import {
   Historical,
   HistoricalDetail,
-} from '../../../../shared/models/Historic';
+} from '../../../../shared/models/historic';
 
 @Injectable({
   providedIn: 'root',
