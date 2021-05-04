@@ -11,7 +11,7 @@ pyms:
     APP_VERSION: "1.0"
     APPLICATION_ROOT : "/stream_service"
     CONNECTIONS_STRINGS:
-      MYSQL_CONNECTION: "mysql,pymysql,tasa_admin:Admin123.@162.243.174.116:3306/tasa_v2"
+      MYSQL_CONNECTION: "mysql,pymysql,root:ensnare-Series9-Oversleep-bays-0Trudge-payment@mysql:3306/tasa_v2"
     DEBUG: true
     SECRET_KEY: "gjr39dkjn344_!67#"
     TESTING: true

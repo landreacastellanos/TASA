@@ -7,7 +7,6 @@ import { FormGroup } from '@angular/forms';
 export class ConfigurationService {
   public loading = false;
   public initialPage = true;
-
   public rolesMock =[
     {key: 1, color: 'red'},
     {key: 2, color: 'blue'},

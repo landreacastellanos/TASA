@@ -15,6 +15,15 @@ class PropertiesServices:
         self.__repository_land = CommonRepository(
          entity_name="land")
 
+        self.__repository_notification = CommonRepository(
+         entity_name="notification")
+        self.__repository_historical = CommonRepository(
+         entity_name="historical")
+        self.__repository_calendar = CommonRepository(
+         entity_name="calendar")
+        self.__repository_procedure = CommonRepository(
+         entity_name="propertyProcedure") 
+
 
     def get_planting_type(self):       
         data = self.__repository_planting.select_all()          
@@ -288,23 +297,70 @@ class PropertiesServices:
             property_data['parthner_add']=data['parthner_add']
         
         if("manager" in data):
-            property_data['manager']=data['manager']        
+            property_data['manager']=data['manager']
 
-        self.__repository_properties.update(data['id'],property_data)
+        try:
+            data_validation = self.__repository_properties.select(
+                options={"filters":
+                             [['business_name', "equals", str(data['business_name'])]]
+                             })
+            data_before_upd = self.__repository_properties.select_one(data['id'])
+            if len(data_validation)>0 and data_before_upd[0]['business_name'] != data['business_name']:
+                raise Exception("Razon social duplicada.")
 
-        for item in data['batchs']:
-            batch = {
-                'land_name':item['name'],
-                'land_ha': float(item['hectares_number'])
-            }
-            if("id" in item):
-                self.__repository_land.update(item['id'],batch)
-            else:
-                batch['property_id']=data['id']
-                self.__repository_land.insert(batch)
+            self.__repository_properties.update(data['id'],property_data)
+
+            for item in data['batchs']:
+                batch = {
+                    'land_name':item['name'],
+                    'land_ha': float(item['hectares_number'])
+                }
+                if("id" in item):
+                    if("delete" in item and item['delete'] == True):
+                        self.delete_batch(item['id'])
+                    else:
+                        self.__repository_land.update(item['id'],batch)
+                else:
+                    batch['property_id']=data['id']
+                    self.__repository_land.insert(batch)
         
-        results['data'].append({
-                                "key": 200,
-                                "value": "Finca actualizada"
-                                })
+            results['data'].append({
+                                    "key": 200,
+                                    "value": "Finca actualizada"
+                                    })
+
+        except Exception as exception:
+            results['details'].append(
+                {
+                    "key": 500,
+                    "value": "Error al registrar finca: "+str(exception)
+                }
+            )        
         return results
+    
+    def delete_batch(self, land_id):
+        notifications = self.__repository_notification.select(options={"filters":
+                            [['id_land', "equals", land_id]]
+                            })
+        for item in notifications:
+            self.__repository_notification.delete(item['id'])    
+        
+        historical = self.__repository_historical.select(options={"filters":
+                            [['id_land', "equals", land_id]]
+                            })
+        for item in historical:
+            self.__repository_historical.delete(item['id']) 
+
+        calendar = self.__repository_calendar.select(options={"filters":
+                            [['id_land', "equals", land_id]]
+                            })
+        for item in calendar:
+            self.__repository_calendar.delete(item['id'])
+
+        stages = self.__repository_procedure.select(options={"filters":
+                            [['landId', "equals", land_id]]
+                            })
+        for item in stages:
+            self.__repository_procedure.delete(item['id'])
+   
+        self.__repository_land.delete(land_id)

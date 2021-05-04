@@ -31,11 +31,12 @@ class CalendarService:
                             "and",
                             ['stageNumber', "equals", stage_number]]
                             })[0]
-
-            start = DataUtils.calulate_date_stage(stage_number, sowing_system)[0]
+            
             if(is_planning):
+                start = DataUtils.calulate_date_stage(stage_number, sowing_system)[1]
                 date = date - timedelta(days=start)
             else:
+                start = DataUtils.calulate_date_stage(stage_number, sowing_system)[0]
                 date = date + timedelta(days=start)
 
             calendar_activity = {
@@ -89,12 +90,21 @@ class CalendarService:
                 "property_name": x['property_name'],
                 "stage_number": x['stage_number'],
                 "stage_name": x['stage_name']
-            }, calendar))            
+            }, calendar))
 
-            return calendar
+            list_calendar = []
+            for item in calendar:
+                result = list(filter(lambda x: x['id_land'] == item['id_land'] and
+                                               x['id_user'] == item['id_user'] and
+                                               x['property_id'] == item['property_id'] and
+                                               x['stage_number'] == item['stage_number'] ,list_calendar))
+                if(not any(result)):
+                  list_calendar.append(item)   
+
+            return list_calendar
         else:
             calendar = self.__repository_calendar.select(options={ "filters":
-                [["user_id",
+                [["id_user",
                 "equals",
                 user[0]['id']]
                 ]

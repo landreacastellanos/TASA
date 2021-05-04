@@ -5,7 +5,7 @@ import { DataApiService } from 'src/app/shared/services/data-api.service';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { environment } from 'src/environments/environment';
 import { LandsService } from '../farms/calendar/lands.service';
-import moment from 'moment';
+import { ChatService } from './chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -20,13 +20,9 @@ export class ChatComponent implements OnInit {
     id: 123
   }
 
-  conversation = []
-
   message = '';
   chat;
   click = false;
-  scrollPerson = false;
-  count = 0;
 
   constructor(
     public configService: ConfigurationService,
@@ -35,6 +31,7 @@ export class ChatComponent implements OnInit {
     public landsService: LandsService,
     private route: ActivatedRoute,
     private router: Router,
+    public chatService: ChatService
   ) {
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
@@ -50,21 +47,22 @@ export class ChatComponent implements OnInit {
     let root = document.documentElement;
     root.style.setProperty("--height-value", this.heightScreenChat(this.configService.screen, this.configService.screenHeight) + "px");
     this.user = this.storageService.getValue('user');
-    this.getMessage();
+    this.chatService.getMessage();
     this.chat = setInterval(() => {
-      this.getMessage();
+      this.user = this.storageService.getValue('user');
+    this.chatService.getMessage();
     }, 2000);
     const out = document.getElementById("chat");
     setInterval(() => {
       const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1;
 
-      if (this.count !== 0 && !isScrolledToBottom) {
-        this.scrollPerson = true
+      if (this.chatService.count !== 0 && !isScrolledToBottom) {
+        this.chatService.scrollPerson = true
       }
       // scroll to bottom if isScrolledToBottom is true
-      if (!isScrolledToBottom && !this.scrollPerson) {
+      if (!isScrolledToBottom && !this.chatService.scrollPerson) {
         out.scrollTop = out.scrollHeight - out.clientHeight;
-        this.count = 1
+        this.chatService.count = 1
       }
     }, 500)
   }
@@ -75,16 +73,6 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  getMessage() {
-    const idLand = parseInt(this.landsService.idLand);
-    return this.dataApiService.getAll(`get_chat_message?land_id=${idLand}`, environment.urlNotifications).then((chat) => {
-      this.conversation = chat[0].map((data) => {
-        data.created_date = moment(data.created_date).format('hh:mm A');
-        return data;
-      });
-    })
-  }
-
   sendMessage() {
     if (!this.message || this.click) {
       return;
@@ -92,11 +80,11 @@ export class ChatComponent implements OnInit {
     this.click = true;
     const idLand = parseInt(this.landsService.idLand);
     return this.dataApiService.post({ id_land: idLand, message: this.message }, 'set_chat_message', environment.urlNotifications).then(data => {
-      return this.getMessage().then(() => {
+      return this.chatService.getMessage().then(() => {
         this.message = '';
         this.click = false;
-        this.scrollPerson = false;
-        this.count = 0;
+        this.chatService.scrollPerson = false;
+        this.chatService.count = 0;
       })
     });
   }

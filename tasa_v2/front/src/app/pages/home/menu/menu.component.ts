@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'src/app/shared/services/notifications.service';
 import { RolAdministrador } from '../../../shared/models/role';
 import { AuthService } from '../../../shared/services/auth.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { ChatService } from '../chat/chat.service';
 
 const PERMISSION_BY_PATH = {
   '/users': [new RolAdministrador().key],
@@ -16,20 +17,25 @@ const PERMISSION_BY_PATH = {
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-
+  @ViewChild('menuToggle', { static: false })
+  menuToggle: ElementRef;
+  @ViewChild('navbarNavDropdown', { static: false })
+  navbarNavDropdown: ElementRef;
   viewNotification = false;
-  title = '';
-  notifications;
+  // title = '';
+  // notifications;
   type;
+  formatDates = 'd-MMM-y';
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
-    public notifyService: NotificationsService
-  ) { }
+    public notifyService: NotificationsService,
+    private chatService: ChatService
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   get role() {
     return this.storageService.settings?.user?.roleId;
@@ -55,34 +61,72 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  viewNotificationMethod(type) {
-    this.viewNotification = !this.viewNotification
-    if(this.viewNotification){
+  onClickViewNotificationMethod(type) {
+    // Close menu
+    if (this.navbarNavDropdown.nativeElement.classList.contains('show')) {
+      this.menuToggle.nativeElement.click();
+    }
+
+    if (!(this.viewNotification && this.type !== type)) {
+      this.viewNotification = !this.viewNotification;
+    }
+
+    if (this.viewNotification) {
       this.type = type;
-      switch (type) {
-        case 'notifications':
-          this.title = 'Notificaciones';
-          this.notifications = this.notifyService.notifications;
-          break;  
-        case 'alerts':
-          this.title = 'Alertas';
-          this.notifications = this.notifyService.alerts;
-          break;
-        case 'notificationsChat':
-          this.title = 'Mensajes';
-          this.notifications = this.notifyService.notificationsChat;
-          break;
-      }
+    }
+  }
+
+  get title() {
+    switch (this.type) {
+      case 'notifications':
+        return 'Receta';
+      case 'alerts':
+        return 'Alertas';
+      case 'notificationsChat':
+        return 'Mensajes';
+    }
+  }
+
+  get notifications() {
+    switch (this.type) {
+      case 'notifications':
+        return this.notifyService.notifications;
+      case 'alerts':
+        return this.notifyService.alerts;
+      case 'notificationsChat':
+        return this.notifyService.notificationsChat;
+      default:
+        return [];
     }
   }
 
   async goNotification(notify) {
-    this.router.navigate(['/farms/calendar/', notify.property_id, notify.land_id, notify.stage_number]);
     this.viewNotification = false;
     await this.closeNotification(notify);
+    switch (this.type) {
+      case 'alerts':
+      case 'notifications':
+        this.router.navigate([
+          '/farms/calendar/',
+          notify.property_id,
+          notify.land_id,
+          notify.stage_number,
+        ]);
+        break;
+      case 'notificationsChat':
+        this.chatService.getMessage(notify.land_id, notify.property_id);
+        this.router.navigate(['/chat/', notify.property_id, notify.land_id]);
+        this.chatService.scrollPerson = false;
+        this.chatService.count = 0;
+        break;
+    }
   }
 
   closeNotification(notify?) {
-    return this.notifyService.deleteNotification(notify ? notify.id : '');
+    const type =
+      this.type === 'notifications' ? 1 : this.type === 'alerts' ? 2 : 3;
+    return this.notifyService.deleteNotification(notify ? notify.id : '', {
+      type,
+    });
   }
 }

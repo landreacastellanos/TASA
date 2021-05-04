@@ -3,10 +3,11 @@ from datetime import datetime
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from project.resources.utils.security_token import SecurityToken
+from project.resources.utils.generals_utils import GeneralsUtils
 from project.resources.utils.encryption_utils import Encryption
 
 class NotificationService():
-
+    END_DATE = "%s-%sT23:59:59Z"
     def __init__(self):
         self.__repository_notification = CommonRepository(
          entity_name="notification")
@@ -34,14 +35,36 @@ class NotificationService():
         email = validation_token[2]
 
         data = self.__repository_notification.select(entity_name="notification",options={ "filters":
-            [["user_name", "equals", email]
+            [["user_name", "equals", email],
+            "and",
+            ["alarm", "equals", False]
             ]         
         })        
 
         for item in data:
             data = json.loads(item['Notification'])
             data['id'] = item['id']
-            results['data'].append(data)            
+            results['data'].append(data) 
+
+        end = self.END_DATE % (datetime.now().year, datetime.today().strftime("%m-%d"))
+        
+        alarms = self.__repository_notification.select(entity_name="notification",options={ "filters":
+            [["user_name", "equals", email],
+            "and",
+            ["alarm", "equals", True],
+            "and",
+            ["alarm_date", "<=", end]
+            ]         
+        })
+        if len(alarms) > 0:
+            alarms = sorted(alarms, key=lambda alarm : alarm['id'])
+        print("------")
+        print(alarms)
+        
+        for item in alarms:
+            data = json.loads(item['Notification'])
+            data['id'] = item['id']
+            results['data'].append(data) 
         return results
 
     def delete_notification(self, type_id, data):
@@ -145,6 +168,8 @@ class NotificationService():
             self.insert_data(notification, property_field['parthner_add'])
         if(property_field['seller'] is not None and property_field['seller'] != user_id):
             self.insert_data(notification, property_field['seller'])
+        if(property_field['decision_influencer'] is not None and property_field['decision_influencer'] != user_id):
+            self.insert_data(notification, property_field['decision_influencer'])
 
 
     def insert_data(self, notification, user_id):
@@ -152,6 +177,7 @@ class NotificationService():
             user_notification = {
                 "id_user": user['id'],
                 "user_name": user['email'],
-                "Notification": json.dumps(notification)                
+                "Notification": json.dumps(notification),
+                "alarm": False                
             }
             self.__repository_notification.insert(user_notification)

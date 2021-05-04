@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RoleByIdGuard } from '../../shared/guards/role-by-id.guard';
-import { RolAdministrador, RolVendedorTASA, RolCapataz, RolDuenoDeLaFinca, RolSocioAdicional } from '../../shared/models/role';
+import { RolAdministrador, RolVendedorTASA, RolCapataz, RolDuenoDeLaFinca, RolSocioAdicional, RolSecretaria } from '../../shared/models/role';
 import { CalendarActivitiesComponent } from './calendar-activities/calendar-activities.component';
 import { HomeComponent } from './home.component';
 
@@ -46,6 +46,7 @@ const routes: Routes = [
             new RolAdministrador().key,
             new RolVendedorTASA().key,
             new RolCapataz().key,
+            new RolSecretaria().key,
             new RolDuenoDeLaFinca().key,
             new RolSocioAdicional().key,
           ]

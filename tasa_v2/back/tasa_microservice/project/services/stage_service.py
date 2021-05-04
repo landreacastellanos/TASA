@@ -14,12 +14,13 @@ from project.infrastructure.repositories.common_repository\
 from project.resources.utils.security_token import SecurityToken   
 from project.resources.utils.generals_utils import GeneralsUtils
 from project.resources.utils.notification_utils import NotificationUtils
+from holidays_co import is_holiday_date
 from project.services.calendar_service import CalendarService
 from project.resources.utils.data_utils import DataUtils
 
 
 class StageServices:
-    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha Inicial %s'
+    MESSAGE_HISTORIC = 'Historico del Lote %s de la Finca %s Fecha de cosecha %s'
     PATH_IMAGES = "%stasa_service/get_file/%s"
 
     def __init__(self):
@@ -40,6 +41,9 @@ class StageServices:
         self.__repository_historical = CommonRepository(
             entity_name="historical"
         )
+        self.__repository_stage = CommonRepository(
+            entity_name="stage"
+        ) 
         self.__service_activities = CalendarService()
 
     def get_property_land(self, id, land):
@@ -110,7 +114,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'real_date' in json_data and not json_data['real_date']
+            edit = 'real_date' in json_data and not json_data['real_date'] and edit
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
@@ -135,8 +139,11 @@ class StageServices:
             "details": []
         }
         
+        validation_token = SecurityToken().validate_token() 
+        email = validation_token[2]
+
         land_id = data['land_id']
-        result_tuple = self.get_property_stage('',data['land_id'],stage_number.value)
+        result_tuple = self.get_property_stage(email, data['land_id'],stage_number.value)
 
         property_stage = result_tuple[1]
         stage_id = result_tuple[2]        
@@ -144,6 +151,13 @@ class StageServices:
         images = []
         stage_db = {}
         complete_stage = False
+        
+        if len(result_tuple[1]) > 0 and result_tuple[1][0]['stage_complete']:
+            results['details'].append({
+                    "key": 400,
+                    "value": "Etapa completa"
+                })
+            return results
 
         notification_utils = NotificationUtils()
         if("observations" in data and "products" in data and "images" in data):
@@ -218,16 +232,18 @@ class StageServices:
         if(len(property_stage) == 0):            
             
             property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            if(edit):                
+            if(edit and not stage_number in (Stage.stage_two.value,Stage.stage_three.value)):                
                 edit &= (len(property_stage_one) > 0)
                 edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
+
+            if(edit and stage_number is Stage.stage_three.value):
+                data = json.loads(property_stage_one[0]['data'])
+                edit &= (len(property_stage_one) > 0 and 'sowing_date' in data
+                and len(data['sowing_date']) > 0)  
 
             if(edit and len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
                 data = json.loads(property_stage_one[0]['data'])
                 edit = data['sowing_date'] != ''
-
-            if not edit and stage_number is Stage.stage_two.value:
-                edit = True
 
             start_traking_date = ''
             end_traking_date = ''
@@ -310,7 +326,8 @@ class StageServices:
                     "observations": "",
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
-                    "products": []
+                    "products": [],
+                    "images": None
                 }
             )
         else:
@@ -318,6 +335,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = edit and 'application_date' not in json_data
             json_data['enabled'] = edit
+            json_data['images'] = property_stage['procedure_image']
             results['data'].append(json_data)
 
         return results
@@ -339,6 +357,7 @@ class StageServices:
 
         if(len(user)>0):
             edit |= user[0]['role_id'] == Keys.admi.value
+            edit |= user[0]['id'] == property_field[0]['decision_influencer']
             edit |= user[0]['id'] == property_field[0]['manager']
             edit |= user[0]['id'] == property_field[0]['property_owner']
             edit |= user[0]['id'] == property_field[0]['seller']
@@ -470,12 +489,23 @@ class StageServices:
             "details": []
         }
         
+        validation_token = SecurityToken().validate_token()
+        email = validation_token[2]
         land_id = data['land_id']         
         
         stage_number = Stage.stage_one.value
+        tuple_stage = self.get_property_stage(email, land_id, stage_number)
+
         land = self.__repository_land.select_one(land_id)
         property_field = self.__repository_properties.select_one(land[0]['property_id'])
         sowing_system = property_field[0]['sowing_system']
+        
+        if len(tuple_stage[1]) > 0 and tuple_stage[1][0]['stage_complete']:
+            results['details'].append({
+                    "key": 400,
+                    "value": "The Stage is complete"
+                })
+            return results
 
         stage = self.__repository_stage.select(entity_name="stage", options={"filters":
                              [['typePlanning', "equals", sowing_system],
@@ -498,7 +528,7 @@ class StageServices:
         complete_stage = False
 
         notification_utils = NotificationUtils()        
-
+        self.set_alarms(land_id, tuple_stage[3], data)
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
             notification_utils.set_notification(land_id, stage_number)
         
@@ -506,6 +536,8 @@ class StageServices:
             images = data['images']
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
+        else:
+            stage_db["procedure_image"] = None
         
         if("real_date" in data and len(data['real_date'].strip()) > 0 ):
             stage_db["real_date"] = data['real_date']
@@ -514,14 +546,13 @@ class StageServices:
             self.set_calendar_real(land_id, property_field[0]['seller'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['property_owner'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['manager'], data['real_date'])
+            self.set_calendar_real(land_id, property_field[0]['decision_influencer'], data['real_date'])
             self.set_calendar_real(land_id, property_field[0]['parthner_add'], data['real_date'])
 
         data.pop("land_id")
         
         stage_db['data'] = json.dumps(data)
-        stage_db['stage_complete'] = complete_stage
-
-        
+        stage_db['stage_complete'] = complete_stage        
 
         if(len(property_stage) == 0):
             stage_db['land_id'] = land_id            
@@ -540,6 +571,7 @@ class StageServices:
             self.set_calendar_planning(land_id, property_field[0]['property_owner'], date)
             self.set_calendar_planning(land_id, property_field[0]['parthner_add'], date)
             self.set_calendar_planning(land_id, property_field[0]['manager'], date)
+            self.set_calendar_planning(land_id, property_field[0]['decision_influencer'], date)
 
         results['data'].append("Datos guardados exitosamente")
         return results
@@ -547,6 +579,7 @@ class StageServices:
     def set_calendar_planning(self, land_id, user, date):
         self.__service_activities.set_calendar(land_id, user, 2, date, True)
         self.__service_activities.set_calendar(land_id, user, 3, date, True)
+        self.__service_activities.set_calendar(land_id, user, 1, date, True)
 
     def set_calendar_real(self, land_id, user, date):
         date = GeneralsUtils.try_parse_date_time(date)
@@ -665,7 +698,7 @@ class StageServices:
         property_stage))
         
 
-        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'])
+        insert_object['title'] = self.MESSAGE_HISTORIC % (land[0]['land_name'], property_[0]['name'], property_stage[0]['start_date'].strftime('%Y-%m-%d'))
         insert_object['owner'] = {
             "id": owner[0]['id'],
             "name": owner[0]['name'] + " " + owner[0]['last_name'] 
@@ -693,3 +726,62 @@ class StageServices:
         result['segments'] = data
         result['segments']['images'] = images
         return result['segments']
+
+    def set_alarms(self, land_id, type_land, type_date):
+        segments = []
+        if "sowing_date" in type_date and len(type_date['sowing_date']) > 0:
+            segments = [Stage.stage_one.value, Stage.stage_two.value, Stage.stage_three.value]
+            list(map(lambda x: self.get_data_alarms(land_id, x, type_land,  type_date['sowing_date']), segments))
+        if "real_date" in type_date and len(type_date['real_date']) > 0:
+            segments = (Stage.stage_four.value, Stage.stage_five.value,
+            Stage.stage_six.value, Stage.stage_seven.value, Stage.stage_eight.value,
+            Stage.stage_nine.value, Stage.stage_ten.value, Stage.stage_eleven.value,
+            Stage.stage_twelve.value, Stage.stage_thirteen.value, Stage.stage_fourteen.value,
+            Stage.stage_fifteen.value)
+            list(map(lambda x: self.get_data_alarms(land_id, x, type_land, type_date['real_date']), segments))
+
+    def get_data_alarms(self, land_id, stage, type_land, date):
+        date_calculated = []
+        stage_name = self.__repository_stage.select(options={"filters":
+                             [
+                             ['stageNumber', "equals", stage],
+                             'and',
+                             ['typePlanning', "equals", type_land]]
+                             })
+        land = self.__repository_land.select(options={"filters":
+                             [
+                             ['id', "equals", land_id]]
+                             })
+        
+        property_ = self.__repository_properties.select(options={"filters":
+                             [
+                             ['id', "equals", land[0]["property_id"]]]
+                             })
+        if stage == Stage.stage_one.value:
+            date_alarm = self.get_date_holidays(date)
+            date_calculated = date
+        else:
+            dates = DataUtils.calulate_date_stage(stage, type_land)
+            date_calculated = self.validate_dates(GeneralsUtils.try_parse_date_time(date), dates, stage)[0]
+            date_alarm = self.get_date_holidays(date_calculated)
+        
+        result = {
+            "batch_name": land[0]['land_name'],
+            "property_name": property_[0]['name'],
+            "title": stage_name[0]['stage'],
+            "land_id": land_id,
+            "property_id": property_[0]['id'],
+            "type": 2,
+            "date": date_calculated,
+            "date_alarm": date_alarm,
+            "stage_number": stage,
+            "stage_id": stage_name[0]['id']
+        }
+
+        NotificationUtils().set_alarms(result)
+
+    def get_date_holidays(self, date):
+        date_alarm = (GeneralsUtils.try_parse_date_time(date) - timedelta(days=2))
+        while is_holiday_date(date_alarm):
+            date_alarm = (date_alarm + timedelta(days=1))
+        return str(date_alarm)

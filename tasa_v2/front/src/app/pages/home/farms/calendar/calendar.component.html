@@ -61,10 +61,10 @@
             </div>
           </div>
 
-          <div class="col-12 container-card-title no-margin-padding" *ngIf="configService.screen > 600">
+          <div class="col-12 container-card-title no-margin-padding" *ngIf="showHistoricList">
             Generar histórico del lote
           </div>
-          <div class="col-12 no-margin-padding" *ngIf="configService.screen > 600">
+          <div class="col-12 no-margin-padding" *ngIf="showHistoricList">
             <mat-expansion-panel [expanded]="false">
               <mat-expansion-panel-header>
                 <mat-panel-title class="header-container-card-green">
