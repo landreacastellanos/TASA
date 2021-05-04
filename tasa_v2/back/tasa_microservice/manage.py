@@ -131,12 +131,12 @@ def after_request_function(response):
 app.config["CORS_HEADERS"] = "Content-Type"
 cors = CORS(app, resources={r"/tasa_service/*": {"origins": "*"}})
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'mail.atechit.com.co'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'digitaltasa@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Abc.123@?'
+app.config['MAIL_USERNAME'] = 'servidor@atechit.com.co'
+app.config['MAIL_PASSWORD'] = '8*G%HAOEp^}r'
 app.config['MAIL_DEBUG '] = True
 app.config['TESTING'] = False
 
