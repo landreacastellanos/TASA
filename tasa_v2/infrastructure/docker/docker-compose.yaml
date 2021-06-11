@@ -100,7 +100,7 @@ services:
       VIRTUAL_HOST: app.tecnicasagricolas.com
       VIRTUAL_PORT: 80
       LETSENCRYPT_HOST: app.tecnicasagricolas.com
-      LETSENCRYPT_EMAIL: juanse.cloud@gmail.com
+      LETSENCRYPT_EMAIL: landreacastellanos@atechit.com.co
     volumes:
       - ./proxy.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
