@@ -1,6 +1,8 @@
 import connexion
 from project.resources.utils.generals_utils import GeneralsUtils
 from project.services.properties_service import PropertiesServices
+from project.resources.utils.registry_utils import RegistryUtils
+
 
 def get_type_planting():
     results = {
@@ -77,7 +79,7 @@ def delete_property(id):
         result = PropertiesServices().delete_property(id)
         results = result
     except Exception as exception:
-        print(str(exception))
+        RegistryUtils.manage_error(error=exception)
         result = exception.args[0]
         results['details'].append(result)
     return results
