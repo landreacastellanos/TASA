@@ -38,9 +38,9 @@ services:
     volumes:
       - /data/mysql:/var/lib/mysql
     expose:
-      - "3606"
+      - "3306"
     ports:
-        - 3606:3606
+        - 3306:3306
   adminer:
     image: adminer
     restart: always
