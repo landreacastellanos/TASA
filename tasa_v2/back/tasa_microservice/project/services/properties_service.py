@@ -265,6 +265,8 @@ class PropertiesServices:
         except Exception as exception:
             result = exception.args[0]
             results['details'].append(result)
+            result = str(exception)
+            results['details'].append(result)
         return results
 
     def update_property(self, data):
