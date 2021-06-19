@@ -234,6 +234,24 @@ class PropertiesServices:
                              })
         
         for item in lands:
+            historical = self.__repository_historical.select(options={"filters":
+                            [['id_land', "equals", item['id']]]
+                            })
+            for item_h in historical:
+                self.__repository_historical.delete(item_h['id']) 
+
+            calendar = self.__repository_calendar.select(options={"filters":
+                                [['id_land', "equals", item['id']]]
+                                })
+            for item_c in calendar:
+                self.__repository_calendar.delete(item_c['id'])
+
+            stages = self.__repository_procedure.select(options={"filters":
+                                [['landId', "equals", item['id']]]
+                                })
+            for item in stages:
+                self.__repository_procedure.delete(item['id'])
+
             self.__repository_land.delete(item['id'])
 
         self.__repository_properties.delete(id)

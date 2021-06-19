@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'src/app/shared/services/notifications.service';
@@ -128,5 +129,11 @@ export class MenuComponent implements OnInit {
     return this.notifyService.deleteNotification(notify ? notify.id : '', {
       type,
     });
+  }
+
+  formatDate(date) {
+    console.log(date,this.formatDates);
+    
+    return moment(date).format(this.formatDates);
   }
 }
