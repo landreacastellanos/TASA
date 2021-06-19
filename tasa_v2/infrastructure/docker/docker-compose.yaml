@@ -61,7 +61,7 @@ services:
       MYSQL_PORT: 3606
       DATABASE_NAME: $DATABASE_NAME
     volumes:
-      - /data/tasa_ms:/app/images
+      - /data/tasa_ms:/app/project/images
     expose:
       - "5024"
     ports:
