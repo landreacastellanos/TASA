@@ -232,36 +232,39 @@ class PropertiesServices:
         lands = self.__repository_land.select(entity_name="land", options={"filters":
                              [['property_id', "equals", id]]
                              })
-        
-        for item in lands:
-            historical = self.__repository_historical.select(options={"filters":
-                            [['id_land', "equals", item['id']]]
-                            })
-            for item_h in historical:
-                self.__repository_historical.delete(item_h['id']) 
-            print("1")
-            calendar = self.__repository_calendar.select(options={"filters":
+        try:                
+            for item in lands:
+                historical = self.__repository_historical.select(options={"filters":
                                 [['id_land', "equals", item['id']]]
                                 })
-            for item_c in calendar:
-                self.__repository_calendar.delete(item_c['id'])
-            print("2")
-            stages = self.__repository_procedure.select(options={"filters":
-                                [['landId', "equals", item['id']]]
-                                })
-            for item in stages:
-                self.__repository_procedure.delete(item['id'])
-            print("3")
-            self.__repository_land.delete(item['id'])
-            print("4")
+                for item_h in historical:
+                    self.__repository_historical.delete(item_h['id']) 
+                results['details'].append("1")
+                calendar = self.__repository_calendar.select(options={"filters":
+                                    [['id_land', "equals", item['id']]]
+                                    })
+                for item_c in calendar:
+                    self.__repository_calendar.delete(item_c['id'])
+                results['details'].append("2")
+                stages = self.__repository_procedure.select(options={"filters":
+                                    [['landId', "equals", item['id']]]
+                                    })
+                for item in stages:
+                    self.__repository_procedure.delete(item['id'])
+                results['details'].append("3")
+                self.__repository_land.delete(item['id'])
+                results['details'].append("4")
 
-        self.__repository_properties.delete(id)
-        print("11")
+            self.__repository_properties.delete(id)
+            results['details'].append("11")
 
-        results['data'].append({
-                                "key": 100,
-                                "value": "Finca eliminado"
-                                })
+            results['data'].append({
+                                    "key": 100,
+                                    "value": "Finca eliminado"
+                                    })            
+        except Exception as exception:
+            result = exception.args[0]
+            results['details'].append(result)
         return results
 
     def update_property(self, data):
