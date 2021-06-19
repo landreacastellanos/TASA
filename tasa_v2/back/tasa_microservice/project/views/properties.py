@@ -77,6 +77,7 @@ def delete_property(id):
         result = PropertiesServices().delete_property(id)
         results = result
     except Exception as exception:
+        print(str(exception))
         result = exception.args[0]
         results['details'].append(result)
     return results
