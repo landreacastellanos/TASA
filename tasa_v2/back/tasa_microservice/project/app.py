@@ -7,7 +7,7 @@ class TasaMicroservice(Microservice):
 
         database.init_app(self.application)
         with self.application.test_request_context():
-            database.create_all()
+            database.create_all()   
 
 
 def create_app():

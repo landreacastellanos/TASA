@@ -743,7 +743,135 @@
                 type: array
                 items:
                   $ref: '#/definitions/product'
-        x-swagger-router-controller: "project.views.stage"                                                         
+        x-swagger-router-controller: "project.views.stage"
+    /get_drone/{id}:
+      get:
+        tags:
+          - "Drone"
+        summary: "Drone"
+        operationId: "get_drone"
+        description: "get drone"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "path"
+            type: "integer"
+            name: "id"
+            required: true
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/drone'
+        x-swagger-router-controller: "project.views.drone"
+    /get_drones:
+      get:
+        tags:
+          - "Drone"
+        summary: "Drone"
+        operationId: "get_drones"
+        description: "get drones"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/drone'
+        x-swagger-router-controller: "project.views.drone"
+    /post_drone:
+          post:
+              tags:
+                - "Drone"
+              summary: "Create drone"
+              operationId: "post_drone"
+              description: "Create dron"
+              produces:
+                - "application/json"
+              parameters:
+                - in: "header"
+                  type: "string"
+                  name: "Token"
+                  required: true
+                - in: body
+                  name: drone
+                  required: true
+                  schema:
+                      $ref: '#/definitions/drone_object'
+              responses:
+                '200':
+                  description: response result successful
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/definitions/drone_object'
+              x-swagger-router-controller: "project.views.drone"
+    /put_drone/{id}:
+          put:
+              tags:
+                - "Drone"
+              summary: "Update drone"
+              operationId: "put_drone"
+              description: "Update dron"
+              produces:
+                - "application/json"
+              parameters:
+                - in: "header"
+                  type: "string"
+                  name: "Token"
+                  required: true
+                - in: "path"
+                  type: "integer"
+                  name: "id"
+                  required: true
+                - in: body
+                  name: drone
+                  required: true
+                  schema:
+                      $ref: '#/definitions/drone_object'
+              responses:
+                '200':
+                  description: response result successful
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/definitions/drone_object'
+              x-swagger-router-controller: "project.views.drone"
+    /delete_drone/{id}:
+      delete:
+        tags:
+          - "Drone"
+        summary: "Properties"
+        operationId: "delete_dron"
+        description: "delete dron"
+        produces:
+          - "application/json"
+        parameters:
+          - in: "header"
+            required: true
+            type: "string"
+            name: "Token"
+          - in: "path"
+            type: "integer"
+            name: "id"
+            required: true  
+        responses:
+          '200':
+            description: response result successful
+        x-swagger-router-controller: "project.views.drone"
   definitions:
     property:
       type: object
@@ -1437,3 +1565,30 @@
         date:
           type: "string"
           example: "01/01/01"
+    drone:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          example: 1
+        name:
+          type: "string"
+          example: "drone 1"
+        state:
+          type: "boolean"
+          example: true
+        reason:
+          type: "string"
+          example: "disabled"
+    drone_object:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+          example: "drone 1"
+        state:
+          type: "boolean"
+          example: true
+        reason:
+          type: "string"
+          example: "disabled"
