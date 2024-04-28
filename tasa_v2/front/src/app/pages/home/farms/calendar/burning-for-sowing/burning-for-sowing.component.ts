@@ -179,11 +179,11 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
             .hectares_number
         : 0;
     }, 1);
-
     this.configurationService.disableForm(
       this.burningForSowingForm,
       this.mode === 'view'
     );
+
     if (!observations && !products.length) {
       this.burningForSowingForm.controls.application_date.disable();
     }

@@ -614,5 +614,29 @@
             "type": "string"
          }
       }
+   },"drone": {
+      "tableName": "drone",
+      "type": "object",
+      "primaryKey": [
+         "id"
+      ],
+      "properties": {
+         "id": {
+            "dbName": "id",
+            "type": "integer"
+         },
+         "name": {
+            "dbName": "name",
+            "type": "string"
+         },
+         "reason": {
+            "dbName": "reason",
+            "type": "string"
+         },
+         "state": {
+            "dbName": "state",
+            "type": "boolean"
+         }
+      }
    }
 }

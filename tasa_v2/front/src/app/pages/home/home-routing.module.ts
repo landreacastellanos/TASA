@@ -27,6 +27,17 @@ const routes: Routes = [
         },
       },
       {
+        path: 'drones',
+        loadChildren: () =>
+          import('./drones/drones.module').then((m) => m.DronesModule),
+        canActivate: [RoleByIdGuard],
+        data: {
+          roles: [
+            new RolAdministrador().key,
+          ]
+        },
+      },
+      {
         path: 'farms',
         loadChildren: () =>
           import('./farms/farms.module').then((m) => m.FarmsModule),

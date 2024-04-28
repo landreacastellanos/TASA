@@ -19,6 +19,10 @@
         <a class="nav-link" routerLink="/users">PERFILES</a>
       </li>
 
+      <li *ngIf="showItem('/drones')" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/drones">DRONES</a>
+      </li>
+
       <hr class="d-lg-none">
       <li class="nav-item d-lg-none">
         <a class="nav-link" href="#" (click)="closeSession()"><i class="material-icons">person_outline</i> Cerrar

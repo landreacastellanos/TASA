@@ -49,11 +49,7 @@ services:
 
   # BACK
   tasa_ms:
-    build: 
-      context: ../../back/tasa_microservice/
-      dockerfile: Dockerfile
-      # args:
-      #   DATABASE_NAME: $DATABASE_NAME
+    image: us-central1-docker.pkg.dev/tasa-dev-01/tasa/tasa_ms:latest
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: $MYSQL_USER
@@ -69,11 +65,7 @@ services:
     restart: always
 
   stream_ms:
-    build: 
-      context: ../../back/stream_microservice/
-      dockerfile: Dockerfile
-      # args:
-      #   DATABASE_NAME: $DATABASE_NAME
+    image: us-central1-docker.pkg.dev/tasa-dev-01/tasa/stream_ms:latest
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: $MYSQL_USER
@@ -88,9 +80,7 @@ services:
   
   # Also contain front files
   proxy:
-    build: 
-      context: ../../front/
-      dockerfile: Dockerfile
+    image: us-central1-docker.pkg.dev/tasa-dev-01/tasa/proxy:latest
     expose:
       - "80"
     ports:
@@ -114,4 +104,3 @@ services:
       - ../../back/migrations/seeds:/flyway/sql
     depends_on:
       - mysql
-
