@@ -10,6 +10,7 @@ import { ChatService } from '../chat/chat.service';
 const PERMISSION_BY_PATH = {
   '/users': [new RolAdministrador().key],
   '/farms/create': [new RolAdministrador().key],
+  '/drones': [new RolAdministrador().key],
 };
 
 @Component({
