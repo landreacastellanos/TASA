@@ -104,16 +104,21 @@ export class DataApiService {
   public getById(
     extension: string,
     id: string,
-    extraParams?: HttpParams
+    notParams?: boolean
   ): Promise<any> {
+    let url = this.urlApi + extension;
+    let params = new HttpParams();
+    let headers = this.getHeaders();
+    if (!notParams) {
+      params = params.append('id', id);
+    } else {
+      url += `/${id}`;
+    }
     return this.http
-      .get<ResponseBack>(this.urlApi + extension, {
-        headers: this.getHeaders(),
-        params: { id, ...extraParams },
-      })
-      .toPromise()
-      .then(this.handleOnSuccess)
-      .catch(this.handleOnError);
+    .get<ResponseBack>(url, { headers, params })
+    .toPromise()
+    .then(this.handleOnSuccess)
+    .catch(this.handleOnError);
   }
 
   public post(element, extension: string, url?: string): Promise<any> {
@@ -152,10 +157,10 @@ export class DataApiService {
       .catch(this.handleOnError);
   }
 
-  public update(element, extension: string): Promise<any> {
+  public update(element, extension: string, id?: string | number): Promise<any> {
     this.cleanObject(element);
     return this.http
-      .put<ResponseBack>(this.urlApi + extension, element, {
+      .put<ResponseBack>(this.urlApi + extension + (id? `/${id}` : ''), element, {
         headers: this.getHeaders(),
       })
       .toPromise()
@@ -175,6 +180,20 @@ export class DataApiService {
       .delete<ResponseBack>(urlGet + extension, {
         headers: this.getHeaders(),
         params: params,
+      })
+      .toPromise()
+      .then(this.handleOnSuccess)
+      .catch(this.handleOnError);
+  }
+
+  public newDelete(
+    extension: string,
+    id: string,
+  ): Promise<any> {
+    const urlGet = this.urlApi;;
+    return this.http
+      .delete<ResponseBack>(urlGet + extension + `/${id}`, {
+        headers: this.getHeaders(),
       })
       .toPromise()
       .then(this.handleOnSuccess)

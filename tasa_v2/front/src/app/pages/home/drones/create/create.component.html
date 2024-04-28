@@ -1,0 +1,112 @@
+<div class="card-container-form p-1">
+  <form [formGroup]="droneFg" (ngSubmit)="onSubmit()">
+    <div class="row no-gutters">
+      <div class="form-body col-12 col-md-8 py-3">
+        <div class="center-children mt-2">
+          <h4><i class="material-icons">person_outline</i> {{this.title}}</h4>
+        </div>
+        <div class="form-inputs row py-3">
+          <div class="form-personal-data col-12 col-md-6 row">
+            <div class="form-subtitle col-12">
+              <strong>Datos personales</strong>
+              <hr class="mt-0" />
+            </div>
+            <div class="containerForm col-12 col-md-6">
+              <mat-label class="text-size"> Nombre </mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  appAutofocus
+                  matInput
+                  formControlName="name"
+                  type="text"
+                  class="inputOutline"
+                  required
+                />
+              </mat-form-field>
+              <div
+                *ngIf="submitted && controls.name?.errors?.required"
+                class="warning"
+              >
+                Este campo es requerido
+              </div>
+              <div
+                *ngIf="submitted && controls.name?.errors?.minlength"
+                class="warning"
+              >
+                Debe contener al menos 3 caracteres
+              </div>
+            </div>
+            <div class="containerForm col-12 col-md-6" *ngIf="this.mode === 'edit'">
+              <mat-label class="text-size">Estado</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <mat-select formControlName="state" required>
+                  <mat-option [value]="'Activo'">
+                    {{ 'Activo' }}
+                  </mat-option>
+                  <mat-option [value]="'Inactivo'">
+                    {{ 'Inactivo' }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div
+                *ngIf="submitted && controls.state?.errors?.required"
+                class="warning"
+              >
+                Este campo es requerido
+              </div>
+            </div>
+            <div class="containerForm col-12 col-md-6" *ngIf="this.mode === 'edit'">
+              <mat-label class="text-size">Razón de inactividad</mat-label>
+              <mat-form-field class="col-12 formOutline" appearance="outline">
+                <input
+                  matInput
+                  formControlName="reason"
+                  type="text"
+                  class="inputOutline"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="submitted && controls.reason?.errors?.required"
+                class="warning"
+              >
+                Este campo es requerido
+              </div>
+              <div
+                *ngIf="submitted && controls.reason?.errors?.maxlength"
+                class="warning"
+              >
+                Este campo no debe tener mas de 100 caracteres
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 pl-md-1 pr-md-0 mh-100 col-md-4">
+        <div class="sponsors h-100">
+          {{sponsorText}}
+        </div>
+      </div>
+    </div>
+    <div class="m-3 row">
+      <button
+        class="transparent-blackground white-border rounded-button col-auto mt-2"
+        mat-raised-button
+        (click)="goBack()"
+        color="primary"
+        type="button"
+      >
+        <mat-icon class="size-icon-folder mr-2">folder_open </mat-icon>Ver lista de
+        drones
+      </button>
+      <button
+        class="no-outline rounded-button ml-md-5 col-auto mt-2"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        <span class="px-5">Guardar cambios</span>
+        <mat-icon class="size-icon-check">check_circle_outline</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

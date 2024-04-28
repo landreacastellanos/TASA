@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
 
-  urlApi: 'http://162.243.174.116:5024/tasa_service/',
-  urlNotifications: 'http://162.243.174.116:5025/stream_service/',
+  urlApi: 'http://35.209.243.75:5024/tasa_service/',
+  urlNotifications: 'http://35.209.243.75:5025/stream_service/',
   publicFrontUrl: 'http://localhost:4200/#/',
 };
 
