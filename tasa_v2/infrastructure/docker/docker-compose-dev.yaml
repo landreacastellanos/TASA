@@ -1,33 +1,6 @@
 version: "2.2"
 
 services:
-  # We are using these 2 containers because automatic TLS certs from docker registry don't work
-  # Estamos usando estos 2 contenedores porque los certs automaticos con docker registry no funcionan
-  # https://github.com/docker/distribution/issues/2545
-
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
-      - ./certs:/etc/nginx/certs:ro
-      - ./nginx-custom.conf:/etc/nginx/conf.d/custom.conf:ro
-    labels:
-      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
-
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    restart: always
-    volumes:
-      - ./certs:/etc/nginx/certs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    volumes_from:
-      - nginx-proxy:rw
   
   mysql:
     image: mysql
@@ -50,6 +23,7 @@ services:
   # BACK
   tasa_ms:
     image: us-central1-docker.pkg.dev/tasa-dev-01/tasa/tasa_ms:latest
+    container_name: tasa_ms
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: $MYSQL_USER
@@ -66,6 +40,7 @@ services:
 
   stream_ms:
     image: us-central1-docker.pkg.dev/tasa-dev-01/tasa/stream_ms:latest
+    container_name: stream_ms
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: $MYSQL_USER
@@ -86,15 +61,8 @@ services:
     ports:
       - "8082:80"
     restart: always
-    environment:
-      VIRTUAL_HOST: app.tecnicasagricolas.com
-      VIRTUAL_PORT: 80
-      LETSENCRYPT_HOST: app.tecnicasagricolas.com
-      LETSENCRYPT_EMAIL: landreacastellanos@atechit.com.co
     volumes:
-      - ./proxy.conf:/etc/nginx/conf.d/default.conf:ro
-    depends_on:
-      - nginx-proxy
+      - ./proxy-dev.conf:/etc/nginx/conf.d/default.conf:ro
   
   # JOBS
   back-migration:
