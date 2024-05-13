@@ -200,7 +200,8 @@ class PropertiesServices:
         batchs = list(map(lambda  x:{ 
                                 "id": x['id'],
                                 "name": x['land_name'],
-                                "hectares_number": x['land_ha']
+                                "hectares_number": x['land_ha'],
+                                "dron": x['dron']
                             } ,lands))
         property['batchs'] = batchs
 
@@ -331,7 +332,8 @@ class PropertiesServices:
             for item in data['batchs']:
                 batch = {
                     'land_name':item['name'],
-                    'land_ha': float(item['hectares_number'])
+                    'land_ha': float(item['hectares_number']),
+                    'dron': bool(item['dron'] if "dron" in item else False)
                 }
                 if("id" in item):
                     if("delete" in item and item['delete'] == True):

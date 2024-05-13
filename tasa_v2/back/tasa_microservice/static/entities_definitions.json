@@ -214,6 +214,10 @@
          "realtime": {
             "dbName": "realtime",
             "type": "dateTime"
+         },
+         "dron": {
+            "dbName": "dron",
+            "type": "boolean"
          }
       }
    },
@@ -381,6 +385,10 @@
          },
          "data": {
             "dbName": "data",
+            "type": "string"
+         },
+         "air_application": {
+            "dbName": "air_application",
             "type": "string"
          },
          "procedure_image": {

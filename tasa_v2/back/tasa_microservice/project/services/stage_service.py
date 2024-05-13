@@ -64,7 +64,8 @@ class StageServices:
         batchs = { 
                     "id": lands['id'],
                     "name": lands['land_name'],
-                    "hectares_number": lands['land_ha']
+                    "hectares_number": lands['land_ha'],
+                    "dron": lands['dron']
                } 
 
         stage_number = Stage.stage_one.value
@@ -117,6 +118,7 @@ class StageServices:
             edit = 'real_date' in json_data and not json_data['real_date'] and edit
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
+            json_data['air_application'] = property_stage['air_application']
             results['data'].append(json_data)
 
         return results
@@ -167,6 +169,11 @@ class StageServices:
             images = data['images']
             stage_db["procedure_image"] = json.dumps(images)
             data.pop("images")
+            
+        if("air_application" in data):
+            air = data['air_application']
+            stage_db["air_application"] = json.dumps(air)
+            data.pop("air_application")                    
 
         if (stage_number == Stage.stage_fifteen and
            "amount_quintals" in data):
@@ -263,7 +270,8 @@ class StageServices:
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
                     "products": [],
-                    "images": None
+                    "images": None,
+                    "air_application": None
                 }
             )
         else:
@@ -274,6 +282,7 @@ class StageServices:
             stage_number != Stage.stage_fifteen.value) and (edit)
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
+            json_data['air_application'] = property_stage['air_application']
             results['data'].append(json_data)
 
         return results
@@ -336,6 +345,7 @@ class StageServices:
             edit = edit and 'application_date' not in json_data
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
+            json_data['air_application'] = property_stage['air_application']
             results['data'].append(json_data)
 
         return results
@@ -531,6 +541,11 @@ class StageServices:
         self.set_alarms(land_id, tuple_stage[3], data)
         if("sowing_date" in data and "type_sowing" in data and "variety" in data):
             notification_utils.set_notification(land_id, stage_number)
+        
+        if("air_application" in data):
+            air = data['air_application']
+            stage_db["air_application"] = json.dumps(air)
+            data.pop("air_application")        
         
         if("images" in data):
             images = data['images']
