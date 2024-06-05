@@ -349,6 +349,10 @@
          "cropComplete":{
             "dbName": "crop_complete",
             "type": "boolean"
+         },
+         "air_application": {
+            "dbName": "air_application",
+            "type": "string"
          }
       }
    },

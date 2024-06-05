@@ -475,7 +475,8 @@ class StageServices:
             "id_stage": x['id'],
 			"stage_number": x['stageNumber'],
 			"stage_name": x['stage'],
-			"complete": False
+			"complete": False, 
+            "air_application": False    
         }
         if len(data_stages)==0 else self.validation_stage(x, data_stages) , data))
         
@@ -487,7 +488,8 @@ class StageServices:
             "id_stage": data['id'],
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
-			"complete": True
+			"complete": True, 
+            "air_application": x['air_application'] is not None        
         }
         if x['stageId'] == data['id'] and
         (x['stageComplete'])
@@ -497,7 +499,8 @@ class StageServices:
             "id_stage": data['id'],
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
-			"complete": False
+			"complete": False,
+            "air_application": x['air_application'] is not None      
         }, stages))
 
         data = sorted(result, key= lambda stage: stage['stage'])
