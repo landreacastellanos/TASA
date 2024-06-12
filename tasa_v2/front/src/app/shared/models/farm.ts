@@ -3,6 +3,7 @@ export interface Farm {
   id: number;
   name: string;
   type_planting: string;
+  air_application: boolean;
 }
 
 export interface FarmById {
@@ -30,6 +31,7 @@ export interface Batches {
   hectares_number: number;
   id: number;
   name: string;
+  dron: boolean;
 }
 
 export interface IArrozType {

@@ -21,7 +21,7 @@ $light-warn: mat-palette($mat-red-custom);
 $theme: mat-light-theme(
   $light-primary,
   $light-accent,
-  $light-warn
+  $light-warn,
 );
 
 // Include theme styles for core and each component used in your app.

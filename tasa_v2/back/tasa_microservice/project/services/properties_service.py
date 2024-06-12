@@ -23,6 +23,8 @@ class PropertiesServices:
          entity_name="calendar")
         self.__repository_procedure = CommonRepository(
          entity_name="propertyProcedure") 
+        self.__repository_property_stage = CommonRepository(
+         entity_name="property_stage")
 
 
     def get_planting_type(self):       
@@ -174,10 +176,28 @@ class PropertiesServices:
                             "name": x['name'],
                             "business_name": x['business_name'],
                             "phone": x['phone'],
+                            "air_application": self.get_air_application_by_property(x['id']),
                             "type_planting": self.get_type_planting_name(planting_type,x['sowing_system'])['name']
                         } ,plant))        
 
         return data
+    
+    def get_air_application_by_property(self, id):
+        lands = self.__repository_land.select(entity_name="land", options={"filters":
+                        [['property_id', "equals", id]]
+                        })
+        air_application = False;
+        
+        for land in lands:
+            property_one = self.__repository_property_stage.select(entity_name="property_stage", options={"filters":
+                                [['land_id', "equals", land['id']]]
+                                })
+            air_application = len(list(filter(lambda x: x['air_application'] is not None, property_one))) > 0
+            if air_application: break
+
+        
+        return air_application
+
     
     def get_type_planting_name(self,list,id):
         for item in list:
@@ -200,7 +220,8 @@ class PropertiesServices:
         batchs = list(map(lambda  x:{ 
                                 "id": x['id'],
                                 "name": x['land_name'],
-                                "hectares_number": x['land_ha']
+                                "hectares_number": x['land_ha'],
+                                "dron": x['dron']
                             } ,lands))
         property['batchs'] = batchs
 
@@ -331,7 +352,8 @@ class PropertiesServices:
             for item in data['batchs']:
                 batch = {
                     'land_name':item['name'],
-                    'land_ha': float(item['hectares_number'])
+                    'land_ha': float(item['hectares_number']),
+                    'dron': bool(item['dron'] if "dron" in item else False)
                 }
                 if("id" in item):
                     if("delete" in item and item['delete'] == True):

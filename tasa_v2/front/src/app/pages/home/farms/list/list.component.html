@@ -76,7 +76,7 @@
         <tr
           mat-row
           (click)="selection.toggle(row)"
-          [ngClass]="selection.isSelected(row) ? 'active' : ''"
+          [ngClass]="selection.isSelected(row) ? 'active' : row.air_application? 'drone': ''"
           *matRowDef="let row; columns: displayedColumns"
         ></tr>
 

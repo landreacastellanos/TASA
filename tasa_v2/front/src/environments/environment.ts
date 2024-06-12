@@ -7,7 +7,7 @@ export const environment = {
 
   urlApi: 'http://35.209.243.75:5024/tasa_service/',
   urlNotifications: 'http://35.209.243.75:5025/stream_service/',
-  publicFrontUrl: 'http://localhost:4200/#/',
+  publicFrontUrl: 'http://35.209.243.75:8082/#/',
 };
 
 /*

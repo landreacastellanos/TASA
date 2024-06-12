@@ -23,8 +23,8 @@ export class ListStagesComponent implements OnInit, CalendarChildren {
     this.list = await this.landsService.getListCalendar();
   }
 
-  public color(complete: boolean) {
-    return complete ? 'color-red' : 'color-green';
+  public color(complete: boolean, air_application: boolean) {
+    return complete ? (air_application? 'color-blue' : 'color-red') : 'color-green';
   }
 
   public goItem(item) {

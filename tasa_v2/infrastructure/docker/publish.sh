@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Login into artifact registry
-gcloud auth login
+gcloud config set project tasa-dev-01
+# gcloud auth login
 gcloud auth configure-docker \
     us-central1-docker.pkg.dev \
     --verbosity=none

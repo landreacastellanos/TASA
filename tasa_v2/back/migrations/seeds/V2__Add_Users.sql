@@ -38,4 +38,5 @@ UNLOCK TABLES;
 
 
 
-INSERT INTO `user` VALUES (1, 'admin','admin',4,'Admi','roce.admi@gmail.com',3006722223,'gAAAAABghE0C9DbDauGx9qdEN4R4qRwsSknn-vK8Bx3bFRGhDCkxaz0s-FJAbVoPhFkOjbhaox8Bly9_94qLlLW5gIxaTcs0aQ==','2021-04-24 11:53:23',1,1)
+INSERT INTO `user` VALUES (1, 'Vanessa','Sora',20,'FrontEndDev','vanesora@gmail.com',1234567890,'gAAAAABl-nL7d5O7jaXap7f5S4TkkeZVPHOVbAl9OdcGIvTj0Ia2ZQ91Q5F-TCugxrfDMgFGqWccOpXL5LfDhjokYfwvhrq4kg==','2024-03-20 00:00:00',1,1);
+INSERT INTO `user` VALUES (2, 'Leonardo','Bustamante',21,'BackEndDev','diegol.bustamantep@gmail.com',1234567890,'gAAAAABl-nL7d5O7jaXap7f5S4TkkeZVPHOVbAl9OdcGIvTj0Ia2ZQ91Q5F-TCugxrfDMgFGqWccOpXL5LfDhjokYfwvhrq4kg==','2024-03-20 00:00:00',1,1)
