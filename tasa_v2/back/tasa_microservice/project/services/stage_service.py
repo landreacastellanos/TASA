@@ -99,7 +99,8 @@ class StageServices:
         
         tuple_stage = self.get_property_stage(email, land_id, stage_number)
         property_stage = tuple_stage[1]
-        edit = tuple_stage[0]                   
+        edit = tuple_stage[0]
+        dron = tuple_stage[4]['dron']
         
         if(len(property_stage) == 0):
             results['data'].append(
@@ -109,7 +110,9 @@ class StageServices:
                     "type_sowing": "",
                     "variety": "",
                     "enabled": edit,
-                    "images": None
+                    "images": None,
+                    "dron": dron
+                    
                 }
             )
         else:
@@ -117,6 +120,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = 'real_date' in json_data and not json_data['real_date'] and edit
             json_data['enabled'] = edit
+            json_data['dron'] = dron
             json_data['images'] = property_stage['procedure_image']
             json_data['air_application'] = property_stage['air_application']
             results['data'].append(json_data)
@@ -233,6 +237,7 @@ class StageServices:
 
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
+        dron = tuple_stage[4]['dron']
 
         stage = self.calulate_stage(stage_number)    
     
@@ -271,6 +276,7 @@ class StageServices:
                     "enabled": edit,
                     "products": [],
                     "images": None,
+                    "dron": dron,
                     "air_application": None
                 }
             )
@@ -283,6 +289,7 @@ class StageServices:
             json_data['enabled'] = edit
             json_data['images'] = property_stage['procedure_image']
             json_data['air_application'] = property_stage['air_application']
+            json_data['dron'] = dron
             results['data'].append(json_data)
 
         return results
@@ -301,6 +308,7 @@ class StageServices:
         dates = DataUtils.calulate_date_stage(stage_number, tuple_stage[3])
         property_stage = tuple_stage[1]
         edit = tuple_stage[0]
+        dron = tuple_stage[4]['dron']
 
         stage_one = Stage.stage_one.value    
         stage_three = Stage.stage_three.value
@@ -336,7 +344,9 @@ class StageServices:
                     "start_traking_date": start_traking_date,
                     "enabled": edit,
                     "products": [],
-                    "images": None
+                    "images": None,
+                    "dron": dron
+                    
                 }
             )
         else:
@@ -344,6 +354,7 @@ class StageServices:
             json_data = json.loads(property_stage['data'])            
             edit = edit and 'application_date' not in json_data
             json_data['enabled'] = edit
+            json_data['dron'] = dron
             json_data['images'] = property_stage['procedure_image']
             json_data['air_application'] = property_stage['air_application']
             results['data'].append(json_data)
@@ -388,7 +399,7 @@ class StageServices:
                              ["crop_complete","equals",False]]
                              })
 
-        return (edit, property_stage, stage_id, sowing_system)
+        return (edit, property_stage, stage_id, sowing_system, land[0])
         
     def upload_file(self, files):
         l_files = []
@@ -464,7 +475,8 @@ class StageServices:
             "id_stage": x['id'],
 			"stage_number": x['stageNumber'],
 			"stage_name": x['stage'],
-			"complete": False
+			"complete": False, 
+            "air_application": False    
         }
         if len(data_stages)==0 else self.validation_stage(x, data_stages) , data))
         
@@ -476,7 +488,8 @@ class StageServices:
             "id_stage": data['id'],
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
-			"complete": True
+			"complete": True, 
+            "air_application": x['air_application'] is not None        
         }
         if x['stageId'] == data['id'] and
         (x['stageComplete'])
@@ -486,7 +499,8 @@ class StageServices:
             "id_stage": data['id'],
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
-			"complete": False
+			"complete": False,
+            "air_application": x['air_application'] is not None      
         }, stages))
 
         data = sorted(result, key= lambda stage: stage['stage'])
