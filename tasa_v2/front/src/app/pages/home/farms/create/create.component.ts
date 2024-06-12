@@ -1,5 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { element } from 'protractor';
@@ -13,7 +19,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent implements OnInit {
   @ViewChild('myForm', { static: false }) myForm: NgForm;
@@ -28,6 +34,7 @@ export class CreateComponent implements OnInit {
   public title = 'Registrar finca';
   public id: string;
   public idLot: number;
+  public drone: boolean;
   public roleIdAdmin = new RolAdministrador().key;
   public roleId: any;
 
@@ -39,8 +46,8 @@ export class CreateComponent implements OnInit {
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
     private storageService: StorageService,
-    public dialog: MatDialog,
-  ) { }
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): Promise<void> {
     setTimeout(() => {
@@ -48,43 +55,44 @@ export class CreateComponent implements OnInit {
     }, 1);
     this.roleId = this.storageService.settings.user.roleId;
     this.mode = this.route.snapshot.data.mode;
-    return this.farmsService.getUsers().then(infoUsers => {
-      this.users = infoUsers[0];
-      return this.farmsService.getSystems().then(infoSystems => {
-        this.systems = infoSystems[0];
+    return this.farmsService
+      .getUsers()
+      .then((infoUsers) => {
+        this.users = infoUsers[0];
+        return this.farmsService.getSystems().then((infoSystems) => {
+          this.systems = infoSystems[0];
+        });
+      })
+      .finally(() => {
+        if (this.mode === 'view') {
+          this.initView();
+        } else {
+          this.initCreate();
+        }
       });
-    }).finally(() => {
-      if (this.mode === 'view') {
-        this.initView();
-      } else {
-        this.initCreate();
-      }
-    });
   }
 
   public initCreate() {
     this.mode = 'create';
-    this.farmForm = this.fb.group(
-      {
-        name: ['', [Validators.required, Validators.minLength(3)]],
-        businessName: ['', [Validators.required, Validators.minLength(3)]],
-        web: [undefined],
-        address: [undefined],
-        phone: [undefined],
-        totalHectares: [undefined, [Validators.required, Validators.min(0)]],
-        system: ['', [Validators.required]],
-        vendor: ['', [Validators.required]],
-        lotName: ['', [Validators.required]],
-        lotHectare: ['', [Validators.required]],
-        owner: [undefined, [Validators.required]],
-        partner: [undefined],
-        influencer: [undefined],
-        liable: [undefined],
-        foreman: [undefined],
-        purchasingAgent: [undefined],
-        paymentAgent: [undefined],
-      }
-    );
+    this.farmForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      businessName: ['', [Validators.required, Validators.minLength(3)]],
+      web: [undefined],
+      address: [undefined],
+      phone: [undefined],
+      totalHectares: [undefined, [Validators.required, Validators.min(0)]],
+      system: ['', [Validators.required]],
+      vendor: ['', [Validators.required]],
+      lotName: ['', [Validators.required]],
+      lotHectare: ['', [Validators.required]],
+      owner: [undefined, [Validators.required]],
+      partner: [undefined],
+      influencer: [undefined],
+      liable: [undefined],
+      foreman: [undefined],
+      purchasingAgent: [undefined],
+      paymentAgent: [undefined],
+    });
     this.configService.loading = false;
   }
 
@@ -95,45 +103,69 @@ export class CreateComponent implements OnInit {
     this.idLot = farm.batchs.length > 0 ? farm.batchs[0].id : undefined;
     this.title = 'Consultar finca';
     this.listLot = [];
-    this.farmForm = this.fb.group(
-      {
-        name: [farm.name, [Validators.required, Validators.minLength(3)]],
-        businessName: [farm.business_name, [Validators.required, Validators.minLength(3)]],
-        web: [farm.web_page],
-        address: [farm.direction],
-        phone: [farm.phone],
-        totalHectares: [farm.hectares_total, [Validators.required, Validators.min(0)]],
-        system: [farm.sowing_system, [Validators.required]],
-        vendor: [farm.seller, [Validators.required]],
-        lotName: [farm.batchs.length > 0 ? farm.batchs[0].name : undefined, [Validators.required]],
-        lotHectare: [farm.batchs.length > 0 ? farm.batchs[0].hectares_number : undefined, [Validators.required]],
-        owner: [farm.property_owner, [Validators.required]],
-        partner: [farm.parthner_add],
-        influencer: [farm.decision_influencer],
-        liable: [farm.responsible_purchasing],
-        foreman: [farm.manager],
-        purchasingAgent: [farm.purchasing_manager],
-        paymentAgent: [farm.pay_manager],
-      }
-    );
+    this.farmForm = this.fb.group({
+      name: [farm.name, [Validators.required, Validators.minLength(3)]],
+      businessName: [
+        farm.business_name,
+        [Validators.required, Validators.minLength(3)],
+      ],
+      web: [farm.web_page],
+      address: [farm.direction],
+      phone: [farm.phone],
+      totalHectares: [
+        farm.hectares_total,
+        [Validators.required, Validators.min(0)],
+      ],
+      system: [farm.sowing_system, [Validators.required]],
+      vendor: [farm.seller, [Validators.required]],
+      lotName: [
+        farm.batchs.length > 0 ? farm.batchs[0].name : undefined,
+        [Validators.required],
+      ],
+      lotHectare: [
+        farm.batchs.length > 0 ? farm.batchs[0].hectares_number : undefined,
+        [Validators.required],
+      ],
+      owner: [farm.property_owner, [Validators.required]],
+      partner: [farm.parthner_add],
+      influencer: [farm.decision_influencer],
+      liable: [farm.responsible_purchasing],
+      foreman: [farm.manager],
+      purchasingAgent: [farm.purchasing_manager],
+      paymentAgent: [farm.pay_manager],
+    });
     if (farm.batchs.length > 1) {
       farm.batchs.forEach((element, index) => {
         if (index !== 0) {
-          this.listLot.push({ name: element.name, value: element.hectares_number, error: false, id: element.id });
+          this.listLot.push({
+            name: element.name,
+            value: element.hectares_number,
+            drone: element.dron,
+            error: false,
+            id: element.id,
+          });
         }
       });
     }
     if (this.idLot) {
+      this.drone = farm.batchs[0].dron;
       this.initialListLot.push({
         name: this.farmForm.value.lotName,
         value: this.farmForm.value.lotHectare,
+        drone: farm.batchs[0].dron,
         error: false,
-        id: this.idLot
+        id: this.idLot,
       });
       if (this.listLot.length) {
         this.listLot.forEach((element) => {
-          this.initialListLot.push({ name: element.name, value: element.value, error: false, id: element.id });
-        })
+          this.initialListLot.push({
+            name: element.name,
+            value: element.value,
+            drone: element.drone,
+            error: false,
+            id: element.id,
+          });
+        });
       }
     }
     this.disabledForm();
@@ -148,42 +180,96 @@ export class CreateComponent implements OnInit {
 
   public disabledForm() {
     const keys = Object.keys(this.farmForm.value);
-    keys.forEach(element => {
-      this.mode === 'view' ? this.farmForm.get(element).disable() : this.farmForm.get(element).enable();
+    keys.forEach((element) => {
+      this.mode === 'view'
+        ? this.farmForm.get(element).disable()
+        : this.farmForm.get(element).enable();
     });
+  }
+
+  openDialogDelete(type, index?): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '350px',
+      data: {message: 'Sí desmarcas el check, se borrarán los datos del punto 5 de los segmentos', subtitle: '¿Estás seguro de continuar?'}
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) {
+        if (type == 'drone') {          
+          this.drone = !this.drone;
+        }
+        if (type == 'list') {
+          this.listLot[index].drone = !this.listLot[index].drone;
+        }
+      }
+    });
+  }
+
+  selectDrone(type, index?) {
+    if (this.mode === 'view') {
+      return;
+    }
+    if (type == 'drone') {
+      if(!this.drone){
+        this.openDialogDelete(type, index)
+      }
+      else{
+        this.drone = !this.drone;
+      }
+    }
+    if (type == 'list') {
+      if(!this.listLot[index].drone){
+        this.openDialogDelete(type, index)
+      }
+      else{
+        this.listLot[index].drone = !this.listLot[index].drone;
+      }
+    }
   }
 
   public onSubmit() {
     this.viewErrorLots();
     this.submitted = true;
-    if (!this.farmForm.valid || this.listLot.find(lot => lot.error)) {
+    if (!this.farmForm.valid || this.listLot.find((lot) => lot.error)) {
       return this.validationError();
     }
     this.configService.loading = true;
     let lots = [];
-    lots = this.listLot.filter(lot => lot.name).map(lot => {
-      return {
-        name: lot.name,
-        hectares_number: lot.value,
-        id: lot.id ? lot.id : undefined
-      };
-    });
+    lots = this.listLot
+      .filter((lot) => lot.name)
+      .map((lot) => {
+        return {
+          name: lot.name,
+          hectares_number: lot.value,
+          dron: lot.drone,
+          id: lot.id ? lot.id : undefined,
+        };
+      });
     if (this.idLot) {
-      lots.push({ name: this.farmForm.value.lotName, hectares_number: this.farmForm.value.lotHectare, id: this.idLot });
+      lots.push({
+        name: this.farmForm.value.lotName,
+        hectares_number: this.farmForm.value.lotHectare,
+        dron: this.drone,
+        id: this.idLot,
+      });
     } else {
-      lots.push({ name: this.farmForm.value.lotName, hectares_number: this.farmForm.value.lotHectare });
+      lots.push({
+        name: this.farmForm.value.lotName,
+        hectares_number: this.farmForm.value.lotHectare,
+        dron: this.drone,
+      });
     }
-    this.initialListLot.forEach(lot => {
-      const deleteLot = lots.find(element => element.id === lot.id);
+    this.initialListLot.forEach((lot) => {
+      const deleteLot = lots.find((element) => element.id === lot.id);
       if (!deleteLot) {
         lots.push({
           name: lot.name,
           hectares_number: lot.value,
           id: lot.id,
-          delete: true
+          dron: lot.drone,
+          delete: true,
         });
       }
-    })
+    });
     const farm = {
       batchs: lots,
       business_name: this.farmForm.value.businessName,
@@ -201,7 +287,7 @@ export class CreateComponent implements OnInit {
       pay_manager: this.farmForm.value.paymentAgent,
       purchasing_manager: this.farmForm.value.purchasingAgent,
       responsible_purchasing: this.farmForm.value.liable,
-      id: this.id ? parseInt(this.id, 10) : undefined
+      id: this.id ? parseInt(this.id, 10) : undefined,
     };
     const promise =
       this.mode === 'edit'
@@ -209,24 +295,28 @@ export class CreateComponent implements OnInit {
         : this.farmsService.saveFarm(farm);
 
     const successMessage =
-      this.mode === 'edit' ? 'Finca editada correctamente' : 'Finca creada correctamente';
-    return promise.then((data) => {
-      if (data !== null) {
-        this.snackBar.open(successMessage, 'x', {
-          duration: 2000,
-          panelClass: ['snackbar-success'],
-        });
-        if (this.mode === 'edit') {
-          this.initView();
+      this.mode === 'edit'
+        ? 'Finca editada correctamente'
+        : 'Finca creada correctamente';
+    return promise
+      .then((data) => {
+        if (data !== null) {
+          this.snackBar.open(successMessage, 'x', {
+            duration: 2000,
+            panelClass: ['snackbar-success'],
+          });
+          if (this.mode === 'edit') {
+            this.initView();
+          }
         }
-      }
-    }).finally(() => {
-      this.configService.loading = false;
-    });
+      })
+      .finally(() => {
+        this.configService.loading = false;
+      });
   }
 
   public viewErrorLots() {
-    this.listLot.forEach(lot => {
+    this.listLot.forEach((lot) => {
       if ((lot.name || lot.value) && !(lot.name && lot.value)) {
         lot.error = true;
       } else {
@@ -254,7 +344,12 @@ export class CreateComponent implements OnInit {
     if (this.mode === 'view') {
       return;
     }
-    this.listLot.push({ name: undefined, value: undefined, error: false });
+    this.listLot.push({
+      name: undefined,
+      value: undefined,
+      error: false,
+      drone: false,
+    });
   }
 
   public viewLot(lot?) {
@@ -266,67 +361,63 @@ export class CreateComponent implements OnInit {
   }
 
   public getIdRole(value: number) {
-    return this.storageService.settings.roles.find(rol => rol.key === value);
+    return this.storageService.settings.roles.find((rol) => rol.key === value);
   }
 
   public deleteLot(lot?) {
-    if(confirm("¿Está seguro que desea eliminar este lote?")) {    
-    if (!lot) {
-      if (this.listLot.length) {
-        this.farmForm.get('lotName').setValue(this.listLot[0].name);
-        this.farmForm.get('lotHectare').setValue(this.listLot[0].value);
-        this.idLot = this.listLot[0].id;
-        this.listLot = this.listLot.filter(item => item.id !== this.idLot);
-      } else {
-        this.farmForm.get('lotName').setValue('');
-        this.farmForm.get('lotHectare').setValue('');
-        this.idLot = null;
-      }
-    } else {
-      if (lot.id) {
-        this.listLot = this.listLot.filter(item => item.id !== lot.id);
+    if (confirm('¿Está seguro que desea eliminar este lote?')) {
+      if (!lot) {
+        if (this.listLot.length) {
+          this.farmForm.get('lotName').setValue(this.listLot[0].name);
+          this.farmForm.get('lotHectare').setValue(this.listLot[0].value);
+          this.idLot = this.listLot[0].id;
+          this.drone = this.listLot[0].drone;
+          this.listLot = this.listLot.filter((item) => item.id !== this.idLot);
+        } else {
+          this.farmForm.get('lotName').setValue('');
+          this.farmForm.get('lotHectare').setValue('');
+          this.idLot = null;
+          this.drone = false;
+        }
       } else {
         if (lot.id) {
-          this.listLot = this.listLot.filter(item => item.id !== lot.id);
+          this.listLot = this.listLot.filter((item) => item.id !== lot.id);
         } else {
-          this.listLot = this.listLot.filter(item => item.name !== lot.name);
+          this.listLot = this.listLot.filter((item) => item.name !== lot.name);
         }
       }
     }
   }
 
-  }
-
   get vendors() {
-    return this.users.filter(user => user.rol === this.getIdRole(6).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(6).key);
   }
 
   get owners() {
-    return this.users.filter(user => user.rol === this.getIdRole(4).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(4).key);
   }
 
   get partners() {
-    return this.users.filter(user => user.rol === this.getIdRole(5).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(5).key);
   }
 
   get influencers() {
-    return this.users.filter(user => user.rol === this.getIdRole(7).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(7).key);
   }
 
   get liables() {
-    return this.users.filter(user => user.rol === this.getIdRole(3).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(3).key);
   }
 
   get foremen() {
-    return this.users.filter(user => user.rol === this.getIdRole(2).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(2).key);
   }
 
   get purchasingAgents() {
-    return this.users.filter(user => user.rol === this.getIdRole(8).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(8).key);
   }
 
   get paymentAgents() {
-    return this.users.filter(user => user.rol === this.getIdRole(9).key);
+    return this.users.filter((user) => user.rol === this.getIdRole(9).key);
   }
-
 }

@@ -46,7 +46,7 @@ import { HarvestTimeComponent } from './harvest-time/harvest-time.component';
     MatCheckboxModule,
     CalendarRoutingModule,
     MatExpansionModule,
-    SharedDateModule,
+    SharedDateModule
   ],
 })
 export class CalendarModule {}

@@ -99,45 +99,57 @@
               <hr class="mt-0" />
             </div>
 
-            <div class="containerForm col-12 col-md-6">
-              <mat-label class="text-size">Nombre del lote</mat-label>
-              <mat-form-field class="formOutline" appearance="outline">
-                <input matInput formControlName="lotName" type="text" class="inputOutline" required />
-              </mat-form-field>
-              <div *ngIf="submitted && controls.lotName?.errors?.required" class="warning">
-                Este campo es requerido
+            <div class="row">
+              <div class="containerForm col-12 col-lg-5">
+                <mat-label class="text-size">Nombre del lote</mat-label>
+                <mat-form-field class="formOutline" appearance="outline">
+                  <input matInput formControlName="lotName" type="text" class="inputOutline" required />
+                </mat-form-field>
+                <div *ngIf="submitted && controls.lotName?.errors?.required" class="warning">
+                  Este campo es requerido
+                </div>
               </div>
-            </div>
-            <div [ngClass]="{
-                containerForm: true,
-                'col-12': mode === 'create',
-                'col-11': mode !== 'create' && idLot,
-                'col-md-6': mode === 'create',
-                'col-md-5': mode !== 'create' && idLot
-              }">
-              <mat-label class="text-size">Hectáreas del lote</mat-label>
-              <mat-form-field class="col-12 formOutline" appearance="outline">
-                <input matInput formControlName="lotHectare" class="inputOutline" required type="number" />
-              </mat-form-field>
-              <div *ngIf="submitted && controls.lotHectare?.errors?.required" class="warning">
-                Este campo es requerido
+              <div [ngClass]="{
+                  containerForm: true,
+                  'col-11': mode === 'create',
+                  'col-10': mode !== 'create' && idLot,
+                  'col-lg-5': mode === 'create',
+                  'col-lg-4': mode !== 'create' && idLot,
+                  'col-md-9': mode === 'create',
+                  'col-md-8': mode !== 'create' && idLot
+                }">
+                <mat-label class="text-size">Hectáreas del lote</mat-label>
+                <mat-form-field class="col-12 formOutline" appearance="outline">
+                  <input matInput formControlName="lotHectare" class="inputOutline" required type="number" />
+                </mat-form-field>
+                <div *ngIf="submitted && controls.lotHectare?.errors?.required" class="warning">
+                  Este campo es requerido
+                </div>
               </div>
-            </div>
-            <div class="col-1 container-icon" *ngIf="mode == 'view'">
-              <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
-                (click)="viewLot()">
-                <mat-icon>visibility</mat-icon>
-              </button>
-            </div>
-            <div class="col-1 container-icon" *ngIf="mode == 'edit'">
-              <button mat-mini-fab color="primary" (click)="deleteLot()"
-                aria-label="Example icon button with a delete icon">
-                <mat-icon>delete</mat-icon>
-              </button>
+              <div class="col-1 containerForm">
+                <mat-label class="text-size">Drone</mat-label>
+                <div class="checkbox-container">
+                  <mat-checkbox class="no-margin" (click)="$event.stopPropagation()" [disabled]="mode === 'view'"
+                  [(ngModel)]="drone" (change)="selectDrone('drone')" [ngModelOptions]="{standalone: true}">
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div class="col-1 col-md-2 container-icon" *ngIf="mode == 'view'">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a delete icon"
+                  (click)="viewLot()">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </div>
+              <div class="col-2 container-icon" *ngIf="mode == 'edit'">
+                <button mat-mini-fab color="primary" (click)="deleteLot()"
+                  aria-label="Example icon button with a delete icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </div>
             <div class="container-lots col-12">
               <div *ngFor="let lot of listLot; index as i" class="container-lots row">
-                <div class="containerForm col-12 col-md-6">
+                <div class="containerForm col-12 col-lg-5">
                   <mat-label class="text-size">Nombre del lote</mat-label>
                   <mat-form-field class="formOutline" appearance="outline">
                     <input matInput type="text" class="inputOutline" [(ngModel)]="listLot[i].name"
@@ -149,10 +161,12 @@
                 </div>
                 <div [ngClass]="{
                   containerForm: true,
-                  'col-12': mode === 'create',
-                  'col-11': mode !== 'create' && idLot,
-                  'col-md-6': mode === 'create',
-                  'col-md-5': mode !== 'create' && idLot
+                  'col-11': mode === 'create',
+                  'col-10': mode !== 'create' && idLot,
+                  'col-lg-5': mode === 'create',
+                  'col-lg-4': mode !== 'create' && idLot,
+                  'col-md-9': mode === 'create',
+                  'col-md-8': mode !== 'create' && idLot
                 }">
                   <mat-label class="text-size">Hectáreas del lote</mat-label>
                   <mat-form-field class="col-12 formOutline" appearance="outline">
@@ -160,13 +174,21 @@
                       [ngModelOptions]="{ standalone: true }" [disabled]="mode === 'view'" />
                   </mat-form-field>
                 </div>
-                <div class="col-1 container-icon" *ngIf="mode == 'view'">
+                <div class="col-1 containerForm">
+                  <mat-label class="text-size">Drone</mat-label>
+                  <div class="checkbox-container">
+                    <mat-checkbox class="no-margin" (click)="$event.stopPropagation()" [disabled]="mode === 'view'"
+                      [(ngModel)]="lot.drone" (change)="selectDrone('list',i)" [ngModelOptions]="{standalone: true}">
+                    </mat-checkbox>
+                  </div>
+                </div>
+                <div class="col-1 col-md-2 container-icon" *ngIf="mode == 'view'">
                   <button mat-mini-fab color="primary" (click)="viewLot(lot)"
                     aria-label="Example icon button with a delete icon">
                     <mat-icon>visibility</mat-icon>
                   </button>
                 </div>
-                <div class="col-1 container-icon" *ngIf="mode == 'edit'">
+                <div class="col-2 container-icon" *ngIf="mode == 'edit'">
                   <button mat-mini-fab color="primary" (click)="deleteLot(lot)"
                     aria-label="Example icon button with a delete icon">
                     <mat-icon>delete</mat-icon>

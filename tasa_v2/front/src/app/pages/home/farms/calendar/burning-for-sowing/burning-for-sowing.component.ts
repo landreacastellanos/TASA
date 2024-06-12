@@ -16,6 +16,9 @@ import { CalendarChildren } from '../calendar-children.interface';
 import { CalendarService } from '../calendar.service';
 import { LandsService } from '../lands.service';
 import { environment } from 'src/environments/environment';
+import { FarmsService } from '../../farms.service';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { DronesService } from '../../../drones/drones.service';
 
 @Component({
   selector: 'app-burning-for-sowing',
@@ -55,18 +58,15 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   ];
   dataSourceProducts: MatTableDataSource<StageProduct>;
   dataSourceProductsAdd: MatTableDataSource<StageProduct>;
-  burningForSowingForm: FormGroup = this.fb.group({
-    observations: [
-      { value: '', disabled: this.mode === 'view' },
-      [Validators.required],
-    ],
-    application_date: [{ value: '', disabled: this.mode === 'view' }, []],
-    products: this.fb.array([]),
-  });
+  burningForSowingForm: FormGroup = this.fb.group({});
   enableEditProduct = false;
   validatorFloat = '^[0-9]+([.][0-9]+)?$';
+  validatorFloat2 = '^(?:[0-9]{1,2})(?:\\.[0-9]{1,2})?$';
   hectares = 0;
   pictures = [];
+  drones = [];
+  drone: boolean;
+  public users = [];
 
   constructor(
     public fb: FormBuilder,
@@ -75,14 +75,24 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     private snackBar: MatSnackBar,
     private landsService: LandsService,
     private configurationService: ConfigurationService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private farmsService: FarmsService,
+    private storageService: StorageService,
+    private droneService: DronesService
   ) {
     this.segmentId = this.route.snapshot.data.segmentId;
     this.initAPI();
   }
 
   ngOnInit(): void {
-    this.init();
+    this.burningForSowingForm = this.fb.group({
+      observations: [
+        { value: '', disabled: this.mode === 'view' },
+        [Validators.required],
+      ],
+      application_date: [{ value: '', disabled: this.mode === 'view' }, []],
+      products: this.fb.array([]),
+    });
     this.burningForSowingForm.controls.products.valueChanges.subscribe(
       (products) => this.productsValidation(products)
     );
@@ -102,6 +112,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   }
   get controls() {
     return this.burningForSowingForm.controls;
+  }
+  get controlsAerial() {
+    return (this.burningForSowingForm.get('aerialApplication') as FormGroup)
+      .controls;
   }
   get hasReferencePhoto() {
     // Some stages are not available for; @Luz:
@@ -126,10 +140,20 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         this.products = products;
         this.dataSourceProducts = new MatTableDataSource(products);
       })
+      .then(() => this.droneService.getDrones())
+      .then((drones) => {
+        this.drones = drones;
+      })
+      .then(() => this.farmsService.getUsers())
+      .then((infoUsers) => {
+        this.users = infoUsers[0];
+      })
       .then(() =>
         this.calendarService.getStage(this.segmentId, this.landsService.idLand)
       )
-      .then((stageOneData) => this.init(stageOneData))
+      .then((stageOneData) => {
+        this.init(stageOneData);
+      })
       .finally(() => {
         this.configurationService.setLoadingPage(false);
       });
@@ -137,6 +161,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
 
   init(
     {
+      air_application = '',
       observations = '',
       application_date = '',
       products = [],
@@ -144,10 +169,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       end_traking_date = '',
       start_traking_date = '',
       images = [],
+      dron = false,
     }: StageBetweenResponse = {} as StageBetweenResponse
   ) {
     this.mode = enabled ? 'edit' : 'view';
-
     // ? ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       this.endTrackingDate = end_traking_date && moment(end_traking_date);
@@ -155,6 +180,151 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       this.selection.clear();
       this.pictures = images ? images : [];
+      const airApplication = JSON.parse(air_application);
+      if (dron) {
+        this.burningForSowingForm = this.fb.group({
+          observations: [
+            { value: observations, disabled: this.mode === 'view' },
+            [Validators.required],
+          ],
+          application_date: [{ value: '', disabled: this.mode === 'view' }, []],
+          products: this.fb.array([]),
+          aerialApplication: this.fb.group({
+            reportNumber: [
+              {
+                value: airApplication.reportNumber,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.maxLength(10)],
+            ],
+            drone: [
+              { value: airApplication.drone, disabled: this.mode === 'view' },
+              Validators.required,
+            ],
+            pilotName: [
+              {
+                value: airApplication.pilotName,
+                disabled: this.mode === 'view',
+              },
+              Validators.required,
+            ],
+            applicationManager: [
+              {
+                value: airApplication.applicationManager,
+                disabled: this.mode === 'view',
+              },
+              Validators.required,
+            ],
+            initialWaterPh: [
+              {
+                value: airApplication.initialWaterPh,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            finalMixturePh: [
+              {
+                value: airApplication.finalMixturePh,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            flightHeight: [
+              {
+                value: airApplication.flightHeight,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            applicationVolume: [
+              {
+                value: airApplication.applicationVolume,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            dropSize: [
+              {
+                value: airApplication.dropSize,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            flightSpeed: [
+              {
+                value: airApplication.flightSpeed,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            coverageWidth: [
+              {
+                value: airApplication.coverageWidth,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            startTime: [
+              {
+                value: airApplication.startTime,
+                disabled: this.mode === 'view',
+              },
+              Validators.required,
+            ],
+            endTime: [
+              { value: airApplication.endTime, disabled: this.mode === 'view' },
+              Validators.required,
+            ],
+            windSpeed: [
+              {
+                value: airApplication.windSpeed,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            applicationIncidence: [
+              {
+                value: airApplication.applicationIncidence,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.maxLength(200)],
+            ],
+            applicationRating: [
+              {
+                value: airApplication.applicationRating,
+                disabled: this.mode === 'view',
+              },
+              [Validators.required, Validators.pattern(this.validatorFloat2)],
+            ],
+            liveTime: [
+              airApplication.liveTime? airApplication.liveTime : '',
+              Validators.required,
+            ],
+            deadTime: [
+              airApplication.deadTime? airApplication.deadTime : '',
+              Validators.required,
+            ],
+            liveTimePeriods: this.fb.array([]),
+            deadTimePeriods: this.fb.array([]),
+          }),
+        });
+
+        if (airApplication.liveTimePeriods) {
+          airApplication.liveTimePeriods.forEach((period: any) => {
+            this.addLiveTimePeriod(period.startTime, period.endTime);
+          });
+        }
+        if (airApplication.deadTimePeriods) {
+          airApplication.deadTimePeriods.forEach((period: any) => {
+            this.addDeadTimePeriod(period.startTime, period.endTime);
+          });
+        }
+
+        this.burningForSowingForm.controls.products.valueChanges.subscribe(
+          (products) => this.productsValidation(products)
+        );
+      }
+      this.drone = dron ?? false;
 
       if (this.products) {
         products.forEach((product) => {
@@ -178,20 +348,24 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         ? this.landsService.lands[this.landsService.landsSelectedIds].batchs
             .hectares_number
         : 0;
-    }, 1);
-    this.configurationService.disableForm(
-      this.burningForSowingForm,
-      this.mode === 'view'
-    );
-
-    if (!observations && !products.length) {
-      this.burningForSowingForm.controls.application_date.disable();
-    }
-    this.burningForSowingForm.patchValue({
-      observations,
-      application_date: application_date && moment(application_date),
-      products,
-    });
+    }, 1);    
+    setTimeout(() => {
+      this.configurationService.disableForm(
+        this.burningForSowingForm,
+        this.mode === 'view'
+      );
+  
+      if (!observations && !products.length) {
+        this.burningForSowingForm.controls.application_date.disable();
+      }
+      this.burningForSowingForm.patchValue({
+        observations,
+        application_date: application_date && moment(application_date),
+        products,
+      });
+    }, 200);
+    this.onLiveTimePeriodsChanges();
+    this.onDeadTimePeriodsChanges();
   }
 
   get productsControl() {
@@ -212,6 +386,13 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.submitted &&
       (this.listProductError.editListProducts ||
         this.listProductError.emptyListProducts)
+    );
+  }
+
+  get hasAerialApplication() {
+    return (
+      this.submitted &&
+      !(this.burningForSowingForm.get('aerialApplication') as FormGroup).valid
     );
   }
 
@@ -322,6 +503,17 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     this.selection.selected.forEach((element) => this.addControl(element));
   }
 
+  logFormErrors(group: FormGroup | FormArray): void {
+    Object.keys(group.controls).forEach((key: string) => {
+      const control = group.get(key);
+      if (control instanceof FormGroup || control instanceof FormArray) {
+        this.logFormErrors(control);
+      } else if (control && control.invalid) {
+        console.error('Error in control: ', key, control.errors);
+      }
+    });
+  }
+
   onSave() {
     this.submitted = true;
     // is needed because is no trigger by submit
@@ -343,6 +535,10 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
     });
     values.start_traking_date = this.startTrackingDate;
     values.end_traking_date = this.endTrackingDate;
+    if(this.drone){
+      values.air_application = values.aerialApplication;
+      delete values.aerialApplication;
+    }
     if (Object.values(this.listProductError).includes(true)) {
       return this.snackBar.open(
         'Valida todos los productos antes de continuar',
@@ -353,7 +549,8 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
         }
       );
     }
-    if (!this.burningForSowingForm.valid) {
+    if (this.burningForSowingForm.invalid) {
+      this.logFormErrors(this.burningForSowingForm);
       return this.snackBar.open('Rectifica los campos', 'x', {
         duration: 2000,
         panelClass: ['snackbar-warn'],
@@ -392,6 +589,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       .then(() => this.initAPI())
       .finally(() => {
         this.configurationService.setLoadingPage(false);
+        this.submitted = false;
       });
   }
 
@@ -543,5 +741,108 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.productsControl.controls[index] as FormGroup,
       false
     );
+  }
+
+  get liveTimePeriods(): FormArray {
+    return this.controlsAerial['liveTimePeriods'] as FormArray;
+  }
+
+  get deadTimePeriods(): FormArray {
+    return this.controlsAerial['deadTimePeriods'] as FormArray;
+  }
+
+  addLiveTimePeriod(startTime: string = '', endTime: string = '') {
+    const periodGroup = this.fb.group({
+      startTime: [startTime, Validators.required],
+      endTime: [endTime, Validators.required]
+    });
+
+    this.liveTimePeriods.push(periodGroup);
+    periodGroup.valueChanges.subscribe(() => this.updateLiveTime());
+  }
+
+  addDeadTimePeriod(startTime: string = '', endTime: string = '') {
+    const periodGroup = this.fb.group({
+      startTime: [startTime, Validators.required],
+      endTime: [endTime, Validators.required]
+    });
+
+    this.deadTimePeriods.push(periodGroup);
+    periodGroup.valueChanges.subscribe(() => this.updateDeadTime());
+  }
+
+  removeLiveTimePeriod(index: number) {
+    this.liveTimePeriods.removeAt(index);
+    this.updateLiveTime();
+  }
+
+  removeDeadTimePeriod(index: number) {
+    this.deadTimePeriods.removeAt(index);
+    this.updateDeadTime();
+  }
+
+  private onLiveTimePeriodsChanges(): void {
+    this.liveTimePeriods.valueChanges.subscribe(() => this.updateLiveTime());
+  }
+
+  private onDeadTimePeriodsChanges(): void {
+    this.deadTimePeriods.valueChanges.subscribe(() => this.updateDeadTime());
+  }
+
+  private updateLiveTime(): void {
+    const totalLiveTime = this.calculateTotalTime(this.liveTimePeriods);
+    this.controlsAerial['liveTime'].setValue(totalLiveTime, { emitEvent: false });
+  }
+
+  private updateDeadTime(): void {
+    const totalDeadTime = this.calculateTotalTime(this.deadTimePeriods);
+    this.controlsAerial['deadTime'].setValue(totalDeadTime, { emitEvent: false });
+  }
+
+  private calculateTotalTime(periods: FormArray): string {
+    let totalMinutes = 0;
+
+    periods.controls.forEach(control => {
+      const startTime = control.get('startTime')?.value;
+      const endTime = control.get('endTime')?.value;
+
+      if (startTime && endTime) {
+        const start = this.parseTime(startTime);
+        const end = this.parseTime(endTime);
+
+        if (start && end) {
+          const diff = (end.hours * 60 + end.minutes) - (start.hours * 60 + start.minutes);
+          totalMinutes += diff;
+        }
+      }
+    });
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${this.padZero(hours)}:${this.padZero(minutes)}`;
+  }
+
+  private parseTime(time: string): { hours: number, minutes: number } | null {
+    const [hours, minutes] = time.split(':').map(Number);
+    if (isNaN(hours) || isNaN(minutes)) {
+      return null;
+    }
+    return { hours, minutes };
+  }
+
+  private padZero(num: number): string {
+    return num < 10 ? '0' + num : num.toString();
+  }
+
+  public getIdRole(value: number) {
+    return this.storageService.settings.roles.find((rol) => rol.key === value);
+  }
+
+  get pilots() {
+    return this.users.filter((user) => user.rol === this.getIdRole(6).key);
+  }
+
+  get managers() {
+    return this.users.filter((user) => user.rol === this.getIdRole(2).key);
   }
 }

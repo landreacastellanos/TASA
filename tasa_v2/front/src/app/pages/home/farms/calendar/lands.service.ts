@@ -20,7 +20,6 @@ export class LandsService {
 
   get landSelected(): LandResponse | undefined {
     return this.lands[this.landsSelectedIds];
-    console.log(this.landSelected);
   }
 
   public getLandById(

@@ -1,31 +1,119 @@
 @import "../../../../../../themes/theme.scss";
-.container-table{
+
+.container-table {
   border: 2px solid #87b017;
   padding: 10px;
   border-radius: 10px;
 
-  .interactive-container{
+  .interactive-container {
     display: flex;
     width: 100%;
     justify-content: right;
-    
-    button{
+
+    button {
       padding: 0;
       border: none;
       background-color: transparent;
       display: flex;
     }
 
-    .delete{
+    .delete {
       color: red;
     }
 
-    mat-icon{
+    mat-icon {
       cursor: pointer;
     }
   }
 
-  .add-button{
+  .add-button {
     margin: 10px 0;
   }
+}
+
+.form-aerial-application {
+
+  .containerForm {
+    max-width: 90% !important;
+    width: 90% !important;
+    margin-bottom: 10px;
+  }
+
+  .row {
+    margin-left: 0px;
+    margin-right: 0px;
+    gap: 10px;
+
+    .containerForm {
+      max-width: 45% !important;
+      width: 45% !important;
+    }
+  }
+  
+  .row-time{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .col-5{
+      padding: 0;
+    }
+
+    .col-1{
+      padding: 0;
+    }
+  }
+
+  .interactive-container {
+    display: flex;
+    width: 100%;
+    justify-content: right;
+
+    button {
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      display: flex;
+    }
+
+    .delete {
+      color: red;
+    }
+
+    mat-icon {
+      cursor: pointer;
+    }
+  }
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  height: 50px !important;
+}
+
+.container-table {
+  padding: 20px;
+}
+
+.container-table .mat-form-field {
+  width: 100% !important;
+  position: relative;
+
+  .unit {
+    position: absolute;
+    right: 1px;
+  }
+}
+
+@media (max-width: 1300px) {
+  .form-aerial-application {
+
+
+    .row {
+      margin-left: 0px;
+      margin-right: 0px;
+      gap: 10px;
+
+    }
+  }
+
 }
