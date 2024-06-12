@@ -12,13 +12,13 @@
     <div class="col-md-12 col-lg-6">
         <div class="cards-farms-col" *ngFor="let item of list.slice(0,8)">
             <div class="cards-farms-item">
-                <div class="cards-farms-number-item" [class]="color(item.complete)">
+                <div class="cards-farms-number-item" [class]="color(item.complete, item.air_application)">
                     {{item.stage_number}}
                 </div>
                 <div class="cards-farms-text-item">
                     {{item.stage_name}}
                 </div>
-                <button mat-raised-button class="rounded-button" [class]="color(item.complete)" (click)="goItem(item)">
+                <button mat-raised-button class="rounded-button" [class]="color(item.complete, item.air_application)" (click)="goItem(item)">
                     <div class="rounded-button-text">ver más </div>
                     <mat-icon>visibility</mat-icon>
                 </button>
@@ -28,13 +28,13 @@
     <div class="col-md-12 col-lg-6">
         <div class="cards-farms-col" *ngFor="let item of list.slice(8,16)">
             <div class="cards-farms-item">
-                <div class="cards-farms-number-item" [class]="color(item.complete)">
+                <div class="cards-farms-number-item" [class]="color(item.complete, item.air_application)">
                     {{item.stage_number}}
                 </div>
                 <div class="cards-farms-text-item">
                     {{item.stage_name}}
                 </div>
-                <button mat-raised-button class="rounded-button" [class]="color(item.complete)" (click)="goItem(item)">
+                <button mat-raised-button class="rounded-button" [class]="color(item.complete, item.air_application)" (click)="goItem(item)">
                     <div class="rounded-button-text">ver más </div>
                     <mat-icon>visibility</mat-icon>
                 </button>

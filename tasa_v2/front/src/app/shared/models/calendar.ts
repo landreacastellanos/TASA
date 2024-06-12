@@ -36,6 +36,8 @@ export interface StageBetweenRequest extends StageBetween {
 export interface StageBetweenResponse extends StageBetween {
   enabled: boolean;
   images?: string[];
+  air_application: any;
+  dron: boolean;
 }
 
 export class StageProduct {

@@ -1,6 +1,6 @@
 @import '../../../../../themes/theme.scss';
 
-.container-lots{
+.container-lots {
     margin: 0;
     padding: 0;
 }
@@ -9,39 +9,79 @@
     color: transparent;
 }
 
-.container-button-add{
+.container-button-add {
     text-align: right;
 }
 
-.container-icon{
+.container-icon {
     padding: 0;
     padding-top: 38px;
+    display: flex;
+    justify-content: end;
 
-    .mat-mini-fab{
+    .mat-mini-fab {
         width: 38px;
         height: 38px;
     }
 }
 
-.sponsors{
+.checkbox-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.sponsors {
     background-color: white;
     justify-content: flex-start;
     flex-direction: row;
     padding: 16px;
     color: black;
 
-    .title-second{
+    .title-second {
         color: #87b017;
         margin-top: 8px;
 
         .material-icons {
-        vertical-align: text-bottom;
-        font-size: larger;
+            vertical-align: text-bottom;
+            font-size: larger;
         }
     }
 
     .containerForm {
-      margin: 6px 0;
+        margin: 6px 0;
+        padding: 0 5px;
+    }
+
+    .text-size {
+        font-size: 16px;
+    }
+}
+
+.containerForm {
+    margin: 6px 0;
+    padding: 0 5px;
+}
+::ng-deep .mat-checkbox-checked.mat-accent {
+    .mat-checkbox-ripple .mat-ripple-element {
+        background-color: blue !important;
+    }
+
+    .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+        background-color: blue;
+     }
+}
+
+::ng-deep .mat-checkbox.mat-accent {
+    .mat-checkbox-ripple .mat-ripple-element {
+        background-color: blue !important;
+    }
+}
+@media (max-width: 1500px) {
+    .text-size {
+        font-size: 14px;
     }
 }
 

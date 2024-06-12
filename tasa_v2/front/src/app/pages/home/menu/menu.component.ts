@@ -133,8 +133,6 @@ export class MenuComponent implements OnInit {
   }
 
   formatDate(date) {
-    console.log(date,this.formatDates);
-    
     return moment(date).format(this.formatDates);
   }
 }
