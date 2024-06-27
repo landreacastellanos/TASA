@@ -16,7 +16,8 @@ from project.models.models import ResponseWrapper
 from project.resources.utils.data_utils import DataUtils
 from project.configuration_manager import ConfigurationManger
 from project.resources.utils.registry_utils import RegistryUtils
-from project.resources.utils.security_token import SecurityToken 
+from project.resources.utils.security_token import SecurityToken
+from fpdf import FPDF, HTMLMixin 
 
 app = create_app()
 
@@ -142,9 +143,19 @@ app.config['TESTING'] = False
 
 app.response_class = ResponseWrapper
 
+class MyFPDF(FPDF, HTMLMixin):
+    pass
+
 uploads_dir = os.path.join(app.root_path, 'images')
 if not (os.path.exists(uploads_dir)):
     os.makedirs(uploads_dir)
+
+if not (os.path.exists(uploads_dir+'/blank.pdf')):    
+    pdf = MyFPDF()
+    # adding a page
+    pdf.add_page()
+    pdf.write_html('<br>dron</br>')
+    pdf.output('project/images/blank.pdf', 'F')
 
 manager = Manager(app)
 
