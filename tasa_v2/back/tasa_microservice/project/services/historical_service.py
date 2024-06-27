@@ -1,6 +1,7 @@
 import json
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
+from flask import send_from_directory, current_app, request
 
 class HistoricalService:
     def __init__(self):
@@ -32,4 +33,7 @@ class HistoricalService:
 
         result['data'] =  list(map(lambda x: json.loads(x['data']), historical))
 
-        return result      
+        return result
+    
+    def export_dron_report(self, year):
+        return send_from_directory('images', 'blank.pdf')        

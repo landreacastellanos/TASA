@@ -15,3 +15,15 @@ def get_historical(id):
         result = exception.args[0]
         return result
     return result
+
+def export_report(year):
+    results = {
+            "data": [],
+            "details": []
+        }
+    try:
+        results = HistoricalService().export_dron_report(year)   
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results
