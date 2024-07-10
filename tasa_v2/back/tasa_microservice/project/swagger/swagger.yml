@@ -719,7 +719,7 @@
                   $ref: '#/definitions/product'
         x-swagger-router-controller: "project.views.historical"
     /dron_report/{year}:
-      post:
+      get:
         tags:
           - "Historical"
         summary: "Historical"

@@ -22,7 +22,7 @@ def export_report(year):
             "details": []
         }
     try:
-        results = HistoricalService().export_dron_report(year)   
+            results['data'] = HistoricalService().export_dron_report(year)   
     except Exception as exception:
         result = exception.args[0]
         results['details'].append(result)
