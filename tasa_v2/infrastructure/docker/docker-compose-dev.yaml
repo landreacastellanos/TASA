@@ -3,8 +3,7 @@ version: "2.2"
 services:
   
   mysql:
-    image: mysql
-    command: ["mysqld", "--mysql-native-password=ON"]
+    image: mysql:8.1
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
