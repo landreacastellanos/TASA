@@ -1,9 +1,14 @@
 import json
+import uuid
+
+from fpdf import FPDF, HTMLMixin
 from project.infrastructure.repositories.common_repository\
     import CommonRepository
 from flask import send_from_directory, current_app, request
 from datetime import datetime, timedelta
 import dateutil.parser
+from csv2pdf import convert
+import pandas as pd
 
 class HistoricalService:
     def __init__(self):
@@ -95,3 +100,31 @@ class HistoricalService:
         
         return {'report': response,
                 'total': {}}
+                    
+    def export_dron_report_file(self, year):
+        file_name = str(year)+str(uuid.uuid1())
+        # adding a page
+        report = self.export_dron_report(year)['report']
+        df = pd.DataFrame({'Finca' : [], 'Lote': [], 'Segmento': [], 'Fecha': []})
+        for item in report:
+            data = {}            
+            for item2 in item['drones']:
+                drone = self.__repository_drones.select_one(int(item2['id']))[0]
+                data['Hora muerto '+drone['name']] = item2['dead']
+                data['Hora vivo '+drone['name']] = item2['live']
+                data['HA '+drone['name']] = item2['ha']
+            df = df._append({'Finca': item['property'],
+                             'Lote': item['batch'],
+                             'Segmento': item['stage'],
+                             'Fecha': item['date'], 
+                             **(data.copy())
+                             }, ignore_index = True)
+           
+        df = df.fillna(0)
+
+
+        df.to_csv('project/images/data.csv')
+        convert('project/images/'+file_name+'.csv', 'project/images/'+file_name+'.pdf', size=4, headersize=6)
+
+        return send_from_directory('images', file_name+'.pdf')
+

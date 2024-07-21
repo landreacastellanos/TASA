@@ -27,3 +27,15 @@ def export_report(year):
         result = exception.args[0]
         results['details'].append(result)
     return results
+
+def export_report_file(year):
+    results = {
+            "data": [],
+            "details": []
+        }
+    try:
+            results = HistoricalService().export_dron_report_file(year)   
+    except Exception as exception:
+        result = exception.args[0]
+        results['details'].append(result)
+    return results

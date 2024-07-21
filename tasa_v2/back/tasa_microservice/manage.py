@@ -32,7 +32,7 @@ def before_request_function():
     g.endpoint = request.endpoint
     validation_url = True
     if any(url_exclude in request.base_url
-    for url_exclude in ("swagger", "restore_password", "reset_password", "login", "get_file")):
+    for url_exclude in ("swagger", "restore_password", "reset_password", "login", "get_file", "dron_report")):
         validation_url = False
 
     if validation_url:
@@ -143,19 +143,12 @@ app.config['TESTING'] = False
 
 app.response_class = ResponseWrapper
 
-class MyFPDF(FPDF, HTMLMixin):
-    pass
+
 
 uploads_dir = os.path.join(app.root_path, 'images')
 if not (os.path.exists(uploads_dir)):
     os.makedirs(uploads_dir)
 
-if not (os.path.exists(uploads_dir+'/blank.pdf')):    
-    pdf = MyFPDF()
-    # adding a page
-    pdf.add_page()
-    pdf.write_html('<br>dron</br>')
-    pdf.output('project/images/blank.pdf', 'F')
 
 manager = Manager(app)
 

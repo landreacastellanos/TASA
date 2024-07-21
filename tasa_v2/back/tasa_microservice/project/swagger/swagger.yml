@@ -744,6 +744,28 @@
                 items:
                   $ref: '#/definitions/product'
         x-swagger-router-controller: "project.views.historical"
+    /dron_report/{year}/report:
+      get:
+        tags:
+          - "Historical"
+        summary: "Historical"
+        operationId: "export_report_file"
+        description: "export report"
+        produces:
+          - "application/pdf"
+        parameters:
+          - in: path
+            name: year
+            type: integer
+            required: true
+        responses:
+          '200':
+              description: response result successful
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/product'
+        x-swagger-router-controller: "project.views.historical"
     /get_file/{path}:
       get:
         tags:
