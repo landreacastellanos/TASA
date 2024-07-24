@@ -60,8 +60,6 @@ export class HistoricalComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     public landsService: LandsService
   ) {
-    console.log(report);
-
     this.landsService.idProperty = this.route.snapshot.paramMap.get(
       'idProperty'
     );
