@@ -174,6 +174,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
   ) {
     this.mode = enabled ? 'edit' : 'view';
     // ? ExpressionChangedAfterItHasBeenCheckedError
+
     setTimeout(() => {
       this.endTrackingDate = end_traking_date && moment(end_traking_date);
       this.startTrackingDate = start_traking_date && moment(start_traking_date);
@@ -192,116 +193,116 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           aerialApplication: this.fb.group({
             reportNumber: [
               {
-                value: airApplication.reportNumber,
+                value: airApplication? airApplication.reportNumber: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.maxLength(10)],
             ],
             drone: [
-              { value: airApplication.drone, disabled: this.mode === 'view' },
+              { value: airApplication? airApplication.drone : null, disabled: this.mode === 'view' },
               Validators.required,
             ],
             pilotName: [
               {
-                value: airApplication.pilotName,
+                value: airApplication? airApplication.pilotName: null,
                 disabled: this.mode === 'view',
               },
               Validators.required,
             ],
             applicationManager: [
               {
-                value: airApplication.applicationManager,
+                value: airApplication? airApplication.applicationManager: null,
                 disabled: this.mode === 'view',
               },
               Validators.required,
             ],
             initialWaterPh: [
               {
-                value: airApplication.initialWaterPh,
+                value: airApplication? airApplication.initialWaterPh: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             finalMixturePh: [
               {
-                value: airApplication.finalMixturePh,
+                value: airApplication? airApplication.finalMixturePh: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             flightHeight: [
               {
-                value: airApplication.flightHeight,
+                value: airApplication? airApplication.flightHeight: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             applicationVolume: [
               {
-                value: airApplication.applicationVolume,
+                value: airApplication? airApplication.applicationVolume: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             dropSize: [
               {
-                value: airApplication.dropSize,
+                value: airApplication? airApplication.dropSize: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             flightSpeed: [
               {
-                value: airApplication.flightSpeed,
+                value: airApplication? airApplication.flightSpeed : '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             coverageWidth: [
               {
-                value: airApplication.coverageWidth,
+                value: airApplication? airApplication.coverageWidth: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             startTime: [
               {
-                value: airApplication.startTime,
+                value: airApplication? airApplication.startTime: '',
                 disabled: this.mode === 'view',
               },
               Validators.required,
             ],
             endTime: [
-              { value: airApplication.endTime, disabled: this.mode === 'view' },
+              { value: airApplication? airApplication.endTime: '', disabled: this.mode === 'view' },
               Validators.required,
             ],
             windSpeed: [
               {
-                value: airApplication.windSpeed,
+                value: airApplication? airApplication.windSpeed: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             applicationIncidence: [
               {
-                value: airApplication.applicationIncidence,
+                value: airApplication? airApplication.applicationIncidence: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.maxLength(200)],
             ],
             applicationRating: [
               {
-                value: airApplication.applicationRating,
+                value: airApplication? airApplication.applicationRating: '',
                 disabled: this.mode === 'view',
               },
               [Validators.required, Validators.pattern(this.validatorFloat2)],
             ],
             liveTime: [
-              airApplication.liveTime? airApplication.liveTime : '',
+              airApplication?.liveTime? airApplication.liveTime : '',
               Validators.required,
             ],
             deadTime: [
-              airApplication.deadTime? airApplication.deadTime : '',
+              airApplication?.deadTime? airApplication.deadTime : '',
               Validators.required,
             ],
             liveTimePeriods: this.fb.array([]),
@@ -309,12 +310,12 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           }),
         });
 
-        if (airApplication.liveTimePeriods) {
+        if (airApplication && airApplication.liveTimePeriods) {
           airApplication.liveTimePeriods.forEach((period: any) => {
             this.addLiveTimePeriod(period.startTime, period.endTime);
           });
         }
-        if (airApplication.deadTimePeriods) {
+        if (airApplication &&  airApplication.deadTimePeriods) {
           airApplication.deadTimePeriods.forEach((period: any) => {
             this.addDeadTimePeriod(period.startTime, period.endTime);
           });
@@ -324,7 +325,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
           (products) => this.productsValidation(products)
         );
       }
-      this.drone = dron ?? false;
+      this.drone = dron;
 
       if (this.products) {
         products.forEach((product) => {

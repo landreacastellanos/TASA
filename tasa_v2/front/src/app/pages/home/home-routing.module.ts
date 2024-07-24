@@ -38,6 +38,17 @@ const routes: Routes = [
         },
       },
       {
+        path: 'history',
+        loadChildren: () =>
+          import('./history/history.module').then((m) => m.HistoryModule),
+        canActivate: [RoleByIdGuard],
+        data: {
+          roles: [
+            new RolAdministrador().key,
+          ]
+        },
+      },
+      {
         path: 'farms',
         loadChildren: () =>
           import('./farms/farms.module').then((m) => m.FarmsModule),
