@@ -1,0 +1,17 @@
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  margin: 10px;
+  background-color: blue;
+  color: white;
+}
+
+table.mat-table .mat-header-cell{
+  min-width: 130px;
+  text-align: center;
+}
+

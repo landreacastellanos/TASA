@@ -349,7 +349,7 @@
               </div>
               <div class="containerForm">
                 <mat-label>Velocidad de vuelo</mat-label>
-                <mat-form-field class="formOutline" appearance="outline">
+                <mat-form-field class="formOutline" appearance="outline"><span class="unit">Mt/Seg</span>
                   <input matInput formControlName="flightSpeed">
                 </mat-form-field>
                 <div *ngIf="submitted && controlsAerial.flightSpeed?.errors?.required" class="warning">
@@ -362,7 +362,7 @@
             </div>
             <div class="containerForm">
               <mat-label>Cobertura o ancho de la aplicación</mat-label>
-              <mat-form-field class="formOutline" appearance="outline">
+              <mat-form-field class="formOutline" appearance="outline"><span class="unit">Metros</span>
                 <input matInput formControlName="coverageWidth">
               </mat-form-field>
               <div *ngIf="submitted && controlsAerial.coverageWidth?.errors?.required" class="warning">

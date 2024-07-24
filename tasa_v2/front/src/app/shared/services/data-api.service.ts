@@ -20,7 +20,7 @@ export class DataApiService {
   getHeaders(
     extraValues: any = { 'Content-Type': 'application/json' }
   ): HttpHeaders {
-    if (this.getToken()) {
+    if (this.getToken()) {  
       return new HttpHeaders({
         Token: `${this.getToken()}`,
         ...extraValues,
@@ -31,6 +31,23 @@ export class DataApiService {
       });
     }
   }
+
+  getHeadersPdf(
+    extraValues: any = { 'Content-Type': 'application/pdf',
+    'Accept': 'application/pdf' }
+  ): HttpHeaders {
+    if (this.getToken()) {  
+      return new HttpHeaders({
+        Token: `${this.getToken()}`,
+        ...extraValues,
+      });
+    } else {
+      return new HttpHeaders({
+        ...extraValues,
+      });
+    }
+  }
+
 
   public getToken(): string {
     if (this.storageService.getValue('token')) {
@@ -206,5 +223,22 @@ export class DataApiService {
         delete element[key];
       }
     });
+  }
+
+  public downloadAll(
+    extension: string,
+    url?: string
+  ): Promise<Blob> {
+    const urlGet = url ? url : this.urlApi;
+    return this.http
+      .get<any>(urlGet + extension, {
+        headers: this.getHeadersPdf(),
+        responseType: 'blob' as 'json'
+      })
+      .toPromise()
+      .then((result) => {
+        return result as Blob;
+      })
+      .catch(this.handleOnError);
   }
 }
