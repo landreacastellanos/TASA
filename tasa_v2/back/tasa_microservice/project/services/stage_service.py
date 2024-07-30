@@ -236,30 +236,13 @@ class StageServices:
         dates = DataUtils.calulate_date_stage(stage_number, tuple_stage[3])
 
         property_stage = tuple_stage[1]
-        edit = tuple_stage[0]
-        dron = tuple_stage[4]['dron']
 
-        stage = self.calulate_stage(stage_number)    
+        dron = tuple_stage[4]['dron']
     
         if(len(property_stage) == 0):            
-            
-            property_stage_one = self.get_property_stage(email, land_id, stage)[1]
-            if(edit and not stage_number in (Stage.stage_two.value,Stage.stage_three.value)):                
-                edit &= (len(property_stage_one) > 0)
-                edit &= property_stage_one[0]['stage_complete'] if(len(property_stage_one) > 0) else edit
-
-            if(edit and stage_number is Stage.stage_three.value):
-                data = json.loads(property_stage_one[0]['data'])
-                edit &= (len(property_stage_one) > 0 and 'sowing_date' in data
-                and len(data['sowing_date']) > 0)  
-
-            if(edit and len(property_stage_one) > 0 and stage_number is Stage.stage_two.value):
-                data = json.loads(property_stage_one[0]['data'])
-                edit = data['sowing_date'] != ''
 
             start_traking_date = ''
             end_traking_date = ''
-            data = []
             date =  self.validation_system(stage_number, email, land_id)
 
             if date != '':
@@ -273,7 +256,7 @@ class StageServices:
                     "end_traking_date": end_traking_date,
                     "observations": "",
                     "start_traking_date": start_traking_date,
-                    "enabled": edit,
+                    "enabled": True,
                     "products": [],
                     "images": None,
                     "dron": dron,
@@ -283,10 +266,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = (stage_number == Stage.stage_fifteen.value and 
-            'amount_quintals' not in json_data) or ('application_date' not in json_data and 
-            stage_number != Stage.stage_fifteen.value) and (edit)
-            json_data['enabled'] = edit
+            json_data['enabled'] = True
             json_data['images'] = property_stage['procedure_image']
             json_data['air_application'] = property_stage['air_application']
             json_data['dron'] = dron
