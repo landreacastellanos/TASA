@@ -322,7 +322,7 @@ class StageServices:
                     "end_traking_date": end_traking_date,
                     "observations": "",
                     "start_traking_date": start_traking_date,
-                    "enabled": edit,
+                    "enabled": True,
                     "products": [],
                     "images": None,
                     "dron": dron
@@ -332,8 +332,7 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = edit and 'application_date' not in json_data
-            json_data['enabled'] = edit
+            json_data['enabled'] = True
             json_data['dron'] = dron
             json_data['images'] = property_stage['procedure_image']
             json_data['air_application'] = property_stage['air_application']
