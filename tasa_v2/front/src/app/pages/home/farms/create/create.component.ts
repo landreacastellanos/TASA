@@ -212,16 +212,10 @@ export class CreateComponent implements OnInit {
       if(!this.drone){
         this.openDialogDelete(type, index)
       }
-      else{
-        this.drone = !this.drone;
-      }
     }
     if (type == 'list') {
       if(!this.listLot[index].drone){
         this.openDialogDelete(type, index)
-      }
-      else{
-        this.listLot[index].drone = !this.listLot[index].drone;
       }
     }
   }
