@@ -181,7 +181,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       this.urlReferencePhoto = this.getUrlReferencePhoto();
       this.selection.clear();
       this.pictures = images ? images : [];
-      const airApplication = JSON.parse(air_application);
+      const airApplication = air_application? JSON.parse(air_application): air_application;
       if (dron) {
         this.burningForSowingForm = this.fb.group({
           observations: [
