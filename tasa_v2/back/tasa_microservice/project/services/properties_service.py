@@ -189,13 +189,9 @@ class PropertiesServices:
         air_application = False;
         
         for land in lands:
-            property_one = self.__repository_property_stage.select(entity_name="property_stage", options={"filters":
-                                [['land_id', "equals", land['id']]]
-                                })
-            air_application = len(list(filter(lambda x: x['air_application'] is not None, property_one))) > 0
+            air_application = land['dron']
             if air_application: break
 
-        
         return air_application
 
     
