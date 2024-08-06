@@ -80,7 +80,7 @@ class HistoricalService:
                                                 'id': drone['id'],
                                                 'dead': str(datetime.strptime(air_application['deadTime'], '%H:%M').time()),
                                                 'live': str(datetime.strptime(air_application['liveTime'], '%H:%M').time()),
-                                                'ha': int(air_application['dropSize'])}]
+                                                'ha': float(air_application['dropSize'])}]
                     response.append(response_data)
                 else:
                     dron = list(filter(lambda x: x['id'] == air_application['drone'], current_element[0]['drones']))
@@ -90,9 +90,9 @@ class HistoricalService:
                                                 'id': drone['id'],
                                                 'dead': str(datetime.strptime(air_application['deadTime'], '%H:%M').time()),
                                                 'live': str(datetime.strptime(air_application['liveTime'], '%H:%M').time()),
-                                                'ha': int(air_application['dropSize'])})
+                                                'ha': float(air_application['dropSize'])})
                     else:
-                        dron[0]['ha'] += int(air_application['dropSize'])
+                        dron[0]['ha'] += float(air_application['dropSize'])
                         live = datetime.strptime(dron[0]['live'], '%H:%M:%S') 
                         dead = datetime.strptime(dron[0]['dead'], '%H:%M:%S') 
                         dron[0]['dead'] = str((datetime.strptime(air_application['deadTime'], '%H:%M') + timedelta(hours=dead.hour, minutes=dead.minute)).time())
