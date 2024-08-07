@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 import dateutil.parser
 from csv2pdf import convert
 import pandas as pd
+import pdfkit
 
 class HistoricalService:
     def __init__(self):
@@ -122,9 +123,8 @@ class HistoricalService:
            
         df = df.fillna(0)
 
-
-        df.to_csv('project/images/data.csv')
-        convert('project/images/'+file_name+'.csv', 'project/images/'+file_name+'.pdf', size=4, headersize=6)
+        html_table = df.to_html()
+        pdfkit.from_string(html_table, 'project/images/'+file_name+'.pdf')
 
         return send_from_directory('images', file_name+'.pdf')
 
