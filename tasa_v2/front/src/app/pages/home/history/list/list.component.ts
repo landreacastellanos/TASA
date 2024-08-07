@@ -173,13 +173,42 @@ export class ListComponent implements AfterViewInit {
           }
         });
 
+        const totals = {};
+        this.displayedColumns.forEach(column => {
+          if (column.includes('-ha')) {
+            totals[column] = outputArray.reduce((sum, item) => sum + (parseFloat(item[column]) || 0), 0);
+          } else if (column.includes('-live') || column.includes('-dead')) {
+            totals[column] = this.calculateTotalTime(outputArray.map(item => item[column]));
+          } else {
+            totals[column] = '';
+          }
+        });
+        totals['property']= 'Total';
+        outputArray.push(totals);
+
         this.dataSource = new MatTableDataSource(outputArray);
       })
       .finally(() => this.loadingService.setloading(false));
   }
 
+  calculateTotalTime(times: string[]): string {
+    let totalMinutes = 0;
+    times.forEach(time => {
+      if(time){
+        const [hours, minutes] = time.split(':').map(Number);
+        totalMinutes += (hours * 60) + minutes;
+      }
+    });
+
+    const totalHours = Math.floor(totalMinutes / 60);
+    const remainingMinutes = totalMinutes % 60;
+
+    return `${totalHours}:${remainingMinutes.toString().padStart(2, '0')}`;
+  }
+
   downloadHistory(year: number): void {
     this.droneService.downloadHistoryYear(year).then((blob: Blob) => {
+      console.log('blob: ', blob)
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
