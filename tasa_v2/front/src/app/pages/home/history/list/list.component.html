@@ -19,12 +19,13 @@
         <!-- Dynamic columns -->
         <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
           <th mat-header-cell *matHeaderCellDef>{{ columnTranslations[column] }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ columnTranslations[column] }}</th>
           <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
         </ng-container>
 
         <!-- Header and rows -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'total-row': row.property === 'Total'}"></tr>
       </table>
     </div>
   </div>

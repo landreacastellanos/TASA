@@ -15,3 +15,13 @@ table.mat-table .mat-header-cell{
   text-align: center;
 }
 
+.total-row {
+  background-color: #87b017;
+  color: white;
+
+  td {
+    font-weight: bold;
+    color: white;
+  }
+}
+
