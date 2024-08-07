@@ -68,3 +68,4 @@ holidays_co==1.0.0
 fpdf
 csv2pdf
 pandas
+pdfkit
