@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -81,5 +82,32 @@ export class ConfigurationService {
     keys.forEach((key) => {
       target[key] = from[key];
     });
+  }
+
+  timeRangeValidator(startControlName: string, endControlName: string): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const start = group.get(startControlName)?.value;
+      const end = group.get(endControlName)?.value;
+  
+      if (start && end) {
+        const startTime = this.parseTime(start);
+        const endTime = this.parseTime(end);
+  
+        if (startTime && endTime && this.isTimeBefore(startTime, endTime)) {
+          return { timeRangeInvalid: true };
+        }
+      }
+  
+      return null;
+    };
+  }
+  
+  parseTime(time: string): { hours: number, minutes: number } | null {
+    const [hours, minutes] = time.split(':').map(Number);
+    return isNaN(hours) || isNaN(minutes) ? null : { hours, minutes };
+  }
+  
+  isTimeBefore(startTime: { hours: number, minutes: number }, endTime: { hours: number, minutes: number }): boolean {
+    return (endTime.hours < startTime.hours) || (endTime.hours === startTime.hours && endTime.minutes < startTime.minutes);
   }
 }
