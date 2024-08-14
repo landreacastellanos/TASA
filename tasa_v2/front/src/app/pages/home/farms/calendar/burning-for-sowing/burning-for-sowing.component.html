@@ -447,13 +447,16 @@
                         <mat-label>Hora Fin</mat-label>
                         <mat-form-field class="formOutline" appearance="outline">
                           <input matInput formControlName="endTime" type="time">
-                        </mat-form-field>
+                        </mat-form-field>                  
                       </div>
                       <div class="interactive-container col-1">
                         <button *ngIf="mode !== 'view'" (click)="removeLiveTimePeriod(i)">
                           <mat-icon class="delete">delete_outline</mat-icon>
                         </button>
                       </div>
+                    </div>
+                    <div *ngIf="submitted && controlsAerial.liveTimePeriods.controls[i]?.errors?.timeRangeInvalid" class="warning">
+                      La hora de fin no puede ser menor que la hora de inicio
                     </div>
                   </div>
                   <button mat-raised-button (click)="addLiveTimePeriod()" type="button" color="primary"
@@ -481,13 +484,16 @@
                         <mat-label>Hora Fin</mat-label>
                         <mat-form-field class="formOutline" appearance="outline">
                           <input matInput formControlName="endTime" type="time">
-                        </mat-form-field>
+                        </mat-form-field>                  
                       </div>
                       <div class="interactive-container col-1">
                         <button *ngIf="mode !== 'view'" (click)="removeDeadTimePeriod(i)">
                           <mat-icon class="delete">delete_outline</mat-icon>
                         </button>
                       </div>
+                    </div>
+                    <div *ngIf="submitted && controlsAerial.deadTimePeriods.controls[i]?.errors?.timeRangeInvalid" class="warning">
+                      La hora de fin no puede ser menor que la hora de inicio
                     </div>
                   </div>
                   <button mat-raised-button (click)="addDeadTimePeriod()" type="button" color="primary"
