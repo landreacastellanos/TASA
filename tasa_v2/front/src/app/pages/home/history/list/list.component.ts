@@ -208,7 +208,6 @@ export class ListComponent implements AfterViewInit {
 
   downloadHistory(year: number): void {
     this.droneService.downloadHistoryYear(year).then((blob: Blob) => {
-      console.log('blob: ', blob)
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
