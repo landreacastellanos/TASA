@@ -468,7 +468,7 @@ class StageServices:
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
 			"complete": True, 
-            "air_application": x['air_application'] is not None        
+            "air_application": x['air_application'] is not None and json.loads(x['air_application'])['drone'] is not None    
         }
         if x['stageId'] == data['id'] and
         (x['stageComplete'])
@@ -479,7 +479,7 @@ class StageServices:
 			"stage_number": data['stageNumber'],
 			"stage_name": data['stage'],
 			"complete": False,
-            "air_application": x['air_application'] is not None      
+            "air_application": x['air_application'] is not None and json.loads(x['air_application'])['drone'] is not None     
         }, stages))
 
         data = sorted(result, key= lambda stage: stage['stage'])
