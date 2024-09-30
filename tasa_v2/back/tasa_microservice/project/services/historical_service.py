@@ -82,7 +82,7 @@ class HistoricalService:
                                                     'id': drone['id'],
                                                     'dead': str(datetime.strptime(air_application['deadTime'] if air_application['deadTime'] != '' else '00:00', '%H:%M').time()),
                                                     'live': str(datetime.strptime(air_application['liveTime'] if air_application['liveTime'] != '' else '00:00', '%H:%M').time()),
-                                                    'ha': float(air_application['dropSize'])}]
+                                                    'ha': float(air_application['dropSize'] if air_application['dropSize'] != '' else 0)}]
                         response.append(response_data)
                     else:
                         dron = list(filter(lambda x: x['id'] == air_application['drone'], current_element[0]['drones']))
@@ -92,9 +92,9 @@ class HistoricalService:
                                                     'id': drone['id'],
                                                     'dead': str(datetime.strptime(air_application['deadTime'] if air_application['deadTime'] != '' else '00:00', '%H:%M').time()),
                                                     'live': str(datetime.strptime(air_application['liveTime'] if air_application['liveTime'] != '' else '00:00', '%H:%M').time()),
-                                                    'ha': float(air_application['dropSize'])})
+                                                    'ha': float(air_application['dropSize'] if air_application['dropSize'] != '' else 0)})
                         else:
-                            dron[0]['ha'] += float(air_application['dropSize'])
+                            dron[0]['ha'] += float(air_application['dropSize'] if air_application['dropSize'] != '' else 0)
                             live = datetime.strptime(dron[0]['live'], '%H:%M:%S') 
                             dead = datetime.strptime(dron[0]['dead'], '%H:%M:%S') 
                             dron[0]['dead'] = str((datetime.strptime(air_application['deadTime'] if air_application['deadTime'] != '' else '00:00', '%H:%M') + timedelta(hours=dead.hour, minutes=dead.minute)).time())
