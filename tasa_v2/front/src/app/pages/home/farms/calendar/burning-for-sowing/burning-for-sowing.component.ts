@@ -142,7 +142,7 @@ export class BurningForSowingComponent implements OnInit, CalendarChildren {
       })
       .then(() => this.droneService.getDrones())
       .then((drones) => {
-        this.drones = drones;
+        this.drones = drones?.filter(x => x.state);
       })
       .then(() => this.farmsService.getUsers())
       .then((infoUsers) => {
