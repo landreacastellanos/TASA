@@ -65,7 +65,7 @@ class HistoricalService:
                and dateutil.parser.parse(data['application_date']).year == year):
                 air_application = json.loads(item['air_application'])
                 current_element = list(filter(lambda x: x['batch_id'] == item['land_id'] and x['stage_id'] == item['stage_id'], response))
-                if air_application['drone'] is not None and air_application['drone'] != '':
+                if air_application['drone'] is not None and air_application['drone'] != '' and len(self.__repository_drones.select_one(int(air_application['drone']))) > 0:
                     drone = self.__repository_drones.select_one(int(air_application['drone']))[0]
                     if len(current_element) == 0:
                         response_data = {}
