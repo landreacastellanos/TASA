@@ -118,7 +118,6 @@ class StageServices:
         else:
             property_stage = property_stage[0]            
             json_data = json.loads(property_stage['data'])            
-            edit = 'real_date' in json_data and not json_data['real_date'] and edit
             json_data['enabled'] = edit
             json_data['dron'] = dron
             json_data['images'] = property_stage['procedure_image']
